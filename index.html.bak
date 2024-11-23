@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  
+    <title>Kirk Radio Online</title>
+  <center>
+  <a><img src="https://images.cooltext.com/5715748.png" width="809" height="87" alt="Kirk Radio Online" /></a>
+  </center>
+  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #FF;
+  background-color: #CD5C5C ;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #8B0000 }
+
+.button:active {
+  background-color: #CD5C5C;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #FF;
+  background-color: #CD5C5C ;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #8B0000 }
+
+.button:active {
+  background-color: #CD5C5C;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #FF;
+  background-color: #CD5C5C ;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #8B0000 }
+
+.button:active {
+  background-color: #CD5C5C;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #FF;
+  background-color: #CD5C5C ;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #8B0000 }
+
+.button:active {
+  background-color: #CD5C5C;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #FF;
+  background-color: #CD5C5C ;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #8B0000 }
+
+.button:active {
+  background-color: #CD5C5C;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #FF;
+  background-color: #CD5C5C ;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #8B0000 }
+
+.button:active {
+  background-color: #CD5C5C;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #FF;
+  background-color: #CD5C5C ;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #8B0000 }
+
+.button:active {
+  background-color: #CD5C5C;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+</style>
+</head>
+ 
+  <body style="background-color: #000000;">
+<!-- page content goes here -->
+
+
+
+
+
+<button class="button">SignUp</button>
+<button class="button">Members</button>
+<a href="https://www.youtube.com/@kirkradio6992"><button class="button">KirkRadioYoutube</button></a>
+<a href="https://pilgrimcmoney.github.io/KirkRadioOnline/forums.html"><button class="button">Forum</button></a>
+<a href="https://discord.com/channels/916979496589090826/916979496589090829.html"><button class="button">Discord</button>
+<a href=""<button class="button">Donations</button>	
+	
+			
+			
+			
+			<!-- RCAST.NET - START EMBEDDED PLAYER --> 
+			<div style="bottom: 0;display: flex;height: 65px;left: 0;position: fixed;right: 0;width: 100%;z-index: 1500;overflow: hidden;"><iframe src="https://players.rcast.net/fixedbar7/67946" frameborder="0" scrolling="no" allow="autoplay" style="width: 100%;"></iframe></div> 
+			<div style="overflow:hidden; height:0px; width:0px;"><a href="https://www.rcast.net" title="Internet Radio Hosting">RCAST.NET</a></div>
+			<!-- RCAST.NET - END EMBEDDED PLAYER -->
+			
+
+</body>
+     			
+  
+</html>
