@@ -9,7 +9,7 @@ body {
 }
 
 .form-container {
-    background-color: #34495e;
+    background-color: #000000;
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     overflow: hidden;
@@ -69,7 +69,7 @@ body {
 
 .login-form input[type="text"],
 .login-form input[type="password"] {
-    background-color: #ecf0f1;
+    background-color: #000000;
     color: #333;
 }
 
