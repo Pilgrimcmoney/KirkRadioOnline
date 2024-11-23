@@ -1,197 +1,131 @@
 <!DOCTYPE html>
-<html>
-  <head>
-  
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kirk Radio Online</title>
-  <center>
-  <a><img src="https://images.cooltext.com/5715748.png" width="809" height="87" alt="Kirk Radio Online" /></a>
-  </center>
-  
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-<center>
-.button {
-  padding: 15px 20px;
-  font-size: 20px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #FF;
-  background-color: #CD5C5C ;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px #999;
-}
+    <style>
+        body {
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
-.button:hover {background-color: #8B0000 }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
 
-.button:active {
-  background-color: #CD5C5C;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
+        .header img {
+            max-width: 100%;
+            height: auto;
+        }
 
-.button {
-  padding: 15px 20px;
-  font-size: 20px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #FF;
-  background-color: #CD5C5C ;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px #999;
-}
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px;
+        }
 
-.button:hover {background-color: #8B0000 }
+        .button {
+            padding: 15px 20px;
+            font-size: 20px;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+            color: white;
+            background-color: #CD5C5C;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.1s;
+        }
 
-.button:active {
-  background-color: #CD5C5C;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
+        .button:hover {
+            background-color: #8B0000;
+        }
 
-.button {
-  padding: 15px 20px;
-  font-size: 20px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #FF;
-  background-color: #CD5C5C ;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px #999;
-}
+        .button:active {
+            background-color: #CD5C5C;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
 
-.button:hover {background-color: #8B0000 }
+        .content {
+            padding: 20px;
+            margin-bottom: 80px; /* Space for fixed player */
+        }
 
-.button:active {
-  background-color: #CD5C5C;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
+        .video-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
 
-.button {
-  padding: 15px 20px;
-  font-size: 20px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #FF;
-  background-color: #CD5C5C ;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px #999;
-}
+        .video-container iframe {
+            max-width: 100%;
+            height: auto;
+            aspect-ratio: 16/9;
+        }
 
-.button:hover {background-color: #8B0000 }
+        .player-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            z-index: 1500;
+            overflow: hidden;
+        }
 
-.button:active {
-  background-color: #CD5C5C;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-
-.button {
-  padding: 15px 20px;
-  font-size: 20px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #FF;
-  background-color: #CD5C5C ;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px #999;
-}
-
-.button:hover {background-color: #8B0000 }
-
-.button:active {
-  background-color: #CD5C5C;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-
-.button {
-  padding: 15px 20px;
-  font-size: 20px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #FF;
-  background-color: #CD5C5C ;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px #999;
-}
-
-.button:hover {background-color: #8B0000 }
-
-.button:active {
-  background-color: #CD5C5C;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-
-.button {
-  padding: 15px 20px;
-  font-size: 20px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #FF;
-  background-color: #CD5C5C ;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px #999;
-}
-
-.button:hover {background-color: #8B0000 }
-
-.button:active {
-  background-color: #CD5C5C;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-</center>
-</style>
+        @media (max-width: 768px) {
+            .button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
 </head>
- 
-  <body style="background-color: #000000;">
-<!-- page content goes here -->
+<body>
+    <div class="header">
+        <img src="/api/placeholder/809/87" alt="Kirk Radio Online" />
+    </div>
 
+    <nav class="nav-buttons">
+        <a href="https://pilgrimcmoney.github.io/KirkRadioOnline/signup.html" class="button">SignUp/Login</a>
+        <a href="https://t.me/KirkRadio" class="button">Contact</a>
+        <a href="https://www.youtube.com/@kirkradio6992" class="button">KirkRadio YouTube</a>
+        <a href="https://pilgrimcmoney.github.io/KirkRadioOnline/forums.html" class="button">Forum</a>
+        <a href="https://discord.com/channels/916979496589090826/916979496589090829.html" class="button">Discord</a>
+        <a href="https://paypal.me/kirkradiodonation?country.x=CA&locale.x=en_US" class="button">Donations</a>
+    </nav>
 
+    <div class="content">
+        <div class="video-container">
+            <iframe 
+                width="900"
+                height="450"
+                src="https://www.youtube.com/embed/b4Pi25I06kY?si=3sajOIC2it-0SBM9"
+                title="YouTube video player"
+                frameborder="1"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
 
-
-
-<a href="https://pilgrimcmoney.github.io/KirkRadioOnline/signup.html"</a><button class="button">SignUp/login</button>
-<a href="https://t.me/KirkRadio"</button></a><button class="button">Contact</button>
-<a href="https://www.youtube.com/@kirkradio6992"><button class="button">KirkRadioYoutube</button></a>
-<a href="https://pilgrimcmoney.github.io/KirkRadioOnline/forums.html"><button class="button">Forum</button></a>
-<a href="https://discord.com/channels/916979496589090826/916979496589090829.html"><button class="button">Discord</button>
-<a href="https://paypal.me/kirkradiodonation?country.x=CA&locale.x=en_US"<button class="button">Donations</button>	
-	
-		
-			<!-- RCAST.NET - START EMBEDDED PLAYER --> 
-			<div style="bottom: 0;display: flex;height: 65px;left: 0;position: fixed;right: 0;width: 100%;z-index: 1500;overflow: hidden;"><iframe src="https://players.rcast.net/fixedbar7/67946" frameborder="0" scrolling="no" allow="autoplay" style="width: 100%;"></iframe></div> 
-			<div style="overflow:hidden; height:0px; width:0px;"><a href="https://www.rcast.net" title="Internet Radio Hosting">RCAST.NET</a></div>
-			<!-- RCAST.NET - END EMBEDDED PLAYER -->
-			
-
+    <div class="player-container">
+        <iframe 
+            src="https://players.rcast.net/fixedbar7/67946"
+            frameborder="0"
+            scrolling="no"
+            allow="autoplay"
+            style="width: 100%; height: 100%;">
+        </iframe>
+    </div>
 </body>
-<p>
- <style>
-  div.buttonSubmit input, div.buttonSubmit span {
-  margin-top: 50px;
-  }
-  </style>
-  <center>
-  <iframe width="900" height="450" src="https://www.youtube.com/embed/b4Pi25I06kY?si=3sajOIC2it-0SBM9" title="YouTube video player" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-		</iframe>
-		</center>
-		</p>	
-  
 </html>
