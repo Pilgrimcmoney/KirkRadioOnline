@@ -38,8 +38,91 @@
         }
 
         .button {
-            padding: 15px 11px;
-            font-size: 10px;
+            padding: 15px 15px;
+            font-size: 14px;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+            color: white;
+            background-color: #CD5C5C;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .button:hover {
+            background-color: #8B0000;
+        }
+
+        .button:active {
+            background-color: #CD5C5C;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        .content {
+            padding: 20px;
+            margin-bottom: 80px; /* Space for fixed player */
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .video-container iframe {
+            max-width: 100%;
+            height: auto;
+            aspect-ratio: 16/9;
+        }
+
+        .player-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            z-index: 1500;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+		 body {
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .header img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .button {
+            padding: 15px 15px;
+            font-size: 14px;
             text-align: center;
             cursor: pointer;
             outline: none;
