@@ -251,6 +251,18 @@ iframe {
     aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
 }
 </style>
+$('button').on('click', function () {
+    var iframe = $(this).prev('iframe')[0];
+
+    if ($(this).hasClass('mute')) {
+        $(this).removeClass('mute').text('Mute');
+        iframe.contentWindow.postMessage('{"method":"setVolume", "value":1}', '*');
+    } else {
+        $(this).addClass('mute').text('Unmute');
+        iframe.contentWindow.postMessage('{"method":"setVolume", "value":0}', '*');
+    }
+});
+	
 	
 <p>
 
