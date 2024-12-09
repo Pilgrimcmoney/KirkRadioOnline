@@ -251,17 +251,7 @@ iframe {
     aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
 }
 </style>
-$('button').on('click', function () {
-    var iframe = $(this).prev('iframe')[0];
 
-    if ($(this).hasClass('mute')) {
-        $(this).removeClass('mute').text('Mute');
-        iframe.contentWindow.postMessage('{"method":"setVolume", "value":1}', '*');
-    } else {
-        $(this).addClass('mute').text('Unmute');
-        iframe.contentWindow.postMessage('{"method":"setVolume", "value":0}', '*');
-    }
-});
 	
 	
 <p>
@@ -307,7 +297,17 @@ $('button').on('click', function () {
 	<!-- RCAST.NET - START EMBEDDED PLAYER --> 
 <iframe src="https://html5.gamemonetize.co/l1b5lvgf49i1s7s6s9onfrjs5uprml8k/" width="1280" height="720" scrolling="none" frameborder="0">		
 </iframe><button>Mute</button>
-		  
+$('button').on('click', function () {
+    var iframe = $(this).prev('iframe')[0];
+
+    if ($(this).hasClass('mute')) {
+        $(this).removeClass('mute').text('Mute');
+        iframe.contentWindow.postMessage('{"method":"setVolume", "value":1}', '*');
+    } else {
+        $(this).addClass('mute').text('Unmute');
+        iframe.contentWindow.postMessage('{"method":"setVolume", "value":0}', '*');
+    }
+});		  
 <center><a href='https://collaborator.pro?ref=olZHef' title='Сollaborator' target='_blank'><img src='https://collaborator.pro/images/referral/promo/en/2.png' width='728' height='90' alt='Сollaborator'/></a>
 		  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9343827360975898"
      crossorigin="anonymous"></script>
