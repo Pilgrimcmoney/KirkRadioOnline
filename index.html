@@ -293,7 +293,13 @@ iframe {
 		<p> <footer id="footer">
 		</footer>
 	<!-- RCAST.NET - START EMBEDDED PLAYER --> 
-<iframe src="https://html5.gamemonetize.co/l1b5lvgf49i1s7s6s9onfrjs5uprml8k/" width="1280" height="720" scrolling="none" frameborder="0"></iframe>
+<iframe src="https://html5.gamemonetize.co/l1b5lvgf49i1s7s6s9onfrjs5uprml8k/" width="1280" height="720" scrolling="none" frameborder="0">		  var frames = window.frames;
+for (var i = 0; i < frames.length; i++) { 
+  var sounds = frames[i].document.getElementsByTagName('audio');
+  for(j=0; j<sounds.length; j++){
+    sounds[j].pause();
+  }
+}</iframe>
 		  
 <center><a href='https://collaborator.pro?ref=olZHef' title='Сollaborator' target='_blank'><img src='https://collaborator.pro/images/referral/promo/en/2.png' width='728' height='90' alt='Сollaborator'/></a>
 		  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9343827360975898"
