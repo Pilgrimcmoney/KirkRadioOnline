@@ -1,315 +1,183 @@
-t<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-<head>  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9343827360975898"
-     crossorigin="anonymous"></script>
-	<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16813384922"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<head>
+  <link rel="stylesheet" href="./css/solarized_dark.css">
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,500' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="./css/master.min.css" media="screen" title="default" charset="utf-8">
+  <link rel="stylesheet" href="./css/jquery-ui.min.css" media="screen" title="default" charset="utf-8">
+  <link rel="stylesheet" href="./css/jquery-ui.structure.min.css" media="screen" title="default" charset="utf-8">
+  <link rel="stylesheet" href="./css/jquery-ui.theme.min.css" media="screen" title="default" charset="utf-8">
+  <meta charset="utf-8">
+  <title>Discord Widget</title>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  gtag('config', 'AW-16813384922');
-</script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9343827360975898"
-     crossorigin="anonymous"></script>
-    @Html.Partial("_Favicons")
-  <link rel="icon" type="image/png" href="/https://github.com/Pilgrimcmoney/KirkRadioOnline/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/https://github.com/Pilgrimcmoney/KirkRadioOnline/favicon.svg" />
-<link rel="shortcut icon" href="/https://github.com/Pilgrimcmoney/KirkRadioOnline/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/https://github.com/Pilgrimcmoney/KirkRadioOnline/apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-title" content="KirkRadio" />
-<link rel="manifest" href="/https://github.com/Pilgrimcmoney/KirkRadioOnline/site.webmanifest" />
-</head>	
+  ga('create', 'UA-69334315-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <script>
+  $(function() {
+    $( "#tabs" ).tabs();
+  });
+  </script>
+</head>
 <body>
- <center>  <div class="imgbox">
-    <img class="center-fit" src='cooltext471072115504471.gif'>
- </center>
-</div>
-	 		<center>	
-			<!-- RCAST.NET - START EMBEDDED PLAYER --> 
-			<iframe width="500" height="450" src="https://players.rcast.net/vinyl/67946" frameborder="0" scrolling="no" allow="autoplay"></iframe> 
-			<div style="overflow:hidden; height:0px; width:0px;"><a href="https://www.rcast.net" title="Internet Radio Hosting">RCAST.NET</a></div>
-			<!-- RCAST.NET - END EMBEDDED PLAYER -->
-			
-</center>
-
-
-<style>
-<div class=
-        * {
-            margin: 40;
-            padding: 0;
-        }
-        .imgbox {
-            display: grid;
-            height: 10%;
-        }
-        .center-fit {
-            max-width: 50%;
-            max-height: 50vh;
-            margin: auto;
-        }
+  <h1>Discord Widget</h1>
+  <h5>Created By: <a href="http://github.com/restingcoder">Josh Schmille</a></h5>
+  <h2>
+    Code Snippet
+  </h2>
+  <div id="tabs">
+  <ul>
+    <li><a href="#tab1">HTML / JS</a></li>
+    <li><a href="#tab2">iframe</a></li>
+  </ul>
+  <div id="tab1">
+    <pre><code class="html">&lt;script type=&quot;text/javascript&quot; src=&quot;http://discord.deliriousdrunkards.com/discord.min.js&quot;&gt;&lt;/script&gt;<br/>&lt;script type=&quot;text/javascript&quot;&gt;<br/>discordWidget.init({<br/>  serverId: '51143782082543616',<br/>  title: 'Discord Widget Title',<br/>  join: true,<br/>  alphabetical: false,<br/>  theme: 'light',<br/>  hideChannels: ['Channel Name 1', 'Channel Name 2'],<br/>  showAllUsers: true,<br/>  allUsersDefaultState: true,<br/>  showNick: false<br/>});<br/>discordWidget.render();<br/>&lt;/script&gt;<br/><br/>&lt;div class=&quot;discord-widget&quot;&gt;&lt;/div&gt;</code></pre>
   </div>
-  
-  
- 
-		
-					
+  <div id="tab2">
+    <p class="iframe-form-info">
+      This is still being worked on. The only part not added yet is the Hide Channels option.
+    </p>
+    <pre><code class="html" id="discord-iframe-code">&lt;iframe src=&quot;http://discordi.deliriousdrunkards.com/render?id=51143782082543616&quot; width=&quot;300px&quot; height=&quot;400px&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;</code></pre>
+    <form id="iframe-form">
+          <div id="iframe-id" class="iframe-form-input">
+               <label for="iframe-id-text">
+                    Server ID
+               </label><br/>
+               <input type="text" name="iframe-id-text" id="iframe-id-text" autocomplete="off">
+          </div>
+          <div id="iframe-title" class="iframe-form-input">
+               <label for="iframe-title-text">
+                    Widget Title <span class="iframe-form-info">(Leave blank to hide the title bar)</span>
+               </label><br/>
+               <input type="text" name="iframe-title" id="iframe-title-text" autocomplete="off">
+          </div>
+          <div id="iframe-theme" class="iframe-form-input">
+               <label for="iframe-theme-light">
+                    Theme
+               </label>
+               <div>
+                    <input type="radio" name="iframe-theme" id="iframe-theme-light" value="Light" checked="checked">
+                    <span>
+                         Light
+                    </span>
+               </div>
+               <div>
+                    <input type="radio" name="iframe-theme" id="iframe-theme-dark" value="Dark">
+                    <span>
+                         Dark
+                    </span>
+               </div>
+               <div>
+                    <input type="radio" name="iframe-theme" id="iframe-theme-none" value="None">
+                    <span>
+                         None
+                    </span>
+               </div>
+          </div>
+          <div id="iframe-options" class="iframe-form-input">
+               <label for="iframe-options">
+                    Options
+               </label>
+               <div>
+                    <input type="checkbox" name="iframe-options-join" id="iframe-options-join" value="Show Join Button">
+                    <span>
+                         Show Join Button
+                    </span>
+                    <br>
+               </div>
+               <div>
+                    <input type="checkbox" name="iframe-options-abc" id="iframe-options-abc" value="Alphabetize Channel List">
+                    <span>
+                         Alphabetize Channel List
+                    </span>
+                    <br>
+               </div>
+               <div>
+                    <input type="checkbox" name="iframe-options-showall" id="iframe-options-showall" value="Show All Online Users">
+                    <span>
+                         Show All Online Users
+                    </span>
+                    <br>
+               </div>
+               <div>
+                    <input type="checkbox" name="iframe-options-showalltoggle" id="iframe-options-showalltoggle" value="All Online Users Starts Expanded">
+                    <span>
+                         All Online Users Starts Expanded
+                    </span>
+                    <br>
+               </div>
+               <div>
+                    <input type="checkbox" name="iframe-options-shownick" id="iframe-options-shownick" value="Show Server Nicknames">
+                    <span>
+                         Show Server Nicknames
+                    </span>
+                    <br>
+               </div>
+          </div>
+          <div id="iframe-hidechannels">
+               <label for="iframe-hidechannels-text">
+                    Hide Channels <span class="iframe-form-info">(Separated by commas)</span>
+               </label><br/>
+               <input type="text" name="iframe-hidechannels-text" id="iframe-hidechannels-text" autocomplete="off" disabled>
+          </div>
+     </form>
+  </div>
+</div>
 
+  <h2>
+    Parameters
+  </h2>
+  <table class="parameter-table">
+    <tr><th>Parameter</th><th>Usage</th><th>Default</th></tr>
+    <tr><td>serverId<br/><strong>[String]</strong></td><td>Paste your Server ID from the Widget section of your Server Settings here.</td><td>false</td></tr>
+    <tr><td>title<br/><strong>[String]</strong></td><td>A header will be added to the widget, containing the text supplied.</td><td>false</td></tr>
+    <tr><td>join<br/><strong>[Boolean]</strong></td><td>Determines whether to show the Join Server button within the widget.</td><td>true</td></tr>
+    <tr><td>alphabetical<br/><strong>[Boolean]</strong></td><td>Determines whether the channel list will display in alphabetical order or not.</td><td>false</td></tr>
+    <tr><td>theme<br/><strong>[String ('light', 'dark', 'none')]</strong></td><td>Pick your poison!<br/><br/>'none' removes <strong>all styling</strong>, including margins and padding around the widget.</td><td>light</td></tr>
+    <tr><td>hideChannels<br/><strong>[String Array]</strong></td><td>Hide channels. If the channel name contains the string provided, it will be hidden.</td><td>false</td></tr>
+    <tr><td>showAllUsers<br/><strong>[Boolean]</strong></td><td>Show all online users, even if they are not in a voice channel.</td><td>false</td></tr>
+    <tr><td>allUsersDefaultState<br/><strong>[Boolean]</strong></td><td>Sets whether the Online Users section is expanded or not by default.</td><td>true</td></tr>
+    <tr><td>showNick<br/><strong>[Boolean]</strong></td><td>Sets whether the the users' server nick name shows or not.</td><td>false</td></tr>
+  </table>
+  <h2>Preview</h2>
+  <div class="discord-preview">
+<script type="text/javascript" src="http://discord.deliriousdrunkards.com/discord.min.js"></script>
+<script type="text/javascript">
+discordWidget.init({
+  serverId: '51143782082543616',
+  title: 'Discord Widget Title',
+  join: true,
+  alphabetical: false,
+  theme: 'light',
+  hideChannels: ['Channel Name 1', 'Channel Name 2'],
+  showAllUsers: true,
+  allUsersDefaultState: true,
+  showNick: false
+});
+discordWidget.render();
+</script>
 
-</style> 
-  
- 
-  <style>
+<div class="discord-widget"></div>
 
-        body {
-            background-color: #000000;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+<iframe src="http://discordi.deliriousdrunkards.com/render?id=51143782082543616&showall=true&shownick=true" width="300px" height="200px" frameborder="0"></iframe>
 
-        .header {
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .header img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding: 20px;
-        }
-
-        .button {
-            padding: 15px 19x;
-            font-size: 18px;
-            text-align: center;
-            cursor: pointer;
-            outline: none;
-            color: white;
-            background-color: #CD5C5C;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 9px #999;
-            text-decoration: none;
-            transition: background-color 0.3s, transform 0.1s;
-        }
-
-        .button:hover {
-            background-color: #8B0000;
-        }
-
-        .button:active {
-            background-color: #CD5C5C;
-            box-shadow: 0 5px #666;
-            transform: translateY(4px);
-        }
-
-        .content {
-            padding: 20px;
-            margin-bottom: 80px; /* Space for fixed player */
-        }
-
-        .video-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 50px;
-        }
-
-        .video-container iframe {
-            max-width: 100%;
-            height: auto;
-            aspect-ratio: 16/9;
-        }
-
-        .player-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 65px;
-            z-index: 1500;
-            overflow: hidden;
-        }
-
-        @media (max-width: 768px) {
-            .button {
-                width: 100%;
-                margin: 5px 0;
-            }
-        }
-</style>
-<style>		 
-		 body {
-            background-color: #000000;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        .header {
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .header img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding: 20px;
-        }
-
-        .button {
-            padding: 15px 19px;
-            font-size: 18px;
-            text-align: center;
-            cursor: pointer;
-            outline: none;
-            color: white;
-            background-color: #CD5C5C;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 9px #999;
-            text-decoration: none;
-            transition: background-color 0.3s, transform 0.1s;
-        }
-
-        .button:hover {
-            background-color: #8B0000;
-        }
-
-        .button:active {
-            background-color: #CD5C5C;
-            box-shadow: 0 5px #666;
-            transform: translateY(4px);
-        }
-
-        .content {
-            padding: 20px;
-            margin-bottom: 80px; /* Space for fixed player */
-        }
-
-        .video-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 50px;
-        }
-
-        .video-container iframe {
-            max-width: 100%;
-            height: auto;
-            aspect-ratio: 16/9;
-        }
-
-        .player-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 65px;
-            z-index: 1500;
-            overflow: hidden;
-        }
-
-        @media (max-width: 768px) {
-            .button {
-                width: 100%;
-                margin: 5px 0;
-            }
-        }
-</style>
-
-	<style>
-	
-.container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-.video {
-    flex: 1;
-    min-width: 300px; /* Adjust this value based on your needs */
-    margin: 10px;
-}
-iframe {
-    width: 100%;
-    height: 40%;
-    aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
-}
-</style>
-
-	
-	
-<p>
-
- <center> <nav class=
-   <div id>
-	  <a href="https://www.youtube.com/@kirkradio6992" target="_blank" rel="noopener noreferrer" class="button">YouTube Channel</a></div>
-   <a href="https://discord.com/channels/916979496589090826/916979496589090829.html" target="_blank" rel="noopener noreferrer" class="button">Discord</a>
-
- <a href="https://soundcloud.com/kirkradio" target="_blank" rel="noopener noreferrer" class="button">SoundCloud</a>
-  
-<a href="https://www.routenote.com/rn/referral/2fabea19" target="_blank" rel="noopener noreferrer" class="button">Get Paid</a>
- 	  
-
- <a href="https://www.reverbnation.com/chrisp45/" target="_blank" rel="noopener noreferrer" class="button">ReverbNation</a>
-
-	 
- <a href="https://kirkradioonlineartistsforum.freeflarum.com/" target="_blank" rel="noopener noreferrer" class="button">Artists Forum</a>
-
-<a href="https://www.paypal.com/donate/?hosted_button_id=76QFTKJ4LNR86" target="_blank" rel="noopener noreferrer" class="button">Donations</a>
-
-
+  </div>
+  <h2>
+    Help
+  </h2>
+  <p>
+    If you run into trouble, let me know <a href="https://github.com/RestingCoder/discord-widget/issues">here</a>.
   </p>
-  </nav>
-</center>
-
-	  <p><div class="container"	
-			<div class="video">
-            <iframe width="0" height="0" src="https://players.rcast.net/artistimageonly/67946" frameborder="1" scrolling="no" allow="autoplay"></iframe> 
-			<div style="overflow:hidden; height:5px; width:0px;"><a href="https://www.rcast.net" title="Internet Radio Hosting">KirkRadio.NET</a>
-        </div></p>
-	  
-	
-
-
-
-	
-
- 
-	
-		<p> <footer id="footer">
-		</footer>
-<iframe src="https://html5.gamemonetize.co/eitm2ciil0yavsyfoiydtas8db1ly065/" width="800" height="480" scrolling="none" frameborder="0"></iframe>
-<center><a href='https://collaborator.pro?ref=olZHef' title='Сollaborator' target='_blank'><img src='https://collaborator.pro/images/referral/promo/en/2.png' width='728' height='90' alt='Сollaborator'/></a>
-		  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9343827360975898"
-     crossorigin="anonymous"></script>
-		</center>	
-		.</footer>
-
-	
-
-		
-		
-							
-		
-			
-					
-			
-			
+  <script src="./js/highlight.pack.js"></script>
+  <script src="./js/master.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</body>
 </html>
-
