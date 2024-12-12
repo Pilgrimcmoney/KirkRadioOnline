@@ -86,20 +86,47 @@
             margin-bottom: 60px; /* Space for fixed player */
         }
 
-        .video-container {
-            display: 
-            justify-content: center;
-            margin-top: 50px;
-        }
-
-        .video-container iframe {
-            max-width: 100%;
-            height: auto;
-            aspect-ratio: 16/9;
-        }
 
         .player-container {
-            position: center;
+            .vimeo-wrapper {
+        max-width: 980px;
+        position: relative;
+        margin: 0 auto;
+    }
+
+    .vimeo-standard {
+        float: left;
+        height: 300px;
+        width: 47%;
+        margin: 10px;
+    }
+
+    iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+
+    @media (max-width:767px) {
+
+        .vimeo-standard {
+            float: none;
+            width: 80%;
+            margin: 0 auto;
+            padding-bottom: 10px;
+        }
+    }
+
+    .clearfix:before,
+    .clearfix:after {
+        content: " "; /* 1 */
+        display: table; /* 2 */
+    }
+
+    .clearfix:after {
+        clear: both;
+    }
+		position: ;
             bottom: 0;
             left: 0;
             right: 0;
