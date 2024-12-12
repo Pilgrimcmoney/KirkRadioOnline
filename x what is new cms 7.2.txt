@@ -1,4 +1,0 @@
-- new template Poki-like
-- new template y8-like
-- optimization seo
-- 24k games ready released, keep in mind to rank in google you need to rewrite automatic post with ghatgpt api
