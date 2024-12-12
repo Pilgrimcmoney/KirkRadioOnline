@@ -33,47 +33,7 @@ t<!DOCTYPE html>
 			<!-- RCAST.NET - END EMBEDDED PLAYER -->
 			
 </center>
-<script type="text/javascript" src="https://discord.com/channels/916979496589090826/916979496589090829.html"></script>
-<script type="text/javascript">
-    discordWidget.init({
-        serverId: '916979496589090829',
-        title: 'Kirk Radio Online',
-        join: false,
-        alphabetical: false,
-        theme: 'dark',
-        hideChannels: ['Channel Name 1', 'Channel Name 2'],
-        showAllUsers: true,
-        allUsersDefaultState: true
-    });
-    discordWidget.render();
-</script>
-<div class="discord-widget"></div>
 
-<style>
-<div class=
-        * {
-            margin: 40;
-            padding: 0;
-        }
-        .imgbox {
-            display: grid;
-            height: 10%;
-        }
-        .center-fit {
-            max-width: 50%;
-            max-height: 50vh;
-            margin: auto;
-        }
-  </div>
-  
-  
- 
-		
-					
-
-
-</style> 
-  
  
   <style>
 
@@ -296,7 +256,20 @@ iframe {
 			<div style="overflow:hidden; height:30px; width:0px;"><a href="https://www.rcast.net" title="Internet Radio Hosting">KirkRadio.NET</a>
         </div></p>
 	  
-	
+	<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org"
+width="640"
+height="480"
+id="vlc" />
+
+<script type="text/javascript">
+<!--
+function start(){
+	var id = vlc.playlist.add("ca_pluto.m3u");
+	vlc.playlist.playItem(id);
+}
+window.addEventListener("load", start, false);
+//-->
+</script>
 
 
 
