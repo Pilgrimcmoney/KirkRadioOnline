@@ -1,210 +1,30 @@
-import React, { useState, useRef } from 'react';
-import ReactDOM from 'react-dom/client';
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Kirk Radio TV" />
+    <title>Kirk Radio TV</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
+<<<<<<< HEAD
+const M3UPlayer = () => {
+  const defaultUrl = 'ca_pluto.m3u'
+=======
+const AVAILABLE_ASSETS = [
+  {
+    "name": "ca_pluto",
+    "shortid": "VkN2",
+    "file_type": "m3u",
+    "url": "ca_pluto.m3u"
+  }
+];
 
-const Header = () => (
-  <header style={{
-    backgroundColor: '#1877f2',
-    padding: '10px 20px',
-    color: 'white',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    position: 'sticky',
-    top: 0,
-    zIndex: 100
-  }}>
-    <h1 style={{ margin: 0, fontSize: '24px' }}>MyRadioBook</h1>
-    <div style={{
-      display: 'flex',
-      gap: '20px',
-      alignItems: 'center'
-    }}>
-      <span>Home</span>
-      <span>Profile</span>
-      <span>Messages</span>
-    </div>
-  </header>
-);
-
-const RadioPlayer = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef(null);
-
-  const togglePlay = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  return (
-    <div style={{
-      position: 'fixed',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      backgroundColor: '#333',
-      color: 'white',
-      padding: '10px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '20px'
-    }}>
-      <audio
-        ref={audioRef}
-        src="https://kirkradio.net"
-      />
-      <button
-        onClick={togglePlay}
-        style={{
-          padding: '8px 16px',
-          backgroundColor: '#1877f2',
-          border: 'none',
-          borderRadius: '4px',
-          color: 'white',
-          cursor: 'pointer'
-        }}
-      >
-        {isPlaying ? 'Pause' : 'Play'} Radio
-      </button>
-      <span>Now Playing: My Radio Station</span>
-    </div>
-  );
-};
-
-const CreatePost = ({ onPost }) => {
-  const [text, setText] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (text.trim()) {
-      onPost(text);
-      setText('');
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} style={{
-      backgroundColor: 'white',
-      padding: '20px',
-      borderRadius: '8px',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-      margin: '20px 0'
-    }}>
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="What's on your mind?"
-        style={{
-          width: '100%',
-          padding: '10px',
-          borderRadius: '4px',
-          border: '1px solid #ddd',
-          minHeight: '100px',
-          marginBottom: '10px'
-        }}
-      />
-      <button
-        type="submit"
-        style={{
-          backgroundColor: '#1877f2',
-          color: 'white',
-          border: 'none',
-          padding: '8px 16px',
-          borderRadius: '4px',
-          cursor: 'pointer'
-        }}
-      >
-        Post
-      </button>
-    </form>
-  );
-};
-
-const Post = ({ content, timestamp }) => (
-  <div style={{
-    backgroundColor: 'white',
-    padding: '20px',
-    borderRadius: '8px',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    marginBottom: '20px'
-  }}>
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      marginBottom: '10px'
-    }}>
-      <div style={{
-        width: '40px',
-        height: '40px',
-        borderRadius: '50%',
-        backgroundColor: '#ddd',
-        marginRight: '10px'
-      }} />
-      <div>
-        <div style={{ fontWeight: 'bold' }}>User Name</div>
-        <div style={{ fontSize: '12px', color: '#666' }}>{timestamp}</div>
-      </div>
-    </div>
-    <p style={{ margin: 0 }}>{content}</p>
-    <div style={{
-      display: 'flex',
-      gap: '20px',
-      marginTop: '15px',
-      color: '#666'
-    }}>
-      <span>Like</span>
-      <span>Comment</span>
-      <span>Share</span>
-    </div>
-  </div>
-);
-
-const App = () => {
-  const [posts, setPosts] = useState([]);
-
-  const handleNewPost = (content) => {
-    setPosts([
-      {
-        id: Date.now(),
-        content,
-        timestamp: new Date().toLocaleString()
-      },
-      ...posts
-    ]);
-  };
-
-  return (
-    <div style={{
-      backgroundColor: '#f0f2f5',
-      minHeight: '100vh',
-      paddingBottom: '80px'
-    }}>
-      <Header />
-      <main style={{
-        maxWidth: '600px',
-        margin: '0 auto',
-        padding: '20px'
-      }}>
-        <CreatePost onPost={handleNewPost} />
-        <div>
-          {posts.map(post => (
-            <Post
-              key={post.id}
-              content={post.content}
-              timestamp={post.timestamp}
-            />
-          ))}
-        </div>
-      </main>
-      <RadioPlayer />
-    </div>
-  );
-};
-
-const container = document.getElementById('renderDiv');
-const root = ReactDOM.createRoot(container);
-root.render(<App />);
+const M3UPlayer = () => {
+  const defaultUrl = AVAILABLE_ASSETS[0].url;
+>>>>>>> updated
