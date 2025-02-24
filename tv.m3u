@@ -15,14 +15,6 @@ https://30a-tv.com/feeds/vidaa/cars.m3u8
 https://content.uplynk.com/2c88dfe19e1447e6a6aa27e8e143a140.m3u8
 #EXTINF:-1 tvg-id="KRGVDT1.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ABC-2021-LOGO.svg/512px-ABC-2021-LOGO.svg.png" group-title="Undefined",ABC 5 (KRGV 5.1)
 https://stream.krgv.com/krgv-english/krgv-english.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="KOCODT1.us" tvg-logo="https://i.imgur.com/yxEbZqn.jpg" group-title="Undefined",ABC 5 Oklahoma City OK (KOCO) (576p) [Not 24/7]
-https://csm-e-eb.csm.tubi.video/csm/extlive/tubiprd01,Cloudfront-KOCO.m3u8
-#EXTINF:-1 tvg-id="KMGHDT1.us" tvg-logo="https://i.imgur.com/MWvoICD.png" group-title="Undefined",ABC 7 Denver CO (KMGH) (720p)
-https://content.uplynk.com/channel/64ca339f04964a5e961c3207a7771bf1.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",ABC 7 Los Angeles CA (KABC-TV) (720p)
-https://content.uplynk.com/channel/ext/2118d9222a87420ab69223af9cfa0a0f/kabc_24x7_news.m3u8
-#EXTINF:-1 tvg-id="KETVDT1.us" tvg-logo="https://i.imgur.com/CWZtYNi.png" group-title="Undefined",ABC 7 Omaha NE (KETV) (720p) [Not 24/7]
-https://live-news-manifest.tubi.video/live-news-manifest/csm/extlive/tubiprd01,Cloudfront-KETV.m3u8
 #EXTINF:-1 tvg-id="WJLADT1.us" tvg-logo="https://i.imgur.com/NfqhdBC.png" group-title="Undefined",ABC 7 Washington DC (WJLA) (720p)
 https://content.uplynk.com/40cec2bf074c40f08932da03ab4510be.m3u8
 #EXTINF:-1 tvg-id="WFAADT1.us" tvg-logo="https://i.imgur.com/3dK1ocU.png" group-title="Undefined",ABC 8 Dallas TX (WFAA) (1080p)
