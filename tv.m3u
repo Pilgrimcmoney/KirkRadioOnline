@@ -11,12 +11,6 @@ https://30a-tv.com/sidewalks.m3u8
 https://30a-tv.com/feeds/masters/30atv.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A We Love Cars
 https://30a-tv.com/feeds/vidaa/cars.m3u8
-#EXTINF:-1 tvg-id="WSBDT1.us" tvg-logo="https://i.imgur.com/HkY10xX.jpg" group-title="Undefined",ABC 2 Atlanta GA (WSB-TV) (720p)
-https://d2rwx6gwduugne.cloudfront.net/v1/master/77872db67918a151b697b5fbc23151e5765767dc/cmg_PROD_cmg-tv-10010_183ec1c7-4183-4661-803b-3ed282ffb625_LE/in/cmg-wsbtvnow-hls-v3/live.m3u8
-#EXTINF:-1 tvg-id="WBRZDT1.us" tvg-logo="https://i.imgur.com/n057TgX.png" group-title="Undefined",ABC 2 Baton Rouge LA (WBRZ) (720p) [Not 24/7]
-http://cms-wowza.lunabyte.io/wbrz-live-1/_definst_/smil:wbrz-live.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="WTAEDT1.us" tvg-logo="https://i.imgur.com/4iEFQjd.png" group-title="Undefined",ABC 4 Pittsburg PA (WTAE) (720p)
-https://live-news-manifest.tubi.video/live-news-manifest/csm/extlive/tubiprd01,Cloudfront-WTAE.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",ABC 4 Seattle WA (KOMO-TV) (720p)
 https://content.uplynk.com/2c88dfe19e1447e6a6aa27e8e143a140.m3u8
 #EXTINF:-1 tvg-id="KRGVDT1.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ABC-2021-LOGO.svg/512px-ABC-2021-LOGO.svg.png" group-title="Undefined",ABC 5 (KRGV 5.1)
