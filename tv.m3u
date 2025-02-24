@@ -1,12 +1,6 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A Golf Kingdom
-https://30a-tv.com/feeds/vidaa/golf.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A Investment Pitch
-https://www.30a-tv.com/InvPit.m3u8
 #EXTINF:-1 tvg-id="30AInvestmentPitch.us" tvg-logo="https://i.imgur.com/CKCtZo7.png" group-title="Business",30A Investment Pitch (720p)
 https://30a-tv.com/feeds/xodglobal/30atv.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A Lionel Nation TV
-https://30a-tv.com/ln.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A Loomered TV
 https://30a-tv.com/loomer.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A Luxe Life Discovered
