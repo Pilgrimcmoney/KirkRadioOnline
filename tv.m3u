@@ -3,9 +3,9 @@
 https://uni01rtmp.tulix.tv/amazingdtv/amazingdtv/playlist.m3u8
 #EXTINF:-1 tvg-id="Cable14Hamilton.ca" tvg-logo="https://i.imgur.com/bJ7ygTq.png" group-title="Undefined",Cable 14 Hamilton
 https://flowcaster1-ch.cdn.clearcable.net/C14/smil:C14.smil/playlist.m3u8?iimae0UC2aendtime=1665196120&iimae0UC2ahash=NzcDbuotaJAVf1DsNxuGHBlfCXSvHDIt5sqMUMgrRMU=&iimae0UC2astarttime=1665181720
-#EXTINF:-1 tvg-id="CBRTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/0/0a/CBRT-DT_logo.jpg" group-title="Undefined",CBC Calgary (CBRT-DT) [Geo-blocked]
+#EXTINF:-1 tvg-id="CBRTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/0/0a/CBRT-DT_logo.jpg" group-title="Undefined",CBC Calgary (CBRT-DT) 
 https://cbcrclinear-tor.akamaized.net/hls/live/2042763/CBCRCLINEAR_TOR_9/master5.m3u8
-#EXTINF:-1 tvg-id="CBXTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/CBC_Logo_1992-Present.svg/512px-CBC_Logo_1992-Present.svg.png" group-title="Undefined",CBC Edmonton (CBXT-DT) [Geo-blocked]
+#EXTINF:-1 tvg-id="CBXTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/CBC_Logo_1992-Present.svg/512px-CBC_Logo_1992-Present.svg.png" group-title="Undefined",CBC Edmonton (CBXT-DT) 
 https://cbcrclinear-tor.akamaized.net/hls/live/2042765/CBCRCLINEAR_TOR_11/master5.m3u8
 #EXTINF:-1 tvg-id="CBWTDT.ca" tvg-logo="https://i.imgur.com/aWNHg5z.png" group-title="Undefined",CBC Manitoba (CBWT-DT) 
 https://cbcrclinear-tor.akamaized.net/hls/live/2042767/CBCRCLINEAR_TOR_13/master5.m3u8
@@ -31,7 +31,7 @@ https://cbcrclinear-tor.akamaized.net/hls/live/2042760/CBCRCLINEAR_TOR_6/master5
 https://cbcrclinear-tor.akamaized.net/hls/live/2042768/CBCRCLINEAR_TOR_14/master5.m3u8
 #EXTINF:-1 tvg-id="CBETDT.ca" tvg-logo="https://i.imgur.com/NFts1uU.png" group-title="Undefined",CBC Windsor (CBET-DT) 
 https://cbcrclinear-tor.akamaized.net/hls/live/2042759/CBCRCLINEAR_TOR_5/master5.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",ClassicalFM [Geo-blocked]
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",ClassicalFM 
 https://ythls.onrender.com/channel/UC_DweJsPH4mvcRU3aFwVtqg.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",CNV/Montreal
 https://media1.radioservers.biz:1936/cnv/cnv/playlist.m3u8
@@ -61,29 +61,6 @@ https://d12a2vxqkkh1bo.cloudfront.net/hls/main.m3u8
 https://d3uyzhwvmemdyf.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/Hard-Knocks-DistroTV/109.m3u8
 #EXTINF:-1 tvg-id="HLN.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/HLN_%28TV_network%29_2017_logo.svg/512px-HLN_%28TV_network%29_2017_logo.svg.png" group-title="News",HLN (720p)
 https://turnerlive.warnermediacdn.com/hls/live/586496/cnngo/hln/VIDEO_0_3564000.m3u8
-#EXTINF:-1 tvg-id="CBVTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/Current_Logo_of_Ici_Radio-Canada_T%C3%A9l%C3%A9_%282016-present%29.svg/512px-Current_Logo_of_Ici_Radio-Canada_T%C3%A9l%C3%A9_%282016-present%29.svg.png" group-title="Undefined",Ici Radio-Canada Télé Québec (CBVT-DT) [Geo-blocked]
-https://rcavlive.akamaized.net/hls/live/664045/cancbvt/master.m3u8
-#EXTINF:-1 tvg-id="CKTVDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/SRC-TV.svg/512px-SRC-TV.svg.png" group-title="Undefined",Ici Radio-Canada Télé Saguenay/Lac-St-Jean (CKTV-DT) [Geo-blocked]
-https://rcavlive.akamaized.net/hls/live/704023/cancktv/master.m3u8
-#EXTINF:-1 tvg-id="CBKFTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/1/13/Ici_Saskatchewan_logo.png/512px-Ici_Saskatchewan_logo.png" group-title="Undefined",Ici Radio-Canada Télé Saskatchewan (CBKFT-DT) [Geo-blocked]
-https://rcavlive.akamaized.net/hls/live/704019/cancbkft/master.m3u8
-#EXTINF:-1 tvg-id="CBAFTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Ici_Acadie_logo.png/512px-Ici_Acadie_logo.png" group-title="Undefined",Ici Radio-Canada Télé Terre-Neuve-et-Labrador (CBAFT-DT) [Geo-blocked]
-https://rcavlive.akamaized.net/hls/live/704014/cancbaft/master.m3u8
-#EXTINF:-1 tvg-id="IciRDI.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/ICI_RDI_logo.svg/512px-ICI_RDI_logo.svg.png" group-title="News",ICI RDI (720p)
-https://rcavlive.akamaized.net/hls/live/704025/xcanrdi/master.m3u8
-#EXTINF:-1 tvg-id="ICnet1.ca" tvg-logo="https://i.imgur.com/aeS4Sjv.png" group-title="Religious",ICnet 1 (720p) [Not 24/7]
-https://60ba7ef02e687.streamlock.net/ICNET/ngrp:my.stream_all/playlist.m3u8
-#EXTINF:-1 tvg-id="IIPCTV.ca" tvg-logo="https://i.imgur.com/mIih39Y.png" group-title="Religious",IIPC TV (480p) [Geo-blocked]
-https://uni10rtmp.tulix.tv/iipctv/iipctv.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="JessTV.ca" tvg-logo="https://i.imgur.com/eJjV7Bu.png" group-title="Undefined",Jess TV (Lethbridge) (480p) [Not 24/7]
-#EXTVLCOPT:http-referrer=https://ssh101.com/
-https://tna5.bozztv.com/jesstv/index.m3u8
-#EXTINF:-1 tvg-id="JhankarTV.ca" tvg-logo="https://www.jagobd.com/wp-content/uploads/2019/05/Jhankartv.jpg" group-title="Culture",Jhankar TV (720p) [Not 24/7]
-https://us170.jagobd.com:447/c3VydmVyX8RpbEU9Mi8xNy8yMDE0GIDU6RgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcGVMZEJCTEFWeVN3PTOmdFsaWRtaW51aiPhnPTI/jhankartv.stream/playlist.m3u8
-#EXTINF:-1 tvg-id="KidoodleTV.ca" tvg-logo="https://i.imgur.com/MaFtbM5.png" group-title="Kids",Kidoodle TV
-https://kidoodletv-kdtv-1-ca.samsung.wurl.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="KnowledgeNetwork.ca" tvg-logo="https://i.imgur.com/VfofmZZ.png" group-title="Education;Kids",Knowledge (720p) [Geo-blocked]
-http://knstream1.azureedge.net/knlive/knlive_high.m3u8
 #EXTINF:-1 tvg-id="LCN.ca" tvg-logo="https://i.imgur.com/iKDLgOG.png" group-title="Undefined",LCN [Geo-blocked]
 https://tvalive.akamaized.net/hls/live/2014213/tvan01/tvan01.m3u8
 #EXTINF:-1 tvg-id="LoveNature4K.ca" tvg-logo="https://i.imgur.com/oDacp1F.png" group-title="Outdoor",Love Nature 4K
