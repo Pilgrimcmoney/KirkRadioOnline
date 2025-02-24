@@ -1,8 +1,6 @@
 #EXTM3U
 #EXTINF:-1 tvg-id="AmazingDiscoveriesTV.ca" tvg-logo="https://i.imgur.com/I0oPFTj.png" group-title="Religious",Amazing Discoveries TV (720p)
 https://uni01rtmp.tulix.tv/amazingdtv/amazingdtv/playlist.m3u8
-#EXTINF:-1 tvg-id="CanaldelAssemblee.ca" tvg-logo="https://i.imgur.com/jAtq0U8.png" group-title="Undefined",Assemblée Nationale du Québec
-https://cdn3.wowza.com/5/SVEySlNEQ0FOWXlS/diffusion/canal17/playlist.m3u8
 #EXTINF:-1 tvg-id="Cable14Hamilton.ca" tvg-logo="https://i.imgur.com/bJ7ygTq.png" group-title="Undefined",Cable 14 Hamilton
 https://flowcaster1-ch.cdn.clearcable.net/C14/smil:C14.smil/playlist.m3u8?iimae0UC2aendtime=1665196120&iimae0UC2ahash=NzcDbuotaJAVf1DsNxuGHBlfCXSvHDIt5sqMUMgrRMU=&iimae0UC2astarttime=1665181720
 #EXTINF:-1 tvg-id="CBRTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/0/0a/CBRT-DT_logo.jpg" group-title="Undefined",CBC Calgary (CBRT-DT) [Geo-blocked]
@@ -17,15 +15,15 @@ https://cbcrclinear-tor.akamaized.net/hls/live/2042761/CBCRCLINEAR_TOR_7/master5
 https://cbcrclinear-tor.akamaized.net/hls/live/2042757/CBCRCLINEAR_TOR_3/master5.m3u8
 #EXTINF:-1 tvg-id="CBNTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/9/9f/Logo_for_CBNT-DT.jpg" group-title="Undefined",CBC Newfoundland and Labrador (CBNT-DT) [Geo-blocked]
 https://cbcrclinear-tor.akamaized.net/hls/live/2042755/CBCRCLINEAR_TOR_1/master5.m3u8
-#EXTINF:-1 tvg-id="CFYKDT.ca" tvg-logo="https://i.imgur.com/EHGOQhj.png" group-title="Undefined",CBC North (CFYK-DT) [Geo-blocked]
+#EXTINF:-1 tvg-id="CFYKDT.ca" tvg-logo="https://i.imgur.com/EHGOQhj.png" group-title="Undefined",CBC North (CFYK-DT) 
 https://cbcrclinear-tor.akamaized.net/hls/live/2042766/CBCRCLINEAR_TOR_12/master5.m3u8
-#EXTINF:-1 tvg-id="CBHTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/6/6b/CBHT-DT_Logo.jpg" group-title="Undefined",CBC Nova Scotia (CBHT-DT) [Geo-blocked]
+#EXTINF:-1 tvg-id="CBHTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/6/6b/CBHT-DT_Logo.jpg" group-title="Undefined",CBC Nova Scotia (CBHT-DT) 
 https://cbcrclinear-tor.akamaized.net/hls/live/2042758/CBCRCLINEAR_TOR_4/master5.m3u8
-#EXTINF:-1 tvg-id="CBOTDT.ca" tvg-logo="https://i.imgur.com/v3DJUa8.png" group-title="Undefined",CBC Ottawa (CBOT-DT) [Geo-blocked]
+#EXTINF:-1 tvg-id="CBOTDT.ca" tvg-logo="https://i.imgur.com/v3DJUa8.png" group-title="Undefined",CBC Ottawa (CBOT-DT) 
 https://cbcrclinear-tor.akamaized.net/hls/live/2042762/CBCRCLINEAR_TOR_8/master5.m3u8
-#EXTINF:-1 tvg-id="CBCTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/e/e9/CBCT-DT_logo.jpg" group-title="Undefined",CBC Prince Edward Island (CBCT-DT) [Geo-blocked]
+#EXTINF:-1 tvg-id="CBCTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/e/e9/CBCT-DT_logo.jpg" group-title="Undefined",CBC Prince Edward Island (CBCT-DT) 
 https://cbcrclinear-tor.akamaized.net/hls/live/2042756/CBCRCLINEAR_TOR_2/master5.m3u8
-#EXTINF:-1 tvg-id="CBKTDT.ca" tvg-logo="https://i.imgur.com/PWGVjsg.png" group-title="Undefined",CBC Saskatchewan (CBKT-DT) [Geo-blocked]
+#EXTINF:-1 tvg-id="CBKTDT.ca" tvg-logo="https://i.imgur.com/PWGVjsg.png" group-title="Undefined",CBC Saskatchewan (CBKT-DT) 
 https://cbcrclinear-tor.akamaized.net/hls/live/2042764/CBCRCLINEAR_TOR_10/master5.m3u8
 #EXTINF:-1 tvg-id="CBLTDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/9/9e/CBLT-DT_Logo.jpg" group-title="Undefined",CBC Toronto (CBLT-DT) [Geo-blocked]
 https://cbcrclinear-tor.akamaized.net/hls/live/2042760/CBCRCLINEAR_TOR_6/master5.m3u8
