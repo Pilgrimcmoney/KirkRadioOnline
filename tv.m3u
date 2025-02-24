@@ -1,4 +1,33 @@
 #EXTM3U
+#EXTINF:-1 tvg-logo="https://i.imgur.com/VX4uHSO.png" group-title="", NASA TV (Opt-1)
+http://iphone-streaming.ustream.tv/uhls/6540154/streams/live/iphone/playlist.m3u8
+
+#EXTINF:-1 tvg-logo="https://i.imgur.com/VX4uHSO.png" group-title="", NASA TV (Opt-2)
+http://hls.ums.ustream.tv/playlist/directhls/channel/6540154/playlist.m3u8?sgn=31d0dfb847c358d4cedcd2256dc4e1c42a7f13a7
+
+#EXTINF:-1 tvg-logo="http://cineframe.mx/wp-content/uploads/2017/08/H2.png" group-title="", H2
+http://livecdnh1.tvanywhere.ae:80/hls/h2/05.m3u8
+
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="https://static.iptv-epg.com/gb/NatGeo.uk.png" group-title="", Nat Geo
+http://livecdnh1.tvanywhere.ae:80/hls/nat_geo/05.m3u8
+
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Wfqt9BS.png" group-title="", Nat Geo People
+http://livecdnh1.tvanywhere.ae:80/hls/nat_geo_people/05.m3u8
+
+#EXTINF:-1 tvg-logo="https://i.imgur.com/h0NNZ2U.png" group-title="", Nat Geo Wild
+http://livecdnh1.tvanywhere.ae/hls/nat_geo_wild/05.m3u8
+
+#EXTINF:-1 tvg-logo="https://i.imgur.com/bUepAp5.png" group-title="", National Geographic
+http://livecdnh1.tvanywhere.ae/hls/nat_geo/05.m3u8
+
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/InvestigationDiscovery.png/200px-InvestigationDiscovery.png" group-title="", Investigation Discovery
+http://80.80.160.168/live/5/live.m3u8
+
+#EXTINF:-1 tvg-logo="https://i.imgur.com/1krUCU8.png" group-title="", Discovery Channel
+http://80.80.160.168/live/8/live.m3u8
+
+#EXTINF:-1 tvg-logo="https://i.imgur.com/KdGgt5L.png" group-title="", Discovery Science
+http://80.80.160.168/live/9/live.m3u8
 #EXTINF:-1 channel-id="2.1" tvg-id="I2.1.19567.zap2it.com" group-title="CH-31 RF" tvg-name="KCBSDT", CBS 2
 #http://192.168.0.37:50960/channels/2352.ts
 #EXTINF:-1 channel-id="2.2" tvg-id="I2.2.88571.zap2it.com" group-title="CH-31 RF" tvg-name="KCBSDT2", Start TV
