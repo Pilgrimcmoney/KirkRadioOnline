@@ -6,7 +6,7 @@ const AVAILABLE_ASSETS = [
     "name": "ca_pluto",
     "shortid": "VkN2",
     "file_type": "m3u",
-    "url": "https://play.rosebud.ai/assets/ca_pluto.m3u?VkN2"
+    "url": "ca_pluto.m3u"
   }
 ];
 const M3UPlayer = () => {
