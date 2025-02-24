@@ -16,8 +16,6 @@ https://livevideo01.whas11.com/hls/live/2016284/elvs/live.m3u8
 #EXTINF:-1 tvg-id="WTVQDT1.us" tvg-logo="https://i.imgur.com/XIoBeja.png" group-title="Undefined",WTVQ ABC 36 News (Lexington KY) (720p)
 #EXTINF:-1 tvg-id="30AInvestmentPitch.us" tvg-logo="https://i.imgur.com/CKCtZo7.png" group-title="Business",30A Investment Pitch (720p)
 https://30a-tv.com/feeds/xodglobal/30atv.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A Loomered TV
-https://30a-tv.com/loomer.m3u8
 #EXTINF:-1 tvg-id="30AMusic.us" tvg-logo="https://i.imgur.com/gNWg9tl.png" group-title="Music",30A Music (720p)
 https://30a-tv.com/music.m3u8
 #EXTINF:-1 tvg-id="30ASidewalks.us" tvg-logo="https://i.imgur.com/HSdwqZN.png" group-title="Entertainment",30A Sidewalks (720p)
@@ -26,18 +24,6 @@ https://30a-tv.com/sidewalks.m3u8
 https://30a-tv.com/feeds/masters/30atv.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A We Love Cars
 https://30a-tv.com/feeds/vidaa/cars.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",ABC 4 Seattle WA (KOMO-TV) (720p)
-https://content.uplynk.com/2c88dfe19e1447e6a6aa27e8e143a140.m3u8
-#EXTINF:-1 tvg-id="KRGVDT1.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ABC-2021-LOGO.svg/512px-ABC-2021-LOGO.svg.png" group-title="Undefined",ABC 5 (KRGV 5.1)
-https://stream.krgv.com/krgv-english/krgv-english.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="WJLADT1.us" tvg-logo="https://i.imgur.com/NfqhdBC.png" group-title="Undefined",ABC 7 Washington DC (WJLA) (720p)
-https://content.uplynk.com/40cec2bf074c40f08932da03ab4510be.m3u8
-#EXTINF:-1 tvg-id="WFAADT1.us" tvg-logo="https://i.imgur.com/3dK1ocU.png" group-title="Undefined",ABC 8 Dallas TX (WFAA) (1080p)
-https://livevideo01.wfaa.com/hls/live/2014541/newscasts/live.m3u8
-#EXTINF:-1 tvg-id="KMBCDT1.us" tvg-logo="https://i.imgur.com/DCBHkiP.jpg" group-title="News",ABC 9 Kansas City MO (KMBC-TV) (720p) [Not 24/7]
-https://live-news-manifest.tubi.video/live-news-manifest/csm/extlive/tubiprd01,Cloudfront-KMBC.m3u8
-#EXTINF:-1 tvg-id="WMURDT1.us" tvg-logo="https://i.imgur.com/6oNx5F0.png" group-title="Undefined",ABC 9 Manchester NH (WMUR-TV) (720p)
-https://csm-e-eb.csm.tubi.video/csm/extlive/tubiprd01,Cloudfront-WMUR.m3u8
 #EXTINF:-1 tvg-id="WFTVDT1.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ABC-2021-LOGO.svg/512px-ABC-2021-LOGO.svg.png" group-title="Undefined",ABC 9 Orlando FL (WFTV) (720p)
 https://d3qm7vzp07vxse.cloudfront.net/v1/master/77872db67918a151b697b5fbc23151e5765767dc/cmg_PROD_cmg-tv-10070_fe1f5f6c-cd0b-4993-a4a4-6db66be4f313_LE/in/cmg-wftvtv-hls-v3/live.m3u8
 #EXTINF:-1 tvg-id="KTNVDT1.us" tvg-logo="https://i.imgur.com/QbkW7zY.png" group-title="Undefined",ABC 13 Las Vegas NV (KTNV) (720p)
