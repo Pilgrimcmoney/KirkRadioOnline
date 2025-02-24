@@ -1,1 +1,1 @@
-npm install hls.js
+npm install app.py
