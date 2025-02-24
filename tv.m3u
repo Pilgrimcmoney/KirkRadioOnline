@@ -3,26 +3,14 @@
 https://30a-tv.com/feeds/xodglobal/30atv.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A Loomered TV
 https://30a-tv.com/loomer.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A Luxe Life Discovered
-https://30a-tv.com/feeds/vidaa/luxelife.m3u8
 #EXTINF:-1 tvg-id="30AMusic.us" tvg-logo="https://i.imgur.com/gNWg9tl.png" group-title="Music",30A Music (720p)
 https://30a-tv.com/music.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A Music Channel
-https://30a-tv.com/feeds/ceftech/30atvmusic.m3u8
 #EXTINF:-1 tvg-id="30ASidewalks.us" tvg-logo="https://i.imgur.com/HSdwqZN.png" group-title="Entertainment",30A Sidewalks (720p)
 https://30a-tv.com/sidewalks.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A Television Channel
 https://30a-tv.com/feeds/masters/30atv.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",30A We Love Cars
 https://30a-tv.com/feeds/vidaa/cars.m3u8
-#EXTINF:-1 tvg-id="48Hours.us" tvg-logo="https://i.imgur.com/Q7THHhX.png" group-title="Documentary",48 Hours (Pluto TV) (720p)
-https://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/6176f39e709f160007ec61c3/master.m3u8?advertisingId={PSID}&appVersion=unknown&deviceDNT={TARGETOPT}&deviceId={PSID}&deviceLat=0&deviceLon=0&deviceMake=samsung&deviceModel=samsung&deviceType=samsung-tvplus&deviceVersion=unknown&embedPartner=samsung-tvplus&profileFloor=&profileLimit=&samsung_app_domain={APP_DOMAIN}&samsung_app_name={APP_NAME}&us_privacy=1YNY
-#EXTINF:-1 tvg-id="247Retro.us" tvg-logo="https://i.imgur.com/QqQL7ss.png" group-title="Classic",247 Retro TV (432p) [Not 24/7]
-http://hlsdpi-cdn-chqtx02.totalstream.net/dpilive/247retro/ret/dai/playlist.m3u8
-#EXTINF:-1 tvg-id="KIIOLD4.us" tvg-logo="https://i.imgur.com/Spu4s89.png" group-title="Undefined",AABC TV (480p)
-https://streamer1.connectto.com/AABC_WEB_1201/index.m3u8
-#EXTINF:-1 tvg-id="AmericasAuctionChannel.us" tvg-logo="https://i.imgur.com/YKhnHE6.png" group-title="Undefined",AACTV America's Auction Channel (1080p)
-https://ythls.onrender.com/channel/UCMeyWH1vyb1TT6Vimp4MqLA.m3u8
 #EXTINF:-1 tvg-id="WSBDT1.us" tvg-logo="https://i.imgur.com/HkY10xX.jpg" group-title="Undefined",ABC 2 Atlanta GA (WSB-TV) (720p)
 https://d2rwx6gwduugne.cloudfront.net/v1/master/77872db67918a151b697b5fbc23151e5765767dc/cmg_PROD_cmg-tv-10010_183ec1c7-4183-4661-803b-3ed282ffb625_LE/in/cmg-wsbtvnow-hls-v3/live.m3u8
 #EXTINF:-1 tvg-id="WBRZDT1.us" tvg-logo="https://i.imgur.com/n057TgX.png" group-title="Undefined",ABC 2 Baton Rouge LA (WBRZ) (720p) [Not 24/7]
