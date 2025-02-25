@@ -1,26 +1,8 @@
 #EXTM3U
-#EXTINF:-1 tvg-name="RealityXtra Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/3/34/RealityXtra_logo.svg/640px-RealityXtra_logo.svg.png" tvg-id="RealityXtra.uk" group-title="UK",RealityXtra Ⓢ
-http://92.114.85.81:8000/play/a01o/index.m3u8
-#EXTINF:-1 tvg-name="HorrorXtra Ⓢ" tvg-logo="https://i.imgur.com/YSbBSTA.png" tvg-id="HorrorXtra.uk" group-title="UK",HorrorXtra Ⓢ
-http://92.114.85.81:8000/play/a01m/index.m3u8
-#EXTINF:-1 tvg-name="That's 70s Ⓢ" tvg-logo="https://i.imgur.com/vlJFB21.png" tvg-id="Thats70s.uk" group-title="UK",That's 70s Ⓢ
-http://92.114.85.81:8000/play/a01l/index.m3u8
 #EXTINF:-1 tvg-name="Jewellery Maker" tvg-logo="https://i.imgur.com/O7SdkBh.png" tvg-id="JewelleryMaker.uk" group-title="UK",Jewellery Maker
 https://lo2-1.gemporia.com/abrjewellerymaker/smil:livestream.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="Hobby Maker" tvg-logo="https://i.imgur.com/VWHp5Tl.png" tvg-id="HobbyMaker.uk" group-title="UK",Hobby Maker
 https://lo2-1.gemporia.com/abrhobbymakerukgfx/smil:livestreamFullHD.smil/playlist.m3u8
-#EXTINF:-1 tvg-name="That's 80s Ⓢ" tvg-logo="https://i.imgur.com/nWbgsfP.png" tvg-id="Thats80s.uk" group-title="UK",That's 80s Ⓢ
-http://92.114.85.81:8000/play/a01y/index.m3u8
-#EXTINF:-1 tvg-name="EarthXTV" tvg-logo="https://i.imgur.com/AvJRFKf.png" tvg-id="EarthXUK.uk" group-title="UK",EarthXTV
-http://92.114.85.81:8000/play/a04c/index.m3u8
-#EXTINF:-1 tvg-name="Talking Pictures TV Ⓢ" tvg-logo="https://i.imgur.com/S1zoIp7.png" tvg-id="TalkingPicturesTV.uk" group-title="UK",Talking Pictures TV Ⓢ
-http://92.114.85.79:8000/play/a0bt
-#EXTINF:-1 tvg-name="Together TV Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/Together_TV_logo.svg/640px-Together_TV_logo.svg.png" tvg-id="TogetherTV.uk" group-title="UK",Together TV Ⓢ
-http://92.114.85.80:8000/play/a03r
-#EXTINF:-1 tvg-name="PBS America" tvg-logo="https://i.imgur.com/J4zE5z9.jpg" tvg-id="PBSAmerica.uk" group-title="UK",PBS America
-https://pbs-samsunguk.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-name="Create & Craft" tvg-logo="https://i.imgur.com/n65sk4L.png" tvg-id="CreateandCraft.uk" group-title="UK",Create & Craft
-https://live-hochanda.simplestreamcdn.com/live2/hochanda/bitrate1.isml/live.m3u8
 #EXTINF:-1 tvg-name="First Channel /Education/ (2TV)" tvg-logo="https://upload.wikimedia.org/wikipedia/ka/c/c9/2_Tv_Logo.jpg" tvg-id="2TV.ge" group-title="Georgia",First Channel /Education/ (2TV)
 https://tv.cdn.xsg.ge/gpb-2tv/index.m3u8
 #EXTINF:-1 tvg-id="AnimeTV.br" tvg-logo="https://i.imgur.com/CFSSTID.png" group-title="Animation",Anime TV (360p) [Not 24/7]
