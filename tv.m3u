@@ -53,30 +53,6 @@ https://outsidetv-firetv.amagi.tv/playlist.m3u8
 https://pac12-firetv.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="",SportsGrid
 https://amg00315-sportsgrid-firetv.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="",48 Hours
-http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/62e925bc68d18a00077bb990/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=2c78ce00-35fc-11ef-a031-2b5d494037a2&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=d510e704-124c-497f-89cb-732e27dd295a
-#EXTINF:-1 tvg-id="",A Million Little Things
-http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/62ea4a07c07f2a00070e8d9a/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=2c78f510-35fc-11ef-a031-2b5d494037a2&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=246c806d-de05-41c2-a26a-2a30c78f7bc5
-#EXTINF:-1 tvg-id="",Adventure Sports TV
-http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/63c9550df13a9b00078677a7/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=2c78f511-35fc-11ef-a031-2b5d494037a2&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=4bd268c5-ffe8-41b9-87eb-00b21764a8c4
-#EXTINF:-1 tvg-id="",Aftershock
-http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/63e36b374e83e70008987c58/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=2c791c20-35fc-11ef-a031-2b5d494037a2&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=8a330bc3-1def-4752-9f03-564abe79388b
-#EXTINF:-1 tvg-id="",Alerte à Malibu
-http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/62e90db65e8e770007382a50/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=2c791c21-35fc-11ef-a031-2b5d494037a2&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=c070d939-44e0-419b-b958-d26935b903d0
-#EXTINF:-1 tvg-id="EDGEsport.uk",EDGESport (1080p)
-https://edgesports-sportstribal.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="HardKnocks.ca",Hard Knocks (1080p) [Not 24/7]
-https://d3uyzhwvmemdyf.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/HardKnocks-SportsTribal/121.m3u8
-#EXTINF:-1 tvg-id="IGN.us",IGN TV (720p)
-https://ign-sportstribal.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="Pac12Insider.us",Pac12 Insider (720p)
-https://pac12-sportstribal.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="SKITV.ch",SKI TV (1080p) [Not 24/7]
-https://d2xeo83q8fcni6.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/SkiTV-SportsTribal/193.m3u8
-#EXTINF:-1 tvg-id="SportsGrid.us",SportsGrid (1080p)
-https://sportsgrid-tribal.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="WorldPokerTour.us",World Poker Tour (1080p) [Not 24/7]
-https://d3w4n3hhseniak.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/WPT-SportsTribal/120.m3u8
 #EXTINF:-1 tvg-name="Jewellery Maker" tvg-logo="https://i.imgur.com/O7SdkBh.png" tvg-id="JewelleryMaker.uk" group-title="UK",Jewellery Maker
 https://lo2-1.gemporia.com/abrjewellerymaker/smil:livestream.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="Hobby Maker" tvg-logo="https://i.imgur.com/VWHp5Tl.png" tvg-id="HobbyMaker.uk" group-title="UK",Hobby Maker
