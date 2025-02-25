@@ -17,24 +17,10 @@ https://apollo.production-public.tubi.io/live/ac-cosmos.m3u8
 https://apollo.production-public.tubi.io/live/ac-court-tv.m3u8
 #EXTINF:-1 tvg-id="",Crime ThrillHer (1080p)
 https://apollo.production-public.tubi.io/live/ac-crime-thrillher.m3u8
-#EXTINF:-1 tvg-id="",Crime Time Canada (1080p)
-https://apollo.production-public.tubi.io/live/ac-crimetime-canada.m3u8
-#EXTINF:-1 tvg-id="Cinevault80s.us",Cinevault 80s (720p)
-https://apollo.production-public.tubi.io/live/ac-cinevault-80s.m3u8
-#EXTINF:-1 tvg-id="",Cinevault Classics (720p)
-https://apollo.production-public.tubi.io/live/ac-cinevault-classics.m3u8
-#EXTINF:-1 tvg-id="CinevaultWesterns.us",Cinevault Westerns (720p)
-https://apollo.production-public.tubi.io/live/ac-cinevault-westerns.m3u8
 #EXTINF:-1 tvg-id="ColdCaseFiles.us",Cold Case Files (1080p)
 https://apollo.production-public.tubi.io/live/ac-cold-case-files.m3u8
 #EXTINF:-1 tvg-id="Buzzr.us",BUZZR (720p)
 https://apollo.production-public.tubi.io/live/ac-buzzr.m3u8
-#EXTINF:-1 tvg-id="CaughtinProvidence.us",Caught in Providence (720p)
-https://livetv-fa.tubi.video/caught-in-providence2/playlist.m3u8
-#EXTINF:-1 tvg-id="TraceSportStars.fr",TRACE Sportstar (1080p)
-https://amg01131-tracetv-amg01131c2-stirr-us-4392.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="DarkMatterTV.us",Dark Matter TV (720p)
-https://tricoast-tv-dark-matter-01-us.ono.wurl.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="",Crafty Panda (720p)
 https://bpd-cp-stirr.otteravision.com/bpd/cp/cp.m3u8
 #EXTINF:-1 tvg-id="",4K Travel TV
