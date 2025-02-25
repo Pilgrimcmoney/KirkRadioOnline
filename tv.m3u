@@ -1,4 +1,16 @@
 #EXTM3U
+#EXTINF:-1 tvg-id="",FilmRise Horror Canada (720p)
+https://apollo.production-public.tubi.io/live/ac-filmrise-horror-canada.m3u8
+#EXTINF:-1 tvg-id="TheRifleman.us",Filmrise The Rifleman (720p)
+https://apollo.production-public.tubi.io/live/ac-rifleman-filmrise.m3u8
+#EXTINF:-1 tvg-id="FilmRiseTrueCrime.us",Filmrise True Crime (720p)
+https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime.m3u8
+#EXTINF:-1 tvg-id="",FilmRise True Crime Canada (720p)
+https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime-canada.m3u8
+#EXTINF:-1 tvg-id="",FilmRise Unsolved Mysteries (720p)
+https://apollo.production-public.tubi.io/live/ac-unsolved-mysteries.m3u8
+#EXTINF:-1 tvg-id="",Filmrise World's Most Evil Killers (720p)
+https://apollo.production-public.tubi.io/live/ac-worlds-most-evil-killers.m3u8
 #EXTINF:-1 tvg-id="",Cosmos (720p)
 https://apollo.production-public.tubi.io/live/ac-cosmos.m3u8
 #EXTINF:-1 tvg-id="CourtTV.us",Court TV (720p)
@@ -248,6 +260,10 @@ https://cbcrclinear-tor.akamaized.net/hls/live/2042764/CBCRCLINEAR_TOR_10/master
 https://cbcrclinear-tor.akamaized.net/hls/live/2042760/CBCRCLINEAR_TOR_6/master5.m3u8
 #EXTINF:-1 tvg-id="CBETDT.ca" tvg-logo="https://i.imgur.com/NFts1uU.png" group-title="Undefined",CBC Windsor (CBET-DT) 
 https://cbcrclinear-tor.akamaized.net/hls/live/2042759/CBCRCLINEAR_TOR_5/master5.m3u8
+#EXTINF:-1 tvg-id="",Def Jam (720p)
+https://aegis-cloudfront-1.tubi.video/b2fc97e6-b98f-42b4-be35-bd0361f1f637/playlist.m3u8
+#EXTINF:-1 tvg-id="DogtheBountyHunter.us",Dog the Bounty Hunter (1080p)
+https://apollo.production-public.tubi.io/live/ac-dog-the-bounty-hunter.m3u8
 #EXTINF:-1 tvg-id="CPACEnglish.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/2016_CPAC_logo.svg/512px-2016_CPAC_logo.svg.png" group-title="Legislative",CPAC 
 https://d7z3qjdsxbwoq.cloudfront.net/groupa/live/f9809cea-1e07-47cd-a94d-2ddd3e1351db/live.isml/.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="" group-title="Undefined",DryBar Comedy
