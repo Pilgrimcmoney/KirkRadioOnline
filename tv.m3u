@@ -1,4 +1,14 @@
 #EXTM3U
+#EXTINF:-1 tvg-id="FoxSports.us",Fox Sports (720p)
+https://apollo.production-public.tubi.io/live/fox-sports.m3u8
+#EXTINF:-1 tvg-id="FoxDeportes.us",Fox Sports en Espanol (720p)
+https://apollo.production-public.tubi.io/live/fox-sports-espanol.m3u8
+#EXTINF:-1 tvg-id="FoxWeather.us",Fox Weather (720p) [Not 24/7]
+https://livetv-fa.tubi.video/fox-weather/index.m3u8
+#EXTINF:-1 tvg-id="FuboSportsNetwork.us",Fubo Sports Network (1080p) [Geo-blocked]
+https://apollo.production-public.tubi.io/live/ac-fubo.m3u8
+#EXTINF:-1 tvg-id="GameShowCentral.us",Game Show Central (720p)
+https://aegis-cloudfront-1.tubi.video/db7dcb0b-3e7a-4d67-90a9-6c028ab2fc88/playlist.m3u8
 #EXTINF:-1 tvg-id="",FilmRise Horror Canada (720p)
 https://apollo.production-public.tubi.io/live/ac-filmrise-horror-canada.m3u8
 #EXTINF:-1 tvg-id="TheRifleman.us",Filmrise The Rifleman (720p)
