@@ -1,4 +1,8 @@
 #EXTM3U
+#EXTINF:-1 tvg-id="MovieSphere.us",MovieSphere (720p)
+https://livetv-fa.tubi.video/moviesphere/playlist.m3u8
+#EXTINF:-1 tvg-id="",MovieSphere Canada (1080p)
+https://apollo.production-public.tubi.io/live/ac-moviesphere-canada2.m3u8
 #EXTINF:-1 tvg-id="FoxSports.us",Fox Sports (720p)
 https://apollo.production-public.tubi.io/live/fox-sports.m3u8
 #EXTINF:-1 tvg-id="FoxDeportes.us",Fox Sports en Espanol (720p)
