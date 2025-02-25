@@ -1,4 +1,17 @@
 #EXTM3U
+#EXTINF:-1 tvg-id="NFLChannel.us",NFL (720p)
+https://apollo.production-public.tubi.io/live/ac-nfl2.m3u8
+#EXTINF:-1 tvg-id="NHLNetwork.us",NHL (1080p)
+https://apollo.production-public.tubi.io/live/ac-nhl.m3u8
+#EXTINF:-1 tvg-id="NHRATV.us",NHRA TV (720p)
+https://apollo.production-public.tubi.io/live/ac-nhra.m3u8
+#EXTINF:-1 tvg-id="NBATV.us",NBA (720p) [Geo-blocked]
+https://aegis-cloudfront-1.tubi.video/c987b155-8d7e-4307-bd24-720bb2843d42/playlist.m3u8
+#EXTINF:-1 tvg-id="WESHDT1.us",NBC 2 Orlando FL (WESH) (720p)
+#EXTINF:-1 tvg-id="MyTimeMovieNetworkEast.us",MyTime Movie Network (720p) [Geo-blocked]
+https://livetv-fa.tubi.video/my-time/playlist.m3u8
+#EXTINF:-1 tvg-id="",Nascar (1080p) [Geo-blocked]
+https://aegis-cloudfront-1.tubi.video/4e6d2330-f93e-4068-b795-9f8585640b13/playlist.m3u8
 #EXTINF:-1 tvg-id="MovieSphere.us",MovieSphere (720p)
 https://livetv-fa.tubi.video/moviesphere/playlist.m3u8
 #EXTINF:-1 tvg-id="",MovieSphere Canada (1080p)
