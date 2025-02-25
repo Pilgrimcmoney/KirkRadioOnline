@@ -1,4 +1,48 @@
 #EXTM3U
+E4_Extra_logo_2022.svg.png" tvg-id="E4Extra.uk" group-title="UK",E4 Extra Ⓢ
+http://92.114.85.81:8000/play/a03r/index.m3u8
+#EXTINF:-1 tvg-name="5Star Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/5Star_logo_2019.svg/640px-5Star_logo_2019.svg.png" tvg-id="5Star.uk" group-title="UK",5Star Ⓢ
+http://92.114.85.81:8000/play/a01c/index.m3u8
+#EXTINF:-1 tvg-name="5Action Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/5Action_logo.svg/640px-5Action_logo.svg.png" tvg-id="5Action.uk" group-title="UK",5Action Ⓢ
+http://92.114.85.81:8000/play/a01h/index.m3u8
+#EXTINF:-1 tvg-name="Great! Movies Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/9/92/Great%21_Movies_logo_2021.svg/640px-Great%21_Movies_logo_2021.svg.png" tvg-id="GreatMovies.uk" group-title="UK",Great! Movies Ⓢ
+http://92.114.85.81:8000/play/a00f/index.m3u8
+#EXTINF:-1 tvg-name="Sky Mix Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/4/44/Sky_Mix_2023_logo.png" tvg-id="SkyMix.uk" group-title="UK",Sky Mix Ⓢ
+http://92.114.85.79:8000/play/a0c7
+#EXTINF:-1 tvg-name="DMAX Ⓢ" tvg-logo="https://i.imgur.com/CDsoyjN.png" tvg-id="DMAXUK.uk" group-title="UK",DMAX Ⓢ
+http://92.114.85.81:8000/play/a03b/index.m3u8
+#EXTINF:-1 tvg-name="Quest Red Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Quest_Red_2020.svg/640px-Quest_Red_2020.svg.png" tvg-id="QuestRed.uk" group-title="UK",Quest Red Ⓢ
+http://92.114.85.81:8000/play/a03d/index.m3u8
+#EXTINF:-1 tvg-name="Legend Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Legend_TV_logo.svg/640px-Legend_TV_logo.svg.png" tvg-id="Legend.uk" group-title="UK",Legend Ⓢ
+http://92.114.85.81:8000/play/a01p/index.m3u8
+#EXTINF:-1 tvg-name="Great! Action Ⓢ" tvg-logo="https://i.imgur.com/O9eiO0I.png" tvg-id="GreatAction.uk" group-title="UK",Great! Action Ⓢ
+http://92.114.85.81:8000/play/a00e/index.m3u8
+#EXTINF:-1 tvg-name="Food Network UK Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Food_Network_logo.svg/768px-Food_Network_logo.svg.png" tvg-id="FoodNetwork.uk" group-title="UK",Food Network UK Ⓢ
+http://92.114.85.79:8000/play/a0ci
+#EXTINF:-1 tvg-name="HGTV Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/HGTV_US_Logo_2015.svg/512px-HGTV_US_Logo_2015.svg.png" tvg-id="HGTVUK.uk" group-title="UK",HGTV Ⓢ
+http://92.114.85.81:8000/play/a037/index.m3u8
+#EXTINF:-1 tvg-name="GemsTV Ⓢ" tvg-logo="https://i.imgur.com/IR2sTag.png" tvg-id="GemsTV.uk" group-title="UK",GemsTV Ⓢ
+http://57d6b85685bb8.streamlock.net:1935/abrgemporiaukgfx/livestream_360p/index.m3u8
+#EXTINF:-1 tvg-name="5Select Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/d/da/5Select_logo.svg/1024px-5Select_logo.svg.png" tvg-id="5Select.uk" group-title="UK",5Select Ⓢ
+http://92.114.85.81:8000/play/a01d/index.m3u8
+#EXTINF:-1 tvg-name="Challenge Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Challenge_%282016-.n.v.%29.png/640px-Challenge_%282016-.n.v.%29.png" tvg-id="Challenge.uk" group-title="UK",Challenge Ⓢ
+http://92.114.85.80:8000/play/a03s
+#EXTINF:-1 tvg-name="4seven Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/5/5e/4seven_logo_2018.svg/568px-4seven_logo_2018.svg.png" tvg-id="4seven.uk" group-title="UK",4seven Ⓢ
+http://92.114.85.80:8000/play/a01a
+#EXTINF:-1 tvg-name="Great! TV Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/6/6f/Great%21_TV_logo_2021.svg/640px-Great%21_TV_logo_2021.svg.png" tvg-id="GreatTV.uk" group-title="UK",Great! TV Ⓢ
+http://92.114.85.81:8000/play/a00q/index.m3u8
+#EXTINF:-1 tvg-name="Ideal World Ⓨ" tvg-logo="https://i.imgur.com/su6GH7i.png" tvg-id="IdealWorldTV.uk" group-title="UK",Ideal World Ⓨ
+https://www.youtube.com/@IdealWorldTV/live
+#EXTINF:-1 tvg-name="Great! Christmas Ⓢ" tvg-logo="https://www.freeview.co.uk/sites/default/files/styles/255_wide/public/2023-09/GREAT-Christmas-logo.png" tvg-id="GreatChristmas.uk" group-title="UK",Great! Christmas Ⓢ
+http://92.114.85.79:8000/play/a06i
+#EXTINF:-1 tvg-name="Blaze Ⓢ" tvg-logo="https://i.imgur.com/6UcPWP9.png" tvg-id="Blaze.uk" group-title="UK",Blaze Ⓢ
+http://92.114.85.77:8000/play/a0ak
+#EXTINF:-1 tvg-name="That's 60s Ⓢ" tvg-logo="https://i.imgur.com/MjdQpF2.png" tvg-id="Thats60s.uk" group-title="UK",That's 60s Ⓢ
+http://92.114.85.79:8000/play/a0bq
+#EXTINF:-1 tvg-name="TBN UK Ⓢ" tvg-logo="https://i.imgur.com/9vzEz1b.png" tvg-id="TBNUK.uk" group-title="UK",TBN UK Ⓢ
+http://92.114.85.79:8000/play/a08g
+#EXTINF:-1 tvg-name="CBS reality UK Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/80/CBS_Reality.png" tvg-id="CBSRealityUK.uk" group-title="UK",CBS reality UK Ⓢ
+http://92.114.85.81:8000/play/a01t/index.m3u8
 #EXTINF:-1 tvg-name="Retro TV" tvg-logo="https://i.imgur.com/PNTYOgg.png" tvg-id="RetroTVEast.us" group-title="USA",Retro TV
 https://bcovlive-a.akamaihd.net/5e531be3ed6c41229b2af2d9bffba88d/us-east-1/6183977686001/profile_1/chunklist.m3u8
 #EXTINF:-1 tvg-name="Jewellery Maker" tvg-logo="https://i.imgur.com/O7SdkBh.png" tvg-id="JewelleryMaker.uk" group-title="UK",Jewellery Maker
