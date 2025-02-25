@@ -1,4 +1,8 @@
 #EXTM3U
+#EXTINF:-1 tvg-name="Food Network" tvg-logo="https://i.imgur.com/i60OYr9.png" tvg-id="FoodNetworkItaly.it" group-title="Italy",Food Network
+https://amg16146-wbdi-amg16146c3-samsung-it-1836.playouts.now.amagi.tv/playlist/amg16146-warnerbrosdiscoveryitalia-foodnetwork-samsungit/playlist.m3u8
+#EXTINF:-1 tvg-name="Cine34   Ⓖ" tvg-logo="https://i.imgur.com/YyldwhI.png" tvg-id="Cine34.it" group-title="Italy",Cine34   Ⓖ
+https://live02-seg.msf.cdn.mediaset.net/live/ch-b6/b6-clr.isml/index.m3u8
 #EXTINF:-1 tvg-name="First Channel /Education/ (2TV)" tvg-logo="https://upload.wikimedia.org/wikipedia/ka/c/c9/2_Tv_Logo.jpg" tvg-id="2TV.ge" group-title="Georgia",First Channel /Education/ (2TV)
 https://tv.cdn.xsg.ge/gpb-2tv/index.m3u8
 #EXTINF:-1 tvg-name="Citytv" tvg-logo="https://i.imgur.com/BlFNlHz.png" group-title="Canada",Citytv
