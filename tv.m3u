@@ -1,42 +1,42 @@
 #EXTM3U
 #EXTINF:-1 tvg-id="UFC",UFC
 https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playlist.m3u8
-#EXTINF:-1 tvg-id="UnsolvedMysteries.us",Unsolved Mysteries (720p)
+#EXTINF:-1 tvg-id="UnsolvedMysteries.us",Unsolved Mysteries 
 https://livetv-fa.tubi.video/unsolved-mysteries/index.m3u8
-#EXTINF:-1 tvg-id="VICETV.us",VICE (720p) 
+#EXTINF:-1 tvg-id="VICETV.us",VICE 
 https://aegis-cloudfront-1.tubi.video/073ab3b0-a8a5-472d-9b45-46d3dead6146/playlist.m3u8
-#EXTINF:-1 tvg-id="NFLChannel.us",NFL (720p)
+#EXTINF:-1 tvg-id="NFLChannel.us",NFL 
 https://apollo.production-public.tubi.io/live/ac-nfl2.m3u8
-#EXTINF:-1 tvg-id="NHLNetwork.us",NHL (1080p)
+#EXTINF:-1 tvg-id="NHLNetwork.us",NHL 
 https://apollo.production-public.tubi.io/live/ac-nhl.m3u8
-#EXTINF:-1 tvg-id="NHRATV.us",NHRA TV (720p)
+#EXTINF:-1 tvg-id="NHRATV.us",NHRA TV 
 https://apollo.production-public.tubi.io/live/ac-nhra.m3u8
-#EXTINF:-1 tvg-id="NBATV.us",NBA (720p) 
+#EXTINF:-1 tvg-id="NBATV.us",NBA 
 https://aegis-cloudfront-1.tubi.video/c987b155-8d7e-4307-bd24-720bb2843d42/playlist.m3u8
-#EXTINF:-1 tvg-id="WESHDT1.us",NBC 2 Orlando FL (WESH) (720p)
-#EXTINF:-1 tvg-id="MyTimeMovieNetworkEast.us",MyTime Movie Network (720p) 
+#EXTINF:-1 tvg-id="WESHDT1.us",NBC 2 Orlando FL (WESH)
+#EXTINF:-1 tvg-id="MyTimeMovieNetworkEast.us",MyTime Movie Network 
 https://livetv-fa.tubi.video/my-time/playlist.m3u8
-#EXTINF:-1 tvg-id="",Nascar (1080p) 
+#EXTINF:-1 tvg-id="",Nascar 
 https://aegis-cloudfront-1.tubi.video/4e6d2330-f93e-4068-b795-9f8585640b13/playlist.m3u8
-#EXTINF:-1 tvg-id="MovieSphere.us",MovieSphere (720p)
+#EXTINF:-1 tvg-id="MovieSphere.us",MovieSphere 
 https://livetv-fa.tubi.video/moviesphere/playlist.m3u8
-#EXTINF:-1 tvg-id="",MovieSphere Canada (1080p)
+#EXTINF:-1 tvg-id="",MovieSphere Canada 
 https://apollo.production-public.tubi.io/live/ac-moviesphere-canada2.m3u8
-#EXTINF:-1 tvg-id="FoxSports.us",Fox Sports (720p)
+#EXTINF:-1 tvg-id="FoxSports.us",Fox Sports 
 https://apollo.production-public.tubi.io/live/fox-sports.m3u8
-#EXTINF:-1 tvg-id="FoxWeather.us",Fox Weather (720p) [Not 24/7]
+#EXTINF:-1 tvg-id="FoxWeather.us",Fox Weather 
 https://livetv-fa.tubi.video/fox-weather/index.m3u8
-#EXTINF:-1 tvg-id="FuboSportsNetwork.us",Fubo Sports Network (1080p) [Geo-blocked]
+#EXTINF:-1 tvg-id="FuboSportsNetwork.us",Fubo Sports Network 
 https://apollo.production-public.tubi.io/live/ac-fubo.m3u8
-#EXTINF:-1 tvg-id="",FilmRise Horror Canada (720p)
+#EXTINF:-1 tvg-id="",FilmRise Horror Canada 
 https://apollo.production-public.tubi.io/live/ac-filmrise-horror-canada.m3u8
-#EXTINF:-1 tvg-id="TheRifleman.us",Filmrise The Rifleman (720p)
+#EXTINF:-1 tvg-id="TheRifleman.us",Filmrise The Rifleman 
 https://apollo.production-public.tubi.io/live/ac-rifleman-filmrise.m3u8
-#EXTINF:-1 tvg-id="FilmRiseTrueCrime.us",Filmrise True Crime (720p)
+#EXTINF:-1 tvg-id="FilmRiseTrueCrime.us",Filmrise True Crime 
 https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime.m3u8
-#EXTINF:-1 tvg-id="",FilmRise True Crime Canada (720p)
+#EXTINF:-1 tvg-id="",FilmRise True Crime Canada 
 https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime-canada.m3u8
-#EXTINF:-1 tvg-id="",FilmRise Unsolved Mysteries (720p)
+#EXTINF:-1 tvg-id="",FilmRise Unsolved Mysteries 
 https://apollo.production-public.tubi.io/live/ac-unsolved-mysteries.m3u8
 #EXTINF:-1 tvg-id="",Filmrise World's Most Evil Killers 
 https://apollo.production-public.tubi.io/live/ac-worlds-most-evil-killers.m3u8
@@ -194,29 +194,29 @@ https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/ff
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/ea019bed-a45e-4dfe-a452-84f5f2f76ea9/manifest.m3u8
 #EXTINF:-1 tvg-id="",Xtrem Sports
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/e0b81a5c-6ab5-48cd-aaa9-f82de4ab5bf9/manifest.m3u8
-#EXTINF:-1 tvg-id="ComedyDynamics.us",Comedy Dynamics (1080p)
+#EXTINF:-1 tvg-id="ComedyDynamics.us",Comedy Dynamics 
 https://comedydynamics-plex-ingest.cinedigm.com/playlist.m3u8
-#EXTINF:-1 tvg-id="FreebieTV.us",Freebie TV (720p) [Not 24/7]
+#EXTINF:-1 tvg-id="FreebieTV.us",Freebie TV 
 https://d1h1d6qoy9vnra.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/Freebie-Plex/187.m3u8
-#EXTINF:-1 tvg-id="HardKnocks.ca",Hard Knocks (1080p) [Not 24/7]
+#EXTINF:-1 tvg-id="HardKnocks.ca",Hard Knocks 
 https://d3uyzhwvmemdyf.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/HardKnocks-PLEX/121.m3u8
-#EXTINF:-1 tvg-id="HiYAH.us",Hi-YAH! (1080p)
+#EXTINF:-1 tvg-id="HiYAH.us",Hi-YAH! 
 https://linear-59.frequency.stream/dist/plex/59/hls/master/playlist.m3u8
-#EXTINF:-1 tvg-id="HumorMill.us",Humor Mill (1080p) [Not 24/7]
+#EXTINF:-1 tvg-id="HumorMill.us",Humor Mill 
 https://damkf751d85s1.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/HumorMill-PLEX/152.m3u8
-#EXTINF:-1 tvg-id="MuseumTVFast.us",Museum TV Fast (1080p)
+#EXTINF:-1 tvg-id="MuseumTVFast.us",Museum TV Fast 
 https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01492-secomsasmediart-museumtv-en-plex/playlist.m3u8
-#EXTINF:-1 tvg-id="PopstarTV.us",Popstar! TV (1080p) [Not 24/7]
+#EXTINF:-1 tvg-id="PopstarTV.us",Popstar! TV 
 https://linear-10.frequency.stream/dist/plex/10/hls/master/playlist.m3u8
-#EXTINF:-1 tvg-id="Revry.us",Revry (720p) [Not 24/7]
+#EXTINF:-1 tvg-id="Revry.us",Revry 
 https://linear-5.frequency.stream/dist/plex/5/hls/master/playlist.m3u8
-#EXTINF:-1 tvg-id="RevryNews.us",Revry News (720p) [Not 24/7]
+#EXTINF:-1 tvg-id="RevryNews.us",Revry News 
 https://linear-44.frequency.stream/dist/plex/44/hls/master/playlist.m3u8
-#EXTINF:-1 tvg-id="Timeline.us",Timeline (1080p)
+#EXTINF:-1 tvg-id="Timeline.us",Timeline 
 https://lds-timeline-plex.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="Wonder.uk",Wonder (1080p)
+#EXTINF:-1 tvg-id="Wonder.uk",Wonder 
 https://lds-wonder-plex.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="WorldPokerTour.us",World Poker Tour (1080p) [Not 24/7]
+#EXTINF:-1 tvg-id="WorldPokerTour.us",World Poker Tour 
 https://dth07jsr8atug.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/WPT-Plex/171.m3u8
 #EXTINF:-1 tvg-name="Jewellery Maker" tvg-logo="https://i.imgur.com/O7SdkBh.png" tvg-id="JewelleryMaker.uk" group-title="UK",Jewellery Maker
 https://lo2-1.gemporia.com/abrjewellerymaker/smil:livestream.smil/playlist.m3u8
@@ -273,9 +273,9 @@ https://cbcrclinear-tor.akamaized.net/hls/live/2042764/CBCRCLINEAR_TOR_10/master
 https://cbcrclinear-tor.akamaized.net/hls/live/2042760/CBCRCLINEAR_TOR_6/master5.m3u8
 #EXTINF:-1 tvg-id="CBETDT.ca" tvg-logo="https://i.imgur.com/NFts1uU.png" group-title="Undefined",CBC Windsor (CBET-DT) 
 https://cbcrclinear-tor.akamaized.net/hls/live/2042759/CBCRCLINEAR_TOR_5/master5.m3u8
-#EXTINF:-1 tvg-id="",Def Jam (720p)
+#EXTINF:-1 tvg-id="",Def Jam 
 https://aegis-cloudfront-1.tubi.video/b2fc97e6-b98f-42b4-be35-bd0361f1f637/playlist.m3u8
-#EXTINF:-1 tvg-id="DogtheBountyHunter.us",Dog the Bounty Hunter (1080p)
+#EXTINF:-1 tvg-id="DogtheBountyHunter.us",Dog the Bounty Hunter
 https://apollo.production-public.tubi.io/live/ac-dog-the-bounty-hunter.m3u8
 #EXTINF:-1 tvg-id="CPACEnglish.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/2016_CPAC_logo.svg/512px-2016_CPAC_logo.svg.png" group-title="Legislative",CPAC 
 https://d7z3qjdsxbwoq.cloudfront.net/groupa/live/f9809cea-1e07-47cd-a94d-2ddd3e1351db/live.isml/.m3u8
@@ -283,7 +283,7 @@ https://d7z3qjdsxbwoq.cloudfront.net/groupa/live/f9809cea-1e07-47cd-a94d-2ddd3e1
 https://drybar-drybarcomedy-1-ca.samsung.wurl.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="FightNetwork.ca" tvg-logo="https://i.imgur.com/vlKPZHR.png" group-title="Sports",Fight Network 
 https://d12a2vxqkkh1bo.cloudfront.net/hls/main.m3u8
-#EXTINF:-1 tvg-id="HardKnocks.ca" tvg-logo="https://i.imgur.com/nt9B6jx.png" group-title="Sports",Hard Knocks [Not 24/7]
+#EXTINF:-1 tvg-id="HardKnocks.ca" tvg-logo="https://i.imgur.com/nt9B6jx.png" group-title="Sports",Hard Knocks 
 https://d3uyzhwvmemdyf.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/Hard-Knocks-DistroTV/109.m3u8
 #EXTINF:-1 tvg-id="LoveNature4K.ca" tvg-logo="https://i.imgur.com/oDacp1F.png" group-title="Outdoor",Love Nature 4K
 https://d18dyiwu97wm6q.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/LoveNature4K2-prod/playlist.m3u8
