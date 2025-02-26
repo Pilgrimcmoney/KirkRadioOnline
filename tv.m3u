@@ -1,9 +1,11 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="",UFC (1080p)
+#EXTINF:-1 tvg-logo="https://github.com/Pilgrimcmoney/KirkRadioOnline/favicon.svg",Kirk Radio TV
+https://stream.zeno.fm/5b7vxccbcchvv.m3u
+#EXTINF:-1 tvg-id="",Kirk Radio 
 https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playlist.m3u8
 #EXTINF:-1 tvg-id="UnsolvedMysteries.us",Unsolved Mysteries (720p)
 https://livetv-fa.tubi.video/unsolved-mysteries/index.m3u8
-#EXTINF:-1 tvg-id="VICETV.us",VICE (720p) [Geo-blocked]
+#EXTINF:-1 tvg-id="VICETV.us",VICE (720p) 
 https://aegis-cloudfront-1.tubi.video/073ab3b0-a8a5-472d-9b45-46d3dead6146/playlist.m3u8
 #EXTINF:-1 tvg-id="NFLChannel.us",NFL (720p)
 https://apollo.production-public.tubi.io/live/ac-nfl2.m3u8
@@ -11,12 +13,12 @@ https://apollo.production-public.tubi.io/live/ac-nfl2.m3u8
 https://apollo.production-public.tubi.io/live/ac-nhl.m3u8
 #EXTINF:-1 tvg-id="NHRATV.us",NHRA TV (720p)
 https://apollo.production-public.tubi.io/live/ac-nhra.m3u8
-#EXTINF:-1 tvg-id="NBATV.us",NBA (720p) [Geo-blocked]
+#EXTINF:-1 tvg-id="NBATV.us",NBA (720p) 
 https://aegis-cloudfront-1.tubi.video/c987b155-8d7e-4307-bd24-720bb2843d42/playlist.m3u8
 #EXTINF:-1 tvg-id="WESHDT1.us",NBC 2 Orlando FL (WESH) (720p)
-#EXTINF:-1 tvg-id="MyTimeMovieNetworkEast.us",MyTime Movie Network (720p) [Geo-blocked]
+#EXTINF:-1 tvg-id="MyTimeMovieNetworkEast.us",MyTime Movie Network (720p) 
 https://livetv-fa.tubi.video/my-time/playlist.m3u8
-#EXTINF:-1 tvg-id="",Nascar (1080p) [Geo-blocked]
+#EXTINF:-1 tvg-id="",Nascar (1080p) 
 https://aegis-cloudfront-1.tubi.video/4e6d2330-f93e-4068-b795-9f8585640b13/playlist.m3u8
 #EXTINF:-1 tvg-id="MovieSphere.us",MovieSphere (720p)
 https://livetv-fa.tubi.video/moviesphere/playlist.m3u8
@@ -38,19 +40,19 @@ https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime.m3u8
 https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime-canada.m3u8
 #EXTINF:-1 tvg-id="",FilmRise Unsolved Mysteries (720p)
 https://apollo.production-public.tubi.io/live/ac-unsolved-mysteries.m3u8
-#EXTINF:-1 tvg-id="",Filmrise World's Most Evil Killers (720p)
+#EXTINF:-1 tvg-id="",Filmrise World's Most Evil Killers 
 https://apollo.production-public.tubi.io/live/ac-worlds-most-evil-killers.m3u8
-#EXTINF:-1 tvg-id="",Cosmos (720p)
+#EXTINF:-1 tvg-id="",Cosmos 
 https://apollo.production-public.tubi.io/live/ac-cosmos.m3u8
-#EXTINF:-1 tvg-id="CourtTV.us",Court TV (720p)
+#EXTINF:-1 tvg-id="CourtTV.us",Court TV 
 https://apollo.production-public.tubi.io/live/ac-court-tv.m3u8
-#EXTINF:-1 tvg-id="",Crime ThrillHer (1080p)
+#EXTINF:-1 tvg-id="",Crime ThrillHer 
 https://apollo.production-public.tubi.io/live/ac-crime-thrillher.m3u8
-#EXTINF:-1 tvg-id="ColdCaseFiles.us",Cold Case Files (1080p)
+#EXTINF:-1 tvg-id="ColdCaseFiles.us",Cold Case Files 
 https://apollo.production-public.tubi.io/live/ac-cold-case-files.m3u8
-#EXTINF:-1 tvg-id="Buzzr.us",BUZZR (720p)
+#EXTINF:-1 tvg-id="Buzzr.us",BUZZR 
 https://apollo.production-public.tubi.io/live/ac-buzzr.m3u8
-#EXTINF:-1 tvg-id="",Crafty Panda (720p)
+#EXTINF:-1 tvg-id="",Crafty Panda 
 https://bpd-cp-stirr.otteravision.com/bpd/cp/cp.m3u8
 #EXTINF:-1 tvg-id="",4K Travel TV
 https://streams2.sofast.tv/sofastplayout/33c31ac4-51fa-46ae-afd0-0d1fe5e60a80_0_HLS/master.m3u8
