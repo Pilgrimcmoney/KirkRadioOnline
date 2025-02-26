@@ -1,5 +1,5 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="UFC" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/united-states/ufc-us.png",UFC
+#EXTINF:-1 tvg-id="UFC" tvg-logo="countries/united-states/ufc-us.png",UFC
 https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playlist.m3u8
 #EXTINF:-1 tvg-id="UnsolvedMysteries.us",Unsolved Mysteries 
 https://livetv-fa.tubi.video/unsolved-mysteries/index.m3u8
