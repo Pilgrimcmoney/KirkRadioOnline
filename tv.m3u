@@ -295,17 +295,6 @@ https://fl5.moveonjoy.com/DISNEY_XD/index.m3u8
 https://main.duckhunting.playout.vju.tv/duckhuntingtv/main.m3u8
 #EXTINF:-1 tvg-id="ESR24x7eSportsNetwork.us",ESR 24x7 eSports Network (1080p)
 https://eyeonesports.com/ES2RA-628g.m3u8
-#EXTINF:-1 tvg-id="MAVTVSelect.us",MAV Select USA
-https://d3h07n6l1exhds.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-0z2yyo4dxctc7/playlist.m3u8
-#EXTINF:-1 tvg-id="",MAVTV Motor Sports IN
-#EXTINF:-1 tvg-id="",Mountain Bike TV
-https://sydandmacky.vju.tv/sydandmacky/main.m3u8?test=1
-#EXTINF:-1 tvg-id="NickelodeonEast.us",Nickelodeon East (720p)
-http://143.244.60.30/NICKELODEON/index.m3u8
-#EXTINF:-1 tvg-id="NicktoonsEast.us",NickToons (720p)
-http://143.244.60.30/NICKTOONS/index.m3u8
-#EXTINF:-1 tvg-id="TheCountryNetwork.us",The Country Network (1080p)
-https://cdn.tcncountry.net/scte35_aws/index.m3u8
 #EXTINF:-1 tvg-id="TheUltimateMusicChannel.us",The Ultimate Music Channel (1080p)
 https://app.viloud.tv/hls/channel/0694b92d093cc2bd5438ff9bbccaf1a2.m3u8
 #EXTINF:-1 tvg-id="IMPACTWrestling.us",TNA Wrestling (1080p)
@@ -317,8 +306,6 @@ https://bozztv.com/gusa/gusa-tvsbowling/index.m3u8
 https://bozztv.com/gusa/gusa-tvsboxing/index.m3u8
 #EXTINF:-1 tvg-id="MTVClassicEast.us",MTV Classic East (720p)
 https://fl2.moveonjoy.com/MTV_CLASSIC/index.m3u8
-#EXTINF:-1 tvg-id="",SportsGrid
-https://amg00315-sportsgrid-firetv.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="Choppertown.us",Choppertown (720p)
 https://linear-11.frequency.stream/dist/glewedtv/11/hls/master/playlist.m3u8
 #EXTINF:-1 tvg-id="SwerveSports.us",Swerve Sports (1080p)
