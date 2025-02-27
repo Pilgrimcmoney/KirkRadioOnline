@@ -1,49 +1,47 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="UFC" tvg-logo="https://imgur.com/gallery/ufc-hd-logo-lGhn93M", UFC
+#EXTINF:-1 tvg-id="UFC" tvg-logo="https://imgur.com/gallery/ufc-hd-logo-lGhn93M",UFC
 https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playlist.m3u8
-#EXTINF:-1 tvg-id="UnsolvedMysteries.us",UNSOLVED MYSTERIES 
-https://livetv-fa.tubi.video/unsolved-mysteries/index.m3u8
-#EXTINF:-1 tvg-id="VICETV.us",VICE 
-https://aegis-cloudfront-1.tubi.video/073ab3b0-a8a5-472d-9b45-46d3dead6146/playlist.m3u8
-#EXTINF:-1 tvg-id="NFLChannel.us", NFL 
+#EXTINF:-1 tvg-id="NFLChannel.us",NFL 
 https://apollo.production-public.tubi.io/live/ac-nfl2.m3u8
-#EXTINF:-1 tvg-id="NHLNetwork.us", NHL 
+#EXTINF:-1 tvg-id="NHLNetwork.us",NHL 
 https://apollo.production-public.tubi.io/live/ac-nhl.m3u8
-#EXTINF:-1 tvg-id="NHRATV.us", NHRA TV 
+#EXTINF:-1 tvg-id="NHRATV.us",NHRA TV 
 https://apollo.production-public.tubi.io/live/ac-nhra.m3u8
-#EXTINF:-1 tvg-id="NBATV.us", NBA 
+#EXTINF:-1 tvg-id="NBATV.us",NBA 
 https://aegis-cloudfront-1.tubi.video/c987b155-8d7e-4307-bd24-720bb2843d42/playlist.m3u8
 #EXTINF:-1 tvg-id="WESHDT1.us",NBC 2 Orlando
 #EXTINF:-1 tvg-id="MyTimeMovieNetworkEast.us",MYTIME MOVIE NETWORK
 https://livetv-fa.tubi.video/my-time/playlist.m3u8
-#EXTINF:-1 tvg-id="Nascar", NASCAR 
+#EXTINF:-1 tvg-id="Nascar",NASCAR 
 https://aegis-cloudfront-1.tubi.video/4e6d2330-f93e-4068-b795-9f8585640b13/playlist.m3u8
 #EXTINF:-1 tvg-id="MovieSphere.us",MOVIESPHERE 
 https://livetv-fa.tubi.video/moviesphere/playlist.m3u8
 #EXTINF:-1 tvg-id="",MOVIESPERE CANADA
 https://apollo.production-public.tubi.io/live/ac-moviesphere-canada2.m3u8
-#EXTINF:-1 tvg-id="FoxSports.us", FOX SPORTS
+#EXTINF:-1 tvg-id="FoxSports.us",FOX SPORTS
 https://apollo.production-public.tubi.io/live/fox-sports.m3u8
-#EXTINF:-1 tvg-id="FoxWeather.us", FOX WEATHER 
+#EXTINF:-1 tvg-id="FoxWeather.us",FOX WEATHER 
 https://livetv-fa.tubi.video/fox-weather/index.m3u8
-#EXTINF:-1 tvg-id="", FILMRISE HORROR CANADA
+#EXTINF:-1 tvg-id="",FILMRISE HORROR CANADA
 https://apollo.production-public.tubi.io/live/ac-rifleman-filmrise.m3u8
-#EXTINF:-1 tvg-id="FilmRiseTrueCrime.us", FILMRISE TRUE CRIME
+#EXTINF:-1 tvg-id="FilmRiseTrueCrime.us",FILMRISE TRUE CRIME
 https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime.m3u8
-#EXTINF:-1 tvg-id="", FILMRISE TRUE CRIME CANADA 
+#EXTINF:-1 tvg-id="",FILMRISE TRUE CRIME CANADA 
 https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime-canada.m3u8
-#EXTINF:-1 tvg-id="",FILERISE UNSOLVEDMYSTERIES
-https://apollo.production-public.tubi.io/live/ac-unsolved-mysteries.m3u8
 #EXTINF:-1 tvg-id="",FILMRISE WORLDS MOST EVIL KILLERS
 https://apollo.production-public.tubi.io/live/ac-worlds-most-evil-killers.m3u8
-#EXTINF:-1 tvg-id="", COSMOS
+#EXTINF:-1 tvg-id="",COSMOS
 https://apollo.production-public.tubi.io/live/ac-cosmos.m3u8
-#EXTINF:-1 tvg-id="CourtTV.us", COURT TV 
+#EXTINF:-1 tvg-id="CourtTV.us",COURT TV 
 https://apollo.production-public.tubi.io/live/ac-court-tv.m3u8
-#EXTINF:-1 tvg-id="", CRIME THRILLER 
+#EXTINF:-1 tvg-id="",CRIME THRILLER 
 https://apollo.production-public.tubi.io/live/ac-crime-thrillher.m3u8
-#EXTINF:-1 tvg-id="ColdCaseFiles.us", COLDCASE FILES
+#EXTINF:-1 tvg-id="ColdCaseFiles.us",COLDCASE FILES
 https://apollo.production-public.tubi.io/live/ac-cold-case-files.m3u8
+#EXTINF:-1 tvg-id="UnsolvedMysteries.us",UNSOLVED MYSTERIES 
+https://livetv-fa.tubi.video/unsolved-mysteries/index.m3u8
+#EXTINF:-1 tvg-id="VICETV.us",VICE 
+https://aegis-cloudfront-1.tubi.video/073ab3b0-a8a5-472d-9b45-46d3dead6146/playlist.m3u8
 #EXTINF:-1 tvg-id="Buzzr.us",BUZZR 
 https://apollo.production-public.tubi.io/live/ac-buzzr.m3u8
 #EXTINF:-1 tvg-id="",CRAFTY PANDA
@@ -54,7 +52,7 @@ https://streams2.sofast.tv/sofastplayout/33c31ac4-51fa-46ae-afd0-0d1fe5e60a80_0_
 https://streams2.sofast.tv/WiseM3U8_30/sofast/cleanhls/master.m3u8
 #EXTINF:-1 tvg-id="",BOATING CHANNEL
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/04c3a27e-c2a0-420b-8eef-7dae9ab93056/manifest.m3u8
-#EXTINF:-1 tvg-id="", AUTOMATION
+#EXTINF:-1 tvg-id="",AUTOMATION
 https://streams2.sofast.tv/sofastplayout/0c3229e2-6ca5-4714-859e-c0ac6b9aa58a_0_HLS/master.m3u8
 #EXTINF:-1 tvg-id="BabyFirst.us", BABYFIRST
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/c8d16110-566c-4e95-a1df-55d175e9e201/manifest.m3u8
@@ -68,7 +66,7 @@ https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/9a
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/9800ea5c-2183-4160-9f01-70e5d6428a50/manifest.m3u8
 #EXTINF:-1 tvg-id="",THRILLER TV
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/ce168a85-c8d4-41d6-a597-cc8fd7baddd9/manifest.m3u8
-#EXTINF:-1 tvg-id="", BILLIARDS+
+#EXTINF:-1 tvg-id="",BILLIARDS+
 https://streams2.sofast.tv/WiseM3U8_18/sofast/cleanhls/master.m3u8
 #EXTINF:-1 tvg-id="",CARTOON CLASSICS
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/d5543c06-5122-49a7-9662-32187f48aa2c/manifest.m3u8
@@ -146,7 +144,7 @@ https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/65
 https://streams2.sofast.tv/sofastplayout/b7867c83-0c17-4de2-a74b-beb972c4f342_1000015693_HLS/master.m3u8
 #EXTINF:-1 tvg-id="",MMA-TV
 https://streams2.sofast.tv/vglive-sk-462904/playlist.m3u8
-#EXTINF:-1 tvg-id="", MOTORRACING
+#EXTINF:-1 tvg-id="",MOTORRACING
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/db917aee-4061-4081-b5fc-d5786defb057/manifest.m3u8
 #EXTINF:-1 tvg-id="",MUNDO SERIES
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/e3189902-0967-48a7-9d32-9401e34471c6/manifest.m3u8
