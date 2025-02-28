@@ -1,6 +1,4 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="WURU" tvg-logo="https://github.com/Pilgrimcmoney/KirkRadioOnline/blob/f8b951d014d10472ef24f1f7e7ea2dc5ce83cfbb/wakeupriseup.png",WAKE UP RISE UP
-https://drive.google.com/file/d/1D25KZ-3Juf2AlbZd1JiUJytvP_ABRneB/view?usp=sharing
 #EXTINF:-1 tvg-id="UFC" tvg-logo="https://imgur.com/gallery/ufc-hd-logo-lGhn93M",UFC
 https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playlist.m3u8
 #EXTINF:-1 tvg-id="NFLChannel.us",NFL 
