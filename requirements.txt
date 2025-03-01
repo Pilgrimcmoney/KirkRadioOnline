@@ -1,2 +1,2 @@
-websockets
-asyncio
+flask
+flask-cors
