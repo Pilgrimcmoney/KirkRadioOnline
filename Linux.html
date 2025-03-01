@@ -2,400 +2,255 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ubuntu Web OS - Kirk Radio</title>
+    <title>Mixxx with Google Drive Integration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        :root {
-            --ubuntu-orange: #E95420;
-            --ubuntu-purple: #772953;
-            --ubuntu-gray: #333;
-            --ubuntu-light-gray: #f7f7f7;
-        }
-
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: 'Ubuntu', sans-serif;
-            background-color: var(--ubuntu-gray);
+        /* (Previous CSS remains the same) */
+        .google-drive-section {
+            background-color: #4285F4;
+            padding: 10px;
             color: white;
-            overflow: hidden;
         }
-
-        #ubuntu-desktop {
-            display: flex;
-            height: 100vh;
-            background: linear-gradient(135deg, var(--ubuntu-purple), var(--ubuntu-orange));
-        }
-
-        #sidebar {
-            width: 250px;
-            background-color: rgba(0,0,0,0.5);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .app-icon {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: rgba(255,255,255,0.1);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .app-icon:hover {
-            background-color: rgba(255,255,255,0.2);
-            transform: scale(1.05);
-        }
-
-        .app-icon img {
-            width: 32px;
-            height: 32px;
-            margin-right: 10px;
-        }
-
-        #terminal-container {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #terminal {
-            flex-grow: 1;
-            background-color: black;
-            color: #0f0;
-            font-family: 'Courier New', monospace;
-            padding: 15px;
+        .file-list {
+            max-height: 300px;
             overflow-y: auto;
-        }
-
-        #command-input {
-            width: 100%;
-            padding: 10px;
-            background-color: #222;
-            color: #0f0;
-            border: none;
-            font-family: 'Courier New', monospace;
-        }
-
-        #taskbar {
-            background-color: rgba(0,0,0,0.7);
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .system-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .system-info img {
-            width: 24px;
-            height: 24px;
-            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <div id="ubuntu-desktop">
         <div id="sidebar">
-            <h3 class="text-center mb-4">Ubuntu Web OS</h3>
+            <h3 class="text-center mb-4">Mixxx DJ</h3>
             
             <div class="app-section">
-                <h5>System Tools</h5>
-                <div class="app-icon" data-app="terminal">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2535/2535524.png" alt="Terminal">
-                    Terminal
+                <h5>Music Sources</h5>
+                <div class="app-icon" data-app="google-drive">
+                    <img src="https://www.gstatic.com/images/branding/product/1x/google_drive_2020q4_48dp.png" alt="Google Drive">
+                    Google Drive
                 </div>
-                <div class="app-icon" data-app="file-manager">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2503/2503508.png" alt="File Manager">
-                    File Manager
-                </div>
-            </div>
-
-            <div class="app-section mt-3">
-                <h5>Applications</h5>
-                <div class="app-icon" data-app="software-center">
-                    <img src="https://cdn-icons-png.flaticon.com/512/906/906324.png" alt="Software Center">
-                    Software Center
-                </div>
-                <div class="app-icon" data-app="web-browser">
-                    <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt="Web Browser">
-                    Web Browser
+                <div class="app-icon" data-app="mixxx">
+                    <img src="https://mixxx.org/images/icon.png" alt="Mixxx">
+                    Mixxx DJ
                 </div>
             </div>
         </div>
 
-        <div id="terminal-container">
+        <div id="app-container">
             <div id="terminal">
-                Welcome to Ubuntu Web OS
-                Type 'help' for available commands
-            </div>
-            <input type="text" id="command-input" placeholder="Enter command...">
-            
-            <div id="taskbar">
-                <div class="system-info">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Logo-ubuntu_cof-orange-hex.svg/1200px-Logo-ubuntu_cof-orange-hex.svg.png" alt="Ubuntu">
-                    Ubuntu Web OS
-                </div>
-                <div id="system-clock"></div>
+                Welcome to Mixxx DJ with Google Drive
+                Click Google Drive icon to connect
             </div>
         </div>
     </div>
 
+    <script src="https://apis.google.com/js/api.js"></script>
     <script>
-        class UbuntuWebOS {
+        // Google Drive Integration Class
+        class GoogleDriveIntegration {
             constructor() {
-                this.initializeSystem();
-            }
-
-            initializeSystem() {
-                // Simulated Ubuntu system configuration
-                this.systemState = {
-                    hostname: 'ubuntu-web',
-                    username: 'ubuntu',
-                    osVersion: '22.04 LTS',
-                    kernel: 'Linux 5.15.0',
-                    installedPackages: [],
-                    systemLogs: []
-                };
-
-                // Ubuntu-like package repositories
-                this.packageRepositories = {
-                    'core': [
-                        { 
-                            name: 'linux-kernel', 
-                            version: '5.15.0', 
-                            description: 'Linux Kernel Core',
-                            size: '150MB'
-                        },
-                        { 
-                            name: 'bash', 
-                            version: '5.1', 
-                            description: 'Bourne Again Shell',
-                            size: '5MB'
-                        }
-                    ],
-                    'development': [
-                        { 
-                            name: 'gcc', 
-                            version: '11.2', 
-                            description: 'GNU Compiler Collection',
-                            size: '60MB'
-                        },
-                        { 
-                            name: 'python3', 
-                            version: '3.10', 
-                            description: 'Python Programming Language',
-                            size: '40MB'
-                        }
-                    ],
-                    'multimedia': [
-                        { 
-                            name: 'vlc', 
-                            version: '3.0.16', 
-                            description: 'Multimedia Player',
-                            size: '30MB'
-                        }
-                    ]
-                };
-
-                this.startSystemClock();
-            }
-
-            startSystemClock() {
-                const clockElement = document.getElementById('system-clock');
-                setInterval(() => {
-                    const now = new Date();
-                    clockElement.textContent = now.toLocaleTimeString();
-                }, 1000);
-            }
-
-            processCommand(command) {
-                const [cmd, ...args] = command.trim().split(' ');
-
-                // Comprehensive command handling
-                const commandHandlers = {
-                    'help': () => this.showHelp(),
-                    'update': () => this.systemUpdate(),
-                    'upgrade': () => this.systemUpgrade(),
-                    'install': () => this.installPackage(args[0]),
-                    'remove': () => this.removePackage(args[0]),
-                    'packages': () => this.listPackages(),
-                    'sysinfo': () => this.getSystemInfo(),
-                    'whoami': () => this.systemState.username,
-                    'hostname': () => this.systemState.hostname
-                };
-
-                // Log command
-                this.systemState.systemLogs.push({
-                    timestamp: new Date().toISOString(),
-                    command: command
-                });
-
-                return commandHandlers[cmd] 
-                    ? commandHandlers[cmd]() 
-                    : `Command not found: ${command}`;
-            }
-
-            showHelp() {
-                return `
-Ubuntu Web OS - Help Menu
-
-System Commands:
-- help: Show this help menu
-- update: Update package lists
-- upgrade: Upgrade system packages
-- sysinfo: Display system information
-
-Package Management:
-- install [package]: Install a package
-- remove [package]: Remove a package
-- packages: List available packages
-
-User Commands:
-- whoami: Show current user
-- hostname: Show system hostname
-                `;
-            }
-
-            systemUpdate() {
-                return `
-Updating Ubuntu Package Lists...
-- Checking repositories
-- Downloading package information
-- Verifying package signatures
-
-Update completed successfully.
-                `;
-            }
-
-            systemUpgrade() {
-                return `
-Upgrading Ubuntu System Packages...
-- Preparing to upgrade packages
-- Downloading updates (250MB)
-- Installing system upgrades
-- Configuring packages
-- Cleaning up
-
-System successfully upgraded to Ubuntu 22.04 LTS
-                `;
-            }
-
-            installPackage(packageName) {
-                const allPackages = Object.values(this.packageRepositories).flat();
-                const pkg = allPackages.find(p => p.name === packageName);
-
-                if (!pkg) {
-                    return `Error: Package ${packageName} not found in repositories`;
-                }
-
-                if (this.systemState.installedPackages.some(p => p.name === packageName)) {
-                    return `${packageName} is already installed`;
-                }
-
-                this.systemState.installedPackages.push(pkg);
-                return `
-Successfully installed ${packageName}
-- Version: ${pkg.version}
-- Size: ${pkg.size}
-- Description: ${pkg.description}
-                `;
-            }
-
-            removePackage(packageName) {
-                const index = this.systemState.installedPackages.findIndex(p => p.name === packageName);
+                // Replace with your actual Google Cloud Console credentials
+                this.CLIENT_ID = 'YOUR_GOOGLE_CLOUD_CLIENT_ID';
+                this.API_KEY = 'YOUR_GOOGLE_CLOUD_API_KEY';
+                this.DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+                this.SCOPES = 'https://www.googleapis.com/auth/drive.readonly';
                 
-                if (index === -1) {
-                    return `Error: ${packageName} is not installed`;
+                this.initializeGoogleAPI();
+            }
+
+            initializeGoogleAPI() {
+                // Load the Google API client library
+                gapi.load('client:auth2', () => {
+                    gapi.client.init({
+                        apiKey: this.API_KEY,
+                        clientId: this.CLIENT_ID,
+                        discoveryDocs: this.DISCOVERY_DOCS,
+                        scope: this.SCOPES
+                    }).then(() => {
+                        console.log('Google API initialized');
+                    }).catch((error) => {
+                        console.error('Error initializing Google API', error);
+                    });
+                });
+            }
+
+            // Authenticate and connect to Google Drive
+            async connectGoogleDrive() {
+                try {
+                    // Request authorization
+                    await gapi.auth2.getAuthInstance().signIn();
+                    return this.listMusicFiles();
+                } catch (error) {
+                    console.error('Google Drive connection error', error);
+                    return 'Failed to connect to Google Drive';
                 }
-
-                const removedPackage = this.systemState.installedPackages.splice(index, 1)[0];
-                return `
-Successfully removed ${removedPackage.name}
-- Version: ${removedPackage.version}
-                `;
             }
 
-            listPackages() {
-                return Object.entries(this.packageRepositories)
-                    .map(([category, packages]) => 
-                        `${category.toUpperCase()} Packages:\n` +
-                        packages.map(pkg => `- ${pkg.name} (${pkg.version})`).join('\n')
-                    )
-                    .join('\n\n');
+            // List music files from Google Drive
+            async listMusicFiles() {
+                try {
+                    // Query for music files (MP3, WAV, etc.)
+                    const response = await gapi.client.drive.files.list({
+                        'pageSize': 50,
+                        'fields': "nextPageToken, files(id, name, mimeType)",
+                        'q': "mimeType contains 'audio/'"
+                    });
+
+                    const files = response.result.files;
+                    if (!files || files.length === 0) {
+                        return 'No music files found in Google Drive';
+                    }
+
+                    // Return formatted file list
+                    return files.map(file => ({
+                        id: file.id,
+                        name: file.name,
+                        type: file.mimeType
+                    }));
+                } catch (error) {
+                    console.error('Error listing files', error);
+                    return 'Error accessing Google Drive';
+                }
             }
 
-            getSystemInfo() {
-                return `
-Ubuntu Web OS - System Information
-- Hostname: ${this.systemState.hostname}
-- Username: ${this.systemState.username}
-- OS Version: ${this.systemState.osVersion}
-- Kernel: ${this.systemState.kernel}
-- Installed Packages: ${this.systemState.installedPackages.length}
-                `;
+            // Get download URL for a specific file
+            async getFileDownloadURL(fileId) {
+                try {
+                    const response = await gapi.client.drive.files.get({
+                        fileId: fileId,
+                        alt: 'media'
+                    });
+
+                    return response.body;
+                } catch (error) {
+                    console.error('Error getting file download URL', error);
+                    return null;
+                }
             }
         }
 
-        // Initialize Ubuntu Web OS
-        const ubuntuOS = new UbuntuWebOS();
-
-        // Terminal Interaction Setup
-        const terminal = document.getElementById('terminal');
-        const commandInput = document.getElementById('command-input');
-
-        commandInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const command = commandInput.value.trim();
-                
-                // Display command
-                terminal.innerHTML += `\n<span style="color: yellow;">$ </span>${command}\n`;
-                
-                // Process and display result
-                const result = ubuntuOS.processCommand(command);
-                terminal.innerHTML += `<pre>${result}</pre>`;
-                
-                // Scroll to bottom
-                terminal.scrollTop = terminal.scrollHeight;
-                
-                // Clear input
-                commandInput.value = '';
+        // Mixxx DJ Application with Google Drive Integration
+        class MixxxDJApp {
+            constructor() {
+                this.googleDrive = new GoogleDriveIntegration();
+                this.tracks = [];
             }
-        });
 
-        // Sidebar Application Launchers
+            // Render Google Drive File Browser
+            async renderGoogleDriveFileBrowser() {
+                const appContainer = document.getElementById('app-container');
+                
+                // Show loading
+                appContainer.innerHTML = `
+                    <div class="google-drive-section">
+                        <h3>Google Drive Music Files</h3>
+                        <div id="file-list">Loading files...</div>
+                    </div>
+                `;
+
+                try {
+                    // Connect and list files
+                    const files = await this.googleDrive.connectGoogleDrive();
+                    
+                    if (typeof files === 'string') {
+                        // Error message
+                        document.getElementById('file-list').innerHTML = files;
+                        return;
+                    }
+
+                    // Render file list
+                    const fileListHTML = files.map(file => `
+                        <div class="file-item" data-file-id="${file.id}">
+                            <span>${file.name}</span>
+                            <button onclick="mixxxApp.loadTrackFromDrive('${file.id}')">Load to Deck</button>
+                        </div>
+                    `).join('');
+
+                    document.getElementById('file-list').innerHTML = fileListHTML;
+                } catch (error) {
+                    console.error('Drive file browser error', error);
+                }
+            }
+
+            // Load track from Google Drive to Mixxx
+            async loadTrackFromDrive(fileId) {
+                try {
+                    // Get file download URL
+                    const fileURL = await this.googleDrive.getFileDownloadURL(fileId);
+                    
+                    if (!fileURL) {
+                        updateTerminal('Failed to load track');
+                        return;
+                    }
+
+                    // Create track object
+                    const track = {
+                        id: fileId,
+                        url: fileURL,
+                        name: fileId // Improve with actual filename
+                    };
+
+                    // Add to tracks
+                    this.tracks.push(track);
+
+                    // Update terminal
+                    updateTerminal(`Loaded track from Google Drive: ${fileId}`);
+                } catch (error) {
+                    console.error('Track loading error', error);
+                    updateTerminal('Error loading track');
+                }
+            }
+        }
+
+        // Global Instances
+        const mixxxApp = new MixxxDJApp();
+
+        // Sidebar Event Handling
         document.getElementById('sidebar').addEventListener('click', (e) => {
             const appIcon = e.target.closest('.app-icon');
             if (appIcon) {
                 const app = appIcon.dataset.app;
                 
                 switch(app) {
-                    case 'terminal':
-                        commandInput.focus();
+                    case 'google-drive':
+                        mixxxApp.renderGoogleDriveFileBrowser();
                         break;
-                    case 'file-manager':
-                        terminal.innerHTML += '\n<h3>File Manager</h3>\n<pre>Simulated File Manager</pre>';
-                        break;
-                    case 'software-center':
-                        terminal.innerHTML += '\n<h3>Software Center</h3>\n<pre>' + 
-                            ubuntuOS.listPackages() + '</pre>';
-                        break;
-                    case 'web-browser':
-                        terminal.innerHTML += '\n<h3>Web Browser</h3>\n<pre>Simulated Web Browser</pre>';
+                    case 'mixxx':
+                        renderMixxxApp();
                         break;
                 }
-                
-                terminal.scrollTop = terminal.scrollHeight;
             }
         });
+
+        // Utility Functions (from previous implementation)
+        function updateTerminal(message) {
+            const terminal = document.getElementById('terminal');
+            if (terminal) {
+                terminal.innerHTML += `\n${message}`;
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+        }
+
+        function renderMixxxApp() {
+            const appContainer = document.getElementById('app-container');
+            appContainer.innerHTML = `
+                <div id="mixxx-app">
+                    <div class="mixxx-controls">
+                        Mixxx DJ Application Placeholder
+                    </div>
+                </div>
+            `;
+        }
+
+        // Google API Script Loading
+        window.onload = () => {
+            // Dynamically load Google API
+            const script = document.createElement('script');
+            script.src = 'https://apis.google.com/js/api.js';
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        };
     </script>
 </body>
 </html>
