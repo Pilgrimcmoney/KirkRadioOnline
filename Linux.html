@@ -2,43 +2,336 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tiny OS Web</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kodi Media Center - Embedded Experience</title>
+    <style>
+        :root {
+            --primary-color: #0077be;
+            --secondary-color: #00a86b;
+            --background-dark: #1a1a2e;
+            --text-light: #ffffff;
+            --text-dark: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+
+        .kodi-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .kodi-interface {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            padding: 20px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar-menu a {
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        .sidebar-menu i {
+            margin-right: 10px;
+        }
+
+        .main-content {
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .media-item {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .media-item:hover {
+            transform: scale(1.05);
+        }
+
+        .media-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .media-item-details {
+            padding: 10px;
+        }
+
+        .player-section {
+            margin-top: 20px;
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .video-player {
+            width: 100%;
+            height: 500px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            background-color: rgba(0,0,0,0.7);
+            padding: 10px;
+            color: var(--text-light);
+        }
+
+        .addon-section {
+            margin-top: 20px;
+        }
+
+        .addon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .addon-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .kodi-interface {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <div class="os-container">
-        <div class="sidebar">
-            <h2>Tiny OS</h2>
-            <div class="system-info">
-                <h3>System Status</h3>
-                <p>Memory: <span id="memory-usage">0/0 MB</span></p>
-                <p>Processes: <span id="process-count">0</span></p>
+    <div class="kodi-container">
+        <div class="kodi-interface">
+            <!-- Sidebar Navigation -->
+            <div class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="#" onclick="showSection('movies')">
+                        <i class="fas fa-film"></i> Movies
+                    </a></li>
+                    <li><a href="#" onclick="showSection('tv')">
+                        <i class="fas fa-tv"></i> TV Shows
+                    </a></li>
+                    <li><a href="#" onclick="showSection('music')">
+                        <i class="fas fa-music"></i> Music
+                    </a></li>
+                    <li><a href="#" onclick="showSection('addons')">
+                        <i class="fas fa-puzzle-piece"></i> Add-ons
+                    </a></li>
+                    <li><a href="#" onclick="showSection('settings')">
+                        <i class="fas fa-cog"></i> Settings
+                    </a></li>
+                </ul>
             </div>
-            <div class="actions">
-                <button onclick="createProcess()">New Process</button>
-                <button onclick="refreshSystemStatus()">Refresh</button>
-            </div>
-        </div>
 
-        <div class="main-content">
-            <div class="process-list">
-                <h3>Running Processes</h3>
-                <table id="process-table">
-                    <thead>
-                        <tr>
-                            <th>PID</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Memory</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="process-list-body"></tbody>
-                </table>
+            <!-- Main Content Area -->
+            <div class="main-content" id="mainContent">
+                <!-- Movies Section -->
+                <div id="movies-section" class="section">
+                    <h2>Movies</h2>
+                    <div class="media-grid" id="movies-grid">
+                        <!-- Movie items will be dynamically populated -->
+                    </div>
+                </div>
+
+                <!-- Video Player Section -->
+                <div class="player-section">
+                    <video class="video-player" id="mediaPlayer" controls>
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="controls">
+                        <div>Now Playing: <span id="current-media-title">No Media Selected</span></div>
+                        <div>
+                            <button onclick="toggleFullscreen()">Fullscreen</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add-ons Section -->
+                <div id="addons-section" class="addon-section" style="display:none;">
+                    <h2>Kodi Add-ons</h2>
+                    <div class="addon-grid" id="addons-grid">
+                        <!-- Add-on items will be dynamically populated -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/os.js') }}"></script>
+    <script>
+        // Media Data (Mock Data - Replace with actual API or backend)
+        const mediaData = {
+            movies: [
+                { 
+                    title: 'Inception', 
+                    poster: 'https://example.com/inception.jpg', 
+                    videoUrl: 'https://example.com/inception.mp4'
+                },
+                { 
+                    title: 'The Matrix', 
+                    poster: 'https://example.com/matrix.jpg', 
+                    videoUrl: 'https://example.com/matrix.mp4'
+                }
+            ],
+            tvShows: [
+                { 
+                    title: 'Stranger Things', 
+                    poster: 'https://example.com/strangerthings.jpg', 
+                    videoUrl: 'https://example.com/strangerthings.mp4'
+                }
+            ],
+            addons: [
+                { name: 'Netflix', description: 'Streaming Service' },
+                { name: 'YouTube', description: 'Video Platform' },
+                { name: 'Spotify', description: 'Music Streaming' }
+            ]
+        };
+
+        // Function to show different sections
+        function showSection(section) {
+            // Hide all sections
+            document.getElementById('movies-section').style.display = 'none';
+            document.getElementById('addons-section').style.display = 'none';
+
+            // Show selected section
+            switch(section) {
+                case 'movies':
+                    document.getElementById('movies-section').style.display = 'block';
+                    populateMovies();
+                    break;
+                case 'addons':
+                    document.getElementById('addons-section').style.display = 'block';
+                    populateAddons();
+                    break;
+            }
+        }
+
+        // Populate Movies Grid
+        function populateMovies() {
+            const moviesGrid = document.getElementById('movies-grid');
+            moviesGrid.innerHTML = ''; // Clear existing content
+
+            mediaData.movies.forEach(movie => {
+                const movieItem = document.createElement('div');
+                movieItem.classList.add('media-item');
+                movieItem.innerHTML = `
+                    <img src="${movie.poster}" alt="${movie.title}">
+                    <div class="media-item-details">
+                        <h3>${movie.title}</h3>
+                        <button onclick="playMedia('${movie.title}', '${movie.videoUrl}')">Play</button>
+                    </div>
+                `;
+                moviesGrid.appendChild(movieItem);
+            });
+        }
+
+        // Populate Add-ons Grid
+        function populateAddons() {
+            const addonsGrid = document.getElementById('addons-grid');
+            addonsGrid.innerHTML = ''; // Clear existing content
+
+            mediaData.addons.forEach(addon => {
+                const addonCard = document.createElement('div');
+                addonCard.classList.add('addon-card');
+                addonCard.innerHTML = `
+                    <h3>${addon.name}</h3>
+                    <p>${addon.description}</p>
+                `;
+                addonsGrid.appendChild(addonCard);
+            });
+        }
+
+        // Play Media Function
+        function playMedia(title, videoUrl) {
+            const mediaPlayer = document.getElementById('mediaPlayer');
+            const currentMediaTitle = document.getElementById('current-media-title');
+
+            mediaPlayer.src = videoUrl;
+            currentMediaTitle.textContent = title;
+            mediaPlayer.play();
+        }
+
+        // Fullscreen Toggle
+        function toggleFullscreen() {
+            const mediaPlayer = document.getElementById('mediaPlayer');
+            if (!document.fullscreenElement) {
+                if (mediaPlayer.requestFullscreen) {
+                    mediaPlayer.requestFullscreen();
+                } else if (mediaPlayer.mozRequestFullScreen) { // Firefox
+                    mediaPlayer.mozRequestFullScreen();
+                } else if (mediaPlayer.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    mediaPlayer.webkitRequestFullscreen();
+                } else if (mediaPlayer.msRequestFullscreen) { // IE/Edge
+                    mediaPlayer.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { // Firefox
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { // IE/Edge
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('movies');
+        });
+    </script>
 </body>
 </html>
