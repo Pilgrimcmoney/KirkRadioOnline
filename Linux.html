@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Full Web-Based Linux System</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Monaco', monospace;
+            background-color: #1e1e1e;
+            color: #00ff00;
+        }
+        #desktop-environment {
+            display: flex;
+            height: 100vh;
+        }
+        #sidebar {
+            width: 200px;
+            background-color: #2c3e50;
+            padding: 20px;
+        }
+        #main-content {
+            flex-grow: 1;
+            display: flex;
+        }
+        #terminal {
+            flex-grow: 1;
+            background-color: #000;
+            color: #00ff00;
+            padding: 10px;
+            overflow: auto;
+        }
+        .app-icon {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #34495e;
+        }
+        .app-icon img {
+            width: 32px;
+            height: 32px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="desktop-environment">
+        <div id="sidebar">
+            <h2>Linux Web OS</h2>
+            <div class="app-icon" onclick="openTerminal()">
+                <img src="https://icon-library.com/images/terminal-icon/terminal-icon-16.jpg" alt="Terminal">
+                Terminal
+            </div>
+            <div class="app-icon" onclick="openFileManager()">
+                <img src="https://cdn-icons-png.flaticon.com/512/2503/2503508.png" alt="Files">
+                File Manager
+            </div>
+            <div class="app-icon" onclick="openSystemMonitor()">
+                <img src="https://cdn-icons-png.flaticon.com/512/2535/2535524.png" alt="Monitor">
+                System Monitor
+            </div>
+        </div>
+        <div id="main-content">
+            <div id="terminal"></div>
+        </div>
+    </div>
+
+    <script>
+        class WebLinuxSystem {
+            constructor() {
+                this.fileSystem = {
+                    '/': ['home', 'etc', 'var', 'usr'],
+                    '/home': ['user'],
+                    '/home/user': ['Documents', 'Downloads', 'Projects'],
+                    '/etc': ['config', 'system'],
+                    '/var': ['log', 'cache']
+                };
+
+                this.systemInfo = {
+                    hostname: 'weblinux',
+                    username: 'webuser',
+                    osVersion: '1.0.0',
+                    kernel: 'WebLinux Kernel',
+                    uptime: this.getUptime()
+                };
+
+                this.currentDirectory = '/home/user';
+                this.commandHistory = [];
+                this.historyIndex = -1;
+            }
+
+            // Advanced File System Methods
+            listDirectory(path = this.currentDirectory) {
+                return this.fileSystem[path] || [];
+            }
+
+            createDirectory(path) {
+                if (!this.fileSystem[path]) {
+                    this.fileSystem[path] = [];
+                    return `Created directory ${path}`;
+                }
+                return `Directory ${path} already exists`;
+            }
+
+            removeDirectory(path) {
+                if (this.fileSystem[path]) {
+                    delete this.fileSystem[path];
+                    return `Removed directory ${path}`;
+                }
+                return `Directory ${path} not found`;
+            }
+
+            // System Monitoring Methods
+            getSystemResources() {
+                return {
+                    cpu: this.simulateCPUUsage(),
+                    memory: this.simulateMemoryUsage(),
+                    storage: this.calculateStorageUsage()
+                };
+            }
+
+            simulateCPUUsage() {
+                return `${Math.floor(Math.random() * 100)}%`;
+            }
+
+            simulateMemoryUsage() {
+                return `${Math.floor(Math.random() * 8)}GB / 16GB`;
+            }
+
+            calculateStorageUsage() {
+                return `${Math.floor(Math.random() * 500)}GB / 1TB`;
+            }
+
+            getUptime() {
+                return `${Math.floor(Math.random() * 100)} days`;
+            }
+
+            // Advanced Command Processing
+            processCommand(command) {
+                const [cmd, ...args] = command.trim().split(' ');
+                
+                const commandHandlers = {
+                    'ls': () => this.listDirectory(args[0] || this.currentDirectory).join('  '),
+                    'pwd': () => this.currentDirectory,
+                    'whoami': () => this.systemInfo.username,
+                    'system': () => this.getSystemInfo(),
+                    'mkdir': () => this.createDirectory(args[0]),
+                    'rmdir': () => this.removeDirectory(args[0]),
+                    'help': () => this.getHelp()
+                };
+
+                if (commandHandlers[cmd]) {
+                    return commandHandlers[cmd]();
+                }
+
+                return `Command not found: ${command}`;
+            }
+
+            getSystemInfo() {
+                return `
+Hostname: ${this.systemInfo.hostname}
+OS: WebLinux ${this.systemInfo.osVersion}
+Kernel: ${this.systemInfo.kernel}
+Uptime: ${this.systemInfo.uptime}
+                `.trim();
+            }
+
+            getHelp() {
+                return `
+Available Commands:
+- ls        : List directory contents
+- pwd       : Print working directory
+- whoami    : Show current user
+- system    : Display system information
+- mkdir     : Create a directory
+- rmdir     : Remove a directory
+- help      : Show this help menu
+                `.trim();
+            }
+        }
+
+        // Web Linux System Initialization
+        const webLinux = new WebLinuxSystem();
+        const terminalElement = document.getElementById('terminal');
+
+        function renderTerminal(output) {
+            terminalElement.innerHTML += `
+                <div class="terminal-output">
+                    ${output}
+                </div>
+            `;
+            terminalElement.scrollTop = terminalElement.scrollHeight;
+        }
+
+        function openTerminal() {
+            terminalElement.innerHTML = `
+                <div class="terminal-header">
+                    WebLinux Terminal - ${webLinux.systemInfo.hostname}
+                </div>
+            `;
+            renderTerminal('Welcome to WebLinux Terminal');
+            renderTerminal('Type "help" for available commands');
+        }
+
+        function openFileManager() {
+            terminalElement.innerHTML = `
+                <div class="file-manager">
+                    <h2>File Manager</h2>
+                    <pre>${JSON.stringify(webLinux.fileSystem, null, 2)}</pre>
+                </div>
+            `;
+        }
+
+        function openSystemMonitor() {
+            const resources = webLinux.getSystemResources();
+            terminalElement.innerHTML = `
+                <div class="system-monitor">
+                    <h2>System Monitor</h2>
+                    <p>CPU Usage: ${resources.cpu}</p>
+                    <p>Memory: ${resources.memory}</p>
+                    <p>Storage: ${resources.storage}</p>
+                </div>
+            `;
+        }
+
+        // Command Execution Simulation
+        function executeCommand() {
+            const command = prompt('Enter command:');
+            if (command) {
+                const result = webLinux.processCommand(command);
+                renderTerminal(`> ${command}`);
+                renderTerminal(result);
+            }
+        }
+
+        // Initial Setup
+        openTerminal();
+    </script>
+</body>
+</html>
