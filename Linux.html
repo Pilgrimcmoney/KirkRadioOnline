@@ -2,274 +2,351 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Advanced Kodi Web Emulation Station</title>
+    <title>Advanced Kodi Web ROM Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* (Previous CSS remains the same) */
-        .emulator-controls {
-            display: flex;
-            justify-content: center;
+        :root {
+            --bg-dark: #121212;
+            --bg-medium: #1e1e1e;
+            --bg-light: #2c2c2c;
+            --text-primary: #ffffff;
+            --accent-color: #bb86fc;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .rom-manager-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            height: 100vh;
+        }
+
+        .sidebar {
+            background-color: var(--bg-medium);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .rom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
             padding: 20px;
-            background-color: rgba(0,0,0,0.7);
+            overflow-y: auto;
         }
 
-        .emulator-btn {
-            background-color: #0f3460;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .rom-card {
+            background-color: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
         }
 
-        .emulator-btn:hover {
-            background-color: #e94560;
+        .rom-card:hover {
+            transform: scale(1.05);
         }
 
-        #emulator-canvas {
-            max-width: 100%;
-            max-height: 70vh;
-            background: black;
+        .rom-card-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .modal {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .github-import-section {
+            background-color: var(--bg-medium);
+            padding: 20px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- (Previous HTML structure remains the same) -->
-
-    <!-- Emulator Modal -->
-    <div id="emulatorModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="emulator-game-title">Game Title</h3>
-                <button class="btn" id="closeEmulatorModal">Close</button>
+    <div class="rom-manager-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3 class="text-center mb-4">ROM Manager</h3>
+            
+            <!-- Console Systems -->
+            <div class="nav flex-column nav-pills" role="tablist">
+                <button class="nav-link active" data-bs-toggle="pill" data-system="nes">
+                    🎮 Nintendo (NES)
+                </button>
+                <button class="nav-link" data-bs-toggle="pill" data-system="snes">
+                    🎮 Super Nintendo (SNES)
+                </button>
+                <button class="nav-link" data-bs-toggle="pill" data-system="n64">
+                    🎮 Nintendo 64
+                </button>
             </div>
-            <div class="modal-body" style="flex-direction: column;">
-                <canvas id="emulator-canvas"></canvas>
-                <div class="emulator-controls">
-                    <button class="emulator-btn" id="start-btn">Start</button>
-                    <button class="emulator-btn" id="pause-btn">Pause</button>
-                    <button class="emulator-btn" id="save-state-btn">Save State</button>
-                    <button class="emulator-btn" id="load-state-btn">Load State</button>
-                    <button class="emulator-btn" id="reset-btn">Reset</button>
+
+            <!-- ROM Management -->
+            <hr>
+            <div class="mt-3">
+                <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#githubImportModal">
+                    Import ROMs from GitHub
+                </button>
+                <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#localUploadModal">
+                    Upload Local ROMs
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <div class="rom-grid" id="romGrid">
+                <!-- ROMs will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- GitHub Import Modal -->
+    <div class="modal fade" id="githubImportModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title">Import ROMs from GitHub</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="github-import-section">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="githubRepoUrl" 
+                                   placeholder="GitHub Repository URL">
+                            <select class="form-select" id="systemSelect" style="max-width: 150px;">
+                                <option value="nes">NES</option>
+                                <option value="snes">SNES</option>
+                                <option value="n64">N64</option>
+                            </select>
+                            <button class="btn btn-primary" id="importFromGithubBtn">
+                                Import ROMs
+                            </button>
+                        </div>
+                        <div id="importStatus" class="mt-3"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Local Upload Modal -->
+    <div class="modal fade" id="localUploadModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title">Upload Local ROMs</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <select class="form-select mb-3" id="localSystemSelect">
+                            <option value="nes">Nintendo (NES)</option>
+                            <option value="snes">Super Nintendo (SNES)</option>
+                            <option value="n64">Nintendo 64</option>
+                        </select>
+                        <input type="file" class="form-control" id="romFileUpload" 
+                               accept=".nes,.smc,.n64" multiple>
+                    </div>
+                    <button class="btn btn-success w-100" id="uploadRomsBtn">
+                        Upload ROMs
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Advanced Emulation Core
-        class EmulationCore {
-            constructor(canvas) {
-                this.canvas = canvas;
-                this.ctx = canvas.getContext('2d');
-                this.isRunning = false;
-                this.currentGame = null;
-                this.saveStates = {};
-                this.emulationInterval = null;
-            }
-
-            // Simulated game state and rendering
-            initializeGame(gameData) {
-                this.currentGame = gameData;
-                this.canvas.width = 640;
-                this.canvas.height = 480;
-                
-                // Clear canvas
-                this.ctx.fillStyle = 'black';
-                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-                
-                // Draw game title
-                this.ctx.fillStyle = 'white';
-                this.ctx.font = '24px Arial';
-                this.ctx.textAlign = 'center';
-                this.ctx.fillText(`Emulating: ${gameData.title}`, 
-                    this.canvas.width / 2, 
-                    this.canvas.height / 2
-                );
-            }
-
-            start() {
-                if (this.isRunning) return;
-                
-                this.isRunning = true;
-                console.log(`Starting game: ${this.currentGame.title}`);
-                
-                // Simulated game loop
-                this.emulationInterval = setInterval(() => {
-                    this.updateGameState();
-                    this.renderGame();
-                }, 1000 / 60); // 60 FPS
-            }
-
-            pause() {
-                if (!this.isRunning) return;
-                
-                this.isRunning = false;
-                if (this.emulationInterval) {
-                    clearInterval(this.emulationInterval);
-                }
-                console.log(`Paused game: ${this.currentGame.title}`);
-            }
-
-            reset() {
-                this.pause();
-                this.initializeGame(this.currentGame);
-                console.log(`Reset game: ${this.currentGame.title}`);
-            }
-
-            saveState() {
-                if (!this.currentGame) return;
-
-                // Create a save state
-                const saveState = {
-                    timestamp: new Date().toISOString(),
-                    gameId: this.currentGame.id,
-                    // Simulated game state data
-                    gameState: {
-                        score: Math.random() * 1000,
-                        level: Math.floor(Math.random() * 10),
-                        timestamp: Date.now()
-                    }
+        // Advanced ROM Management System
+        class ROMManager {
+            constructor() {
+                // Local storage for ROM collections
+                this.romCollections = {
+                    nes: [],
+                    snes: [],
+                    n64: []
                 };
 
-                // Store save state
-                if (!this.saveStates[this.currentGame.id]) {
-                    this.saveStates[this.currentGame.id] = [];
-                }
-                this.saveStates[this.currentGame.id].push(saveState);
-
-                console.log(`Save state created for ${this.currentGame.title}`);
-                this.showNotification(`Save state created for ${this.currentGame.title}`);
+                // Initialize local storage
+                this.loadFromLocalStorage();
             }
 
-            loadState() {
-                if (!this.currentGame) return;
+            // GitHub ROM Import
+            async importFromGithub(repoUrl, system) {
+                try {
+                    // Parse GitHub repository
+                    const githubRegex = /https:\/\/github.com\/([^\/]+)\/([^\/]+)/;
+                    const match = repoUrl.match(githubRegex);
 
-                const gameSaves = this.saveStates[this.currentGame.id];
-                if (!gameSaves || gameSaves.length === 0) {
-                    this.showNotification('No save states available');
-                    return;
-                }
-
-                // Load the most recent save state
-                const latestSave = gameSaves[gameSaves.length - 1];
-                console.log(`Loading save state for ${this.currentGame.title}`, latestSave);
-                this.showNotification(`Loaded save state for ${this.currentGame.title}`);
-            }
-
-            updateGameState() {
-                // Simulated game state update
-                if (!this.isRunning) return;
-            }
-
-            renderGame() {
-                // Simulated rendering
-                if (!this.isRunning) return;
-                
-                // Simple animation to show emulation is working
-                this.ctx.fillStyle = `hsl(${Math.random() * 360}, 50%, 50%)`;
-                this.ctx.fillRect(
-                    Math.random() * this.canvas.width, 
-                    Math.random() * this.canvas.height, 
-                    20, 20
-                );
-            }
-
-            showNotification(message) {
-                // Create a simple notification
-                const notification = document.createElement('div');
-                notification.style.position = 'fixed';
-                notification.style.bottom = '20px';
-                notification.style.left = '50%';
-                notification.style.transform = 'translateX(-50%)';
-                notification.style.backgroundColor = 'rgba(0,0,0,0.7)';
-                notification.style.color = 'white';
-                notification.style.padding = '10px 20px';
-                notification.style.borderRadius = '5px';
-                notification.textContent = message;
-                
-                document.body.appendChild(notification);
-                
-                // Remove notification after 3 seconds
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 3000);
-            }
-        }
-
-        // Emulator Management
-        const EmulatorManager = {
-            currentEmulator: null,
-
-            initializeEmulator(game) {
-                const canvas = document.getElementById('emulator-canvas');
-                this.currentEmulator = new EmulationCore(canvas);
-                this.currentEmulator.initializeGame(game);
-
-                // Setup button events
-                document.getElementById('start-btn').onclick = () => this.currentEmulator.start();
-                document.getElementById('pause-btn').onclick = () => this.currentEmulator.pause();
-                document.getElementById('save-state-btn').onclick = () => this.currentEmulator.saveState();
-                document.getElementById('load-state-btn').onclick = () => this.currentEmulator.loadState();
-                document.getElementById('reset-btn').onclick = () => this.currentEmulator.reset();
-            },
-
-            openEmulator(game) {
-                const emulatorModal = document.getElementById('emulatorModal');
-                const gameTitleElement = document.getElementById('emulator-game-title');
-
-                // Set game title
-                gameTitleElement.textContent = game.title;
-
-                // Show modal
-                emulatorModal.style.display = 'flex';
-
-                // Initialize emulator
-                this.initializeEmulator(game);
-            }
-        };
-
-        // Update the existing script to use EmulatorManager
-        function setupEventListeners() {
-            // Previous event listeners...
-
-            // Add game play functionality
-            document.addEventListener('click', (e) => {
-                const playButton = e.target.closest('.play-game');
-                if (playButton) {
-                    const gameId = playButton.dataset.id;
-                    const game = Object.values(AppState.gameLibrary)
-                        .flat()
-                        .find(g => g.id == gameId);
-                    
-                    if (game) {
-                        EmulatorManager.openEmulator(game);
+                    if (!match) {
+                        throw new Error('Invalid GitHub Repository URL');
                     }
+
+                    const [, owner, repo] = match;
+
+                    // Fetch repository contents
+                    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents`;
+                    const response = await fetch(apiUrl);
+                    const files = await response.json();
+
+                    // Filter ROM files
+                    const romExtensions = {
+                        nes: ['.nes'],
+                        snes: ['.smc', '.snes'],
+                        n64: ['.n64', '.z64']
+                    };
+
+                    const validRoms = files.filter(file => 
+                        romExtensions[system].some(ext => 
+                            file.name.toLowerCase().endsWith(ext)
+                        )
+                    );
+
+                    // Process and add ROMs
+                    const importedRoms = validRoms.map(rom => ({
+                        id: rom.sha,
+                        name: rom.name,
+                        system: system,
+                        downloadUrl: rom.download_url,
+                        metadata: {
+                            size: rom.size,
+                            path: rom.path
+                        }
+                    }));
+
+                    // Add to collection
+                    this.romCollections[system].push(...importedRoms);
+                    this.saveToLocalStorage();
+
+                    return importedRoms;
+                } catch (error) {
+                    console.error('GitHub ROM Import Error:', error);
+                    throw error;
+                }
+            }
+
+            // Local File Upload
+            uploadLocalRoms(files, system) {
+                const uploadedRoms = Array.from(files).map(file => ({
+                    id: Date.now() + Math.random().toString(36).substr(2, 9),
+                    name: file.name,
+                    system: system,
+                    file: file,
+                    metadata: {
+                        size: file.size,
+                        type: file.type
+                    }
+                }));
+
+                this.romCollections[system].push(...uploadedRoms);
+                this.saveToLocalStorage();
+
+                return uploadedRoms;
+            }
+
+            // Persist ROM Collection
+            saveToLocalStorage() {
+                localStorage.setItem('romCollections', JSON.stringify(this.romCollections));
+            }
+
+            // Retrieve ROM Collection
+            loadFromLocalStorage() {
+                const savedCollections = localStorage.getItem('romCollections');
+                if (savedCollections) {
+                    this.romCollections = JSON.parse(savedCollections);
+                }
+            }
+
+            // Render ROMs
+            renderROMGrid(system) {
+                const romGrid = document.getElementById('romGrid');
+                romGrid.innerHTML = '';
+
+                const roms = this.romCollections[system] || [];
+
+                roms.forEach(rom => {
+                    const romCard = document.createElement('div');
+                    romCard.classList.add('rom-card');
+                    romCard.innerHTML = `
+                        <img src="/placeholder-rom-image.png" 
+                             alt="${rom.name}" 
+                             class="rom-card-image">
+                        <div class="p-3">
+                            <h5>${rom.name}</h5>
+                            <div class="d-flex justify-content-between">
+                                <span class="badge bg-primary">${rom.system.toUpperCase()}</span>
+                                <button class="btn btn-sm btn-success play-rom" 
+                                        data-rom-id="${rom.id}">
+                                    Play
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    romGrid.appendChild(romCard);
+                });
+            }
+        }
+
+        // Initialize ROM Manager
+        const romManager = new ROMManager();
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // System Selection
+            document.querySelectorAll('[data-system]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const system = e.target.dataset.system;
+                    romManager.renderROMGrid(system);
+                });
+            });
+
+            // Initial render (NES)
+            romManager.renderROMGrid('nes');
+
+            // GitHub Import
+            document.getElementById('importFromGithubBtn').addEventListener('click', async () => {
+                const repoUrl = document.getElementById('githubRepoUrl').value;
+                const system = document.getElementById('systemSelect').value;
+                const statusEl = document.getElementById('importStatus');
+
+                try {
+                    statusEl.innerHTML = '<div class="text-warning">Importing ROMs...</div>';
+                    const importedRoms = await romManager.importFromGithub(repoUrl, system);
+                    
+                    statusEl.innerHTML = `
+                        <div class="text-success">
+                            Successfully imported ${importedRoms.length} ROMs
+                        </div>
+                    `;
+
+                    // Refresh ROM grid
+                    romManager.renderROMGrid(system);
+                } catch (error) {
+                    statusEl.innerHTML = `
+                        <div class="text-danger">
+                            Error: ${error.message}
+                        </div>
+                    `;
                 }
             });
 
-            // Close emulator modal
-            document.getElementById('closeEmulatorModal').addEventListener('click', () => {
-                const emulatorModal = document.getElementById('emulatorModal');
-                emulatorModal.style.display = 'none';
-                
-                // Stop emulation if active
-                if (EmulatorManager.currentEmulator) {
-                    EmulatorManager.currentEmulator.pause();
+            // Local ROM Upload
+            document.getElementById('uploadRomsBtn').addEventListener('click', () => {
+                const files = document.getElementById('romFileUpload').files;
+                const system = document.getElementById('localSystemSelect').value;
+
+                if (files.length > 0) {
+                    romManager.uploadLocalRoms(files, system);
+                    romManager.renderROMGrid(system);
                 }
             });
-        }
-
-        // Modify the existing initializeApp function
-        function initializeApp() {
-            // Initial render
-            RenderManager.renderGameLibrary('nes');
-            setupEventListeners();
-        }
-
-        // Start the application
-        document.addEventListener('DOMContentLoaded', initializeApp);
+        });
     </script>
 </body>
 </html>
