@@ -2,172 +2,217 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Full Web-Based Linux System</title>
+    <title>Web Linux OS - Full Operating System Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Monaco', monospace;
-            background-color: #1e1e1e;
-            color: #00ff00;
+        :root {
+            --primary-bg: #1a1a2e;
+            --secondary-bg: #16213e;
+            --text-color: #ffffff;
+            --accent-color: #0f3460;
         }
-        #desktop-environment {
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Ubuntu Mono', monospace;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            overflow: hidden;
+        }
+
+        #desktop {
             display: flex;
             height: 100vh;
+            background: url('https://source.unsplash.com/1600x900/?technology,linux') no-repeat center center fixed;
+            background-size: cover;
         }
+
         #sidebar {
-            width: 200px;
-            background-color: #2c3e50;
+            width: 250px;
+            background-color: rgba(22, 33, 62, 0.8);
             padding: 20px;
+            backdrop-filter: blur(10px);
         }
+
         #main-content {
             flex-grow: 1;
             display: flex;
+            flex-direction: column;
         }
-        #terminal {
-            flex-grow: 1;
-            background-color: #000;
-            color: #00ff00;
-            padding: 10px;
-            overflow: auto;
-        }
+
         .app-icon {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
-            cursor: pointer;
+            margin-bottom: 15px;
             padding: 10px;
-            background-color: #34495e;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
+
+        .app-icon:hover {
+            background-color: rgba(233, 69, 96, 0.2);
+            transform: scale(1.05);
+        }
+
         .app-icon img {
             width: 32px;
             height: 32px;
-            margin-right: 10px;
+            margin-right: 15px;
+        }
+
+        #window-container {
+            flex-grow: 1;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .terminal {
+            background-color: black;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        #taskbar {
+            background-color: rgba(22, 33, 62, 0.9);
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .system-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .system-clock {
+            margin-left: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div id="desktop-environment">
+    <div id="desktop">
+        <!-- Sidebar -->
         <div id="sidebar">
-            <h2>Linux Web OS</h2>
-            <div class="app-icon" onclick="openTerminal()">
-                <img src="https://icon-library.com/images/terminal-icon/terminal-icon-16.jpg" alt="Terminal">
-                Terminal
-            </div>
-            <div class="app-icon" onclick="openFileManager()">
-                <img src="https://cdn-icons-png.flaticon.com/512/2503/2503508.png" alt="Files">
-                File Manager
-            </div>
-            <div class="app-icon" onclick="openSystemMonitor()">
-                <img src="https://cdn-icons-png.flaticon.com/512/2535/2535524.png" alt="Monitor">
-                System Monitor
+            <h3 class="mb-4">Web Linux OS</h3>
+            <div class="app-icons">
+                <div class="app-icon" data-app="terminal">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2535/2535524.png" alt="Terminal">
+                    Terminal
+                </div>
+                <div class="app-icon" data-app="file-manager">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2503/2503508.png" alt="File Manager">
+                    File Manager
+                </div>
+                <div class="app-icon" data-app="system-monitor">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2535/2535507.png" alt="System Monitor">
+                    System Monitor
+                </div>
+                <div class="app-icon" data-app="web-browser">
+                    <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt="Web Browser">
+                    Web Browser
+                </div>
             </div>
         </div>
+
+        <!-- Main Content Area -->
         <div id="main-content">
-            <div id="terminal"></div>
+            <div id="window-container">
+                <!-- Dynamic content will load here -->
+            </div>
+
+            <!-- Taskbar -->
+            <div id="taskbar">
+                <div class="system-info">
+                    <span>Web Linux OS v2.0</span>
+                    <div class="system-clock" id="system-clock"></div>
+                </div>
+                <div class="system-actions">
+                    <button class="btn btn-sm btn-outline-light" id="shutdown-btn">Shutdown</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        class WebLinuxSystem {
+        class WebLinuxOS {
             constructor() {
                 this.fileSystem = {
                     '/': ['home', 'etc', 'var', 'usr'],
-                    '/home': ['user'],
-                    '/home/user': ['Documents', 'Downloads', 'Projects'],
-                    '/etc': ['config', 'system'],
-                    '/var': ['log', 'cache']
+                    '/home': ['user', 'documents', 'downloads'],
+                    '/home/documents': ['readme.txt', 'notes.md'],
+                    '/home/downloads': []
                 };
 
                 this.systemInfo = {
                     hostname: 'weblinux',
                     username: 'webuser',
-                    osVersion: '1.0.0',
-                    kernel: 'WebLinux Kernel',
-                    uptime: this.getUptime()
+                    osVersion: '2.0.0',
+                    kernel: 'WebLinux Kernel'
                 };
 
                 this.currentDirectory = '/home/user';
-                this.commandHistory = [];
-                this.historyIndex = -1;
+                this.initializeClock();
             }
 
-            // Advanced File System Methods
-            listDirectory(path = this.currentDirectory) {
-                return this.fileSystem[path] || [];
+            // System Clock
+            initializeClock() {
+                const clockElement = document.getElementById('system-clock');
+                setInterval(() => {
+                    const now = new Date();
+                    clockElement.textContent = now.toLocaleTimeString();
+                }, 1000);
             }
 
-            createDirectory(path) {
-                if (!this.fileSystem[path]) {
-                    this.fileSystem[path] = [];
-                    return `Created directory ${path}`;
-                }
-                return `Directory ${path} already exists`;
-            }
-
-            removeDirectory(path) {
-                if (this.fileSystem[path]) {
-                    delete this.fileSystem[path];
-                    return `Removed directory ${path}`;
-                }
-                return `Directory ${path} not found`;
-            }
-
-            // System Monitoring Methods
-            getSystemResources() {
-                return {
-                    cpu: this.simulateCPUUsage(),
-                    memory: this.simulateMemoryUsage(),
-                    storage: this.calculateStorageUsage()
-                };
-            }
-
-            simulateCPUUsage() {
-                return `${Math.floor(Math.random() * 100)}%`;
-            }
-
-            simulateMemoryUsage() {
-                return `${Math.floor(Math.random() * 8)}GB / 16GB`;
-            }
-
-            calculateStorageUsage() {
-                return `${Math.floor(Math.random() * 500)}GB / 1TB`;
-            }
-
-            getUptime() {
-                return `${Math.floor(Math.random() * 100)} days`;
-            }
-
-            // Advanced Command Processing
+            // Secure Command Processing
             processCommand(command) {
                 const [cmd, ...args] = command.trim().split(' ');
                 
                 const commandHandlers = {
-                    'ls': () => this.listDirectory(args[0] || this.currentDirectory).join('  '),
+                    'ls': () => this.listDirectory(args[0]),
                     'pwd': () => this.currentDirectory,
                     'whoami': () => this.systemInfo.username,
                     'system': () => this.getSystemInfo(),
-                    'mkdir': () => this.createDirectory(args[0]),
-                    'rmdir': () => this.removeDirectory(args[0]),
                     'help': () => this.getHelp()
                 };
 
-                if (commandHandlers[cmd]) {
-                    return commandHandlers[cmd]();
-                }
-
-                return `Command not found: ${command}`;
+                return commandHandlers[cmd] 
+                    ? commandHandlers[cmd]() 
+                    : `Command not found: ${command}`;
             }
 
+            // Directory Listing
+            listDirectory(path = this.currentDirectory) {
+                return this.fileSystem[path] 
+                    ? this.fileSystem[path].join('\n') 
+                    : `Directory not found: ${path}`;
+            }
+
+            // System Information
             getSystemInfo() {
                 return `
 Hostname: ${this.systemInfo.hostname}
-OS: WebLinux ${this.systemInfo.osVersion}
+Username: ${this.systemInfo.username}
+OS Version: ${this.systemInfo.osVersion}
 Kernel: ${this.systemInfo.kernel}
-Uptime: ${this.systemInfo.uptime}
+Current Directory: ${this.currentDirectory}
                 `.trim();
             }
 
+            // Help Command
             getHelp() {
                 return `
 Available Commands:
@@ -175,69 +220,141 @@ Available Commands:
 - pwd       : Print working directory
 - whoami    : Show current user
 - system    : Display system information
-- mkdir     : Create a directory
-- rmdir     : Remove a directory
 - help      : Show this help menu
                 `.trim();
             }
         }
 
-        // Web Linux System Initialization
-        const webLinux = new WebLinuxSystem();
-        const terminalElement = document.getElementById('terminal');
+        class WebLinuxUI {
+            constructor() {
+                this.linux = new WebLinuxOS();
+                this.windowContainer = document.getElementById('window-container');
+                this.setupEventListeners();
+            }
 
-        function renderTerminal(output) {
-            terminalElement.innerHTML += `
-                <div class="terminal-output">
-                    ${output}
-                </div>
-            `;
-            terminalElement.scrollTop = terminalElement.scrollHeight;
-        }
+            setupEventListeners() {
+                // App Icon Clicks
+                document.querySelector('#sidebar').addEventListener('click', (e) => {
+                    const appIcon = e.target.closest('.app-icon');
+                    if (appIcon) {
+                        const app = appIcon.dataset.app;
+                        this.openApp(app);
+                    }
+                });
 
-        function openTerminal() {
-            terminalElement.innerHTML = `
-                <div class="terminal-header">
-                    WebLinux Terminal - ${webLinux.systemInfo.hostname}
-                </div>
-            `;
-            renderTerminal('Welcome to WebLinux Terminal');
-            renderTerminal('Type "help" for available commands');
-        }
+                // Shutdown Button
+                document.getElementById('shutdown-btn').addEventListener('click', () => {
+                    this.shutdownSystem();
+                });
+            }
 
-        function openFileManager() {
-            terminalElement.innerHTML = `
-                <div class="file-manager">
-                    <h2>File Manager</h2>
-                    <pre>${JSON.stringify(webLinux.fileSystem, null, 2)}</pre>
-                </div>
-            `;
-        }
+            openApp(app) {
+                this.windowContainer.innerHTML = '';
 
-        function openSystemMonitor() {
-            const resources = webLinux.getSystemResources();
-            terminalElement.innerHTML = `
-                <div class="system-monitor">
-                    <h2>System Monitor</h2>
-                    <p>CPU Usage: ${resources.cpu}</p>
-                    <p>Memory: ${resources.memory}</p>
-                    <p>Storage: ${resources.storage}</p>
-                </div>
-            `;
-        }
+                switch(app) {
+                    case 'terminal':
+                        this.renderTerminal();
+                        break;
+                    case 'file-manager':
+                        this.renderFileManager();
+                        break;
+                    case 'system-monitor':
+                        this.renderSystemMonitor();
+                        break;
+                    case 'web-browser':
+                        this.renderWebBrowser();
+                        break;
+                }
+            }
 
-        // Command Execution Simulation
-        function executeCommand() {
-            const command = prompt('Enter command:');
-            if (command) {
-                const result = webLinux.processCommand(command);
-                renderTerminal(`> ${command}`);
-                renderTerminal(result);
+            renderTerminal() {
+                this.windowContainer.innerHTML = `
+                    <div class="terminal">
+                        <div class="terminal-header">Web Linux Terminal</div>
+                        <div id="terminal-output" class="terminal-output"></div>
+                        <div class="terminal-input">
+                            <input type="text" id="command-input" placeholder="Enter command" class="form-control">
+                        </div>
+                    </div>
+                `;
+
+                const commandInput = document.getElementById('command-input');
+                const terminalOutput = document.getElementById('terminal-output');
+
+                commandInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        const command = commandInput.value;
+                        const result = this.linux.processCommand(command);
+                        
+                        terminalOutput.innerHTML += `
+                            <div class="command-line">
+                                <span class="prompt">$ </span>${command}
+                            </div>
+                            <div class="command-result">${result}</div>
+                        `;
+
+                        commandInput.value = '';
+                        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    }
+                });
+            }
+
+            renderFileManager() {
+                this.windowContainer.innerHTML = `
+                    <div class="file-manager">
+                        <h2>File Manager</h2>
+                        <pre>${JSON.stringify(this.linux.fileSystem, null, 2)}</pre>
+                    </div>
+                `;
+            }
+
+            renderSystemMonitor() {
+                this.windowContainer.innerHTML = `
+                    <div class="system-monitor">
+                        <h2>System Monitor</h2>
+                        <pre>${this.linux.getSystemInfo()}</pre>
+                        <div class="system-resources">
+                            <h3>System Resources</h3>
+                            <div>CPU: ${this.generateRandomPercentage()}%</div>
+                            <div>Memory: ${this.generateRandomPercentage()}%</div>
+                            <div>Disk: ${this.generateRandomPercentage()}%</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderWebBrowser() {
+                this.windowContainer.innerHTML = `
+                    <div class="web-browser">
+                        <h2>Web Browser</h2>
+                        <input type="text" id="url-input" class="form-control" placeholder="Enter URL">
+                        <iframe id="browser-frame" src="https://www.google.com" width="100%" height="500"></iframe>
+                    </div>
+                `;
+            }
+
+            generateRandomPercentage() {
+                return Math.floor(Math.random() * 100);
+            }
+
+            shutdownSystem() {
+                this.windowContainer.innerHTML = `
+                    <div class="shutdown-screen text-center">
+                        <h1>System Shutting Down...</h1>
+                        <p>Goodbye, ${this.linux.systemInfo.username}</p>
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
             }
         }
 
-        // Initial Setup
-        openTerminal();
+        // Initialize the Web Linux OS
+        document.addEventListener('DOMContentLoaded', () => {
+            new WebLinuxUI();
+        });
     </script>
 </body>
 </html>
