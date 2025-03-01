@@ -1,0 +1,27 @@
+.sidebar {
+    background-color: #f4f4f4;
+    height: 100vh;
+    padding: 20px;
+}
+
+.rom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+.rom-card {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 10px;
+}
+
+.rom-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+#error-message {
+    margin-top: 15px;
+}
