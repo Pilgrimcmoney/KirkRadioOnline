@@ -3,93 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Kodi Web Emulation Station</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
-            --kodi-bg-dark: #1a1a2e;
-            --kodi-bg-medium: #16213e;
-            --kodi-bg-light: #0f3460;
-            --kodi-text-primary: #e94560;
-            --kodi-text-secondary: #ffffff;
-            --kodi-accent: #0f3460;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --primary-dark: #1a1a2e;
+            --secondary-dark: #16213e;
+            --accent-color: #0f3460;
+            --text-color: #e94560;
         }
 
         body {
+            background-color: var(--primary-dark);
+            color: white;
             font-family: 'Arial', sans-serif;
-            background-color: var(--kodi-bg-dark);
-            color: var(--kodi-text-secondary);
-            line-height: 1.6;
         }
 
-        .kodi-container {
+        .emulation-container {
             display: grid;
             grid-template-columns: 250px 1fr;
             height: 100vh;
         }
 
-        /* Sidebar Styling */
-        .kodi-sidebar {
-            background-color: var(--kodi-bg-medium);
+        .sidebar {
+            background-color: var(--secondary-dark);
             padding: 20px;
             overflow-y: auto;
         }
 
-        .kodi-menu {
+        .console-list {
             list-style: none;
+            padding: 0;
         }
 
-        .kodi-menu-category {
-            margin-bottom: 20px;
+        .console-item {
+            margin-bottom: 15px;
         }
 
-        .kodi-menu-category-title {
-            color: var(--kodi-text-primary);
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .kodi-menu-item {
-            margin-bottom: 10px;
-        }
-
-        .kodi-menu-link {
-            display: flex;
-            align-items: center;
+        .console-btn {
+            width: 100%;
+            text-align: left;
+            background-color: transparent;
+            border: none;
+            color: white;
             padding: 10px;
-            color: var(--kodi-text-secondary);
-            text-decoration: none;
-            border-radius: 5px;
             transition: all 0.3s ease;
         }
 
-        .kodi-menu-link:hover,
-        .kodi-menu-link.active {
-            background-color: var(--kodi-bg-light);
-            color: var(--kodi-text-primary);
+        .console-btn:hover, .console-btn.active {
+            background-color: var(--accent-color);
+            color: var(--text-color);
         }
 
-        /* Main Content Area */
-        .kodi-main-content {
-            display: grid;
-            grid-template-rows: auto 1fr auto;
-            background-color: var(--kodi-bg-dark);
-        }
-
-        .kodi-header {
-            background-color: var(--kodi-bg-medium);
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .kodi-content-grid {
+        .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
@@ -97,56 +62,24 @@
             overflow-y: auto;
         }
 
-        .kodi-media-item {
-            background-color: var(--kodi-bg-medium);
-            border-radius: 8px;
+        .game-card {
+            background-color: var(--secondary-dark);
+            border-radius: 10px;
             overflow: hidden;
             transition: transform 0.3s ease;
-            position: relative;
         }
 
-        .kodi-media-item:hover {
+        .game-card:hover {
             transform: scale(1.05);
         }
 
-        .kodi-media-item img {
+        .game-card img {
             width: 100%;
             height: 300px;
             object-fit: cover;
         }
 
-        .kodi-media-details {
-            padding: 10px;
-        }
-
-        .kodi-emulator-controls {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .kodi-media-item:hover .kodi-emulator-controls {
-            opacity: 1;
-        }
-
-        .kodi-emulator-btn {
-            background-color: var(--kodi-text-primary);
-            color: var(--kodi-bg-dark);
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        /* Emulator Modal */
-        .kodi-emulator-modal {
+        .emulator-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -154,166 +87,125 @@
             height: 100%;
             background: rgba(0,0,0,0.9);
             display: none;
+            z-index: 1000;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
         }
 
-        .kodi-emulator-window {
+        .emulator-window {
             width: 90%;
             max-width: 1200px;
             height: 80%;
-            background: var(--kodi-bg-medium);
+            background: var(--secondary-dark);
             border-radius: 10px;
             display: flex;
             flex-direction: column;
         }
 
-        .kodi-emulator-header {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            background: var(--kodi-bg-light);
-        }
-
-        .kodi-emulator-content {
-            flex-grow: 1;
-            display: flex;
-        }
-
-        .kodi-emulator-sidebar {
-            width: 250px;
-            background: var(--kodi-bg-medium);
-            padding: 20px;
-        }
-
-        .kodi-emulator-main {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #emulatorCanvas {
+        #emulator-canvas {
             max-width: 100%;
             max-height: 100%;
+            background: black;
+        }
+
+        .controller-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .controller-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="kodi-container">
-        <!-- Sidebar Navigation -->
-        <div class="kodi-sidebar">
-            <div class="kodi-menu-category">
-                <div class="kodi-menu-category-title">Game Systems</div>
-                <ul class="kodi-menu">
-                    <li class="kodi-menu-item">
-                        <a href="#" class="kodi-menu-link" data-system="nes">
-                            🎮 Nintendo Entertainment System
-                        </a>
-                    </li>
-                    <li class="kodi-menu-item">
-                        <a href="#" class="kodi-menu-link" data-system="snes">
-                            🎮 Super Nintendo
-                        </a>
-                    </li>
-                    <li class="kodi-menu-item">
-                        <a href="#" class="kodi-menu-link" data-system="n64">
-                            🎮 Nintendo 64
-                        </a>
-                    </li>
-                    <li class="kodi-menu-item">
-                        <a href="#" class="kodi-menu-link" data-system="psx">
-                            🎮 PlayStation 1
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="kodi-menu-category">
-                <div class="kodi-menu-category-title">Multimedia</div>
-                <ul class="kodi-menu">
-                    <li class="kodi-menu-item">
-                        <a href="#" class="kodi-menu-link" data-section="movies">
-                            🎬 Movies
-                        </a>
-                    </li>
-                    <li class="kodi-menu-item">
-                        <a href="#" class="kodi-menu-link" data-section="tv">
-                            📺 TV Shows
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="kodi-menu-category">
-                <div class="kodi-menu-category-title">System</div>
-                <ul class="kodi-menu">
-                    <li class="kodi-menu-item">
-                        <a href="#" class="kodi-menu-link" data-section="settings">
-                            ⚙️ Emulator Settings
-                        </a>
-                    </li>
-                    <li class="kodi-menu-item">
-                        <a href="#" class="kodi-menu-link" data-section="addons">
-                            🧩 Add-ons
-                        </a>
-                    </li>
-                </ul>
+    <div class="emulation-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3 class="text-center mb-4">Emulation Stations</h3>
+            <div class="console-list">
+                <div class="console-item">
+                    <button class="console-btn active" data-system="nes">
+                        🎮 Nintendo (NES)
+                    </button>
+                </div>
+                <div class="console-item">
+                    <button class="console-btn" data-system="snes">
+                        🎮 Super Nintendo (SNES)
+                    </button>
+                </div>
+                <div class="console-item">
+                    <button class="console-btn" data-system="n64">
+                        🎮 Nintendo 64
+                    </button>
+                </div>
+                <div class="console-item">
+                    <button class="console-btn" data-system="psx">
+                        🎮 PlayStation
+                    </button>
+                </div>
+                <div class="console-item">
+                    <button class="console-btn" data-system="settings">
+                        ⚙️ Emulator Settings
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- Main Content Area -->
-        <div class="kodi-main-content">
-            <!-- Header -->
-            <div class="kodi-header">
-                <div>Kodi Emulation Station</div>
-                <div>User Profile</div>
-            </div>
-
-            <!-- Content Grid -->
-            <div class="kodi-content-grid" id="mediaContent">
-                <!-- Dynamically populated game/media items -->
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="games-grid" id="games-container">
+                <!-- Games will be dynamically loaded here -->
             </div>
         </div>
     </div>
 
     <!-- Emulator Modal -->
-    <div id="emulatorModal" class="kodi-emulator-modal">
-        <div class="kodi-emulator-window">
-            <div class="kodi-emulator-header">
-                <span id="emulatorTitle">Emulator</span>
-                <button id="closeEmulator">Close</button>
+    <div class="emulator-modal" id="emulator-modal">
+        <div class="emulator-window">
+            <div class="d-flex justify-content-between p-3">
+                <h4 id="game-title">Game Title</h4>
+                <button class="btn btn-danger" id="close-emulator">Close</button>
             </div>
-            <div class="kodi-emulator-content">
-                <div class="kodi-emulator-sidebar">
-                    <h3>Game Controls</h3>
-                    <!-- Emulator-specific controls -->
-                </div>
-                <div class="kodi-emulator-main">
-                    <canvas id="emulatorCanvas"></canvas>
+            <div class="flex-grow-1 position-relative">
+                <canvas id="emulator-canvas"></canvas>
+                <div class="controller-overlay">
+                    <button class="controller-btn" id="start-btn">Start</button>
+                    <button class="controller-btn" id="select-btn">Select</button>
+                    <button class="controller-btn" id="save-state-btn">Save State</button>
+                    <button class="controller-btn" id="load-state-btn">Load State</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Comprehensive Emulation and Media Library
-        const mediaLibrary = {
+        // Comprehensive Game Library
+        const gameLibrary = {
             nes: [
                 {
                     id: 1,
                     title: "Super Mario Bros",
                     cover: "https://example.com/mario-nes.jpg",
-                    rom: "/roms/mario.nes",
-                    system: "nes"
+                    rom: "/roms/mario.nes"
                 },
                 {
                     id: 2,
                     title: "Legend of Zelda",
                     cover: "https://example.com/zelda-nes.jpg",
-                    rom: "/roms/zelda.nes",
-                    system: "nes"
+                    rom: "/roms/zelda.nes"
                 }
             ],
             snes: [
@@ -321,79 +213,115 @@
                     id: 1,
                     title: "Super Mario World",
                     cover: "https://example.com/mario-snes.jpg",
-                    rom: "/roms/mario-snes.smc",
-                    system: "snes"
+                    rom: "/roms/mario-snes.smc"
+                }
+            ],
+            n64: [
+                {
+                    id: 1,
+                    title: "Super Mario 64",
+                    cover: "https://example.com/mario-n64.jpg",
+                    rom: "/roms/mario-n64.n64"
+                }
+            ],
+            psx: [
+                {
+                    id: 1,
+                    title: "Final Fantasy VII",
+                    cover: "https://example.com/ff7-psx.jpg",
+                    rom: "/roms/ff7-psx.iso"
                 }
             ]
         };
 
-        // Emulation Core (Placeholder - would typically use emscripten or WebAssembly)
+        // Advanced Emulation Core
         class EmulationCore {
             constructor(canvas) {
                 this.canvas = canvas;
                 this.ctx = canvas.getContext('2d');
+                this.currentGame = null;
+                this.saveStates = {};
             }
 
-            loadROM(romPath) {
-                console.log(`Loading ROM: ${romPath}`);
-                // Actual ROM loading and emulation logic would be complex
-                // This is a simplified placeholder
+            async loadROM(romPath) {
+                try {
+                    // Simulated ROM loading
+                    console.log(`Loading ROM: ${romPath}`);
+                    // In a real implementation, this would use WebAssembly emulators
+                    // like RetroArch, EmulatorJS, or custom WebAssembly cores
+                } catch (error) {
+                    console.error("ROM Loading Error:", error);
+                }
             }
 
             start() {
-                console.log("Starting emulation");
+                console.log("Starting Emulation");
                 // Emulation start logic
             }
 
             pause() {
-                console.log("Pausing emulation");
+                console.log("Pausing Emulation");
             }
 
-            stop() {
-                console.log("Stopping emulation");
+            saveState() {
+                if (this.currentGame) {
+                    this.saveStates[this.currentGame] = {
+                        timestamp: Date.now(),
+                        // Actual save state data would be more complex
+                    };
+                    console.log("State Saved");
+                }
+            }
+
+            loadState() {
+                if (this.currentGame && this.saveStates[this.currentGame]) {
+                    console.log("State Loaded");
+                }
             }
         }
 
-        // Render Media/Game Items
-        function renderMediaItems(system = 'nes') {
-            const mediaContent = document.getElementById('mediaContent');
-            mediaContent.innerHTML = '';
+        // Render Game Library
+        function renderGameLibrary(system = 'nes') {
+            const gamesContainer = document.getElementById('games-container');
+            gamesContainer.innerHTML = '';
 
-            const systemGames = mediaLibrary[system] || [];
+            const games = gameLibrary[system] || [];
 
-            systemGames.forEach(game => {
-                const mediaItem = document.createElement('div');
-                mediaItem.classList.add('kodi-media-item');
-                mediaItem.innerHTML = `
+            games.forEach(game => {
+                const gameCard = document.createElement('div');
+                gameCard.classList.add('game-card');
+                gameCard.innerHTML = `
                     <img src="${game.cover}" alt="${game.title}">
-                    <div class="kodi-media-details">
-                        <h3>${game.title}</h3>
-                    </div>
-                    <div class="kodi-emulator-controls">
-                        <button class="kodi-emulator-btn" data-rom="${game.rom}">Play</button>
-                        <button class="kodi-emulator-btn">Info</button>
+                    <div class="p-3">
+                        <h5>${game.title}</h5>
+                        <button class="btn btn-primary w-100 launch-game" 
+                                data-rom="${game.rom}" 
+                                data-title="${game.title}">
+                            Launch Game
+                        </button>
                     </div>
                 `;
-                mediaContent.appendChild(mediaItem);
+                gamesContainer.appendChild(gameCard);
             });
 
-            // Add event listeners for emulator launch
-            mediaContent.querySelectorAll('.kodi-emulator-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const rom = e.target.dataset.rom;
-                    if (rom) {
-                        launchEmulator(rom);
-                    }
-                });
+            // Add launch event listeners
+            gamesContainer.querySelectorAll('.launch-game').forEach(btn => {
+                btn.addEventListener('click', launchEmulator);
             });
         }
 
         // Emulator Launch
-        function launchEmulator(romPath) {
-            const modal = document.getElementById('emulatorModal');
-            const canvas = document.getElementById('emulatorCanvas');
-            const closeBtn = document.getElementById('closeEmulator');
+        function launchEmulator(event) {
+            const romPath = event.target.dataset.rom;
+            const gameTitle = event.target.dataset.title;
+            const modal = document.getElementById('emulator-modal');
+            const canvas = document.getElementById('emulator-canvas');
+            const gameTitleElement = document.getElementById('game-title');
 
+            // Set game title
+            gameTitleElement.textContent = gameTitle;
+
+            // Show modal
             modal.style.display = 'flex';
 
             // Initialize emulation core
@@ -401,31 +329,34 @@
             emulator.loadROM(romPath);
             emulator.start();
 
-            // Close button handler
-            closeBtn.onclick = () => {
-                emulator.stop();
+            // Controller button events
+            document.getElementById('start-btn').onclick = () => emulator.start();
+            document.getElementById('save-state-btn').onclick = () => emulator.saveState();
+            document.getElementById('load-state-btn').onclick = () => emulator.loadState();
+
+            // Close emulator
+            document.getElementById('close-emulator').onclick = () => {
+                emulator.pause();
                 modal.style.display = 'none';
             };
         }
 
-        // Navigation Setup
-        function setupNavigation() {
-            const menuLinks = document.querySelectorAll('.kodi-menu-link');
+        // Console Selection
+        function setupConsoleNavigation() {
+            const consoleBtns = document.querySelectorAll('.console-btn');
             
-            menuLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    // Remove active class from all links
-                    menuLinks.forEach(l => l.classList.remove('active'));
+            consoleBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    // Remove active from all buttons
+                    consoleBtns.forEach(b => b.classList.remove('active'));
                     
-                    // Add active class to clicked link
-                    e.currentTarget.classList.add('active');
+                    // Add active to clicked button
+                    e.target.classList.add('active');
                     
-                    // Get section/system and render
-                    const system = e.currentTarget.dataset.system;
-                    const section = e.currentTarget.dataset.section;
-                    
-                    if (system) {
-                        renderMediaItems(system);
+                    // Get system and render games
+                    const system = e.target.dataset.system;
+                    if (system && system !== 'settings') {
+                        renderGameLibrary(system);
                     }
                 });
             });
@@ -433,8 +364,8 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            renderMediaItems(); // Default to NES
-            setupNavigation();
+            renderGameLibrary(); // Default to NES
+            setupConsoleNavigation();
         });
     </script>
 </body>
