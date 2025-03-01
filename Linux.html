@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Advanced Kodi Web ROM Manager</title>
+    <title>Advanced ROM Manager with Controller Settings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
@@ -19,142 +19,114 @@
             font-family: 'Arial', sans-serif;
         }
 
-        .rom-manager-container {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            height: 100vh;
-        }
-
-        .sidebar {
+        .controller-config-section {
             background-color: var(--bg-medium);
+            border-radius: 10px;
             padding: 20px;
-            overflow-y: auto;
+            margin-bottom: 20px;
         }
 
-        .rom-grid {
+        .controller-mapping-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            overflow-y: auto;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
         }
 
-        .rom-card {
+        .controller-input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background-color: var(--bg-light);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
+            padding: 10px;
+            border-radius: 5px;
         }
 
-        .rom-card:hover {
-            transform: scale(1.05);
-        }
-
-        .rom-card-image {
+        .gamepad-visual {
             width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-
-        .modal {
-            background-color: rgba(0,0,0,0.8);
-        }
-
-        .github-import-section {
-            background-color: var(--bg-medium);
-            padding: 20px;
+            max-width: 400px;
+            background-color: #333;
             border-radius: 10px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        .gamepad-button {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .gamepad-button.active {
+            background-color: var(--accent-color);
+        }
+
+        .controller-test-area {
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="rom-manager-container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <h3 class="text-center mb-4">ROM Manager</h3>
-            
-            <!-- Console Systems -->
-            <div class="nav flex-column nav-pills" role="tablist">
-                <button class="nav-link active" data-bs-toggle="pill" data-system="nes">
-                    🎮 Nintendo (NES)
-                </button>
-                <button class="nav-link" data-bs-toggle="pill" data-system="snes">
-                    🎮 Super Nintendo (SNES)
-                </button>
-                <button class="nav-link" data-bs-toggle="pill" data-system="n64">
-                    🎮 Nintendo 64
-                </button>
-            </div>
-
-            <!-- ROM Management -->
-            <hr>
-            <div class="mt-3">
-                <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#githubImportModal">
-                    Import ROMs from GitHub
-                </button>
-                <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#localUploadModal">
-                    Upload Local ROMs
-                </button>
-            </div>
-        </div>
-
-        <!-- Main Content Area -->
-        <div class="main-content">
-            <div class="rom-grid" id="romGrid">
-                <!-- ROMs will be dynamically loaded here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- GitHub Import Modal -->
-    <div class="modal fade" id="githubImportModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+    <!-- Controller Settings Modal -->
+    <div class="modal fade" id="controllerSettingsModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
-                    <h5 class="modal-title">Import ROMs from GitHub</h5>
+                    <h5 class="modal-title">Controller Configuration</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="github-import-section">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" id="githubRepoUrl" 
-                                   placeholder="GitHub Repository URL">
-                            <select class="form-select" id="systemSelect" style="max-width: 150px;">
-                                <option value="nes">NES</option>
-                                <option value="snes">SNES</option>
-                                <option value="n64">N64</option>
-                            </select>
-                            <button class="btn btn-primary" id="importFromGithubBtn">
-                                Import ROMs
-                            </button>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- Controller Selection -->
+                            <div class="col-md-4">
+                                <div class="controller-config-section">
+                                    <h6>Select Controller</h6>
+                                    <select class="form-select" id="controllerSelect">
+                                        <option value="generic">Generic Gamepad</option>
+                                        <option value="nes">NES Controller</option>
+                                        <option value="snes">SNES Controller</option>
+                                        <option value="n64">Nintendo 64 Controller</option>
+                                    </select>
+                                </div>
+
+                                <!-- Gamepad Visual Representation -->
+                                <div class="gamepad-visual" id="gamepadVisual">
+                                    <!-- Dynamically generated gamepad buttons -->
+                                </div>
+                            </div>
+
+                            <!-- Mapping Configuration -->
+                            <div class="col-md-8">
+                                <div class="controller-config-section">
+                                    <h6>Button Mapping</h6>
+                                    <div class="controller-mapping-grid" id="buttonMappingContainer">
+                                        <!-- Dynamically populated button mappings -->
+                                    </div>
+                                </div>
+
+                                <!-- Controller Test Area -->
+                                <div class="controller-test-area">
+                                    <h6>Controller Test</h6>
+                                    <div id="controllerTestOutput" 
+                                         class="alert alert-info">
+                                        Connect a gamepad to begin testing
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div id="importStatus" class="mt-3"></div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Local Upload Modal -->
-    <div class="modal fade" id="localUploadModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title">Upload Local ROMs</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <select class="form-select mb-3" id="localSystemSelect">
-                            <option value="nes">Nintendo (NES)</option>
-                            <option value="snes">Super Nintendo (SNES)</option>
-                            <option value="n64">Nintendo 64</option>
-                        </select>
-                        <input type="file" class="form-control" id="romFileUpload" 
-                               accept=".nes,.smc,.n64" multiple>
-                    </div>
-                    <button class="btn btn-success w-100" id="uploadRomsBtn">
-                        Upload ROMs
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="saveControllerConfig">
+                        Save Configuration
                     </button>
                 </div>
             </div>
@@ -163,188 +135,171 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Advanced ROM Management System
-        class ROMManager {
+        class ControllerManager {
             constructor() {
-                // Local storage for ROM collections
-                this.romCollections = {
-                    nes: [],
-                    snes: [],
-                    n64: []
+                this.controllers = {
+                    generic: {
+                        buttons: [
+                            'A', 'B', 'X', 'Y', 
+                            'Left Bumper', 'Right Bumper', 
+                            'Start', 'Select', 
+                            'Left Stick', 'Right Stick'
+                        ]
+                    },
+                    nes: {
+                        buttons: ['A', 'B', 'Start', 'Select']
+                    },
+                    snes: {
+                        buttons: ['A', 'B', 'X', 'Y', 'Start', 'Select', 'L', 'R']
+                    },
+                    n64: {
+                        buttons: [
+                            'A', 'B', 'Start', 
+                            'D-Pad Up', 'D-Pad Down', 
+                            'D-Pad Left', 'D-Pad Right',
+                            'C-Buttons', 'Z'
+                        ]
+                    }
                 };
 
-                // Initialize local storage
-                this.loadFromLocalStorage();
+                this.currentControllerConfig = {
+                    mappings: {},
+                    deadzone: 0.1,
+                    sensitivity: 1.0
+                };
+
+                this.gamepad = null;
+                this.setupGamepadListeners();
             }
 
-            // GitHub ROM Import
-            async importFromGithub(repoUrl, system) {
-                try {
-                    // Parse GitHub repository
-                    const githubRegex = /https:\/\/github.com\/([^\/]+)\/([^\/]+)/;
-                    const match = repoUrl.match(githubRegex);
-
-                    if (!match) {
-                        throw new Error('Invalid GitHub Repository URL');
-                    }
-
-                    const [, owner, repo] = match;
-
-                    // Fetch repository contents
-                    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents`;
-                    const response = await fetch(apiUrl);
-                    const files = await response.json();
-
-                    // Filter ROM files
-                    const romExtensions = {
-                        nes: ['.nes'],
-                        snes: ['.smc', '.snes'],
-                        n64: ['.n64', '.z64']
-                    };
-
-                    const validRoms = files.filter(file => 
-                        romExtensions[system].some(ext => 
-                            file.name.toLowerCase().endsWith(ext)
-                        )
-                    );
-
-                    // Process and add ROMs
-                    const importedRoms = validRoms.map(rom => ({
-                        id: rom.sha,
-                        name: rom.name,
-                        system: system,
-                        downloadUrl: rom.download_url,
-                        metadata: {
-                            size: rom.size,
-                            path: rom.path
-                        }
-                    }));
-
-                    // Add to collection
-                    this.romCollections[system].push(...importedRoms);
-                    this.saveToLocalStorage();
-
-                    return importedRoms;
-                } catch (error) {
-                    console.error('GitHub ROM Import Error:', error);
-                    throw error;
-                }
-            }
-
-            // Local File Upload
-            uploadLocalRoms(files, system) {
-                const uploadedRoms = Array.from(files).map(file => ({
-                    id: Date.now() + Math.random().toString(36).substr(2, 9),
-                    name: file.name,
-                    system: system,
-                    file: file,
-                    metadata: {
-                        size: file.size,
-                        type: file.type
-                    }
-                }));
-
-                this.romCollections[system].push(...uploadedRoms);
-                this.saveToLocalStorage();
-
-                return uploadedRoms;
-            }
-
-            // Persist ROM Collection
-            saveToLocalStorage() {
-                localStorage.setItem('romCollections', JSON.stringify(this.romCollections));
-            }
-
-            // Retrieve ROM Collection
-            loadFromLocalStorage() {
-                const savedCollections = localStorage.getItem('romCollections');
-                if (savedCollections) {
-                    this.romCollections = JSON.parse(savedCollections);
-                }
-            }
-
-            // Render ROMs
-            renderROMGrid(system) {
-                const romGrid = document.getElementById('romGrid');
-                romGrid.innerHTML = '';
-
-                const roms = this.romCollections[system] || [];
-
-                roms.forEach(rom => {
-                    const romCard = document.createElement('div');
-                    romCard.classList.add('rom-card');
-                    romCard.innerHTML = `
-                        <img src="/placeholder-rom-image.png" 
-                             alt="${rom.name}" 
-                             class="rom-card-image">
-                        <div class="p-3">
-                            <h5>${rom.name}</h5>
-                            <div class="d-flex justify-content-between">
-                                <span class="badge bg-primary">${rom.system.toUpperCase()}</span>
-                                <button class="btn btn-sm btn-success play-rom" 
-                                        data-rom-id="${rom.id}">
-                                    Play
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    romGrid.appendChild(romCard);
+            setupGamepadListeners() {
+                window.addEventListener('gamepadconnected', (e) => {
+                    console.log('Gamepad connected:', e.gamepad);
+                    this.gamepad = e.gamepad;
+                    this.updateControllerTestOutput('Gamepad connected: ' + e.gamepad.id);
                 });
+
+                window.addEventListener('gamepaddisconnected', (e) => {
+                    console.log('Gamepad disconnected:', e.gamepad);
+                    this.gamepad = null;
+                    this.updateControllerTestOutput('Gamepad disconnected');
+                });
+
+                // Continuous gamepad state checking
+                this.startGamepadPolling();
+            }
+
+            startGamepadPolling() {
+                const pollGamepads = () => {
+                    const gamepads = navigator.getGamepads();
+                    if (gamepads[0]) {
+                        this.processGamepadInput(gamepads[0]);
+                    }
+                    requestAnimationFrame(pollGamepads);
+                };
+                pollGamepads();
+            }
+
+            processGamepadInput(gamepad) {
+                const testOutput = document.getElementById('controllerTestOutput');
+                let activeButtons = [];
+
+                // Check button states
+                gamepad.buttons.forEach((button, index) => {
+                    if (button.pressed) {
+                        activeButtons.push(`Button ${index}`);
+                    }
+                });
+
+                // Check axis states
+                gamepad.axes.forEach((axis, index) => {
+                    if (Math.abs(axis) > this.currentControllerConfig.deadzone) {
+                        activeButtons.push(`Axis ${index}: ${axis.toFixed(2)}`);
+                    }
+                });
+
+                if (activeButtons.length > 0) {
+                    testOutput.textContent = 'Active Inputs: ' + activeButtons.join(', ');
+                }
+            }
+
+            renderControllerMapping(controllerType) {
+                const mappingContainer = document.getElementById('buttonMappingContainer');
+                const controller = this.controllers[controllerType];
+
+                mappingContainer.innerHTML = '';
+
+                controller.buttons.forEach(button => {
+                    const mappingGroup = document.createElement('div');
+                    mappingGroup.classList.add('controller-input-group');
+                    mappingGroup.innerHTML = `
+                        <span>${button}</span>
+                        <select class="form-select form-select-sm" style="width: auto;">
+                            <option>Keyboard</option>
+                            <option>Gamepad Button</option>
+                            <option>Mouse</option>
+                        </select>
+                    `;
+                    mappingContainer.appendChild(mappingGroup);
+                });
+            }
+
+            renderGamepadVisual(controllerType) {
+                const gamepadVisual = document.getElementById('gamepadVisual');
+                const controller = this.controllers[controllerType];
+
+                gamepadVisual.innerHTML = '';
+
+                controller.buttons.forEach(button => {
+                    const buttonEl = document.createElement('button');
+                    buttonEl.classList.add('gamepad-button');
+                    buttonEl.textContent = button;
+                    gamepadVisual.appendChild(buttonEl);
+                });
+            }
+
+            updateControllerTestOutput(message) {
+                const testOutput = document.getElementById('controllerTestOutput');
+                testOutput.textContent = message;
+            }
+
+            saveConfiguration() {
+                // Collect mapping configurations
+                const mappings = {};
+                document.querySelectorAll('.controller-input-group select').forEach((select, index) => {
+                    mappings[this.controllers[this.currentControllerType].buttons[index]] = select.value;
+                });
+
+                this.currentControllerConfig.mappings = mappings;
+                
+                // Save to local storage
+                localStorage.setItem('controllerConfig', JSON.stringify(this.currentControllerConfig));
+
+                alert('Controller configuration saved!');
             }
         }
 
-        // Initialize ROM Manager
-        const romManager = new ROMManager();
+        // Initialize Controller Manager
+        const controllerManager = new ControllerManager();
 
         // Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
-            // System Selection
-            document.querySelectorAll('[data-system]').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const system = e.target.dataset.system;
-                    romManager.renderROMGrid(system);
-                });
+            // Controller Type Selection
+            const controllerSelect = document.getElementById('controllerSelect');
+            controllerSelect.addEventListener('change', (e) => {
+                const controllerType = e.target.value;
+                controllerManager.currentControllerType = controllerType;
+                controllerManager.renderControllerMapping(controllerType);
+                controllerManager.renderGamepadVisual(controllerType);
             });
 
-            // Initial render (NES)
-            romManager.renderROMGrid('nes');
+            // Initial render
+            controllerManager.renderControllerMapping('generic');
+            controllerManager.renderGamepadVisual('generic');
 
-            // GitHub Import
-            document.getElementById('importFromGithubBtn').addEventListener('click', async () => {
-                const repoUrl = document.getElementById('githubRepoUrl').value;
-                const system = document.getElementById('systemSelect').value;
-                const statusEl = document.getElementById('importStatus');
-
-                try {
-                    statusEl.innerHTML = '<div class="text-warning">Importing ROMs...</div>';
-                    const importedRoms = await romManager.importFromGithub(repoUrl, system);
-                    
-                    statusEl.innerHTML = `
-                        <div class="text-success">
-                            Successfully imported ${importedRoms.length} ROMs
-                        </div>
-                    `;
-
-                    // Refresh ROM grid
-                    romManager.renderROMGrid(system);
-                } catch (error) {
-                    statusEl.innerHTML = `
-                        <div class="text-danger">
-                            Error: ${error.message}
-                        </div>
-                    `;
-                }
-            });
-
-            // Local ROM Upload
-            document.getElementById('uploadRomsBtn').addEventListener('click', () => {
-                const files = document.getElementById('romFileUpload').files;
-                const system = document.getElementById('localSystemSelect').value;
-
-                if (files.length > 0) {
-                    romManager.uploadLocalRoms(files, system);
-                    romManager.renderROMGrid(system);
-                }
+            // Save Configuration
+            document.getElementById('saveControllerConfig').addEventListener('click', () => {
+                controllerManager.saveConfiguration();
             });
         });
     </script>
