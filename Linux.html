@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kodi Media Center - Embedded Experience</title>
+    <title>Kodi Web Emulation Station</title>
     <style>
         :root {
-            --primary-color: #0077be;
-            --secondary-color: #00a86b;
-            --background-dark: #1a1a2e;
-            --text-light: #ffffff;
-            --text-dark: #333;
+            --kodi-bg-dark: #1a1a2e;
+            --kodi-bg-medium: #16213e;
+            --kodi-bg-light: #0f3460;
+            --kodi-text-primary: #e94560;
+            --kodi-text-secondary: #ffffff;
+            --kodi-accent: #0f3460;
         }
 
         * {
@@ -21,316 +21,420 @@
 
         body {
             font-family: 'Arial', sans-serif;
+            background-color: var(--kodi-bg-dark);
+            color: var(--kodi-text-secondary);
             line-height: 1.6;
-            background-color: #f4f4f4;
         }
 
         .kodi-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .kodi-interface {
             display: grid;
             grid-template-columns: 250px 1fr;
-            background-color: #fff;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            overflow: hidden;
+            height: 100vh;
         }
 
-        .sidebar {
-            background-color: var(--background-dark);
-            color: var(--text-light);
+        /* Sidebar Styling */
+        .kodi-sidebar {
+            background-color: var(--kodi-bg-medium);
             padding: 20px;
+            overflow-y: auto;
         }
 
-        .sidebar-menu {
+        .kodi-menu {
             list-style: none;
         }
 
-        .sidebar-menu li {
-            margin-bottom: 15px;
+        .kodi-menu-category {
+            margin-bottom: 20px;
         }
 
-        .sidebar-menu a {
-            color: var(--text-light);
-            text-decoration: none;
+        .kodi-menu-category-title {
+            color: var(--kodi-text-primary);
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .kodi-menu-item {
+            margin-bottom: 10px;
+        }
+
+        .kodi-menu-link {
             display: flex;
             align-items: center;
-            transition: color 0.3s ease;
+            padding: 10px;
+            color: var(--kodi-text-secondary);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
         }
 
-        .sidebar-menu a:hover {
-            color: var(--primary-color);
+        .kodi-menu-link:hover,
+        .kodi-menu-link.active {
+            background-color: var(--kodi-bg-light);
+            color: var(--kodi-text-primary);
         }
 
-        .sidebar-menu i {
-            margin-right: 10px;
-        }
-
-        .main-content {
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
-
-        .media-grid {
+        /* Main Content Area */
+        .kodi-main-content {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
+            grid-template-rows: auto 1fr auto;
+            background-color: var(--kodi-bg-dark);
         }
 
-        .media-item {
-            background-color: #fff;
+        .kodi-header {
+            background-color: var(--kodi-bg-medium);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .kodi-content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .kodi-media-item {
+            background-color: var(--kodi-bg-medium);
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            position: relative;
         }
 
-        .media-item:hover {
+        .kodi-media-item:hover {
             transform: scale(1.05);
         }
 
-        .media-item img {
+        .kodi-media-item img {
             width: 100%;
-            height: 250px;
+            height: 300px;
             object-fit: cover;
         }
 
-        .media-item-details {
+        .kodi-media-details {
             padding: 10px;
         }
 
-        .player-section {
-            margin-top: 20px;
-            background-color: #000;
-            border-radius: 10px;
-            overflow: hidden;
+        .kodi-emulator-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .video-player {
+        .kodi-media-item:hover .kodi-emulator-controls {
+            opacity: 1;
+        }
+
+        .kodi-emulator-btn {
+            background-color: var(--kodi-text-primary);
+            color: var(--kodi-bg-dark);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        /* Emulator Modal */
+        .kodi-emulator-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 500px;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
 
-        .controls {
+        .kodi-emulator-window {
+            width: 90%;
+            max-width: 1200px;
+            height: 80%;
+            background: var(--kodi-bg-medium);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .kodi-emulator-header {
             display: flex;
             justify-content: space-between;
-            background-color: rgba(0,0,0,0.7);
             padding: 10px;
-            color: var(--text-light);
+            background: var(--kodi-bg-light);
         }
 
-        .addon-section {
-            margin-top: 20px;
+        .kodi-emulator-content {
+            flex-grow: 1;
+            display: flex;
         }
 
-        .addon-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
+        .kodi-emulator-sidebar {
+            width: 250px;
+            background: var(--kodi-bg-medium);
+            padding: 20px;
         }
 
-        .addon-card {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
+        .kodi-emulator-main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        @media (max-width: 768px) {
-            .kodi-interface {
-                grid-template-columns: 1fr;
-            }
+        #emulatorCanvas {
+            max-width: 100%;
+            max-height: 100%;
         }
     </style>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <div class="kodi-container">
-        <div class="kodi-interface">
-            <!-- Sidebar Navigation -->
-            <div class="sidebar">
-                <ul class="sidebar-menu">
-                    <li><a href="#" onclick="showSection('movies')">
-                        <i class="fas fa-film"></i> Movies
-                    </a></li>
-                    <li><a href="#" onclick="showSection('tv')">
-                        <i class="fas fa-tv"></i> TV Shows
-                    </a></li>
-                    <li><a href="#" onclick="showSection('music')">
-                        <i class="fas fa-music"></i> Music
-                    </a></li>
-                    <li><a href="#" onclick="showSection('addons')">
-                        <i class="fas fa-puzzle-piece"></i> Add-ons
-                    </a></li>
-                    <li><a href="#" onclick="showSection('settings')">
-                        <i class="fas fa-cog"></i> Settings
-                    </a></li>
+        <!-- Sidebar Navigation -->
+        <div class="kodi-sidebar">
+            <div class="kodi-menu-category">
+                <div class="kodi-menu-category-title">Game Systems</div>
+                <ul class="kodi-menu">
+                    <li class="kodi-menu-item">
+                        <a href="#" class="kodi-menu-link" data-system="nes">
+                            🎮 Nintendo Entertainment System
+                        </a>
+                    </li>
+                    <li class="kodi-menu-item">
+                        <a href="#" class="kodi-menu-link" data-system="snes">
+                            🎮 Super Nintendo
+                        </a>
+                    </li>
+                    <li class="kodi-menu-item">
+                        <a href="#" class="kodi-menu-link" data-system="n64">
+                            🎮 Nintendo 64
+                        </a>
+                    </li>
+                    <li class="kodi-menu-item">
+                        <a href="#" class="kodi-menu-link" data-system="psx">
+                            🎮 PlayStation 1
+                        </a>
+                    </li>
                 </ul>
             </div>
 
-            <!-- Main Content Area -->
-            <div class="main-content" id="mainContent">
-                <!-- Movies Section -->
-                <div id="movies-section" class="section">
-                    <h2>Movies</h2>
-                    <div class="media-grid" id="movies-grid">
-                        <!-- Movie items will be dynamically populated -->
-                    </div>
-                </div>
+            <div class="kodi-menu-category">
+                <div class="kodi-menu-category-title">Multimedia</div>
+                <ul class="kodi-menu">
+                    <li class="kodi-menu-item">
+                        <a href="#" class="kodi-menu-link" data-section="movies">
+                            🎬 Movies
+                        </a>
+                    </li>
+                    <li class="kodi-menu-item">
+                        <a href="#" class="kodi-menu-link" data-section="tv">
+                            📺 TV Shows
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-                <!-- Video Player Section -->
-                <div class="player-section">
-                    <video class="video-player" id="mediaPlayer" controls>
-                        <source src="" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <div class="controls">
-                        <div>Now Playing: <span id="current-media-title">No Media Selected</span></div>
-                        <div>
-                            <button onclick="toggleFullscreen()">Fullscreen</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="kodi-menu-category">
+                <div class="kodi-menu-category-title">System</div>
+                <ul class="kodi-menu">
+                    <li class="kodi-menu-item">
+                        <a href="#" class="kodi-menu-link" data-section="settings">
+                            ⚙️ Emulator Settings
+                        </a>
+                    </li>
+                    <li class="kodi-menu-item">
+                        <a href="#" class="kodi-menu-link" data-section="addons">
+                            🧩 Add-ons
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-                <!-- Add-ons Section -->
-                <div id="addons-section" class="addon-section" style="display:none;">
-                    <h2>Kodi Add-ons</h2>
-                    <div class="addon-grid" id="addons-grid">
-                        <!-- Add-on items will be dynamically populated -->
-                    </div>
+        <!-- Main Content Area -->
+        <div class="kodi-main-content">
+            <!-- Header -->
+            <div class="kodi-header">
+                <div>Kodi Emulation Station</div>
+                <div>User Profile</div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="kodi-content-grid" id="mediaContent">
+                <!-- Dynamically populated game/media items -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Emulator Modal -->
+    <div id="emulatorModal" class="kodi-emulator-modal">
+        <div class="kodi-emulator-window">
+            <div class="kodi-emulator-header">
+                <span id="emulatorTitle">Emulator</span>
+                <button id="closeEmulator">Close</button>
+            </div>
+            <div class="kodi-emulator-content">
+                <div class="kodi-emulator-sidebar">
+                    <h3>Game Controls</h3>
+                    <!-- Emulator-specific controls -->
+                </div>
+                <div class="kodi-emulator-main">
+                    <canvas id="emulatorCanvas"></canvas>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Media Data (Mock Data - Replace with actual API or backend)
-        const mediaData = {
-            movies: [
-                { 
-                    title: 'Inception', 
-                    poster: 'https://example.com/inception.jpg', 
-                    videoUrl: 'https://example.com/inception.mp4'
+        // Comprehensive Emulation and Media Library
+        const mediaLibrary = {
+            nes: [
+                {
+                    id: 1,
+                    title: "Super Mario Bros",
+                    cover: "https://example.com/mario-nes.jpg",
+                    rom: "/roms/mario.nes",
+                    system: "nes"
                 },
-                { 
-                    title: 'The Matrix', 
-                    poster: 'https://example.com/matrix.jpg', 
-                    videoUrl: 'https://example.com/matrix.mp4'
+                {
+                    id: 2,
+                    title: "Legend of Zelda",
+                    cover: "https://example.com/zelda-nes.jpg",
+                    rom: "/roms/zelda.nes",
+                    system: "nes"
                 }
             ],
-            tvShows: [
-                { 
-                    title: 'Stranger Things', 
-                    poster: 'https://example.com/strangerthings.jpg', 
-                    videoUrl: 'https://example.com/strangerthings.mp4'
+            snes: [
+                {
+                    id: 1,
+                    title: "Super Mario World",
+                    cover: "https://example.com/mario-snes.jpg",
+                    rom: "/roms/mario-snes.smc",
+                    system: "snes"
                 }
-            ],
-            addons: [
-                { name: 'Netflix', description: 'Streaming Service' },
-                { name: 'YouTube', description: 'Video Platform' },
-                { name: 'Spotify', description: 'Music Streaming' }
             ]
         };
 
-        // Function to show different sections
-        function showSection(section) {
-            // Hide all sections
-            document.getElementById('movies-section').style.display = 'none';
-            document.getElementById('addons-section').style.display = 'none';
+        // Emulation Core (Placeholder - would typically use emscripten or WebAssembly)
+        class EmulationCore {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+            }
 
-            // Show selected section
-            switch(section) {
-                case 'movies':
-                    document.getElementById('movies-section').style.display = 'block';
-                    populateMovies();
-                    break;
-                case 'addons':
-                    document.getElementById('addons-section').style.display = 'block';
-                    populateAddons();
-                    break;
+            loadROM(romPath) {
+                console.log(`Loading ROM: ${romPath}`);
+                // Actual ROM loading and emulation logic would be complex
+                // This is a simplified placeholder
+            }
+
+            start() {
+                console.log("Starting emulation");
+                // Emulation start logic
+            }
+
+            pause() {
+                console.log("Pausing emulation");
+            }
+
+            stop() {
+                console.log("Stopping emulation");
             }
         }
 
-        // Populate Movies Grid
-        function populateMovies() {
-            const moviesGrid = document.getElementById('movies-grid');
-            moviesGrid.innerHTML = ''; // Clear existing content
+        // Render Media/Game Items
+        function renderMediaItems(system = 'nes') {
+            const mediaContent = document.getElementById('mediaContent');
+            mediaContent.innerHTML = '';
 
-            mediaData.movies.forEach(movie => {
-                const movieItem = document.createElement('div');
-                movieItem.classList.add('media-item');
-                movieItem.innerHTML = `
-                    <img src="${movie.poster}" alt="${movie.title}">
-                    <div class="media-item-details">
-                        <h3>${movie.title}</h3>
-                        <button onclick="playMedia('${movie.title}', '${movie.videoUrl}')">Play</button>
+            const systemGames = mediaLibrary[system] || [];
+
+            systemGames.forEach(game => {
+                const mediaItem = document.createElement('div');
+                mediaItem.classList.add('kodi-media-item');
+                mediaItem.innerHTML = `
+                    <img src="${game.cover}" alt="${game.title}">
+                    <div class="kodi-media-details">
+                        <h3>${game.title}</h3>
+                    </div>
+                    <div class="kodi-emulator-controls">
+                        <button class="kodi-emulator-btn" data-rom="${game.rom}">Play</button>
+                        <button class="kodi-emulator-btn">Info</button>
                     </div>
                 `;
-                moviesGrid.appendChild(movieItem);
+                mediaContent.appendChild(mediaItem);
+            });
+
+            // Add event listeners for emulator launch
+            mediaContent.querySelectorAll('.kodi-emulator-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const rom = e.target.dataset.rom;
+                    if (rom) {
+                        launchEmulator(rom);
+                    }
+                });
             });
         }
 
-        // Populate Add-ons Grid
-        function populateAddons() {
-            const addonsGrid = document.getElementById('addons-grid');
-            addonsGrid.innerHTML = ''; // Clear existing content
+        // Emulator Launch
+        function launchEmulator(romPath) {
+            const modal = document.getElementById('emulatorModal');
+            const canvas = document.getElementById('emulatorCanvas');
+            const closeBtn = document.getElementById('closeEmulator');
 
-            mediaData.addons.forEach(addon => {
-                const addonCard = document.createElement('div');
-                addonCard.classList.add('addon-card');
-                addonCard.innerHTML = `
-                    <h3>${addon.name}</h3>
-                    <p>${addon.description}</p>
-                `;
-                addonsGrid.appendChild(addonCard);
+            modal.style.display = 'flex';
+
+            // Initialize emulation core
+            const emulator = new EmulationCore(canvas);
+            emulator.loadROM(romPath);
+            emulator.start();
+
+            // Close button handler
+            closeBtn.onclick = () => {
+                emulator.stop();
+                modal.style.display = 'none';
+            };
+        }
+
+        // Navigation Setup
+        function setupNavigation() {
+            const menuLinks = document.querySelectorAll('.kodi-menu-link');
+            
+            menuLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    // Remove active class from all links
+                    menuLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    e.currentTarget.classList.add('active');
+                    
+                    // Get section/system and render
+                    const system = e.currentTarget.dataset.system;
+                    const section = e.currentTarget.dataset.section;
+                    
+                    if (system) {
+                        renderMediaItems(system);
+                    }
+                });
             });
         }
 
-        // Play Media Function
-        function playMedia(title, videoUrl) {
-            const mediaPlayer = document.getElementById('mediaPlayer');
-            const currentMediaTitle = document.getElementById('current-media-title');
-
-            mediaPlayer.src = videoUrl;
-            currentMediaTitle.textContent = title;
-            mediaPlayer.play();
-        }
-
-        // Fullscreen Toggle
-        function toggleFullscreen() {
-            const mediaPlayer = document.getElementById('mediaPlayer');
-            if (!document.fullscreenElement) {
-                if (mediaPlayer.requestFullscreen) {
-                    mediaPlayer.requestFullscreen();
-                } else if (mediaPlayer.mozRequestFullScreen) { // Firefox
-                    mediaPlayer.mozRequestFullScreen();
-                } else if (mediaPlayer.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                    mediaPlayer.webkitRequestFullscreen();
-                } else if (mediaPlayer.msRequestFullscreen) { // IE/Edge
-                    mediaPlayer.msRequestFullscreen();
-                }
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.mozCancelFullScreen) { // Firefox
-                    document.mozCancelFullScreen();
-                } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
-                    document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) { // IE/Edge
-                    document.msExitFullscreen();
-                }
-            }
-        }
-
-        // Initial load
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            showSection('movies');
+            renderMediaItems(); // Default to NES
+            setupNavigation();
         });
     </script>
 </body>
