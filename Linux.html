@@ -2,61 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mixxx Web Interface</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Tiny OS Web</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Mixxx Web Controller</h1>
-        
-        <div class="deck-container">
-            <div class="deck" id="deck1">
-                <h2>Deck 1</h2>
-                <div class="controls">
-                    <button onclick="loadTrack(1)">Load Track</button>
-                    <button onclick="play(1)">Play</button>
-                    <button onclick="pause(1)">Pause</button>
-                    <input type="range" min="0" max="100" value="50" class="slider" id="pitch1">
-                </div>
+    <div class="os-container">
+        <div class="sidebar">
+            <h2>Tiny OS</h2>
+            <div class="system-info">
+                <h3>System Status</h3>
+                <p>Memory: <span id="memory-usage">0/0 MB</span></p>
+                <p>Processes: <span id="process-count">0</span></p>
             </div>
-
-            <div class="deck" id="deck2">
-                <h2>Deck 2</h2>
-                <div class="controls">
-                    <button onclick="loadTrack(2)">Load Track</button>
-                    <button onclick="play(2)">Play</button>
-                    <button onclick="pause(2)">Pause</button>
-                    <input type="range" min="0" max="100" value="50" class="slider" id="pitch2">
-                </div>
+            <div class="actions">
+                <button onclick="createProcess()">New Process</button>
+                <button onclick="refreshSystemStatus()">Refresh</button>
             </div>
         </div>
 
-        <div class="mixer-controls">
-            <h2>Mixer</h2>
-            <div class="crossfader">
-                <input type="range" min="0" max="100" value="50" class="slider" id="crossfader">
-            </div>
-            <div class="eq-controls">
-                <div class="eq-section">
-                    <label>Low</label>
-                    <input type="range" min="0" max="100" value="50" class="slider" id="lowEQ1">
-                    <input type="range" min="0" max="100" value="50" class="slider" id="lowEQ2">
-                </div>
-                <div class="eq-section">
-                    <label>Mid</label>
-                    <input type="range" min="0" max="100" value="50" class="slider" id="midEQ1">
-                    <input type="range" min="0" max="100" value="50" class="slider" id="midEQ2">
-                </div>
-                <div class="eq-section">
-                    <label>High</label>
-                    <input type="range" min="0" max="100" value="50" class="slider" id="highEQ1">
-                    <input type="range" min="0" max="100" value="50" class="slider" id="highEQ2">
-                </div>
+        <div class="main-content">
+            <div class="process-list">
+                <h3>Running Processes</h3>
+                <table id="process-table">
+                    <thead>
+                        <tr>
+                            <th>PID</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Memory</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="process-list-body"></tbody>
+                </table>
             </div>
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script src="{{ url_for('static', filename='js/os.js') }}"></script>
 </body>
 </html>
