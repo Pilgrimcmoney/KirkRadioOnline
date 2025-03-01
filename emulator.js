@@ -1,141 +1,186 @@
-class RetroEmulatorV2 {
+class SafeEmulatorManager {
     constructor() {
-        // Comprehensive System Configuration
+        // Safe Element Selection with Fallback
+        this.elements = {
+            systemSelector: this.safeSelect('#system-selector'),
+            romFileInput: this.safeSelect('#rom-file'),
+            loadGameBtn: this.safeSelect('#load-game-btn'),
+            gameContainer: this.safeSelect('#game-container'),
+            errorDisplay: this.safeSelect('#error-display')
+        };
+
+        // Validate all critical elements
+        this.validateElements();
+
+        // System Configuration
         this.systemConfig = {
             'nes': {
                 core: 'nes',
-                extensions: ['.nes'],
-                path: 'https://cdn.jsdelivr.net/npm/emulatorjs@latest/data/nes.data'
+                extensions: ['.nes']
             },
             'snes': {
                 core: 'snes',
-                extensions: ['.smc', '.sfc'],
-                path: 'https://cdn.jsdelivr.net/npm/emulatorjs@latest/data/snes.data'
+                extensions: ['.smc', '.sfc']
             },
             'gba': {
                 core: 'gba',
-                extensions: ['.gba', '.gb'],
-                path: 'https://cdn.jsdelivr.net/npm/emulatorjs@latest/data/gba.data'
+                extensions: ['.gba', '.gb']
             }
         };
 
-        // DOM Element References
-        this.elements = {
-            systemSelector: document.getElementById('system-selector'),
-            romFileInput: document.getElementById('rom-file'),
-            loadGameBtn: document.getElementById('load-game-btn'),
-            gameContainer: document.getElementById('game-container'),
-            errorDisplay: document.getElementById('error-display')
-        };
-
+        // Initialize Event Listeners
         this.initializeEventListeners();
     }
 
-    initializeEventListeners() {
-        this.elements.loadGameBtn.addEventListener('click', () => this.startGameEmulation());
+    // Safe Element Selection
+    safeSelect(selector) {
+        const element = document.querySelector(selector);
+        if (!element) {
+            console.warn(`Element not found: ${selector}`);
+        }
+        return element;
     }
 
+    // Validate Critical Elements
+    validateElements() {
+        const missingElements = Object.entries(this.elements)
+            .filter(([key, element]) => !element)
+            .map(([key]) => key);
+
+        if (missingElements.length > 0) {
+            throw new Error(`Missing critical elements: ${missingElements.join(', ')}`);
+        }
+    }
+
+    // Event Listener Setup with Null Checking
+    initializeEventListeners() {
+        if (this.elements.loadGameBtn) {
+            this.elements.loadGameBtn.addEventListener('click', () => {
+                try {
+                    this.startGameEmulation();
+                } catch (error) {
+                    this.handleError(error);
+                }
+            });
+        }
+    }
+
+    // Comprehensive ROM Validation
     validateROMFile(file, system) {
-        // Comprehensive ROM Validation
+        // Null and type checking
         if (!file) {
             throw new Error('No ROM file selected');
+        }
+
+        // System validation
+        if (!this.systemConfig[system]) {
+            throw new Error(`Unsupported system: ${system}`);
         }
 
         const allowedExtensions = this.systemConfig[system].extensions;
         const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
 
+        // Extension validation
         if (!allowedExtensions.includes(fileExtension)) {
             throw new Error(`Invalid ROM type for ${system}. Allowed: ${allowedExtensions.join(', ')}`);
         }
 
-        // File size check (50MB limit)
-        const maxFileSize = 50 * 1024 * 1024;
+        // File size check
+        const maxFileSize = 50 * 1024 * 1024; // 50MB
         if (file.size > maxFileSize) {
             throw new Error('ROM file exceeds maximum size (50MB)');
         }
     }
 
+    // Safe ROM Buffer Reading
     async readROMBuffer(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
+            
             reader.onload = (event) => {
                 const buffer = event.target.result;
+                
                 if (buffer instanceof ArrayBuffer) {
                     resolve(buffer);
                 } else {
                     reject(new Error('Failed to read ROM file'));
                 }
             };
-            reader.onerror = (error) => reject(error);
+
+            reader.onerror = (error) => {
+                reject(new Error('ROM file reading error'));
+            };
+
             reader.readAsArrayBuffer(file);
         });
     }
 
+    // Game Emulation Initialization
     startGameEmulation() {
-        try {
-            // Get selected system and ROM file
-            const system = this.elements.systemSelector.value;
-            const file = this.elements.romFileInput.files[0];
+        // Null-safe method calls
+        const system = this.elements.systemSelector?.value;
+        const file = this.elements.romFileInput?.files?.[0];
 
-            // Validate ROM
-            this.validateROMFile(file, system);
-
-            // Read ROM and initialize emulation
-            this.readROMBuffer(file)
-                .then(buffer => this.initializeEmulator(system, buffer))
-                .catch(this.handleError.bind(this));
-
-        } catch (error) {
-            this.handleError(error);
+        if (!system || !file) {
+            throw new Error('Please select a system and ROM file');
         }
+
+        // Validate ROM
+        this.validateROMFile(file, system);
+
+        // Read and initialize
+        this.readROMBuffer(file)
+            .then(buffer => this.initializeEmulator(system, buffer))
+            .catch(this.handleError.bind(this));
     }
 
+    // Emulator Initialization with Robust Configuration
     initializeEmulator(system, romBuffer) {
-        // Clear previous emulator content
-        this.elements.gameContainer.innerHTML = '';
+        // Null-safe container clearing
+        if (this.elements.gameContainer) {
+            this.elements.gameContainer.innerHTML = '';
+        }
 
-        // Detailed EmulatorJS Configuration
+        // Global EmulatorJS Configuration
         window.EJS_player = '#game-container';
         window.EJS_core = this.systemConfig[system].core;
-        window.EJS_gameName = 'Retro Game';
-        window.EJS_color = '#00ff00';  // Optional: Customize color
-
-        // ROM and Data Paths
-        window.EJS_pathtodata = 'https://cdn.jsdelivr.net/npm/emulatorjs@latest/data/';
         window.EJS_loadedROM = romBuffer;
 
-        // Emulator Behavior Settings
+        // Additional Configuration
+        window.EJS_pathtodata = 'https://cdn.jsdelivr.net/npm/emulatorjs@latest/data/';
         window.EJS_startOnLoaded = true;
         window.EJS_defaultControls = true;
         window.EJS_fullscreenOnLoaded = true;
-        window.EJS_saveStatesSupported = true;
 
         try {
-            // Direct Emulator Initialization
-            const emulator = new EmulatorJS(window.EJS_player);
+            // Safe Emulator Initialization
+            new EmulatorJS(window.EJS_player);
         } catch (error) {
             this.handleError(error);
         }
     }
 
+    // Centralized Error Handling
     handleError(error) {
         console.error('Emulation Error:', error);
-        
-        // User-friendly error display
-        this.elements.errorDisplay.innerHTML = `
-            <strong>Emulation Error:</strong>
-            <p>${error.message}</p>
-            <ul>
-                <li>Verify ROM file</li>
-                <li>Check system selection</li>
-                <li>Ensure file compatibility</li>
-            </ul>
-        `;
-        this.elements.errorDisplay.style.display = 'block';
+
+        // Null-safe error display
+        if (this.elements.errorDisplay) {
+            this.elements.errorDisplay.textContent = error.message;
+            this.elements.errorDisplay.style.display = 'block';
+        } else {
+            // Fallback error logging
+            alert(`Emulation Error: ${error.message}`);
+        }
     }
 }
 
-// Initialize Emulator on DOM Load
+// Safe Initialization
 document.addEventListener('DOMContentLoaded', () => {
-    new RetroEmulatorV2();
+    try {
+        new SafeEmulatorManager();
+    } catch (initError) {
+        console.error('Initialization Error:', initError);
+        alert('Failed to initialize emulator. Check console for details.');
+    }
 });
