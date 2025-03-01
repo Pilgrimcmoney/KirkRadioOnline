@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Kirk Radio Linux OS with Mixxx</title>
+    <title>Kirk Radio Linux OS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.4.0/wavesurfer.min.js"></script>
     <style>
         :root {
@@ -14,16 +15,15 @@
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
             height: 100%;
+            margin: 0;
             font-family: 'Ubuntu', sans-serif;
             background-color: var(--primary-bg);
             color: var(--text-color);
             overflow: hidden;
         }
 
-        #linux-desktop {
+        #desktop {
             display: flex;
             height: 100vh;
         }
@@ -32,12 +32,6 @@
             width: 250px;
             background-color: var(--secondary-bg);
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .app-section {
-            margin-bottom: 20px;
         }
 
         .app-icon {
@@ -62,7 +56,7 @@
             margin-right: 10px;
         }
 
-        #main-content {
+        #content-area {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -86,56 +80,35 @@
             font-family: 'Courier New', monospace;
         }
 
-        #mixxx-app {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            background-color: #2a2a2a;
-        }
-
-        .mixxx-interface {
-            display: flex;
-            flex-grow: 1;
-        }
-
-        .deck {
-            flex-grow: 1;
-            background-color: #1a1a1a;
-            margin: 10px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .waveform {
+        .modal {
+            background-color: rgba(0,0,0,0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 200px;
-            background-color: #3a3a3a;
-            margin-bottom: 10px;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
 
-        .mixxx-controls {
-            display: flex;
-            background-color: #3a3a3a;
-            padding: 10px;
-            justify-content: space-between;
-        }
-
-        .mixxx-controls button {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 10px;
-            margin: 0 5px;
-            cursor: pointer;
+        .modal-content {
+            background-color: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
         }
     </style>
 </head>
 <body>
-    <div id="linux-desktop">
+    <div id="desktop">
         <div id="sidebar">
+            <h3 class="text-center mb-4">Kirk Radio OS</h3>
+            
             <div class="app-section">
-                <h3>Applications</h3>
+                <h5>System Tools</h5>
                 <div class="app-icon" data-app="terminal">
                     <img src="https://cdn-icons-png.flaticon.com/512/2535/2535524.png" alt="Terminal">
                     Terminal
@@ -151,152 +124,103 @@
             </div>
         </div>
         
-        <div id="main-content">
+        <div id="content-area">
             <div id="terminal">
                 Welcome to Kirk Radio Linux OS
-                Type 'help' for available commands
+                Click an application to begin
             </div>
             <input type="text" id="command-input" placeholder="Enter command...">
         </div>
     </div>
 
+    <!-- Modals -->
+    <div id="mixxx-modal" class="modal">
+        <div class="modal-content">
+            <h2>Mixxx DJ Controller</h2>
+            <div id="mixxx-interface">
+                <div class="row">
+                    <div class="col-6">
+                        <h3>Deck 1</h3>
+                        <div id="waveform1" style="height: 100px; background-color: #333;"></div>
+                        <input type="file" id="file-input1" accept="audio/*">
+                        <div class="mt-2">
+                            <button onclick="mixxxController.loadTrack(1)" class="btn btn-primary">Load</button>
+                            <button onclick="mixxxController.play(1)" class="btn btn-success">Play</button>
+                            <button onclick="mixxxController.pause(1)" class="btn btn-warning">Pause</button>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h3>Deck 2</h3>
+                        <div id="waveform2" style="height: 100px; background-color: #333;"></div>
+                        <input type="file" id="file-input2" accept="audio/*">
+                        <div class="mt-2">
+                            <button onclick="mixxxController.loadTrack(2)" class="btn btn-primary">Load</button>
+                            <button onclick="mixxxController.play(2)" class="btn btn-success">Play</button>
+                            <button onclick="mixxxController.pause(2)" class="btn btn-warning">Pause</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="closeModal('mixxx-modal')" class="btn btn-danger mt-3">Close</button>
+        </div>
+    </div>
+
     <script>
-        class KirkLinuxOS {
-            constructor() {
-                this.initializeSystem();
-            }
-
-            initializeSystem() {
-                this.state = {
-                    hostname: 'kirkradio-linux',
-                    username: 'kirk',
-                    osVersion: '2.0.0',
-                    kernel: 'KirkLinux Kernel'
-                };
-
-                this.fileSystem = {
-                    '/home/kirk': ['documents', 'music', 'downloads'],
-                    '/home/kirk/music': ['sample1.mp3', 'sample2.mp3', 'kirkradio_mix.mp3']
-                };
-            }
-
-            processCommand(command) {
-                const [cmd, ...args] = command.split(' ');
-                
-                const commandHandlers = {
-                    'help': () => this.showHelp(),
-                    'ls': () => this.listDirectory(args[0] || '/home/kirk'),
-                    'pwd': () => '/home/kirk',
-                    'whoami': () => this.state.username,
-                    'sysinfo': () => this.getSystemInfo()
-                };
-
-                return commandHandlers[cmd] 
-                    ? commandHandlers[cmd]() 
-                    : `Command not found: ${command}`;
-            }
-
-            showHelp() {
-                return `
-Kirk Radio Linux OS - Help
-
-Basic Commands:
-- help: Show this help menu
-- ls: List directory contents
-- pwd: Print working directory
-- whoami: Show current user
-- sysinfo: Display system information
-
-Mixxx Commands:
-- mixxx:load [deck] [track]: Load track to deck
-- mixxx:play [deck]: Play track on deck
-- mixxx:pause [deck]: Pause track on deck
-                `;
-            }
-
-            listDirectory(path) {
-                return this.fileSystem[path] 
-                    ? this.fileSystem[path].join('\n')
-                    : `Directory not found: ${path}`;
-            }
-
-            getSystemInfo() {
-                return `
-Kirk Radio Linux OS
-- Hostname: ${this.state.hostname}
-- Username: ${this.state.username}
-- OS Version: ${this.state.osVersion}
-- Kernel: ${this.state.kernel}
-                `;
-            }
-        }
-
-        class WebMixxxController {
+        class MixxxController {
             constructor() {
                 this.decks = {
-                    1: {
-                        wavesurfer: null,
-                        audioElement: null,
-                        isPlaying: false,
-                        currentTrack: null
+                    1: { 
+                        wavesurfer: null, 
+                        audioElement: null, 
+                        isPlaying: false 
                     },
-                    2: {
-                        wavesurfer: null,
-                        audioElement: null,
-                        isPlaying: false,
-                        currentTrack: null
+                    2: { 
+                        wavesurfer: null, 
+                        audioElement: null, 
+                        isPlaying: false 
                     }
                 };
-
-                this.tracks = [
-                    { 
-                        name: 'sample1.mp3', 
-                        path: '/home/kirk/music/sample1.mp3' 
-                    },
-                    { 
-                        name: 'sample2.mp3', 
-                        path: '/home/kirk/music/sample2.mp3' 
-                    },
-                    { 
-                        name: 'kirkradio_mix.mp3', 
-                        path: '/home/kirk/music/kirkradio_mix.mp3' 
-                    }
-                ];
-
-                this.initializeDecks();
+                this.initializeWavesurfer();
             }
 
-            initializeDecks() {
-                Object.keys(this.decks).forEach(deckNumber => {
-                    const wavesurfer = WaveSurfer.create({
-                        container: `#waveform${deckNumber}`,
-                        waveColor: 'violet',
-                        progressColor: 'purple',
-                        responsive: true,
-                        height: 200
-                    });
+            initializeWavesurfer() {
+                // Initialize Wavesurfer for each deck
+                this.decks[1].wavesurfer = WaveSurfer.create({
+                    container: '#waveform1',
+                    waveColor: 'violet',
+                    progressColor: 'purple',
+                    responsive: true,
+                    height: 100
+                });
 
-                    this.decks[deckNumber].wavesurfer = wavesurfer;
+                this.decks[2].wavesurfer = WaveSurfer.create({
+                    container: '#waveform2',
+                    waveColor: 'green',
+                    progressColor: 'blue',
+                    responsive: true,
+                    height: 100
                 });
             }
 
-            loadTrack(deckNumber, trackName) {
-                const track = this.tracks.find(t => t.name === trackName);
-                if (!track) {
-                    return `Track not found: ${trackName}`;
-                }
+            loadTrack(deckNumber) {
+                const fileInput = document.getElementById(`file-input${deckNumber}`);
+                fileInput.onchange = (event) => {
+                    const file = event.target.files[0];
+                    const fileURL = URL.createObjectURL(file);
+                    
+                    const deck = this.decks[deckNumber];
+                    
+                    // Load audio into wavesurfer
+                    deck.wavesurfer.load(fileURL);
+                    
+                    // Create audio element
+                    deck.audioElement = new Audio(fileURL);
+                    
+                    // Log to terminal
+                    updateTerminal(`Loaded track on Deck ${deckNumber}: ${file.name}`);
+                };
 
-                // Simulate file loading (in real scenario, use actual file path)
-                const mockFileURL = `https://kirkradio.net/music/${track.name}`;
-                
-                const deck = this.decks[deckNumber];
-                deck.wavesurfer.load(mockFileURL);
-                
-                // Create audio element
-                deck.audioElement = new Audio(mockFileURL);
-                deck.currentTrack = track;
-
-                return `Loaded ${track.name} on Deck ${deckNumber}`;
+                fileInput.click();
             }
 
             play(deckNumber) {
@@ -306,10 +230,10 @@ Kirk Radio Linux OS
                     deck.audioElement.play();
                     deck.wavesurfer.play();
                     deck.isPlaying = true;
-                    return `Playing ${deck.currentTrack.name} on Deck ${deckNumber}`;
+                    updateTerminal(`Playing track on Deck ${deckNumber}`);
+                } else {
+                    updateTerminal(`No track loaded on Deck ${deckNumber}`);
                 }
-
-                return `No track loaded on Deck ${deckNumber}`;
             }
 
             pause(deckNumber) {
@@ -319,166 +243,84 @@ Kirk Radio Linux OS
                     deck.audioElement.pause();
                     deck.wavesurfer.pause();
                     deck.isPlaying = false;
-                    return `Paused ${deck.currentTrack.name} on Deck ${deckNumber}`;
+                    updateTerminal(`Paused track on Deck ${deckNumber}`);
+                } else {
+                    updateTerminal(`No track loaded on Deck ${deckNumber}`);
                 }
-
-                return `No track loaded on Deck ${deckNumber}`;
-            }
-
-            listTracks() {
-                return this.tracks.map((track, index) => 
-                    `${index + 1}. ${track.name}`
-                ).join('\n');
             }
         }
 
         // Global instances
-        const linuxOS = new KirkLinuxOS();
-        const mixxxController = new WebMixxxController();
+        const mixxxController = new MixxxController();
 
-        // DOM Elements
-        const terminal = document.getElementById('terminal');
-        const commandInput = document.getElementById('command-input');
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
+        // Utility Functions
+        function updateTerminal(message) {
+            const terminal = document.getElementById('terminal');
+            terminal.innerHTML += `\n> ${message}`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
 
-        // Command input handler
-        commandInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const command = commandInput.value.trim();
-                
-                // Display command
-                terminal.innerHTML += `\n<span style="color: yellow;">$ </span>${command}\n`;
-                
-                // Process command
-                let result = '';
-                if (command.startsWith('mixxx:')) {
-                    // Mixxx-specific commands
-                    const [, mixxxCmd, ...args] = command.split(':')[1].split(' ');
-                    switch(mixxxCmd) {
-                        case 'tracks':
-                            result = mixxxController.listTracks();
-                            break;
-                        case 'load':
-                            result = mixxxController.loadTrack(args[0], args[1]);
-                            break;
-                        case 'play':
-                            result = mixxxController.play(args[0]);
-                            break;
-                        case 'pause':
-                            result = mixxxController.pause(args[0]);
-                            break;
-                        default:
-                            result = 'Unknown Mixxx command';
-                    }
-                } else {
-                    // Linux OS commands
-                    result = linuxOS.processCommand(command);
-                }
-                
-                // Display result
-                terminal.innerHTML += `<pre>${result}</pre>`;
-                
-                // Scroll to bottom
-                terminal.scrollTop = terminal.scrollHeight;
-                
-                // Clear input
-                commandInput.value = '';
-            }
-        });
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
 
-        // Sidebar application launcher
-        sidebar.addEventListener('click', (e) => {
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Event Listeners
+        document.getElementById('sidebar').addEventListener('click', (e) => {
             const appIcon = e.target.closest('.app-icon');
             if (appIcon) {
                 const app = appIcon.dataset.app;
                 
                 switch(app) {
                     case 'terminal':
-                        renderTerminal();
+                        // Already in terminal view
                         break;
                     case 'mixxx':
-                        renderMixxxApp();
+                        openModal('mixxx-modal');
                         break;
                     case 'file-manager':
-                        renderFileManager();
+                        updateTerminal('File Manager: Not implemented');
                         break;
                 }
             }
         });
 
-        // Render Mixxx Application
-        function renderMixxxApp() {
-            mainContent.innerHTML = `
-                <div id="mixxx-app">
-                    <div class="mixxx-interface">
-                        <div class="deck" id="deck1">
-                            <h3>Deck 1</h3>
-                            <div id="waveform1" class="waveform"></div>
-                        </div>
-                        <div class="deck" id="deck2">
-                            <h3>Deck 2</h3>
-                            <div id="waveform2" class="waveform"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="mixxx-controls">
-                        <button onclick="mixxxCommand('load 1 sample1.mp3')">Load Sample 1</button>
-                        <button onclick="mixxxCommand('play 1')">Play Deck 1</button>
-                        <button onclick="mixxxCommand('pause 1')">Pause Deck 1</button>
-                        <button onclick="mixxxCommand('load 2 sample2.mp3')">Load Sample 2</button>
-                        <button onclick="mixxxCommand('play 2')">Play Deck 2</button>
-                        <button onclick="mixxxCommand('pause 2')">Pause Deck 2</button>
-                    </div>
-                </div>
-            `;
-
-            // Reinitialize wavesurfer after rendering
-            mixxxController.initializeDecks();
-        }
-
-        // Mixxx command handler for UI
-        function mixxxCommand(cmd) {
-            const [command, ...args] = cmd.split(' ');
-            let result = '';
-
-            switch(command) {
-                case 'load':
-                    result = mixxxController.loadTrack(args[0], args[1]);
-                    break;
-                case 'play':
-                    result = mixxxController.play(args[0]);
-                    break;
-                case 'pause':
-                    result = mixxxController.pause(args[0]);
-                    break;
+        // Command Input
+        document.getElementById('command-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const command = e.target.value.trim().toLowerCase();
+                updateTerminal(`Command: ${command}`);
+                
+                // Basic command handling
+                switch(command) {
+                    case 'help':
+                        updateTerminal(`
+Available Commands:
+- help: Show this help menu
+- about: Show system information
+- clear: Clear terminal
+                        `);
+                        break;
+                    case 'about':
+                        updateTerminal(`
+Kirk Radio Linux OS
+Version: 1.0.0
+Developed by Kirk Radio Team
+                        `);
+                        break;
+                    case 'clear':
+                        document.getElementById('terminal').innerHTML = '';
+                        break;
+                    default:
+                        updateTerminal(`Unknown command: ${command}`);
+                }
+                
+                e.target.value = '';
             }
-            
-            // Update terminal
-            terminal.innerHTML += `\n<pre>${result}</pre>`;
-            terminal.scrollTop = terminal.scrollHeight;
-        }
-
-        // Render File Manager
-        function renderFileManager() {
-            mainContent.innerHTML = `
-                <div id="file-manager">
-                    <h2>File Manager</h2>
-                    <pre>${linuxOS.listDirectory('/home/kirk')}</pre>
-                </div>
-            `;
-        }
-
-        // Render Terminal
-        function renderTerminal() {
-            mainContent.innerHTML = `
-                <div id="terminal">
-                    Welcome to Kirk Radio Linux OS
-                    Type 'help' for available commands
-                </div>
-                <input type="text" id="command-input" placeholder="Enter command...">
-            `;
-        }
+        });
     </script>
 </body>
 </html>
