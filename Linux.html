@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Kirk Radio Linux OS with Mixxx</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.4.0/wavesurfer.min.js"></script>
     <style>
         :root {
             --primary-bg: #1a1a2e;
@@ -92,22 +93,41 @@
             background-color: #2a2a2a;
         }
 
-        .mixxx-controls {
-            display: flex;
-            background-color: #3a3a3a;
-            padding: 10px;
-        }
-
-        .mixxx-decks {
+        .mixxx-interface {
             display: flex;
             flex-grow: 1;
         }
 
         .deck {
             flex-grow: 1;
-            margin: 10px;
             background-color: #1a1a1a;
+            margin: 10px;
             padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .waveform {
+            width: 100%;
+            height: 200px;
+            background-color: #3a3a3a;
+            margin-bottom: 10px;
+        }
+
+        .mixxx-controls {
+            display: flex;
+            background-color: #3a3a3a;
+            padding: 10px;
+            justify-content: space-between;
+        }
+
+        .mixxx-controls button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 0 5px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -147,7 +167,6 @@
             }
 
             initializeSystem() {
-                // Simulated system state
                 this.state = {
                     hostname: 'kirkradio-linux',
                     username: 'kirk',
@@ -155,14 +174,12 @@
                     kernel: 'KirkLinux Kernel'
                 };
 
-                // Simulated file system
                 this.fileSystem = {
                     '/home/kirk': ['documents', 'music', 'downloads'],
-                    '/home/kirk/music': ['sample1.mp3', 'sample2.mp3']
+                    '/home/kirk/music': ['sample1.mp3', 'sample2.mp3', 'kirkradio_mix.mp3']
                 };
             }
 
-            // Command processing
             processCommand(command) {
                 const [cmd, ...args] = command.split(' ');
                 
@@ -189,6 +206,11 @@ Basic Commands:
 - pwd: Print working directory
 - whoami: Show current user
 - sysinfo: Display system information
+
+Mixxx Commands:
+- mixxx:load [deck] [track]: Load track to deck
+- mixxx:play [deck]: Play track on deck
+- mixxx:pause [deck]: Pause track on deck
                 `;
             }
 
@@ -209,61 +231,110 @@ Kirk Radio Linux OS
             }
         }
 
-        class MixxxDJApplication {
+        class WebMixxxController {
             constructor() {
+                this.decks = {
+                    1: {
+                        wavesurfer: null,
+                        audioElement: null,
+                        isPlaying: false,
+                        currentTrack: null
+                    },
+                    2: {
+                        wavesurfer: null,
+                        audioElement: null,
+                        isPlaying: false,
+                        currentTrack: null
+                    }
+                };
+
                 this.tracks = [
                     { 
-                        title: 'Sample Track 1', 
-                        artist: 'Kirk Radio', 
-                        duration: '3:45' 
+                        name: 'sample1.mp3', 
+                        path: '/home/kirk/music/sample1.mp3' 
                     },
                     { 
-                        title: 'Sample Track 2', 
-                        artist: 'Kirk Beats', 
-                        duration: '4:12' 
+                        name: 'sample2.mp3', 
+                        path: '/home/kirk/music/sample2.mp3' 
+                    },
+                    { 
+                        name: 'kirkradio_mix.mp3', 
+                        path: '/home/kirk/music/kirkradio_mix.mp3' 
                     }
                 ];
 
-                this.state = {
-                    deck1: null,
-                    deck2: null,
-                    isPlaying: false
-                };
+                this.initializeDecks();
             }
 
-            loadTrack(deck, trackIndex) {
-                if (trackIndex < 0 || trackIndex >= this.tracks.length) {
-                    return `Invalid track index: ${trackIndex}`;
+            initializeDecks() {
+                Object.keys(this.decks).forEach(deckNumber => {
+                    const wavesurfer = WaveSurfer.create({
+                        container: `#waveform${deckNumber}`,
+                        waveColor: 'violet',
+                        progressColor: 'purple',
+                        responsive: true,
+                        height: 200
+                    });
+
+                    this.decks[deckNumber].wavesurfer = wavesurfer;
+                });
+            }
+
+            loadTrack(deckNumber, trackName) {
+                const track = this.tracks.find(t => t.name === trackName);
+                if (!track) {
+                    return `Track not found: ${trackName}`;
                 }
 
-                this.state[deck] = this.tracks[trackIndex];
-                return `Loaded ${this.tracks[trackIndex].title} on ${deck}`;
+                // Simulate file loading (in real scenario, use actual file path)
+                const mockFileURL = `https://kirkradio.net/music/${track.name}`;
+                
+                const deck = this.decks[deckNumber];
+                deck.wavesurfer.load(mockFileURL);
+                
+                // Create audio element
+                deck.audioElement = new Audio(mockFileURL);
+                deck.currentTrack = track;
+
+                return `Loaded ${track.name} on Deck ${deckNumber}`;
             }
 
-            play(deck) {
-                if (!this.state[deck]) {
-                    return `No track loaded on ${deck}`;
+            play(deckNumber) {
+                const deck = this.decks[deckNumber];
+                
+                if (deck.audioElement) {
+                    deck.audioElement.play();
+                    deck.wavesurfer.play();
+                    deck.isPlaying = true;
+                    return `Playing ${deck.currentTrack.name} on Deck ${deckNumber}`;
                 }
 
-                this.state.isPlaying = true;
-                return `Playing ${this.state[deck].title} on ${deck}`;
+                return `No track loaded on Deck ${deckNumber}`;
             }
 
-            pause() {
-                this.state.isPlaying = false;
-                return 'Playback paused';
+            pause(deckNumber) {
+                const deck = this.decks[deckNumber];
+                
+                if (deck.audioElement) {
+                    deck.audioElement.pause();
+                    deck.wavesurfer.pause();
+                    deck.isPlaying = false;
+                    return `Paused ${deck.currentTrack.name} on Deck ${deckNumber}`;
+                }
+
+                return `No track loaded on Deck ${deckNumber}`;
             }
 
             listTracks() {
                 return this.tracks.map((track, index) => 
-                    `${index + 1}. ${track.title} - ${track.artist}`
+                    `${index + 1}. ${track.name}`
                 ).join('\n');
             }
         }
 
         // Global instances
         const linuxOS = new KirkLinuxOS();
-        const mixxxApp = new MixxxDJApplication();
+        const mixxxController = new WebMixxxController();
 
         // DOM Elements
         const terminal = document.getElementById('terminal');
@@ -283,19 +354,19 @@ Kirk Radio Linux OS
                 let result = '';
                 if (command.startsWith('mixxx:')) {
                     // Mixxx-specific commands
-                    const mixxxCmd = command.split(':')[1];
+                    const [, mixxxCmd, ...args] = command.split(':')[1].split(' ');
                     switch(mixxxCmd) {
                         case 'tracks':
-                            result = mixxxApp.listTracks();
+                            result = mixxxController.listTracks();
                             break;
-                        case 'load1':
-                            result = mixxxApp.loadTrack('deck1', 0);
-                            break;
-                        case 'load2':
-                            result = mixxxApp.loadTrack('deck2', 1);
+                        case 'load':
+                            result = mixxxController.loadTrack(args[0], args[1]);
                             break;
                         case 'play':
-                            result = mixxxApp.play('deck1');
+                            result = mixxxController.play(args[0]);
+                            break;
+                        case 'pause':
+                            result = mixxxController.pause(args[0]);
                             break;
                         default:
                             result = 'Unknown Mixxx command';
@@ -340,41 +411,46 @@ Kirk Radio Linux OS
         function renderMixxxApp() {
             mainContent.innerHTML = `
                 <div id="mixxx-app">
-                    <div class="mixxx-controls">
-                        <button onclick="mixxxCommand('load1')">Load Track 1</button>
-                        <button onclick="mixxxCommand('load2')">Load Track 2</button>
-                        <button onclick="mixxxCommand('play')">Play</button>
-                    </div>
-                    <div class="mixxx-decks">
+                    <div class="mixxx-interface">
                         <div class="deck" id="deck1">
                             <h3>Deck 1</h3>
-                            <div id="deck1-info">No track loaded</div>
+                            <div id="waveform1" class="waveform"></div>
                         </div>
                         <div class="deck" id="deck2">
                             <h3>Deck 2</h3>
-                            <div id="deck2-info">No track loaded</div>
+                            <div id="waveform2" class="waveform"></div>
                         </div>
+                    </div>
+                    
+                    <div class="mixxx-controls">
+                        <button onclick="mixxxCommand('load 1 sample1.mp3')">Load Sample 1</button>
+                        <button onclick="mixxxCommand('play 1')">Play Deck 1</button>
+                        <button onclick="mixxxCommand('pause 1')">Pause Deck 1</button>
+                        <button onclick="mixxxCommand('load 2 sample2.mp3')">Load Sample 2</button>
+                        <button onclick="mixxxCommand('play 2')">Play Deck 2</button>
+                        <button onclick="mixxxCommand('pause 2')">Pause Deck 2</button>
                     </div>
                 </div>
             `;
+
+            // Reinitialize wavesurfer after rendering
+            mixxxController.initializeDecks();
         }
 
         // Mixxx command handler for UI
         function mixxxCommand(cmd) {
+            const [command, ...args] = cmd.split(' ');
             let result = '';
-            switch(cmd) {
-                case 'load1':
-                    result = mixxxApp.loadTrack('deck1', 0);
-                    document.getElementById('deck1-info').textContent = 
-                        `${mixxxApp.tracks[0].title} - ${mixxxApp.tracks[0].artist}`;
-                    break;
-                case 'load2':
-                    result = mixxxApp.loadTrack('deck2', 1);
-                    document.getElementById('deck2-info').textContent = 
-                        `${mixxxApp.tracks[1].title} - ${mixxxApp.tracks[1].artist}`;
+
+            switch(command) {
+                case 'load':
+                    result = mixxxController.loadTrack(args[0], args[1]);
                     break;
                 case 'play':
-                    result = mixxxApp.play('deck1');
+                    result = mixxxController.play(args[0]);
+                    break;
+                case 'pause':
+                    result = mixxxController.pause(args[0]);
                     break;
             }
             
