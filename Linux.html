@@ -2,347 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Advanced Web Emulation Station</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Emulation Station</title>
+    
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #121212;
-            color: white;
-        }
-        #emulator-canvas {
-            max-width: 100%;
-            background: black;
-        }
-    </style>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-md-2 bg-dark p-3">
-                <h3 class="text-center mb-4">Emulation Hub</h3>
+            <div class="col-md-3 sidebar">
+                <h2>Emulation Station</h2>
                 
-                <!-- System Selection -->
-                <div class="nav flex-column" role="tablist">
-                    <button class="btn btn-outline-light mb-2 system-select" data-system="nes">
-                        🎮 Nintendo (NES)
-                    </button>
-                    <button class="btn btn-outline-light mb-2 system-select" data-system="snes">
-                        🎮 Super Nintendo (SNES)
-                    </button>
-                    <button class="btn btn-outline-light mb-2 system-select" data-system="gba">
-                        🎮 Game Boy Advance
-                    </button>
+                <!-- ROM Upload Section -->
+                <div class="upload-section">
+                    <input 
+                        type="file" 
+                        id="rom-file" 
+                        class="form-control" 
+                        accept=".nes,.smc,.gb,.gba"
+                        multiple
+                    >
+                    <button id="upload-btn" class="btn btn-primary mt-2">Upload ROMs</button>
                 </div>
 
-                <!-- ROM Upload -->
-                <hr>
-                <div class="mt-3">
-                    <select id="system-select" class="form-control mb-2">
-                        <option value="nes">NES</option>
-                        <option value="snes">SNES</option>
-                        <option value="gba">GBA</option>
+                <!-- System Selection -->
+                <div class="system-selection mt-3">
+                    <h4>Select System</h4>
+                    <select id="system-selector" class="form-select">
+                        <option value="nes">Nintendo (NES)</option>
+                        <option value="snes">Super Nintendo (SNES)</option>
+                        <option value="gba">Game Boy Advance</option>
                     </select>
-                    <input type="file" 
-                           id="rom-upload" 
-                           accept=".nes,.smc,.gba" 
-                           multiple 
-                           class="form-control mb-2">
-                    <button id="upload-roms" class="btn btn-primary w-100">
-                        Upload ROMs
-                    </button>
                 </div>
             </div>
 
             <!-- ROM Grid -->
-            <div class="col-md-10 bg-dark">
-                <div class="row" id="rom-grid">
-                    <!-- Dynamic ROM Rendering -->
-                </div>
+            <div class="col-md-9 rom-grid" id="rom-grid">
+                <!-- Dynamic ROM cards will be rendered here -->
             </div>
         </div>
-    </div>
 
-    <!-- Emulator Modal -->
-    <div class="modal fade" id="emulator-modal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title text-white" id="game-title">Game Emulator</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <div id="emulator-container"></div>
-                    <div class="mt-3">
-                        <div class="btn-group" role="group">
-                            <button id="fullscreen-btn" class="btn btn-secondary">Fullscreen</button>
-                            <button id="save-state-btn" class="btn btn-success">Save State</button>
-                            <button id="load-state-btn" class="btn btn-warning">Load State</button>
-                        </div>
+        <!-- Emulator Modal -->
+        <div class="modal fade" id="emulator-modal" tabindex="-1">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Game Emulator</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="emulator-container"></div>
+                        <div id="error-message" class="alert alert-danger" style="display: none;"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- External Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/emulatorjs@latest/loader.js"></script>
-    <script>
-        class AdvancedEmulationStation {
-            constructor() {
-                // ROM Library with Enhanced Storage
-                this.romLibrary = {
-                    nes: [],
-                    snes: [],
-                    gba: []
-                };
-
-                // Emulator Configuration
-                this.emulatorConfig = {
-                    nes: {
-                        core: 'nes',
-                        systemFullName: 'Nintendo Entertainment System'
-                    },
-                    snes: {
-                        core: 'snes',
-                        systemFullName: 'Super Nintendo'
-                    },
-                    gba: {
-                        core: 'gba',
-                        systemFullName: 'Game Boy Advance'
-                    }
-                };
-
-                // State Management
-                this.currentEmulator = null;
-                this.saveStates = {};
-
-                // Initialize Core Systems
-                this.initializeEventListeners();
-                this.loadPersistedROMs();
-            }
-
-            // Comprehensive ROM Upload Handler
-            handleROMUpload() {
-                const fileInput = document.getElementById('rom-upload');
-                const systemSelect = document.getElementById('system-select');
-                const files = fileInput.files;
-
-                if (files.length === 0) {
-                    this.showNotification('No ROMs selected', 'warning');
-                    return;
-                }
-
-                Array.from(files).forEach(file => {
-                    const rom = {
-                        id: crypto.randomUUID(),
-                        name: file.name,
-                        file: file,
-                        system: systemSelect.value,
-                        metadata: {
-                            size: file.size,
-                            type: file.type,
-                            uploadDate: new Date().toISOString()
-                        }
-                    };
-
-                    // Store ROM
-                    this.romLibrary[rom.system].push(rom);
-                });
-
-                // Persist and Render
-                this.persistROMs();
-                this.renderROMGrid(systemSelect.value);
-
-                // Clear input
-                fileInput.value = '';
-                this.showNotification(`Uploaded ${files.length} ROMs`, 'success');
-            }
-
-            // Advanced ROM Grid Rendering
-            renderROMGrid(system) {
-                const romGrid = document.getElementById('rom-grid');
-                romGrid.innerHTML = '';
-
-                const roms = this.romLibrary[system] || [];
-
-                roms.forEach(rom => {
-                    const romCard = document.createElement('div');
-                    romCard.classList.add('col-md-2', 'mb-3');
-                    romCard.innerHTML = `
-                        <div class="card bg-secondary text-white">
-                            <div class="card-body">
-                                <h6 class="card-title">${rom.name}</h6>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="badge bg-dark">${system.toUpperCase()}</span>
-                                    <span class="badge bg-info">${(rom.metadata.size / 1024).toFixed(2)} KB</span>
-                                </div>
-                                <button class="btn btn-primary w-100 launch-rom" 
-                                        data-rom-id="${rom.id}"
-                                        data-rom-system="${system}">
-                                    Play
-                                </button>
-                            </div>
-                        </div>
-                    `;
-
-                    romCard.querySelector('.launch-rom').addEventListener('click', () => {
-                        this.launchEmulator(rom);
-                    });
-
-                    romGrid.appendChild(romCard);
-                });
-            }
-
-            // Advanced Emulator Launcher
-            async launchEmulator(rom) {
-                try {
-                    // Create URL for ROM file
-                    const romUrl = await this.createROMUrl(rom.file);
-                    
-                    // Show Emulator Modal
-                    const emulatorModal = new bootstrap.Modal('#emulator-modal');
-                    document.getElementById('game-title').textContent = rom.name;
-                    emulatorModal.show();
-
-                    // Prepare Emulator Container
-                    const container = document.getElementById('emulator-container');
-                    container.innerHTML = ''; // Clear previous emulator
-
-                    // Get Emulator Configuration
-                    const config = this.emulatorConfig[rom.system];
-
-                    // Initialize EmulatorJS
-                    const EJS = new EmulatorJS(container);
-                    EJS.start({
-                        // Emulator Configuration
-                        core: config.core,
-                        rom: romUrl,
-                        
-                        // Optional Configuration
-                        width: 800,
-                        height: 600,
-                        
-                        // Event Handlers
-                        onload: () => {
-                            this.showNotification(`Loaded ${rom.name}`, 'success');
-                        },
-                        onerror: (error) => {
-                            this.showNotification(`Emulation Error: ${error}`, 'danger');
-                            console.error(error);
-                        }
-                    });
-
-                    // Store current emulator reference
-                    this.currentEmulator = EJS;
-
-                    // Setup Additional Controls
-                    this.setupEmulatorControls(EJS);
-
-                } catch (error) {
-                    this.showNotification(`Emulation Error: ${error.message}`, 'danger');
-                    console.error(error);
-                }
-            }
-
-            // Create Blob URL for ROM
-            createROMUrl(file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const blob = new Blob([e.target.result], { type: file.type });
-                        resolve(URL.createObjectURL(blob));
-                    };
-                    reader.onerror = reject;
-                    reader.readAsArrayBuffer(file);
-                });
-            }
-
-            // Emulator Additional Controls
-            setupEmulatorControls(emulator) {
-                // Fullscreen Button
-                document.getElementById('fullscreen-btn').onclick = () => {
-                    emulator.fullscreen();
-                };
-
-                // Save State (Placeholder - actual implementation depends on emulator)
-                document.getElementById('save-state-btn').onclick = () => {
-                    try {
-                        // Attempt to save state
-                        const saveState = emulator.saveState();
-                        this.showNotification('State Saved', 'success');
-                    } catch (error) {
-                        this.showNotification('Save State Failed', 'warning');
-                    }
-                };
-
-                // Load State
-                document.getElementById('load-state-btn').onclick = () => {
-                    try {
-                        // Attempt to load state
-                        emulator.loadState();
-                        this.showNotification('State Loaded', 'success');
-                    } catch (error) {
-                        this.showNotification('Load State Failed', 'warning');
-                    }
-                };
-            }
-
-            // Persistent Storage Management
-            persistROMs() {
-                try {
-                    localStorage.setItem('romLibrary', JSON.stringify(this.romLibrary));
-                } catch (error) {
-                    this.showNotification('Storage Limit Exceeded', 'warning');
-                }
-            }
-
-            loadPersistedROMs() {
-                const savedLibrary = localStorage.getItem('romLibrary');
-                if (savedLibrary) {
-                    this.romLibrary = JSON.parse(savedLibrary);
-                }
-            }
-
-            // Utility Notification
-            showNotification(message, type = 'info') {
-                const notification = document.createElement('div');
-                notification.className = `alert alert-${type} position-fixed top-0 start-50 translate-middle-x mt-3 z-3`;
-                notification.textContent = message;
-                document.body.appendChild(notification);
-
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 3000);
-            }
-
-            // Event Listeners
-            initializeEventListeners() {
-                // ROM Upload
-                document.getElementById('upload-roms').addEventListener('click', 
-                    () => this.handleROMUpload());
-
-                // System Selection
-                document.querySelectorAll('.system-select').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const system = e.target.dataset.system;
-                        this.renderROMGrid(system);
-                    });
-                });
-            }
-
-            // Initialize Application
-            initialize() {
-                // Initial ROM grid render
-                this.renderROMGrid('nes');
-            }
-        }
-
-        // Application Initialization
-        document.addEventListener('DOMContentLoaded', () => {
-            const emulationStation = new AdvancedEmulationStation();
-            emulationStation.initialize();
-        });
-    </script>
+    
+    <!-- EmulatorJS Library (Make sure to include the correct version) -->
+    <script src="path/to/emulatorjs/emulator.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="emulator-loader.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
