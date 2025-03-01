@@ -2,194 +2,350 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Kirk Radio Linux OS</title>
+    <title>Kirk Radio Advanced Linux OS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            font-family: monospace;
-            background-color: #000;
-            color: #0f0;
+        :root {
+            --bg-dark: #1a1a2e;
+            --bg-medium: #16213e;
+            --text-primary: #0f3460;
+            --text-light: #e94560;
+            --terminal-bg: #000;
+            --terminal-text: #0f0;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Monaco', 'Courier New', monospace;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow: hidden;
+        }
+
+        #desktop {
             display: flex;
             height: 100vh;
         }
 
         #sidebar {
-            width: 200px;
-            background-color: #333;
+            width: 250px;
+            background-color: var(--bg-medium);
             padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
 
-        #main-content {
+        #terminal-container {
             flex-grow: 1;
-            padding: 20px;
-            overflow: auto;
-        }
-
-        .app-icon {
-            cursor: pointer;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #444;
-        }
-
-        .app-icon:hover {
-            background-color: #555;
+            display: flex;
+            flex-direction: column;
         }
 
         #terminal {
-            background-color: #000;
-            color: #0f0;
-            padding: 10px;
-            height: 400px;
-            overflow-y: scroll;
+            flex-grow: 1;
+            background-color: var(--terminal-bg);
+            color: var(--terminal-text);
+            padding: 15px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
         #command-input {
             width: 100%;
-            background-color: #000;
-            color: #0f0;
+            background-color: var(--terminal-bg);
+            color: var(--terminal-text);
             border: none;
-            outline: none;
+            padding: 10px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .menu-section {
+            margin-bottom: 20px;
+        }
+
+        .menu-item {
+            cursor: pointer;
+            padding: 10px;
+            margin-bottom: 5px;
+            background-color: rgba(233, 69, 96, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(233, 69, 96, 0.2);
         }
     </style>
 </head>
 <body>
-    <div id="sidebar">
-        <h2>Kirk Linux</h2>
-        <div class="app-icon" onclick="openTerminal()">Terminal</div>
-        <div class="app-icon" onclick="openPackageManager()">Package Manager</div>
-    </div>
-
-    <div id="main-content">
-        <div id="output"></div>
+    <div id="desktop">
+        <div id="sidebar">
+            <div class="menu-section">
+                <h3>System Tools</h3>
+                <div class="menu-item" onclick="openTerminal()">Terminal</div>
+                <div class="menu-item" onclick="openPackageManager()">Package Manager</div>
+                <div class="menu-item" onclick="openSystemInfo()">System Info</div>
+            </div>
+            <div class="menu-section">
+                <h3>Development</h3>
+                <div class="menu-item" onclick="openTextEditor()">Text Editor</div>
+                <div class="menu-item" onclick="openWebBrowser()">Web Browser</div>
+            </div>
+        </div>
+        <div id="terminal-container">
+            <div id="terminal">Welcome to Kirk Radio Linux OS</div>
+            <input type="text" id="command-input" placeholder="Enter command...">
+        </div>
     </div>
 
     <script>
-        // Simplified Linux Simulation
-        class LinuxSystem {
+        class AdvancedLinuxOS {
             constructor() {
-                this.fileSystem = {
-                    '/': ['home', 'etc', 'var'],
-                    '/home': ['user', 'documents'],
-                    '/etc': ['config']
+                this.initializeSystem();
+            }
+
+            initializeSystem() {
+                // Simulated system state
+                this.state = {
+                    hostname: 'kirkradio-linux',
+                    username: 'kirk',
+                    osVersion: '2.0.0',
+                    kernel: 'KirkLinux Kernel',
+                    uptime: 0,
+                    installedPackages: [],
+                    systemLogs: []
                 };
 
-                this.packages = {
-                    'core': [
-                        { name: 'kernel', version: '5.4.0', description: 'Linux Kernel' },
-                        { name: 'bash', version: '5.1', description: 'Bourne Again Shell' }
+                // Simulated package repository
+                this.packageRepository = {
+                    core: [
+                        { name: 'kernel', version: '5.10.0', size: '120MB', description: 'Linux Kernel' },
+                        { name: 'bash', version: '5.1', size: '5MB', description: 'Bourne Again Shell' }
                     ],
-                    'multimedia': [
-                        { name: 'vlc', version: '3.0.16', description: 'Media Player' },
-                        { name: 'ffmpeg', version: '4.4', description: 'Multimedia Framework' }
+                    development: [
+                        { name: 'gcc', version: '10.2', size: '50MB', description: 'GNU Compiler Collection' },
+                        { name: 'python', version: '3.9', size: '30MB', description: 'Python Programming Language' }
+                    ],
+                    multimedia: [
+                        { name: 'vlc', version: '3.0.16', size: '25MB', description: 'Multimedia Player' },
+                        { name: 'ffmpeg', version: '4.4', size: '35MB', description: 'Multimedia Framework' }
                     ]
                 };
 
-                this.installedPackages = [];
+                // Start system uptime tracking
+                this.uptimeInterval = setInterval(() => {
+                    this.state.uptime++;
+                }, 1000);
             }
 
-            // Package Management Methods
-            listPackages() {
-                return Object.values(this.packages).flat();
-            }
-
-            installPackage(name) {
-                const package = this.listPackages().find(p => p.name === name);
-                
-                if (!package) {
-                    return `Error: Package ${name} not found`;
-                }
-
-                if (this.installedPackages.some(p => p.name === name)) {
-                    return `${name} is already installed`;
-                }
-
-                this.installedPackages.push(package);
-                return `Installed ${name} version ${package.version}`;
-            }
-
-            removePackage(name) {
-                const index = this.installedPackages.findIndex(p => p.name === name);
-                
-                if (index === -1) {
-                    return `Error: ${name} is not installed`;
-                }
-
-                this.installedPackages.splice(index, 1);
-                return `Removed ${name}`;
-            }
-
-            // Command Processing
+            // Advanced Command Processing
             processCommand(command) {
-                const [cmd, arg] = command.split(' ');
+                const [cmd, ...args] = command.split(' ');
+                
+                const commandHandlers = {
+                    'help': () => this.showHelp(),
+                    'update': () => this.systemUpdate(),
+                    'upgrade': () => this.systemUpgrade(),
+                    'install': () => this.installPackage(args[0]),
+                    'remove': () => this.removePackage(args[0]),
+                    'packages': () => this.listPackages(),
+                    'sysinfo': () => this.getSystemInfo(),
+                    'logs': () => this.getSystemLogs(),
+                    'whoami': () => this.state.username,
+                    'hostname': () => this.state.hostname
+                };
 
-                switch(cmd) {
-                    case 'ls':
-                        return JSON.stringify(this.fileSystem['/']);
-                    case 'install':
-                        return this.installPackage(arg);
-                    case 'remove':
-                        return this.removePackage(arg);
-                    case 'packages':
-                        return JSON.stringify(this.listPackages());
-                    case 'help':
-                        return `
-Available Commands:
-- ls: List root directory
+                // Log command
+                this.state.systemLogs.push({
+                    timestamp: new Date().toISOString(),
+                    command: command
+                });
+
+                return commandHandlers[cmd] 
+                    ? commandHandlers[cmd]() 
+                    : `Command not found: ${command}`;
+            }
+
+            // Comprehensive Help
+            showHelp() {
+                return `
+Kirk Radio Linux OS - Help
+
+System Commands:
+- help: Show this help menu
+- sysinfo: Display system information
+- update: Update package lists
+- upgrade: Upgrade installed packages
+- logs: View system logs
+
+Package Management:
 - install [package]: Install a package
 - remove [package]: Remove a package
 - packages: List available packages
-- help: Show this help
-                        `;
-                    default:
-                        return `Unknown command: ${command}`;
+
+User Commands:
+- whoami: Show current user
+- hostname: Show system hostname
+                `;
+            }
+
+            // System Update Simulation
+            systemUpdate() {
+                return `
+Updating package lists...
+Fetching updates from Kirk Radio repositories
+- Checking for updates
+- Downloading package lists
+- Verifying package signatures
+
+Update completed successfully.
+                `;
+            }
+
+            // System Upgrade Simulation
+            systemUpgrade() {
+                return `
+Upgrading system packages...
+- Preparing to upgrade 15 packages
+- Downloading upgrade packages (120MB)
+- Installing upgrades
+- Configuring packages
+- Cleaning up
+
+System successfully upgraded to version ${this.state.osVersion}
+                `;
+            }
+
+            // Package Installation
+            installPackage(packageName) {
+                const allPackages = Object.values(this.packageRepository).flat();
+                const pkg = allPackages.find(p => p.name === packageName);
+
+                if (!pkg) {
+                    return `Error: Package ${packageName} not found`;
                 }
+
+                if (this.state.installedPackages.some(p => p.name === packageName)) {
+                    return `${packageName} is already installed`;
+                }
+
+                this.state.installedPackages.push(pkg);
+                return `
+Successfully installed ${packageName}
+- Version: ${pkg.version}
+- Size: ${pkg.size}
+- Description: ${pkg.description}
+                `;
+            }
+
+            // Package Removal
+            removePackage(packageName) {
+                const index = this.state.installedPackages.findIndex(p => p.name === packageName);
+                
+                if (index === -1) {
+                    return `Error: ${packageName} is not installed`;
+                }
+
+                const removedPackage = this.state.installedPackages.splice(index, 1)[0];
+                return `
+Successfully removed ${removedPackage.name}
+- Version: ${removedPackage.version}
+                `;
+            }
+
+            // List Packages
+            listPackages() {
+                const categories = Object.keys(this.packageRepository);
+                return categories.map(category => 
+                    `${category.toUpperCase()} Packages:\n` +
+                    this.packageRepository[category]
+                        .map(pkg => `- ${pkg.name} (${pkg.version})`)
+                        .join('\n')
+                ).join('\n\n');
+            }
+
+            // System Information
+            getSystemInfo() {
+                return `
+Kirk Radio Linux OS - System Information
+- Hostname: ${this.state.hostname}
+- Username: ${this.state.username}
+- OS Version: ${this.state.osVersion}
+- Kernel: ${this.state.kernel}
+- Uptime: ${this.state.uptime} seconds
+- Installed Packages: ${this.state.installedPackages.length}
+                `;
+            }
+
+            // System Logs
+            getSystemLogs() {
+                return this.state.systemLogs
+                    .map(log => `${log.timestamp}: ${log.command}`)
+                    .join('\n');
             }
         }
 
         // Global Linux System Instance
-        const linuxSystem = new LinuxSystem();
+        const linuxOS = new AdvancedLinuxOS();
 
-        // UI Interaction Functions
+        // Terminal Interaction
+        const terminal = document.getElementById('terminal');
+        const commandInput = document.getElementById('command-input');
+
+        commandInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const command = commandInput.value.trim();
+                
+                // Display command
+                terminal.innerHTML += `\n<span style="color: yellow;">$ </span>${command}\n`;
+                
+                // Process and display result
+                const result = linuxOS.processCommand(command);
+                terminal.innerHTML += `<pre>${result}</pre>`;
+                
+                // Scroll to bottom
+                terminal.scrollTop = terminal.scrollHeight;
+                
+                // Clear input
+                commandInput.value = '';
+            }
+        });
+
+        // Additional UI Functions
         function openTerminal() {
-            const output = document.getElementById('output');
-            output.innerHTML = `
-                <div id="terminal">
-                    Welcome to Kirk Radio Linux Terminal
-                    Type 'help' for available commands
-                </div>
-                <input type="text" id="command-input" placeholder="Enter command">
-            `;
-
-            const commandInput = document.getElementById('command-input');
-            const terminal = document.getElementById('terminal');
-
-            commandInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    const command = commandInput.value;
-                    const result = linuxSystem.processCommand(command);
-                    
-                    terminal.innerHTML += `
-<div>$ ${command}</div>
-<div>${result}</div>
-                    `;
-
-                    commandInput.value = '';
-                    terminal.scrollTop = terminal.scrollHeight;
-                }
-            });
+            // Focus on terminal input
+            commandInput.focus();
         }
 
         function openPackageManager() {
-            const output = document.getElementById('output');
-            const packages = linuxSystem.listPackages();
-            
-            output.innerHTML = `
-                <h2>Package Manager</h2>
-                <pre>${JSON.stringify(packages, null, 2)}</pre>
-            `;
+            terminal.innerHTML += `\n<h3>Package Manager</h3>\n`;
+            terminal.innerHTML += `<pre>${linuxOS.listPackages()}</pre>`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function openSystemInfo() {
+            terminal.innerHTML += `\n<h3>System Information</h3>\n`;
+            terminal.innerHTML += `<pre>${linuxOS.getSystemInfo()}</pre>`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function openTextEditor() {
+            terminal.innerHTML += `\n<h3>Text Editor (Simulated)</h3>\n`;
+            terminal.innerHTML += `<pre>Simple text editor functionality coming soon...</pre>`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function openWebBrowser() {
+            terminal.innerHTML += `\n<h3>Web Browser (Simulated)</h3>\n`;
+            terminal.innerHTML += `<pre>Secure web browsing functionality coming soon...</pre>`;
+            terminal.scrollTop = terminal.scrollHeight;
         }
     </script>
 </body>
