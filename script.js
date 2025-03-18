@@ -1,4 +1,7 @@
-// DOM Elements
+// External JavaScript file (script.js)
+document.getElementById('externalButton').addEventListener('click', function() {
+    document.getElementById('result').textContent = 'External JavaScript works!';
+});// DOM Elements
 const addMusicBtn = document.getElementById('add-music-btn');
 const settingsBtn = document.getElementById('settings-btn');
 const loginBtn = document.getElementById('login-btn');
