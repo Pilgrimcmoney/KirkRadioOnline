@@ -28,7 +28,20 @@
         }
 
         /* Your existing CSS styles go here */
+/* Enhanced Turntable Styles */
+.turntable-container {
+    perspective: 1000px; /* Perspective for 3D effect */
+}
 
+.turntable-platter {
+    transform: rotateX(20deg) rotateY(0deg);
+    transition: transform 0.2s;
+}
+
+/* 3D effect on hover */
+.turntable-container:hover .turntable-platter {
+    transform: rotateX(0deg) rotateY(20deg);
+}
         /* ... (omitted for brevity) ... */
 
     </style>
