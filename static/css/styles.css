@@ -36,3 +36,10 @@ button {
     margin: 5px;
     cursor: pointer;
 }
+input {
+    color: white; /* Or another contrasting color */
+}
+
+.settings-label {
+    color: white; /* Adjust accordingly */
+}
