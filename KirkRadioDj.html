@@ -51,4 +51,121 @@
             position: absolute;
             width: 220px;
             height: 220px;
-            border-radius
+            border-radius: 50%;
+            background-color: #1a1a1a;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid #2a2a2a;
+        }
+
+        .vinyl {
+            cursor: grab;
+            transition: transform 0.1s linear;
+        }
+
+        .vinyl:active {
+            cursor: grabbing;
+        }
+
+        /* Other CSS styles omitted for brevity */
+        
+    </style>
+</head>
+<body>
+    <div class="flex h-screen">
+        <div class="w-64 bg-[#1a1a1a] border-r border-[#333] flex flex-col" id="trackList">
+            <div class="p-4 border-b border-[#333]">
+                <h2 class="text-lg font-medium mb-3">Track Library</h2>
+                <div class="relative">
+                    <input type="text" placeholder="Search tracks..." class="w-full bg-[#222] border border-[#333] rounded px-4 py-2 pl-10 text-white" onkeyup="searchTracks(this.value)">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
+                </div>
+            </div>
+            <div class="flex-1 max-h-fit p-4" id="trackListContent">
+                <div class="text-center text-gray-500 mt-10">
+                    <p>No tracks loaded</p>
+                    <p class="mt-2">Use "Load Track" button or click "Music Database" to see available tracks</p>
+                </div>
+            </div>
+            <button onclick="browseMusicDatabase()" class="dj-button w-full mb-2">Browse Music Database</button>
+        </div>
+
+        <div class="flex-1 flex flex-col bg-[#111]">
+            <div class="bg-[#1a1a1a] border-b border-[#333] p-4">
+                <div class="flex justify-between">
+                    <div>
+                        <button onclick="loadTrack()" class="dj-button">Load Track</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 p-6 space-y-6">
+                <div class="deck p-6">
+                    <h2 class="text-xl font-medium">Deck 1</h2>
+                    <div class="track-info p-2 mb-4">
+                        <div id="deck1Title" class="font-medium">No track loaded</div>
+                        <div id="deck1CurrentTime">00:00</div>
+                    </div>
+                    <div class="transport-controls">
+                        <button onclick="playDeck(0)" class="transport-button" id="playBtn1"><i class="fas fa-play" id="playIcon1"></i></button>
+                    </div>
+                    <div class="turntable-container">
+                        <div class="turntable-platter"></div>
+                        <div class="vinyl" id="vinyl1" onmousedown="startScratch(0, event)" onmousemove="scratch(0, event)" onmouseup="stopScratch(0)">
+                            <div class="vinyl-label">KIRK RADIO</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deck p-6">
+                    <h2 class="text-xl font-medium">Deck 2</h2>
+                    <div class="track-info p-2 mb-4">
+                        <div id="deck2Title" class="font-medium">No track loaded</div>
+                        <div id="deck2CurrentTime">00:00</div>
+                    </div>
+                    <div class="transport-controls">
+                        <button onclick="playDeck(1)" class="transport-button" id="playBtn2"><i class="fas fa-play" id="playIcon2"></i></button>
+                    </div>
+                    <div class="turntable-container">
+                        <div class="turntable-platter"></div>
+                        <div class="vinyl" id="vinyl2" onmousedown="startScratch(1, event)" onmousemove="scratch(1, event)" onmouseup="stopScratch(1)">
+                            <div class="vinyl-label">KIRK RADIO</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loadTrack() {
+            // Load the track logic
+        }
+
+        function playDeck(deckIndex) {
+            // Play the deck logic
+        }
+
+        function browseMusicDatabase() {
+            // Load music database logic
+            const tracks = [
+                { id: 1, title: "Summer Vibes", artist: "DJ Sunshine", duration: "3:45" },
+                { id: 2, title: "Midnight Run", artist: "Beat Masters", duration: "4:12" },
+                { id: 3, title: "Classical Remix", artist: "Orchestra X", duration: "6:10" }
+            ];
+            const trackListContent = document.getElementById('trackListContent');
+            trackListContent.innerHTML = tracks.map(track => `
+                <div onclick="loadTrackToDeck(${track.id})">
+                    <b>${track.title}</b> - ${track.artist} (${track.duration})
+                </div>
+            `).join('');
+        }
+
+        function loadTrackToDeck(id) {
+            // Load the track to the selected deck logic
+        }
+    </script>
+</body>
+</html>
