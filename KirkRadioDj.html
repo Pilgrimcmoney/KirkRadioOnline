@@ -494,6 +494,25 @@
     </div>
 
     <script>
+        function startScratch(deckIndex, event) {
+    scratching[deckIndex] = true;
+    lastY[deckIndex] = event.clientY;
+    const vinyl = document.getElementById(`vinyl${deckIndex + 1}`);
+    vinyl.classList.add('scratching');
+    
+    // Handle scratching with mouse movement
+    document.onmousemove = (e) => {
+        const deltaY = e.clientY - lastY[deckIndex];
+        performScratch(deckIndex, deltaY);
+        lastY[deckIndex] = e.clientY; // Update lastY for continuous scratch
+    };
+}
+
+function performScratch(deckIndex, delta) {
+    // Update vinyl and audio playback rate based on delta
+    const playbackRate = 1 + (delta / 100); // Scale sensitivity
+    decks[deckIndex].processor.setPlaybackRate(playbackRate);
+}
         let audioContext;
         let masterGain;
         const decks = [{}, {}];
