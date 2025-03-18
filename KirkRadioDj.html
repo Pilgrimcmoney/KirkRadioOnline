@@ -30,6 +30,178 @@
     color: white; /* Ensure this contrasts with the background */
     background-color: #222; /* Make sure the input background is defined */
 }
+       class AudioProcessor {
+    constructor(context, masterNode) {
+        this.context = context;
+        this.masterNode = masterNode;
+        
+        // Create more sophisticated audio processing chain
+        this.sourceNode = null;
+        this.gainNode = context.createGain();
+        this.analyser = context.createAnalyser();
+        this.convolver = context.createConvolver(); // For better sound quality
+        
+        // Advanced filter setup
+        this.lowpassFilter = context.createBiquadFilter();
+        this.highpassFilter = context.createBiquadFilter();
+        
+        // Configure filters
+        this.lowpassFilter.type = 'lowpass';
+        this.lowpassFilter.frequency.value = 5000; // Clean up high-frequency noise
+        
+        this.highpassFilter.type = 'highpass';
+        this.highpassFilter.frequency.value = 20; // Remove very low-frequency rumble
+        
+        // Connection chain
+        this.gainNode.connect(this.lowpassFilter);
+        this.lowpassFilter.connect(this.highpassFilter);
+        this.highpassFilter.connect(this.analyser);
+        this.analyser.connect(this.masterNode);
+        
+        // Default settings
+        this.gainNode.gain.value = 1.0;
+        this.analyser.fftSize = 2048;
+    }
+
+    async loadTrack(file) {
+        try {
+            // Fetch audio file and decode
+            const arrayBuffer = await file.arrayBuffer();
+            const audioBuffer = await this.context.decodeAudioData(arrayBuffer);
+            
+            // Create buffer source
+            this.sourceNode = this.context.createBufferSource();
+            this.sourceNode.buffer = audioBuffer;
+            
+            // Connect nodes
+            this.sourceNode.connect(this.gainNode);
+            
+            return audioBuffer;
+        } catch (error) {
+            console.error("Track Loading Error:", error);
+            this.showErrorNotification("Failed to load track. Please check the file format.");
+            return null;
+        }
+    }
+
+    play() {
+        if (this.sourceNode) {
+            // Prevent multiple playbacks
+            this.sourceNode.stop();
+        }
+        
+        this.sourceNode = this.context.createBufferSource();
+        this.sourceNode.buffer = this.currentBuffer;
+        this.sourceNode.connect(this.gainNode);
+        this.sourceNode.start(0);
+    }
+
+    stop() {
+        if (this.sourceNode) {
+            this.sourceNode.stop();
+            this.sourceNode.disconnect();
+        }
+    }
+
+    setVolume(volume) {
+        // Smooth volume transition
+        const currentTime = this.context.currentTime;
+        this.gainNode.gain.cancelScheduledValues(currentTime);
+        this.gainNode.gain.setTargetAtTime(volume, currentTime, 0.1);
+    }
+
+    applyEQ(frequencies) {
+        // Advanced EQ adjustment
+        const filters = [
+            { type: 'lowshelf', f: 100, gain: frequencies.low },
+            { type: 'peaking', f: 1000, gain: frequencies.mid },
+            { type: 'highshelf', f: 5000, gain: frequencies.high }
+        ];
+
+        filters.forEach(filter => {
+            const biquadFilter = this.context.createBiquadFilter();
+            biquadFilter.type = filter.type;
+            biquadFilter.frequency.value = filter.f;
+            biquadFilter.gain.value = filter.gain;
+        });
+    }
+
+    showErrorNotification(message) {
+        // Create a user-friendly error notification
+        const notification = document.createElement('div');
+        notification.className = 'error-notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+}
+
+// Enhanced Track Loading Function
+async function loadTrackToDecks(file, deckIndex) {
+    try {
+        const audioProcessor = decks[deckIndex].processor;
+        const audioBuffer = await audioProcessor.loadTrack(file);
+        
+        if (audioBuffer) {
+            // Update UI with track details
+            updateTrackUI(deckIndex, {
+                title: file.name,
+                duration: audioBuffer.duration
+            });
+        }
+    } catch (error) {
+        console.error("Deck Loading Error:", error);
+    }
+}
+
+// File Input Handler
+function handleFileInput(event) {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('audio/')) {
+        // Determine which deck to load to (could be user-selected or auto-assigned)
+        const deckIndex = determineDeckForLoading();
+        loadTrackToDecks(file, deckIndex);
+    } else {
+        alert("Please select a valid audio file.");
+    }
+}
+
+// Recommended HTML Input
+`
+<input 
+    type="file" 
+    id="trackLoader" 
+    accept="audio/*" 
+    onchange="handleFileInput(event)"
+/>`
+
+// Noise Reduction Techniques
+function applyNoiseReduction(audioContext, sourceNode) {
+    const noiseGate = audioContext.createGain();
+    const threshold = -50; // dB
+    
+    noiseGate.gain.value = sourceNode.gain.value > threshold ? 1 : 0;
+    
+    return noiseGate;
+}
+
+// Error Handling CSS
+`
+.error-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff4444;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
         /* Add background image with overlay */
         body::before {
             content: "";
