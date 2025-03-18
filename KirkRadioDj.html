@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kirk Radio DJ - Professional DJ Software</title>
-    <!-- Using inline Font Awesome icons instead of external CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Font Awesome core inline styles */
         .fas, .fab, .fa {
@@ -86,39 +86,28 @@
         .h-32 { height: 8rem; }
         .h-64 { height: 16rem; }
         
-        /* Font Awesome icons - just the ones we need */
-        .fa-search:before { content: "🔍"; }
-        .fa-folder-open:before { content: "📂"; }
-        .fa-plus:before { content: "➕"; }
-        .fa-file-export:before { content: "📤"; }
-        .fa-google-drive:before { content: "📁"; }
-        .fa-microsoft:before { content: "📁"; }
-        .fa-youtube:before { content: "📺"; }
-        .fa-soundcloud:before { content: "🎵"; }
-        .fa-database:before { content: "🗃️"; }
-        .fa-external-link-alt:before { content: "🔗"; }
-        .fa-link:before { content: "🔗"; }
-        .fa-save:before { content: "💾"; }
-        .fa-file-audio:before { content: "🎵"; }
-        .fa-broadcast-tower:before { content: "📡"; }
-        .fa-cog:before { content: "⚙️"; }
-        .fa-volume-up:before { content: "🔊"; }
-        .fa-sync:before { content: "🔄"; }
-        .fa-key:before { content: "🔑"; }
-        .fa-redo:before { content: "🔁"; }
-        .fa-play:before { content: "▶️"; }
-        .fa-pause:before { content: "⏸️"; }
-        .fa-stop:before { content: "⏹️"; }
-        .fa-step-backward:before { content: "⏮️"; }
-        .fa-step-forward:before { content: "⏭️"; }
-        .fa-chevron-down:before { content: "🔽"; }
-        .fa-expand:before { content: "⤢"; }
-        .fa-search:before { content: "🔍"; }
+        /* Font Awesome icons styling */
+        .fas, .fab, .fa {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+        }
     </style>
     <style>
         /* Fix for search input and menu dropdown text visibility */
         input[type="text"], input[type="password"], select, option {
             color: white !important;
+            background-color: #333 !important;
+            border: 1px solid #444 !important;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #D42F00 !important;
+            outline: none !important;
+            box-shadow: 0 0 0 1px #D42F00 !important;
         }
         input::placeholder {
             color: #888 !important;
@@ -245,8 +234,8 @@
         /* Enhanced 3D turntable setup */
         .turntable-container {
             position: relative;
-            width: 220px;
-            height: 220px;
+            width: 180px;
+            height: 180px;
             margin: 0 auto;
             perspective: 1200px;
             transform-style: preserve-3d;
@@ -255,8 +244,8 @@
         /* 3D turntable platter with enhanced depth */
         .turntable-platter {
             position: absolute;
-            width: 220px;
-            height: 220px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             background-color: #1a1a1a;
             top: 50%;
@@ -322,26 +311,48 @@
         }
 
         /* Enhanced 3D vinyl record with improved depth */
-        .vinyl {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle at center, 
-                #333 0%, 
-                #222 45%, 
-                #1a1a1a 90%,
+        /* Turntable style options */
+        .vinyl-style-classic {
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle at center,
+                #222 0%,
+                #181818 40%,
                 #111 100%);
+        }
+
+        .vinyl-style-modern {
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle at center,
+                #2c3e50 0%,
+                #2980b9 40%,
+                #3498db 100%);
+        }
+
+        .vinyl-style-retro {
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle at center,
+                #c0392b 0%,
+                #e74c3c 40%,
+                #d35400 100%);
+        }
+
+        .vinyl {
             border-radius: 50%;
             position: relative;
             cursor: grab;
             transform-style: preserve-3d;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.5), 
-                        inset 0 3px 10px rgba(255,255,255,0.1),
-                        inset 0 -3px 10px rgba(0,0,0,0.5);
-            border: 1px solid #444;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.7),
+                        inset 0 5px 15px rgba(255,255,255,0.1),
+                        inset 0 -5px 15px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.1);
             transition: transform 0.1s ease-out;
             will-change: transform;
             z-index: 2;
             transform: translateZ(5px);
+            backdrop-filter: blur(5px);
         }
 
         .vinyl:hover {
@@ -421,29 +432,31 @@
         }
 
         .vinyl-label {
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle at center, #fff 0%, #f5f5f5 70%, #eee 100%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at center, 
+                rgba(212, 47, 0, 0.9) 0%, 
+                rgba(150, 31, 0, 0.95) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
-            color: white;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.9);
             text-align: center;
-            font-weight: bold;
+            font-weight: 800;
             text-transform: uppercase;
-            text-shadow: 0 1px 1px rgba(0,0,0,0.5);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), inset 0 2px 3px rgba(255, 255, 255, 0.2);
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4),
+                        inset 0 2px 5px rgba(255, 255, 255, 0.2);
             z-index: 5;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) translateZ(6px);
-            border: 1px solid rgba(0,0,0,0.1);
-            background-image: url('assets/kirk_radio_logo.jpg');
-            background-size: cover;
-            background-position: center;
+            border: 2px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(2px);
         }
 
         /* Enhanced vinyl reflection effect */
@@ -1099,6 +1112,12 @@
                                         
                                         <div class="section-label">Interface Settings</div>
                                         <div>
+                                            <label class="block mb-2">Turntable Style</label>
+                                            <select id="turntableStyle" onchange="changeTurntableStyle(this.value)" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm mb-4">
+                                                <option value="classic">Classic Black</option>
+                                                <option value="modern">Modern Blue</option>
+                                                <option value="retro">Retro Red</option>
+                                            </select>
                                             <label class="flex items-center mb-2">
                                                 <input type="checkbox" id="darkModeToggle" class="mr-2" checked> 
                                                 <span>Dark Mode</span>
@@ -3175,8 +3194,19 @@
             }, 1000);
         }
         
+        // Change turntable style
+        function changeTurntableStyle(style) {
+            const vinyls = document.querySelectorAll('.vinyl');
+            vinyls.forEach(vinyl => {
+                vinyl.classList.remove('vinyl-style-classic', 'vinyl-style-modern', 'vinyl-style-retro');
+                vinyl.classList.add(`vinyl-style-${style}`);
+            });
+        }
+
         // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
+            // Set initial turntable style
+            changeTurntableStyle('classic');
             // Add global mouse event listeners for scratch effect
             document.addEventListener('mousemove', (e) => {
                 scratching.forEach((isScratch, index) => {
