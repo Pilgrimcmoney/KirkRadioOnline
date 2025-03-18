@@ -4,9 +4,181 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kirk Radio DJ - Professional DJ Software</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Using inline Font Awesome icons instead of external CSS -->
     <style>
+        /* Font Awesome core inline styles */
+        .fas, .fab, .fa {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+        }
+        
+        /* Tailwind utility classes (minimal subset used in this app) */
+        .w-full { width: 100%; }
+        .flex { display: flex; }
+        .grid { display: grid; }
+        .hidden { display: none; }
+        .block { display: block; }
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .fixed { position: fixed; }
+        .sticky { position: sticky; }
+        .flex-1 { flex: 1 1 0%; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-6 { gap: 1.5rem; }
+        .p-2 { padding: 0.5rem; }
+        .p-4 { padding: 1rem; }
+        .p-6 { padding: 1.5rem; }
+        .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+        .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .pl-10 { padding-left: 2.5rem; }
+        .pt-4 { padding-top: 1rem; }
+        .pt-8 { padding-top: 2rem; }
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .ml-2 { margin-left: 0.5rem; }
+        .mr-1 { margin-right: 0.25rem; }
+        .mr-2 { margin-right: 0.5rem; }
+        .mx-2 { margin-left: 0.5rem; margin-right: 0.5rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-10 { margin-top: 2.5rem; }
+        .space-x-2 > :not([hidden]) ~ :not([hidden]) { margin-left: 0.5rem; }
+        .space-x-4 > :not([hidden]) ~ :not([hidden]) { margin-left: 1rem; }
+        .space-x-6 > :not([hidden]) ~ :not([hidden]) { margin-left: 1.5rem; }
+        .space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.5rem; }
+        .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
+        .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem; }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .rounded { border-radius: 0.25rem; }
+        .rounded-full { border-radius: 9999px; }
+        .border { border-width: 1px; }
+        .border-t { border-top-width: 1px; }
+        .border-b { border-bottom-width: 1px; }
+        .border-r { border-right-width: 1px; }
+        .text-center { text-align: center; }
+        .text-white { color: white; }
+        .text-gray-400 { color: #9ca3af; }
+        .text-gray-500 { color: #6b7280; }
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+        .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+        .text-xs { font-size: 0.75rem; line-height: 1rem; }
+        .font-medium { font-weight: 500; }
+        .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .w-24 { width: 6rem; }
+        .w-32 { width: 8rem; }
+        .w-64 { width: 16rem; }
+        .h-24 { height: 6rem; }
+        .h-32 { height: 8rem; }
+        .h-64 { height: 16rem; }
+        
+        /* Font Awesome icons - just the ones we need */
+        .fa-search:before { content: "🔍"; }
+        .fa-folder-open:before { content: "📂"; }
+        .fa-plus:before { content: "➕"; }
+        .fa-file-export:before { content: "📤"; }
+        .fa-google-drive:before { content: "📁"; }
+        .fa-microsoft:before { content: "📁"; }
+        .fa-youtube:before { content: "📺"; }
+        .fa-soundcloud:before { content: "🎵"; }
+        .fa-database:before { content: "🗃️"; }
+        .fa-external-link-alt:before { content: "🔗"; }
+        .fa-link:before { content: "🔗"; }
+        .fa-save:before { content: "💾"; }
+        .fa-file-audio:before { content: "🎵"; }
+        .fa-broadcast-tower:before { content: "📡"; }
+        .fa-cog:before { content: "⚙️"; }
+        .fa-volume-up:before { content: "🔊"; }
+        .fa-sync:before { content: "🔄"; }
+        .fa-key:before { content: "🔑"; }
+        .fa-redo:before { content: "🔁"; }
+        .fa-play:before { content: "▶️"; }
+        .fa-pause:before { content: "⏸️"; }
+        .fa-stop:before { content: "⏹️"; }
+        .fa-step-backward:before { content: "⏮️"; }
+        .fa-step-forward:before { content: "⏭️"; }
+        .fa-chevron-down:before { content: "🔽"; }
+        .fa-expand:before { content: "⤢"; }
+        .fa-search:before { content: "🔍"; }
+    </style>
+    <style>
+        /* Fix for search input and menu dropdown text visibility */
+        input[type="text"], input[type="password"], select, option {
+            color: white !important;
+        }
+        input::placeholder {
+            color: #888 !important;
+            opacity: 1;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #D42F00;
+            box-shadow: 0 0 0 1px #D42F00;
+        }
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2rem !important;
+        }
+        select:focus {
+            outline: none;
+            border-color: #D42F00;
+            box-shadow: 0 0 0 1px #D42F00;
+        }
+        
+        /* Custom checkbox styling */
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #444;
+            border-radius: 3px;
+            background-color: #333;
+            position: relative;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        input[type="checkbox"]:checked {
+            background-color: #D42F00;
+            border-color: #D42F00;
+        }
+        
+        input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        input[type="checkbox"]:focus {
+            border-color: #D42F00;
+            box-shadow: 0 0 0 1px #D42F00;
+        }
+        
         :root {
             --primary: #D42F00;
             --background: #111;
@@ -16,6 +188,25 @@
             --highlight-inactive: #555;
             --text-primary: #fff;
             --text-secondary: #aaa;
+            --kirk-radio-red: #D42F00;
+        }
+        
+        /* Add Kirk Radio logo background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/kirk_radio_logo.jpg');
+            background-size: 500px;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.1;
+            z-index: -1;
+            filter: brightness(0.8) contrast(1.2);
+            pointer-events: none;
         }
 
         body {
@@ -25,23 +216,6 @@
             position: relative;
             min-height: 100vh;
             overflow-x: hidden;
-        }
-        
-        /* Add background image with overlay */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect width="400" height="400" fill="%23111111"/%3E%3Cpath d="M100,200 A100,100 0 1,0 300,200 A100,100 0 1,0 100,200 Z" fill="none" stroke="%23D42F00" stroke-width="20"/%3E%3Ccircle cx="200" cy="200" r="20" fill="%23D42F00"/%3E%3Ctext x="200" y="180" text-anchor="middle" font-family="Arial" font-size="30" font-weight="bold" fill="%23FFFFFF"%3EKIRK%3C/text%3E%3Ctext x="200" y="220" text-anchor="middle" font-family="Arial" font-size="24" font-weight="bold" fill="%23FFFFFF"%3ERADIO%3C/text%3E%3C/svg%3E');
-            background-size: 400px;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            opacity: 0.25;
-            z-index: -2;
         }
         
         /* Add overlay to make content more visible over background image */
@@ -68,16 +242,17 @@
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
         }
 
-        /* Improved turntable setup */
+        /* Enhanced 3D turntable setup */
         .turntable-container {
             position: relative;
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             margin: 0 auto;
-            perspective: 1000px;
+            perspective: 1200px;
+            transform-style: preserve-3d;
         }
 
-        /* Turntable platter */
+        /* 3D turntable platter with enhanced depth */
         .turntable-platter {
             position: absolute;
             width: 220px;
@@ -86,13 +261,34 @@
             background-color: #1a1a1a;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) translateZ(-5px);
             z-index: -1;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            border: 2px solid #2a2a2a;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+            border: 3px solid #2a2a2a;
+            overflow: hidden;
         }
 
-        /* Turntable strobe marks */
+        /* Enhanced 3D platter base with metallic effect */
+        .turntable-platter::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at center,
+                #333 0%,
+                #222 30%,
+                #1a1a1a 70%,
+                #111 100%
+            );
+            top: 0;
+            left: 0;
+            z-index: -1;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        /* Enhanced turntable strobe marks with 3D effect */
         .strobe-marks {
             position: absolute;
             width: 220px;
@@ -100,41 +296,66 @@
             border-radius: 50%;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) translateZ(-2px);
             z-index: 0;
             background: repeating-conic-gradient(
                 #333 0deg 10deg,
                 #222 10deg 20deg
             );
-            opacity: 0.7;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+            opacity: 0.8;
+        }
+        
+        /* Add metallic rim to platter for 3D effect */
+        .platter-rim {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 4px solid;
+            border-color: #444 #333 #222 #333;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateZ(-3px);
+            z-index: 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.7);
         }
 
-        /* Improved vinyl record */
+        /* Enhanced 3D vinyl record with improved depth */
         .vinyl {
             width: 200px;
             height: 200px;
             background: radial-gradient(circle at center, 
                 #333 0%, 
-                #222 50%, 
-                #1a1a1a 100%);
+                #222 45%, 
+                #1a1a1a 90%,
+                #111 100%);
             border-radius: 50%;
             position: relative;
             cursor: grab;
             transform-style: preserve-3d;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5), 
-                        inset 0 2px 10px rgba(255,255,255,0.1),
-                        inset 0 -2px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5), 
+                        inset 0 3px 10px rgba(255,255,255,0.1),
+                        inset 0 -3px 10px rgba(0,0,0,0.5);
             border: 1px solid #444;
-            transition: transform 0.1s linear;
+            transition: transform 0.1s ease-out;
             will-change: transform;
             z-index: 2;
+            transform: translateZ(5px);
+        }
+
+        .vinyl:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.7), 
+                        inset 0 3px 10px rgba(255,255,255,0.15),
+                        inset 0 -3px 10px rgba(0,0,0,0.6);
         }
 
         .vinyl:active {
             cursor: grabbing;
+            transform: translateZ(2px);
         }
 
-        /* Vinyl record texture */
+        /* Enhanced vinyl record texture with realistic grooves */
         .vinyl-texture {
             position: absolute;
             top: 0;
@@ -145,17 +366,18 @@
             background: repeating-radial-gradient(
                 circle at center,
                 transparent,
+                transparent 4px,
+                rgba(30, 30, 30, 0.4) 4px,
+                rgba(30, 30, 30, 0.4) 5px,
                 transparent 5px,
-                rgba(30, 30, 30, 0.3) 5px,
-                rgba(30, 30, 30, 0.3) 6px,
-                transparent 6px,
-                transparent 10px
+                transparent 8px
             );
             pointer-events: none;
             z-index: 2;
+            opacity: 0.9;
         }
         
-        /* Vinyl center hole and spindle */
+        /* Enhanced vinyl center hole and spindle with 3D effect */
         .vinyl::after {
             content: '';
             position: absolute;
@@ -163,10 +385,10 @@
             left: 50%;
             width: 20px;
             height: 20px;
-            background: #111;
+            background: radial-gradient(circle at center, #222, #111);
             border-radius: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 0 10px rgba(50, 50, 50, 0.5);
+            transform: translate(-50%, -50%) translateZ(1px);
+            box-shadow: 0 0 0 10px rgba(50, 50, 50, 0.6), inset 0 0 5px rgba(0,0,0,0.8);
             z-index: 4;
         }
 
@@ -177,13 +399,14 @@
             left: 50%;
             width: 120px;
             height: 120px;
-            border: 2px solid #444;
+            border: 2px solid rgba(68, 68, 68, 0.7);
             border-radius: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) translateZ(0.5px);
             z-index: 1;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
         }
         
-        /* Improved vinyl record label - now doesn't rotate with the record */
+        /* Enhanced vinyl record label with 3D effect */
         .vinyl-label-container {
             position: absolute;
             top: 50%;
@@ -194,12 +417,13 @@
             z-index: 3;
             pointer-events: none;
             border-radius: 50%;
+            transform-style: preserve-3d;
         }
 
         .vinyl-label {
             width: 80px;
             height: 80px;
-            background: radial-gradient(circle at center, #D42F00, #961F00);
+            background: radial-gradient(circle at center, #fff 0%, #f5f5f5 70%, #eee 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -210,15 +434,19 @@
             font-weight: bold;
             text-transform: uppercase;
             text-shadow: 0 1px 1px rgba(0,0,0,0.5);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), inset 0 2px 3px rgba(255, 255, 255, 0.2);
             z-index: 5;
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) translateZ(6px);
+            border: 1px solid rgba(0,0,0,0.1);
+            background-image: url('assets/kirk_radio_logo.jpg');
+            background-size: cover;
+            background-position: center;
         }
 
-        /* Vinyl reflection effect */
+        /* Enhanced vinyl reflection effect */
         .vinyl-reflection {
             position: absolute;
             top: 0;
@@ -227,10 +455,39 @@
             height: 100%;
             border-radius: 50%;
             background: linear-gradient(45deg, 
-                rgba(255,255,255,0.1) 0%, 
+                rgba(255,255,255,0.15) 0%, 
+                rgba(255,255,255,0.05) 50%,
                 rgba(255,255,255,0) 60%);
             z-index: 3;
             pointer-events: none;
+        }
+        
+        /* Add vinyl groove animation */
+        @keyframes pulse-groove {
+            0% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.4; }
+        }
+        
+        .vinyl-grooves {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: repeating-radial-gradient(
+                circle at center,
+                transparent,
+                transparent 5px,
+                rgba(0, 0, 0, 0.2) 5.5px,
+                transparent 6px,
+                transparent 15px
+            );
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.5;
+            animation: pulse-groove 5s infinite ease-in-out;
         }
 
         /* Improved animation for vinyl rotation */
@@ -326,17 +583,30 @@
             transition: width 0.1s linear;
         }
 
-        /* EQ Knobs */
+        /* Enhanced 3D EQ Knobs */
         .eq-knob {
             width: 50px;
             height: 50px;
-            background: radial-gradient(circle at center, #555, #333);
+            background: radial-gradient(circle at center, #666 5%, #555 30%, #444 60%, #333 90%);
             border-radius: 50%;
             position: relative;
             margin: 0 auto;
             border: 2px solid #444;
             cursor: pointer;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            transform: perspective(500px) rotateX(25deg);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .eq-knob:hover {
+            transform: perspective(500px) rotateX(25deg) scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+            background: radial-gradient(circle at center, #777 5%, #666 30%, #555 60%, #444 90%);
+        }
+        
+        .eq-knob:active {
+            transform: perspective(500px) rotateX(25deg) scale(0.95);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .eq-knob::after {
@@ -349,10 +619,31 @@
             height: 20px;
             background-color: var(--primary);
             transform-origin: bottom center;
+            border-radius: 2px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+        
+        /* Add knob grip marks for better visual feedback */
+        .eq-knob::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 2px;
+            background-color: #222;
+            border-radius: 1px;
+            box-shadow: 0 0 2px rgba(0,0,0,0.3);
         }
 
         .eq-knob[data-value="0"]::after {
             transform: translate(-50%, -50%) rotate(0deg);
+        }
+        
+        /* Add transition for smooth knob rotation */
+        .eq-knob::after {
+            transition: transform 0.2s ease-out;
         }
 
         /* FX panel styles */
@@ -608,8 +899,8 @@
                 <div class="relative">
                     <input type="text" 
                            placeholder="Search tracks..." 
-                           class="w-full bg-[#222] border border-[#333] rounded px-4 py-2 pl-10 text-white"
-                           onkeyup="searchTracks(this.value)">
+                           class="w-full bg-[#222] border border-[#333] rounded px-4 py-2 pl-10 text-white focus:outline-none focus:ring-1 focus:ring-[#D42F00] focus:border-[#D42F00] placeholder-gray-500"
+                           onkeyup="searchTracks(this.value)" id="searchInput">
                     <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
                 </div>
             </div>
@@ -697,50 +988,60 @@
                                         <div>
                                             <label class="block mb-1 text-sm">Icecast Server URL</label>
                                             <input type="text" id="icecastUrl" placeholder="http://your-server:8000" 
-                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#D42F00] focus:border-[#D42F00] placeholder-gray-500">
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">Mount Point</label>
                                             <input type="text" id="mountPoint" placeholder="/stream" 
-                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#D42F00] focus:border-[#D42F00] placeholder-gray-500">
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">Username</label>
                                             <input type="text" id="icecastUsername" placeholder="source" 
-                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#D42F00] focus:border-[#D42F00] placeholder-gray-500">
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">Password</label>
                                             <input type="password" id="icecastPassword" placeholder="********" 
-                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#D42F00] focus:border-[#D42F00] placeholder-gray-500">
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">Stream Name</label>
                                             <input type="text" id="streamName" placeholder="Kirk Radio DJ Live Mix" 
-                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#D42F00] focus:border-[#D42F00] placeholder-gray-500">
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">Stream Description</label>
                                             <input type="text" id="streamDescription" placeholder="Live DJ set by Kirk Radio DJ" 
-                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#D42F00] focus:border-[#D42F00] placeholder-gray-500">
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">Bitrate</label>
-                                            <select id="streamBitrate" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                            <select id="streamBitrate" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm appearance-none">
                                                 <option value="64">64 kbps (Low Quality)</option>
                                                 <option value="128" selected>128 kbps (Standard)</option>
                                                 <option value="192">192 kbps (Good Quality)</option>
                                                 <option value="256">256 kbps (High Quality)</option>
                                                 <option value="320">320 kbps (Best Quality)</option>
                                             </select>
+                                            <div class="relative">
+                                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">Format</label>
-                                            <select id="streamFormat" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                            <select id="streamFormat" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm appearance-none">
                                                 <option value="mp3" selected>MP3</option>
                                                 <option value="aac">AAC</option>
                                                 <option value="ogg">Ogg Vorbis</option>
                                             </select>
+                                            <div class="relative">
+                                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -758,22 +1059,37 @@
                                         <div class="section-label">Audio Devices</div>
                                         <div>
                                             <label class="block mb-1 text-sm">Output Device</label>
-                                            <select id="audioOutputDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                            <select id="audioOutputDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm appearance-none">
                                                 <option value="default" selected>Default Output Device</option>
                                             </select>
+                                            <div class="relative">
+                                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">Microphone Input</label>
-                                            <select id="micInputDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                            <select id="micInputDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm appearance-none">
                                                 <option value="none">No Microphone</option>
                                                 <option value="default" selected>Default Input Device</option>
                                             </select>
+                                            <div class="relative">
+                                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">DJ Controller</label>
-                                            <select id="djControllerDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                            <select id="djControllerDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm appearance-none">
                                                 <option value="none" selected>No Controller</option>
                                             </select>
+                                            <div class="relative">
+                                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div>
                                             <button onclick="detectHardware()" class="dj-button w-full mb-3">
@@ -808,19 +1124,29 @@
                                         <div class="section-label">Audio Processing</div>
                                         <div>
                                             <label class="block mb-1 text-sm">Buffer Size</label>
-                                            <select id="bufferSize" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm mb-3">
+                                            <select id="bufferSize" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm mb-3 appearance-none">
                                                 <option value="256">256 (Lowest latency)</option>
                                                 <option value="512" selected>512 (Balanced)</option>
                                                 <option value="1024">1024 (Best stability)</option>
                                                 <option value="2048">2048 (Maximum stability)</option>
                                             </select>
+                                            <div class="relative">
+                                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                            </div>
                                             
                                             <label class="block mb-1 text-sm">Sample Rate</label>
-                                            <select id="sampleRate" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                            <select id="sampleRate" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm appearance-none">
                                                 <option value="44100">44.1 kHz (Standard)</option>
                                                 <option value="48000" selected>48 kHz (Better Quality)</option>
                                                 <option value="96000">96 kHz (High Quality)</option>
                                             </select>
+                                            <div class="relative">
+                                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -883,16 +1209,18 @@
                             <div class="flex flex-col items-center">
                                 <span class="control-label">Turntable Control</span>
                                 <!-- Improved turntable visuals -->
-                                <div class="turntable-container relative">
+                                <div class="turntable-container relative tooltip">
                                     <div class="turntable-platter"></div>
+                                    <div class="platter-rim"></div>
                                     <div class="strobe-marks"></div>
-                                    <div class="vinyl tooltip" id="vinyl1" onmousedown="startScratch(0, event)" 
+                                    <div class="vinyl" id="vinyl1" onmousedown="startScratch(0, event)" 
                                          onmousemove="scratch(0, event)" onmouseup="stopScratch(0)">
                                         <div class="vinyl-texture"></div>
+                                        <div class="vinyl-grooves"></div>
                                         <div class="vinyl-reflection"></div>
                                         <div class="vinyl-label">KIRK RADIO</div>
-                                        <span class="tooltip-text">Click and drag to scratch</span>
                                     </div>
+                                    <span class="tooltip-text">Click and drag to scratch</span>
                                 </div>
                                 <div class="transport-controls mt-4">
                                     <button onclick="playDeck(0)" class="transport-button tooltip" id="playBtn1">
@@ -988,16 +1316,18 @@
                             <div class="flex flex-col items-center">
                                 <span class="control-label">Turntable Control</span>
                                 <!-- Improved turntable visuals -->
-                                <div class="turntable-container relative">
+                                <div class="turntable-container relative tooltip">
                                     <div class="turntable-platter"></div>
+                                    <div class="platter-rim"></div>
                                     <div class="strobe-marks"></div>
-                                    <div class="vinyl tooltip" id="vinyl2" onmousedown="startScratch(1, event)" 
+                                    <div class="vinyl" id="vinyl2" onmousedown="startScratch(1, event)" 
                                          onmousemove="scratch(1, event)" onmouseup="stopScratch(1)">
                                         <div class="vinyl-texture"></div>
+                                        <div class="vinyl-grooves"></div>
                                         <div class="vinyl-reflection"></div>
                                         <div class="vinyl-label">KIRK RADIO</div>
-                                        <span class="tooltip-text">Click and drag to scratch</span>
                                     </div>
+                                    <span class="tooltip-text">Click and drag to scratch</span>
                                 </div>
                                 <div class="transport-controls mt-4">
                                     <button onclick="playDeck(1)" class="transport-button tooltip" id="playBtn2">
@@ -1844,24 +2174,47 @@
             decks[deckIndex].processor.skipForward();
         }
         
-        // EQ Control
+        // Enhanced 3D EQ Control
         function rotateEQ(element, type, deckIndex) {
-            // This would be much more sophisticated in a real DJ app
-            // Here we just toggle between -50%, 0%, and +50%
+            // Get current value and calculate new one with finer control
             const currentValue = parseInt(element.getAttribute('data-value') || 0);
             let newValue;
             
-            if (currentValue <= -50) newValue = 0;
-            else if (currentValue === 0) newValue = 50;
-            else newValue = -50;
+            // Improve progression with 5 steps instead of 3
+            if (currentValue <= -75) newValue = -50;
+            else if (currentValue <= -25) newValue = 0;
+            else if (currentValue < 25) newValue = 50;
+            else if (currentValue < 75) newValue = 100;
+            else newValue = -100;
             
-            // Update visual rotation
-            element.style.transform = `rotate(${newValue * 1.8}deg)`; // 180 degrees max rotation
+            // Update data attribute
             element.setAttribute('data-value', newValue);
             
-            // Apply EQ
+            // Enhanced visual rotation with 3D perspective
+            // The pointer line inside the knob rotates
+            const rotationDegrees = (newValue * 1.8); // 180 degrees max rotation
+            element.querySelector('::after').style.transform = `translate(-50%, -50%) rotate(${rotationDegrees}deg)`;
+            
+            // Apply 3D tilt effect based on rotation
+            const xTilt = Math.sin(rotationDegrees * Math.PI / 180) * 5;
+            const yTilt = Math.cos(rotationDegrees * Math.PI / 180) * 5;
+            element.style.transform = `perspective(500px) rotateX(${25 + xTilt}deg) rotateY(${yTilt}deg)`;
+            
+            // Visual feedback - active class temporarily 
+            element.classList.add('active');
+            setTimeout(() => {
+                element.classList.remove('active');
+            }, 200);
+            
+            // Apply EQ to the audio
             if (decks[deckIndex].processor) {
                 decks[deckIndex].processor.setEQ(type, newValue);
+            }
+            
+            // Update display value if it exists
+            const valueDisplay = document.getElementById(`${type}EQValue${deckIndex + 1}`);
+            if (valueDisplay) {
+                valueDisplay.textContent = newValue > 0 ? `+${newValue}%` : `${newValue}%`;
             }
         }
         
