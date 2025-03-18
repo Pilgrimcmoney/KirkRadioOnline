@@ -8,61 +8,35 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #D42F00; 
-            --background: #111; 
-            --secondary: #222; 
-            --border: #333; 
-            --highlight-active: #D42F00; 
-            --highlight-inactive: #555; 
-            --text-primary: #fff; 
-            --text-secondary: #aaa; 
+            --primary: #D42F00;
+            --background: #111;
+            --secondary: #222;
+            --border: #333;
+            --highlight-active: #D42F00;
+            --highlight-inactive: #555;
+            --text-primary: #fff;
+            --text-secondary: #aaa;
         }
-
         body {
-            background-color: var(--background); 
-            color: var(--text-primary); 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            position: relative; 
-            min-height: 100vh; 
-            overflow-x: hidden; 
+            background-color: var(--background);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-
-        /* Your existing CSS styles go here */
-/* Enhanced Turntable Styles */
-.turntable-container {
-    perspective: 1000px; /* Perspective for 3D effect */
-}
-
-.turntable-platter {
-    transform: rotateX(20deg) rotateY(0deg);
-    transition: transform 0.2s;
-}
-
-/* 3D effect on hover */
-.turntable-container:hover .turntable-platter {
-    transform: rotateX(0deg) rotateY(20deg);
-}
-        /* ... (omitted for brevity) ... */
-
+        /* Additional CSS styling can be added here */
     </style>
 </head>
 <body>
-    <div class="menu">
-    <button onclick="saveMix()" class="menu-button">Save Mix</button>
-    <button onclick="loadTrack()" class="menu-button">Load Track</button>
-    <button onclick="openLibraryFolder()" class="menu-button">Open Library Folder</button>
-    <button onclick="createPlaylist()" class="menu-button">New Playlist</button>
-</div>
+
     <div class="flex h-screen">
         <!-- Left Sidebar - Track Library -->
         <div class="w-64 bg-[#1a1a1a] border-r border-[#333] flex flex-col">
             <div class="p-4 border-b border-[#333]">
                 <h2 class="text-lg font-medium mb-3">Track Library</h2>
                 <div class="relative">
-                    <input type="text" 
-                           placeholder="Search tracks..." 
-                           class="w-full bg-[#222] border border-[#333] rounded px-4 py-2 pl-10 text-white"
-                           onkeyup="searchTracks(this.value)">
+                    <input type="text" placeholder="Search tracks..." class="w-full bg-[#222] border border-[#333] rounded px-4 py-2 pl-10 text-white" onkeyup="searchTracks(this.value)">
                     <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
                 </div>
             </div>
@@ -72,46 +46,19 @@
                     <p class="mt-2">Use "Load Track" button or click "Music Database" to see available tracks</p>
                 </div>
             </div>
+
             <!-- Library Controls -->
             <div class="p-4 border-t border-[#333]">
                 <div class="section-label">Library Controls</div>
-                <button onclick="openLibraryFolder()" class="dj-button w-full mb-2 tooltip">
+                <button onclick="openLibraryFolder()" class="dj-button w-full mb-2">
                     <i class="fas fa-folder-open mr-2"></i> Open Library Folder
-                    <span class="tooltip-text">Open a folder to import multiple tracks at once</span>
                 </button>
-                <div class="flex gap-2 mb-4">
-                    <button onclick="createPlaylist()" class="dj-button flex-1 tooltip">
-                        <i class="fas fa-plus mr-1"></i> New Playlist
-                        <span class="tooltip-text">Create a new playlist</span>
-                    </button>
-                    <button onclick="exportLibrary()" class="dj-button flex-1 tooltip">
-                        <i class="fas fa-file-export mr-1"></i> Export
-                        <span class="tooltip-text">Export your track library</span>
-                    </button>
-                </div>
-                <div class="section-label">Music Services</div>
-                <div class="space-y-2">
-                    <button onclick="connectGoogleDrive()" class="dj-button w-full flex items-center justify-between tooltip">
-                        <div><i class="fab fa-google-drive mr-2"></i> Google Drive</div>
-                        <span class="tooltip-text">Connect to your Google Drive music</span>
-                    </button>
-                    <button onclick="connectOneDrive()" class="dj-button w-full flex items-center justify-between tooltip">
-                        <div><i class="fab fa-microsoft mr-2"></i> OneDrive</div>
-                        <span class="tooltip-text">Connect to your OneDrive music</span>
-                    </button>
-                    <button onclick="connectYouTube()" class="dj-button w-full flex items-center justify-between tooltip">
-                        <div><i class="fab fa-youtube mr-2"></i> YouTube</div>
-                        <span class="tooltip-text">Connect to YouTube for DJ mixes</span>
-                    </button>
-                    <button onclick="connectSoundCloud()" class="dj-button w-full flex items-center justify-between tooltip bg-[#D42F00]">
-                        <div><i class="fab fa-soundcloud mr-2"></i> SoundCloud</div>
-                        <span class="tooltip-text">Connect to SoundCloud for streaming music</span>
-                    </button>
-                    <button onclick="browseMusicDatabase()" class="dj-button w-full flex items-center justify-between tooltip bg-[#D42F00]">
-                        <div><i class="fas fa-database mr-2"></i> Music Database</div>
-                        <span class="tooltip-text">Browse our extensive online music collection</span>
-                    </button>
-                </div>
+                <button onclick="createPlaylist()" class="dj-button w-full mb-2">
+                    <i class="fas fa-plus mr-1"></i> New Playlist
+                </button>
+                <button onclick="exportLibrary()" class="dj-button w-full mb-2">
+                    <i class="fas fa-file-export mr-1"></i> Export
+                </button>
             </div>
         </div>
 
@@ -120,54 +67,12 @@
             <!-- Top Toolbar -->
             <div class="bg-[#1a1a1a] border-b border-[#333] p-4">
                 <div class="flex items-center justify-between">
-                    <div class="flex space-x-4">
-                        <button onclick="saveMix()" class="dj-button tooltip">
-                            <i class="fas fa-save mr-2"></i> Save Mix
-                            <span class="tooltip-text">Save the current mix session</span>
-                        </button>
-                        <button id="loadTrackBtn" onclick="loadTrack()" class="dj-button tooltip">
-                            <i class="fas fa-file-audio mr-2"></i> Load Track
-                            <span class="tooltip-text">Load an audio track from your device</span>
-                        </button>
-                        <div class="dropdown relative">
-                            <button id="broadcastBtn" onclick="toggleBroadcastSettings()" class="dj-button tooltip">
-                                <i class="fas fa-broadcast-tower mr-2"></i> Broadcast Settings
-                                <span class="tooltip-text">Configure and start broadcasting</span>
-                            </button>
-                            <div id="broadcastSettings" class="dropdown-content">
-                                <!-- Broadcast settings content -->
-                                <div class="p-4">
-                                    <!-- Your broadcast settings inputs here -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dropdown relative">
-                            <button id="settingsBtn" onclick="toggleAppSettings()" class="dj-button tooltip">
-                                <i class="fas fa-cog mr-2"></i> Settings
-                                <span class="tooltip-text">Configure application settings</span>
-                            </button>
-                            <div id="appSettings" class="dropdown-content">
-                                <!-- App settings content -->
-                                <div class="p-4">
-                                    <!-- Your app settings inputs here -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center space-x-6">
-                        <div class="flex items-center">
-                            <span class="control-label mr-2">Master Tempo:</span>
-                            <input type="range" min="60" max="200" value="128" class="slider w-32"
-                                   oninput="updateMasterTempo(this.value)">
-                            <span class="text-white ml-2" id="tempoValue">128 BPM</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-volume-up text-white mr-2" title="Master Volume"></i>
-                            <input type="range" min="0" max="100" value="100" class="slider w-24"
-                                   oninput="updateMasterVolume(this.value)" title="Master Volume Control">
-                        </div>
-                    </div>
+                    <button onclick="saveMix()" class="dj-button">
+                        <i class="fas fa-save mr-2"></i>Save Mix
+                    </button>
+                    <button id="loadTrackBtn" onclick="loadTrack()" class="dj-button">
+                        <i class="fas fa-file-audio mr-2"></i>Load Track
+                    </button>
                 </div>
             </div>
 
@@ -175,25 +80,9 @@
             <div class="flex-1 p-6 space-y-6">
                 <div class="grid grid-cols-2 gap-6">
                     <!-- Deck 1 -->
-                    <div class="deck p-6">
-                        <div class="flex justify-between mb-4">
-                            <h2 class="text-xl font-medium">Deck 1</h2>
-                            <div class="flex space-x-2">
-                                <button onclick="toggleSync(0)" class="dj-button tooltip" title="Sync Tempo with Master">
-                                    <i class="fas fa-sync"></i>
-                                    <span class="tooltip-text">Sync Tempo with Master</span>
-                                </button>
-                                <button onclick="toggleKeyLock(0)" class="dj-button tooltip" title="Key Lock">
-                                    <i class="fas fa-key"></i>
-                                    <span class="tooltip-text">Lock Key When Changing Tempo</span>
-                                </button>
-                                <button onclick="toggleLoop(0)" class="dj-button tooltip" title="Loop Current Section">
-                                    <i class="fas fa-redo"></i>
-                                    <span class="tooltip-text">Loop Current Section</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="track-info p-2 mb-4">
+                    <div class="deck p-6 bg-[#222] rounded-lg">
+                        <h2 class="text-xl font-medium">Deck 1</h2>
+                        <div class="track-info mb-4">
                             <div id="deck1Title" class="font-medium truncate">No track loaded</div>
                             <div id="deck1Artist" class="text-sm text-gray-400 truncate">--</div>
                             <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
@@ -204,99 +93,19 @@
                                 <span id="deck1TotalTime">00:00</span>
                             </div>
                         </div>
-                        <div class="flex gap-6">
-                            <div class="flex flex-col items-center">
-                                <span class="control-label">Turntable Control</span>
-                                <div class="turntable-container relative">
-                                    <div class="turntable-platter"></div>
-                                    <div class="strobe-marks"></div>
-                                    <div class="vinyl tooltip" id="vinyl1" onmousedown="startScratch(0, event)" 
-                                         onmousemove="scratch(0, event)" onmouseup="stopScratch(0)">
-                                        <div class="vinyl-texture"></div>
-                                        <div class="vinyl-reflection"></div>
-                                        <div class="vinyl-label">KIRK RADIO</div>
-                                        <span class="tooltip-text">Click and drag to scratch</span>
-                                    </div>
-                                </div>
-                                <div class="transport-controls mt-4">
-                                    <button onclick="playDeck(0)" class="transport-button tooltip" id="playBtn1">
-                                        <i class="fas fa-play" id="playIcon1"></i>
-                                        <span class="tooltip-text">Play/Pause</span>
-                                    </button>
-                                    <button onclick="cuePoint(0)" class="transport-button tooltip">
-                                        <i class="fas fa-flag"></i>
-                                        <span class="tooltip-text">Set Cue Point</span>
-                                    </button>
-                                    <button onclick="skipBackward(0)" class="transport-button tooltip">
-                                        <i class="fas fa-backward"></i>
-                                        <span class="tooltip-text">Skip Backward</span>
-                                    </button>
-                                    <button onclick="skipForward(0)" class="transport-button tooltip">
-                                        <i class="fas fa-forward"></i>
-                                        <span class="tooltip-text">Skip Forward</span>
-                                    </button>
-                                </div>
+                        <button onmousedown="startScratch(0, event)" onmousemove="scratch(0, event)" onmouseup="stopScratch(0)" class="turntable-control">
+                            <audio id="audioDeck1"></audio>
+                            <div class="vinyl">
+                                <div class="vinyl-label">KIRK RADIO</div>
+                                <span>Click and drag to scratch</span>
                             </div>
-                            <div class="flex-1">
-                                <div class="mb-4">
-                                    <span class="control-label">Waveform</span>
-                                    <div class="waveform">
-                                        <canvas id="waveform1" class="waveform-data"></canvas>
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <span class="control-label">Tempo Control</span>
-                                        <input type="range" min="60" max="200" value="128" class="slider"
-                                               oninput="updateTempo(0, this.value)" title="Adjust track tempo">
-                                        <div class="text-center text-sm mt-1" id="deck1Tempo">128 BPM</div>
-                                    </div>
-                                    <div>
-                                        <span class="control-label">Key/Pitch Control</span>
-                                        <input type="range" min="-12" max="12" value="0" class="slider"
-                                               oninput="updateKey(0, this.value)" title="Adjust track key/pitch">
-                                        <div class="text-center text-sm mt-1" id="deck1Key">Original Key</div>
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-3 gap-4 mt-4">
-                                    <div>
-                                        <span class="control-label">Low EQ</span>
-                                        <div class="eq-knob" id="lowEQ1" data-value="0" onclick="rotateEQ(this, 'low', 0)" title="Low Frequency EQ"></div>
-                                    </div>
-                                    <div>
-                                        <span class="control-label">Mid EQ</span>
-                                        <div class="eq-knob" id="midEQ1" data-value="0" onclick="rotateEQ(this, 'mid', 0)" title="Mid Frequency EQ"></div>
-                                    </div>
-                                    <div>
-                                        <span class="control-label">High EQ</span>
-                                        <div class="eq-knob" id="highEQ1" data-value="0" onclick="rotateEQ(this, 'high', 0)" title="High Frequency EQ"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </button>
                     </div>
 
                     <!-- Deck 2 -->
-                    <div class="deck p-6">
-                        <div class="flex justify-between mb-4">
-                            <h2 class="text-xl font-medium">Deck 2</h2>
-                            <div class="flex space-x-2">
-                                <button onclick="toggleSync(1)" class="dj-button tooltip" title="Sync Tempo with Master">
-                                    <i class="fas fa-sync"></i>
-                                    <span class="tooltip-text">Sync Tempo with Master</span>
-                                </button>
-                                <button onclick="toggleKeyLock(1)" class="dj-button tooltip" title="Key Lock">
-                                    <i class="fas fa-key"></i>
-                                    <span class="tooltip-text">Lock Key When Changing Tempo</span>
-                                </button>
-                                <button onclick="toggleLoop(1)" class="dj-button tooltip" title="Loop Current Section">
-                                    <i class="fas fa-redo"></i>
-                                    <span class="tooltip-text">Loop Current Section</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="track-info p-2 mb-4">
+                    <div class="deck p-6 bg-[#222] rounded-lg">
+                        <h2 class="text-xl font-medium">Deck 2</h2>
+                        <div class="track-info mb-4">
                             <div id="deck2Title" class="font-medium truncate">No track loaded</div>
                             <div id="deck2Artist" class="text-sm text-gray-400 truncate">--</div>
                             <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
@@ -307,77 +116,13 @@
                                 <span id="deck2TotalTime">00:00</span>
                             </div>
                         </div>
-
-                        <div class="flex gap-6">
-                            <div class="flex flex-col items-center">
-                                <span class="control-label">Turntable Control</span>
-                                <div class="turntable-container relative">
-                                    <div class="turntable-platter"></div>
-                                    <div class="strobe-marks"></div>
-                                    <div class="vinyl tooltip" id="vinyl2" onmousedown="startScratch(1, event)" 
-                                         onmousemove="scratch(1, event)" onmouseup="stopScratch(1)">
-                                        <div class="vinyl-texture"></div>
-                                        <div class="vinyl-reflection"></div>
-                                        <div class="vinyl-label">KIRK RADIO</div>
-                                        <span class="tooltip-text">Click and drag to scratch</span>
-                                    </div>
-                                </div>
-                                <div class="transport-controls mt-4">
-                                    <button onclick="playDeck(1)" class="transport-button tooltip" id="playBtn2">
-                                        <i class="fas fa-play" id="playIcon2"></i>
-                                        <span class="tooltip-text">Play/Pause</span>
-                                    </button>
-                                    <button onclick="cuePoint(1)" class="transport-button tooltip">
-                                        <i class="fas fa-flag"></i>
-                                        <span class="tooltip-text">Set Cue Point</span>
-                                    </button>
-                                    <button onclick="skipBackward(1)" class="transport-button tooltip">
-                                        <i class="fas fa-backward"></i>
-                                        <span class="tooltip-text">Skip Backward</span>
-                                    </button>
-                                    <button onclick="skipForward(1)" class="transport-button tooltip">
-                                        <i class="fas fa-forward"></i>
-                                        <span class="tooltip-text">Skip Forward</span>
-                                    </button>
-                                </div>
+                        <button onmousedown="startScratch(1, event)" onmousemove="scratch(1, event)" onmouseup="stopScratch(1)" class="turntable-control">
+                            <audio id="audioDeck2"></audio>
+                            <div class="vinyl">
+                                <div class="vinyl-label">KIRK RADIO</div>
+                                <span>Click and drag to scratch</span>
                             </div>
-                            <div class="flex-1">
-                                <div class="mb-4">
-                                    <span class="control-label">Waveform</span>
-                                    <div class="waveform">
-                                        <canvas id="waveform2" class="waveform-data"></canvas>
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <span class="control-label">Tempo Control</span>
-                                        <input type="range" min="60" max="200" value="128" class="slider"
-                                               oninput="updateTempo(1, this.value)" title="Adjust track tempo">
-                                        <div class="text-center text-sm mt-1" id="deck2Tempo">128 BPM</div>
-                                    </div>
-                                    <div>
-                                        <span class="control-label">Key/Pitch Control</span>
-                                        <input type="range" min="-12" max="12" value="0" class="slider"
-                                               oninput="updateKey(1, this.value)" title="Adjust track key/pitch">
-                                        <div class="text-center text-sm mt-1" id="deck2Key">Original Key</div>
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-3 gap-4 mt-4">
-                                    <div>
-                                        <span class="control-label">Low EQ</span>
-                                        <div class="eq-knob" id="lowEQ2" data-value="0" onclick="rotateEQ(this, 'low', 1)" title="Low Frequency EQ"></div>
-                                    </div>
-                                    <div>
-                                        <span class="control-label">Mid EQ</span>
-                                        <div class="eq-knob" id="midEQ2" data-value="0" onclick="rotateEQ(this, 'mid', 1)" title="Mid Frequency EQ"></div>
-                                    </div>
-                                    <div>
-                                        <span class="control-label">High EQ</span>
-                                        <div class="eq-knob" id="highEQ2" data-value="0" onclick="rotateEQ(this, 'high', 1)" title="High Frequency EQ"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </button>
                     </div>
                 </div>
 
@@ -385,242 +130,101 @@
                 <div class="flex justify-center items-center space-x-8 bg-[#1a1a1a] p-6 rounded-lg">
                     <div>
                         <span class="control-label text-center">Deck 1 Volume</span>
-                        <input type="range" min="0" max="100" value="100" class="vertical-slider"
-                               oninput="updateVolume(0, this.value)" title="Deck 1 Volume Control">
+                        <input type="range" min="0" max="100" value="100" class="vertical-slider" onchange="updateVolume(0, this.value)">
                         <div class="text-center text-xs mt-2" id="volume1Value">100%</div>
                     </div>
                     <div class="flex-1">
                         <span class="control-label">Crossfader</span>
-                        <div class="flex items-center">
-                            <span class="text-xs mr-2">Deck 1</span>
-                            <input type="range" min="0" max="100" value="50" class="slider w-full"
-                                   oninput="updateCrossfader(this.value)" title="Mix between Deck 1 and Deck 2">
-                            <span class="text-xs ml-2">Deck 2</span>
-                        </div>
+                        <input type="range" min="0" max="100" value="50" class="slider w-full" onchange="updateCrossfader(this.value)">
                         <div class="text-center text-xs mt-2" id="crossfaderValue">Center</div>
                     </div>
                     <div>
                         <span class="control-label text-center">Deck 2 Volume</span>
-                        <input type="range" min="0" max="100" value="100" class="vertical-slider"
-                               oninput="updateVolume(1, this.value)" title="Deck 2 Volume Control">
+                        <input type="range" min="0" max="100" value="100" class="vertical-slider" onchange="updateVolume(1, this.value)">
                         <div class="text-center text-xs mt-2" id="volume2Value">100%</div>
                     </div>
                 </div>
-
-                <!-- FX Section -->
-                <div class="bg-[#1a1a1a] p-6 rounded-lg">
-                    <div class="section-label">Effects Panel</div>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div>
-                            <span class="control-label">Deck 1 Effects</span>
-                            <div class="grid grid-cols-4 gap-2">
-                                <div class="fx-button tooltip" onclick="toggleEffect(0, 'reverb')">
-                                    Reverb
-                                    <span class="tooltip-text">Apply reverb effect to Deck 1</span>
-                                </div>
-                                <div class="fx-button tooltip" onclick="toggleEffect(0, 'delay')">
-                                    Delay
-                                    <span class="tooltip-text">Apply delay effect to Deck 1</span>
-                                </div>
-                                <div class="fx-button tooltip" onclick="toggleEffect(0, 'flanger')">
-                                    Flanger
-                                    <span class="tooltip-text">Apply flanger effect to Deck 1</span>
-                                </div>
-                                <div class="fx-button tooltip" onclick="toggleEffect(0, 'filter')">
-                                    Filter
-                                    <span class="tooltip-text">Apply filter effect to Deck 1</span>
-                                </div>
-                            </div>
-                            <div class="mt-4">
-                                <span class="control-label">Effect Mix</span>
-                                <input type="range" min="0" max="100" value="50" class="slider"
-                                       oninput="updateEffectMix(0, this.value)" title="Adjust effect mix level">
-                            </div>
-                        </div>
-                        <div>
-                            <span class="control-label">Deck 2 Effects</span>
-                            <div class="grid grid-cols-4 gap-2">
-                                <div class="fx-button tooltip" onclick="toggleEffect(1, 'reverb')">
-                                    Reverb
-                                    <span class="tooltip-text">Apply reverb effect to Deck 2</span>
-                                </div>
-                                <div class="fx-button tooltip" onclick="toggleEffect(1, 'delay')">
-                                    Delay
-                                    <span class="tooltip-text">Apply delay effect to Deck 2</span>
-                                </div>
-                                <div class="fx-button tooltip" onclick="toggleEffect(1, 'flanger')">
-                                    Flanger
-                                    <span class="tooltip-text">Apply flanger effect to Deck 2</span>
-                                </div>
-                                <div class="fx-button tooltip" onclick="toggleEffect(1, 'filter')">
-                                    Filter
-                                    <span class="tooltip-text">Apply filter effect to Deck 2</span>
-                                </div>
-                            </div>
-                            <div class="mt-4">
-                                <span class="control-label">Effect Mix</span>
-                                <input type="range" min="0" max="100" value="50" class="slider"
-                                       oninput="updateEffectMix(1, this.value)" title="Adjust effect mix level">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Broadcast Status -->
-                <div class="bg-[#1a1a1a] p-4 rounded-lg" id="broadcastStatus">
-                    <div class="section-label">Broadcast Status</div>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <div class="w-3 h-3 rounded-full bg-red-500 mr-2" id="broadcastStatusIndicator"></div>
-                            <span id="broadcastStatusText">Not broadcasting</span>
-                        </div>
-                        <div>
-                            <button id="startStopBroadcastBtn" onclick="toggleBroadcast()" class="dj-button">
-                                <i class="fas fa-play-circle mr-2"></i> Start Broadcasting
-                            </button>
-                        </div>
-                    </div>
-                    <div class="text-xs text-gray-500 mt-2" id="broadcastStats">
-                        Configure your Icecast settings using the Broadcast Settings button in the toolbar.
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- Modals -->
-    <div id="alertModal" class="modal">
-        <div class="modal-content">
-            <h3 class="text-xl font-medium mb-4" id="modalTitle">Alert</h3>
-            <p id="modalMessage" class="mb-4">Message content will appear here.</p>
-            <div class="flex justify-end">
-                <button onclick="closeModal('alertModal')" class="dj-button">Close</button>
-            </div>
-        </div>
-    </div>
-
+    <!-- JavaScript Functions -->
     <script>
-        const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer();
+        let decks = [{ audio: new Audio() }, { audio: new Audio() }];
+        let currentlyPlayingDeck = null;
 
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+        function loadTrack() {
+            // Simulate track loading and assign to a deck
+            const track = {
+                title: "Classical Remix",
+                artist: "Orchestra X",
+                duration: "06:10",
+                audioSrc: "path_to_audio_file" // Provide the audio file path
+            };
 
-// Create and load 3D models
-const loader = new THREE.GLTFLoader();
-loader.load('turntable_model.glb', function(gltf) {
-    scene.add(gltf.scene);
-    render();
-});
-
-function render() {
-    requestAnimationFrame(render);
-    renderer.render(scene, camera);
-}
-        function toggleDropdown(dropdownId) {
-    const dropdown = document.getElementById(dropdownId);
-    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-}
-        function startScratch(deckIndex, event) {
-    scratching[deckIndex] = true;
-    lastY[deckIndex] = event.clientY;
-    const vinyl = document.getElementById(`vinyl${deckIndex + 1}`);
-    vinyl.classList.add('scratching');
-    
-    // Handle scratching with mouse movement
-    document.onmousemove = (e) => {
-        const deltaY = e.clientY - lastY[deckIndex];
-        performScratch(deckIndex, deltaY);
-        lastY[deckIndex] = e.clientY; // Update lastY for continuous scratch
-    };
-}
-
-function performScratch(deckIndex, delta) {
-    // Update vinyl and audio playback rate based on delta
-    const playbackRate = 1 + (delta / 100); // Scale sensitivity
-    decks[deckIndex].processor.setPlaybackRate(playbackRate);
-}
-        let audioContext;
-        let masterGain;
-        const decks = [{}, {}];
-        let scratching = [false, false];
-        let lastY = [0, 0];
-        let broadcasting = false;
-
-        class AudioProcessor {
-            constructor(context, masterNode) {
-                this.context = context;
-                this.masterNode = masterNode;
-                this.source = null;
-                this.gainNode = context.createGain();
-                this.lowEQ = context.createBiquadFilter();
-                this.midEQ = context.createBiquadFilter();
-                this.highEQ = context.createBiquadFilter();
-
-                this.lowEQ.type = 'lowshelf';
-                this.lowEQ.frequency.value = 320;
-                this.lowEQ.gain.value = 0;
-
-                this.midEQ.type = 'peaking';
-                this.midEQ.frequency.value = 1000;
-                this.midEQ.Q.value = 1;
-                this.midEQ.gain.value = 0;
-
-                this.highEQ.type = 'highshelf';
-                this.highEQ.frequency.value = 3200;
-                this.highEQ.gain.value = 0;
-
-                this.gainNode.connect(this.lowEQ);
-                this.lowEQ.connect(this.midEQ);
-                this.midEQ.connect(this.highEQ);
-                this.highEQ.connect(this.masterNode);
-
-                this.playing = false;
-                this.looping = false;
-                this.buffer = null;
-                this.deckIndex = 0;
-                this.trackTitle = "No track loaded";
-                this.trackArtist = "--";
-                this.duration = 0;
-                this.offset = 0;
-                this.startTime = 0;
+            if (!currentlyPlayingDeck) {
+                decks[0].audio.src = track.audioSrc;
+                decks[0].audio.load();
+                currentlyPlayingDeck = 0;
+                document.getElementById("deck1Title").textContent = track.title;
+                document.getElementById("deck1Artist").textContent = track.artist;
+                document.getElementById("deck1TotalTime").textContent = track.duration;
+                decks[0].audio.play();
+            } else {
+                decks[1].audio.src = track.audioSrc;
+                decks[1].audio.load();
+                currentlyPlayingDeck = 1;
+                document.getElementById("deck2Title").textContent = track.title;
+                document.getElementById("deck2Artist").textContent = track.artist;
+                document.getElementById("deck2TotalTime").textContent = track.duration;
+                decks[1].audio.play();
             }
-
-            loadBuffer(buffer, title = "Untitled Track", artist = "Unknown Artist") {
-                this.buffer = buffer;
-                this.duration = buffer.duration;
-                this.trackTitle = title;
-                this.trackArtist = artist;
-                this.offset = 0;
-                this.updateTrackInfo();
-            }
-
-            play() {
-                // Your play logic
-            }
-
-            // Other methods...
         }
 
-        // Initialize audio context on user interaction
-        document.addEventListener('click', () => {
-            if (!audioContext) {
-                try {
-                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    masterGain = audioContext.createGain();
-                    masterGain.connect(audioContext.destination);
-                    decks[0].processor = new AudioProcessor(audioContext, masterGain);
-                    decks[1].processor = new AudioProcessor(audioContext, masterGain);
-                } catch (error) {
-                    console.error('Failed to initialize audio context:', error);
-                }
-            }
-        });
+        function updateVolume(deckIndex, volume) {
+            decks[deckIndex].audio.volume = volume / 100;
+            document.getElementById(`volume${deckIndex + 1}Value`).textContent = `${volume}%`;
+        }
 
-        // Your remaining script logic...
-        // It should include all functions like playDeck, loadTrack, and so on.
+        function updateCrossfader(value) {
+            // Functionality to adjust crossfader levels
+        }
 
+        function startScratch(deckIndex, event) {
+            // Implement scratch functionality here
+        }
+
+        function scratch(deckIndex, event) {
+            // Implement scratch movement functionality
+        }
+
+        function stopScratch(deckIndex) {
+            // Implement stop scratch functionality
+        }
+
+        function showAlert(title, message) {
+            alert(title + "\n" + message); // Replace with a modal in production
+        }
+
+        function searchTracks(query) {
+            // Implement track search logic
+        }
+
+        function openLibraryFolder() {
+            // Implementation for open library folder
+        }
+
+        function createPlaylist() {
+            // Implementation for create a new playlist
+        }
+
+        function exportLibrary() {
+            // Implementation for exporting the track library
+        }
+
+        function saveMix() {
+            // Implementation to save mix session
+        }
     </script>
 </body>
 </html>
