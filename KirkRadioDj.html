@@ -3,54 +3,2141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Example</title>
+    <title>Kirk Radio DJ - Professional DJ Software</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
+        :root {
+            --primary: #D42F00;
+            --background: #111;
+            --secondary: #222;
+            --border: #333;
+            --highlight-active: #D42F00;
+            --highlight-inactive: #555;
+            --text-primary: #fff;
+            --text-secondary: #aaa;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
+
+        body {
+            background-color: var(--background);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            position: relative;
+        }
+        
+        /* Add background image with overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('kirkradio_logo.jpg');
+            background-size: 400px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0.25;
+            z-index: -2;
+        }
+        
+        /* Add overlay to make content more visible over background image */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+
+        .deck {
+            background-color: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .vinyl {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at center, 
+                #333 0%, 
+                #222 50%, 
+                #1a1a1a 100%);
+            border-radius: 50%;
+            position: relative;
+            cursor: grab;
+            transition: transform 0.05s linear;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border: 1px solid #444;
+        }
+
+        .vinyl:active {
+            cursor: grabbing;
+        }
+
+        .vinyl::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(66, 153, 225, 0.5);
+        }
+
+        .vinyl::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120px;
+            height: 120px;
+            border: 2px solid #444;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        /* Vinyl record texture */
+        .vinyl-texture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: repeating-radial-gradient(
+                circle at center,
+                #222,
+                #222 1px,
+                #333 1px,
+                #333 2px,
+                #222 2px,
+                #222 3px,
+                #333 3px,
+                #333 4px,
+                #222 4px,
+                #222 5px
+            );
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        /* Vinyl record label */
+        .vinyl-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at center, #D42F00, #961F00);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+        }
+
+        .waveform {
+            height: 60px;
+            background: #333;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .waveform-data {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: scaleY(0.8);
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: #444;
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
             cursor: pointer;
         }
-        #result {
-            margin-top: 20px;
-            font-size: 18px;
-            color: blue;
+
+        .vertical-slider {
+            writing-mode: bt-lr;
+            -webkit-appearance: slider-vertical;
+            width: 8px;
+            height: 150px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: var(--secondary);
+            min-width: 300px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 10;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+
+        /* Add animations for vinyl rotation */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .vinyl.playing {
+            animation: rotate 2s linear infinite;
+        }
+
+        .vinyl.scratching {
+            animation: none;
+        }
+
+        /* Progress bar for tracks */
+        .progress-bar {
+            height: 6px;
+            width: 100%;
+            background-color: #333;
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+            width: 0%;
+        }
+
+        /* EQ Knobs */
+        .eq-knob {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at center, #555, #333);
+            border-radius: 50%;
+            position: relative;
+            margin: 0 auto;
+            border: 2px solid #444;
+            cursor: pointer;
+        }
+
+        .eq-knob::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 20px;
+            background-color: var(--primary);
+            transform-origin: bottom center;
+        }
+
+        .eq-knob[data-value="0"]::after {
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+
+        /* FX panel styles */
+        .fx-button {
+            padding: 8px 12px;
+            background-color: #333;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .fx-button.active {
+            background-color: var(--primary);
+        }
+
+        /* Button styles */
+        .dj-button {
+            background-color: #333;
+            border-radius: 4px;
+            padding: 8px 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: none;
+            color: white;
+        }
+
+        .dj-button:hover {
+            background-color: #444;
+        }
+
+        .dj-button.active {
+            background-color: var(--primary);
+        }
+
+        /* Crossfader */
+        .crossfader-container {
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        .crossfader {
+            width: 100%;
+            height: 12px;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #3498db, #2ecc71);
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .crossfader::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background-color: #fff;
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        /* Transport controls */
+        .transport-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .transport-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #333;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .transport-button:hover {
+            background-color: #444;
+        }
+
+        .transport-button.active {
+            background-color: var(--primary);
+        }
+
+        /* Tooltips */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 5px;
+            position: absolute;
+            z-index: 20;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Alert modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 30;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--secondary);
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+            border: 1px solid var(--border);
+        }
+
+        /* Track info display */
+        .track-info {
+            background-color: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        .vu-meter {
+            height: 150px;
+            width: 20px;
+            background: linear-gradient(to top, #ff0000, #ffff00, #00ff00);
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .vu-meter-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 70%;
+            background-color: #000;
+            opacity: 0.7;
+        }
+
+        /* Enable badge */
+        .enable-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            display: none;
+        }
+
+        .enabled .enable-badge {
+            display: block;
+        }
+
+        /* Loading indicator */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Label styles */
+        .control-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            display: block;
+            text-align: center;
+        }
+
+        .section-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--border);
         }
     </style>
 </head>
-<body>
-    <h1>JavaScript Example</h1>
-    
-    <!-- Button with inline JavaScript -->
-    <button onclick="showMessage('Inline JavaScript works!')">Click for Inline JS</button>
-    
-    <!-- Button for internal JavaScript function -->
-    <button id="internalButton">Click for Internal JS</button>
-    
-    <!-- Button for external JavaScript function -->
-    <button id="externalButton">Click for External JS</button>
-    
-    <!-- Display area for results -->
-    <div id="result"></div>
-    
-    <!-- Internal JavaScript -->
+<body class="min-h-screen">
+    <div class="flex h-screen">
+        <!-- Left Sidebar - Track Library -->
+        <div class="w-64 bg-[#1a1a1a] border-r border-[#333] flex flex-col">
+            <div class="p-4 border-b border-[#333]">
+                <h2 class="text-lg font-medium mb-3">Track Library</h2>
+                <div class="relative">
+                    <input type="text" 
+                           placeholder="Search tracks..." 
+                           class="w-full bg-[#222] border border-[#333] rounded px-4 py-2 pl-10 text-white"
+                           onkeyup="searchTracks(this.value)">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-4" id="trackList">
+                <!-- Track list will be populated by JavaScript -->
+                <div class="text-center text-gray-500 mt-10">
+                    <p>No tracks loaded</p>
+                    <p class="mt-2">Use "Load Track" button to add music</p>
+                </div>
+            </div>
+
+            <!-- Library Controls -->
+            <div class="p-4 border-t border-[#333]">
+                <div class="section-label">Library Controls</div>
+                <button onclick="openLibraryFolder()" class="dj-button w-full mb-2 tooltip">
+                    <i class="fas fa-folder-open mr-2"></i> Open Library Folder
+                    <span class="tooltip-text">Open a folder to import multiple tracks at once</span>
+                </button>
+                <div class="flex gap-2 mb-4">
+                    <button onclick="createPlaylist()" class="dj-button flex-1 tooltip">
+                        <i class="fas fa-plus mr-1"></i> New Playlist
+                        <span class="tooltip-text">Create a new playlist</span>
+                    </button>
+                    <button onclick="exportLibrary()" class="dj-button flex-1 tooltip">
+                        <i class="fas fa-file-export mr-1"></i> Export
+                        <span class="tooltip-text">Export your track library</span>
+                    </button>
+                </div>
+                
+                <div class="section-label">Music Services</div>
+                <div class="space-y-2">
+                    <button onclick="connectGoogleDrive()" class="dj-button w-full flex items-center justify-between tooltip">
+                        <div><i class="fab fa-google-drive mr-2"></i> Google Drive</div>
+                        <i class="fas fa-link text-xs"></i>
+                        <span class="tooltip-text">Connect to your Google Drive music</span>
+                    </button>
+                    <button onclick="connectOneDrive()" class="dj-button w-full flex items-center justify-between tooltip">
+                        <div><i class="fab fa-microsoft mr-2"></i> OneDrive</div>
+                        <i class="fas fa-link text-xs"></i>
+                        <span class="tooltip-text">Connect to your OneDrive music</span>
+                    </button>
+                    <button onclick="connectYouTube()" class="dj-button w-full flex items-center justify-between tooltip">
+                        <div><i class="fab fa-youtube mr-2"></i> YouTube</div>
+                        <i class="fas fa-link text-xs"></i>
+                        <span class="tooltip-text">Connect to YouTube for DJ mixes and music</span>
+                    </button>
+                    <button onclick="connectSoundCloud()" class="dj-button w-full flex items-center justify-between tooltip">
+                        <div><i class="fab fa-soundcloud mr-2"></i> SoundCloud</div>
+                        <i class="fas fa-link text-xs"></i>
+                        <span class="tooltip-text">Connect to SoundCloud for streaming music</span>
+                    </button>
+                    <button onclick="browseMusicDatabase()" class="dj-button w-full flex items-center justify-between tooltip bg-[#D42F00]">
+                        <div><i class="fas fa-database mr-2"></i> Music Database</div>
+                        <i class="fas fa-external-link-alt text-xs"></i>
+                        <span class="tooltip-text">Browse our extensive online music collection</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col bg-[#111]">
+            <!-- Top Toolbar -->
+            <div class="bg-[#1a1a1a] border-b border-[#333] p-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-4">
+                        <button onclick="saveMix()" class="dj-button tooltip">
+                            <i class="fas fa-save mr-2"></i>Save Mix
+                            <span class="tooltip-text">Save the current mix session</span>
+                        </button>
+                        <button id="loadTrackBtn" onclick="loadTrack()" class="dj-button tooltip">
+                            <i class="fas fa-file-audio mr-2"></i>Load Track
+                            <span class="tooltip-text">Load an audio track from your device</span>
+                        </button>
+                        <div class="dropdown relative">
+                            <button id="broadcastBtn" onclick="toggleBroadcastSettings()" class="dj-button tooltip">
+                                <i class="fas fa-broadcast-tower mr-2"></i>Broadcast Settings
+                                <span class="tooltip-text">Configure and start Icecast broadcasting</span>
+                            </button>
+                            <div id="broadcastSettings" class="dropdown-content">
+                                <div class="p-4">
+                                    <h3 class="text-white font-medium mb-4">Icecast Broadcast Settings</h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block mb-1 text-sm">Icecast Server URL</label>
+                                            <input type="text" id="icecastUrl" placeholder="http://your-server:8000" 
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block mb-1 text-sm">Mount Point</label>
+                                            <input type="text" id="mountPoint" placeholder="/stream" 
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block mb-1 text-sm">Username</label>
+                                            <input type="text" id="icecastUsername" placeholder="source" 
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block mb-1 text-sm">Password</label>
+                                            <input type="password" id="icecastPassword" 
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block mb-1 text-sm">Stream Name</label>
+                                            <input type="text" id="streamName" placeholder="KirkRadioDJ Live" 
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block mb-1 text-sm">Stream Description</label>
+                                            <input type="text" id="streamDescription" placeholder="Live DJ Set" 
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block mb-1 text-sm">Stream Genre</label>
+                                            <input type="text" id="streamGenre" placeholder="Electronic" 
+                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block mb-1 text-sm">Bitrate (kbps)</label>
+                                            <select id="streamBitrate" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                                <option value="64">64 kbps</option>
+                                                <option value="96">96 kbps</option>
+                                                <option value="128" selected>128 kbps</option>
+                                                <option value="192">192 kbps</option>
+                                                <option value="256">256 kbps</option>
+                                                <option value="320">320 kbps</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block mb-1 text-sm">Format</label>
+                                            <select id="streamFormat" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                                <option value="mp3" selected>MP3</option>
+                                                <option value="ogg">OGG</option>
+                                                <option value="aac">AAC</option>
+                                            </select>
+                                        </div>
+                                        <div class="pt-2">
+                                            <button id="startBroadcastBtn" onclick="startBroadcast()" class="dj-button w-full">
+                                                <i class="fas fa-play-circle mr-2"></i> Start Broadcasting
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown relative">
+                            <button id="settingsBtn" onclick="toggleAppSettings()" class="dj-button tooltip">
+                                <i class="fas fa-cog mr-2"></i>App Settings
+                                <span class="tooltip-text">Configure application settings</span>
+                            </button>
+                            <div id="appSettings" class="dropdown-content">
+                                <div class="p-4">
+                                    <h3 class="text-white font-medium mb-4">Application Settings</h3>
+                                    <div class="space-y-4">
+                                        <div class="section-label">Audio Settings</div>
+                                        <div>
+                                            <label class="flex items-center mb-2">
+                                                <input type="checkbox" id="syncModeToggle" class="mr-2" checked> 
+                                                <span>Sync Mode (Auto-sync tempo between decks)</span>
+                                            </label>
+                                            <label class="flex items-center mb-2">
+                                                <input type="checkbox" id="keyLockToggle" class="mr-2" checked> 
+                                                <span>Key Lock (Maintain pitch during tempo changes)</span>
+                                            </label>
+                                            <label class="flex items-center mb-2">
+                                                <input type="checkbox" id="gridSnapToggle" class="mr-2" checked> 
+                                                <span>Grid Snap (Align loops to beat grid)</span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="section-label">Audio Interface & Hardware</div>
+                                        <div>
+                                            <label class="block mb-1 text-sm">Audio Output Device</label>
+                                            <select id="audioOutputDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm mb-3">
+                                                <option value="default" selected>Default Output</option>
+                                                <option value="interface1">External Audio Interface</option>
+                                                <option value="hdmi">HDMI Audio Output</option>
+                                                <option value="bluetooth">Bluetooth Speakers</option>
+                                            </select>
+                                            
+                                            <label class="block mb-1 text-sm">Microphone Input</label>
+                                            <select id="micInputDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm mb-3">
+                                                <option value="none" selected>No Microphone</option>
+                                                <option value="default">Built-in Microphone</option>
+                                                <option value="usb">USB Microphone</option>
+                                                <option value="xlr">XLR Microphone (via Interface)</option>
+                                            </select>
+                                            
+                                            <label class="block mb-1 text-sm">DJ Controller</label>
+                                            <select id="djControllerDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm mb-3">
+                                                <option value="none" selected>No Controller</option>
+                                                <option value="pioneer">Pioneer DDJ</option>
+                                                <option value="numark">Numark Controller</option>
+                                                <option value="traktor">Traktor Controller</option>
+                                                <option value="denon">Denon DJ Controller</option>
+                                            </select>
+                                            
+                                            <button onclick="detectHardware()" class="dj-button w-full mb-3">
+                                                <i class="fas fa-search mr-2"></i> Detect Hardware
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="section-label">Interface Settings</div>
+                                        <div>
+                                            <label class="flex items-center mb-2">
+                                                <input type="checkbox" id="darkModeToggle" class="mr-2" checked> 
+                                                <span>Dark Mode</span>
+                                            </label>
+                                            <label class="flex items-center mb-2">
+                                                <input type="checkbox" id="waveformExpandedToggle" class="mr-2"> 
+                                                <span>Show Expanded Waveforms</span>
+                                            </label>
+                                            <label class="flex items-center mb-2">
+                                                <input type="checkbox" id="highQualityVinylToggle" class="mr-2" checked> 
+                                                <span>High Quality Vinyl Scratch Effect</span>
+                                            </label>
+                                            <label class="flex items-center mb-4">
+                                                <input type="checkbox" id="performanceModeToggle" class="mr-2"> 
+                                                <span>Performance Mode (Reduce Visual Effects)</span>
+                                            </label>
+                                            
+                                            <button onclick="toggleFullscreen()" class="dj-button w-full mb-3">
+                                                <i class="fas fa-expand mr-2"></i> Toggle Fullscreen
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="section-label">Audio Processing</div>
+                                        <div>
+                                            <label class="block mb-1 text-sm">Buffer Size</label>
+                                            <select id="bufferSize" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm mb-3">
+                                                <option value="256">256 (Lowest latency)</option>
+                                                <option value="512" selected>512 (Balanced)</option>
+                                                <option value="1024">1024 (Best stability)</option>
+                                                <option value="2048">2048 (Maximum stability)</option>
+                                            </select>
+                                            
+                                            <label class="block mb-1 text-sm">Sample Rate</label>
+                                            <select id="sampleRate" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                                <option value="44100">44.1 kHz (Standard)</option>
+                                                <option value="48000" selected>48 kHz (Better Quality)</option>
+                                                <option value="96000">96 kHz (High Quality)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-6">
+                        <div class="flex items-center">
+                            <span class="control-label mr-2">Master Tempo:</span>
+                            <input type="range" min="60" max="200" value="128" class="slider w-32"
+                                   oninput="updateMasterTempo(this.value)">
+                            <span class="text-white ml-2" id="tempoValue">128 BPM</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-volume-up text-white mr-2" title="Master Volume"></i>
+                            <input type="range" min="0" max="100" value="100" class="slider w-24"
+                                   oninput="updateMasterVolume(this.value)" title="Master Volume Control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decks -->
+            <div class="flex-1 p-6 space-y-6">
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- Deck 1 -->
+                    <div class="deck p-6">
+                        <div class="flex justify-between mb-4">
+                            <h2 class="text-xl font-medium">Deck 1</h2>
+                            <div class="flex space-x-2">
+                                <button onclick="toggleSync(0)" class="dj-button tooltip" title="Sync Tempo with Master">
+                                    <i class="fas fa-sync"></i>
+                                    <span class="tooltip-text">Sync Tempo with Master</span>
+                                </button>
+                                <button onclick="toggleKeyLock(0)" class="dj-button tooltip" title="Key Lock">
+                                    <i class="fas fa-key"></i>
+                                    <span class="tooltip-text">Lock Key When Changing Tempo</span>
+                                </button>
+                                <button onclick="toggleLoop(0)" class="dj-button tooltip" title="Loop Current Section">
+                                    <i class="fas fa-redo"></i>
+                                    <span class="tooltip-text">Loop Current Section</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="track-info p-2 mb-4">
+                            <div id="deck1Title" class="font-medium truncate">No track loaded</div>
+                            <div id="deck1Artist" class="text-sm text-gray-400 truncate">--</div>
+                            <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
+                                <span id="deck1CurrentTime">00:00</span>
+                                <div class="progress-bar flex-1 mx-2">
+                                    <div id="deck1Progress" class="progress-bar-fill" style="width: 0%"></div>
+                                </div>
+                                <span id="deck1TotalTime">00:00</span>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-6">
+                            <div class="flex flex-col items-center">
+                                <span class="control-label">Turntable Control</span>
+                                <div class="vinyl tooltip" id="vinyl1" onmousedown="startScratch(0, event)" 
+                                     onmousemove="scratch(0, event)" onmouseup="stopScratch(0)">
+                                    <span class="tooltip-text">Click and drag to scratch</span>
+                                </div>
+                                <div class="transport-controls mt-4">
+                                    <button onclick="playDeck(0)" class="transport-button tooltip" id="playBtn1">
+                                        <i class="fas fa-play" id="playIcon1"></i>
+                                        <span class="tooltip-text">Play/Pause</span>
+                                    </button>
+                                    <button onclick="cuePoint(0)" class="transport-button tooltip">
+                                        <i class="fas fa-flag"></i>
+                                        <span class="tooltip-text">Set Cue Point</span>
+                                    </button>
+                                    <button onclick="skipBackward(0)" class="transport-button tooltip">
+                                        <i class="fas fa-backward"></i>
+                                        <span class="tooltip-text">Skip Backward</span>
+                                    </button>
+                                    <button onclick="skipForward(0)" class="transport-button tooltip">
+                                        <i class="fas fa-forward"></i>
+                                        <span class="tooltip-text">Skip Forward</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="mb-4">
+                                    <span class="control-label">Waveform</span>
+                                    <div class="waveform">
+                                        <canvas id="waveform1" class="waveform-data"></canvas>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <span class="control-label">Tempo Control</span>
+                                        <input type="range" min="60" max="200" value="128" class="slider"
+                                               oninput="updateTempo(0, this.value)" title="Adjust track tempo">
+                                        <div class="text-center text-sm mt-1" id="deck1Tempo">128 BPM</div>
+                                    </div>
+                                    <div>
+                                        <span class="control-label">Key/Pitch Control</span>
+                                        <input type="range" min="-12" max="12" value="0" class="slider"
+                                               oninput="updateKey(0, this.value)" title="Adjust track key/pitch">
+                                        <div class="text-center text-sm mt-1" id="deck1Key">Original Key</div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4 mt-4">
+                                    <div>
+                                        <span class="control-label">Low EQ</span>
+                                        <div class="eq-knob" id="lowEQ1" data-value="0" onclick="rotateEQ(this, 'low', 0)" title="Low Frequency EQ"></div>
+                                    </div>
+                                    <div>
+                                        <span class="control-label">Mid EQ</span>
+                                        <div class="eq-knob" id="midEQ1" data-value="0" onclick="rotateEQ(this, 'mid', 0)" title="Mid Frequency EQ"></div>
+                                    </div>
+                                    <div>
+                                        <span class="control-label">High EQ</span>
+                                        <div class="eq-knob" id="highEQ1" data-value="0" onclick="rotateEQ(this, 'high', 0)" title="High Frequency EQ"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Deck 2 (Similar to Deck 1) -->
+                    <div class="deck p-6">
+                        <div class="flex justify-between mb-4">
+                            <h2 class="text-xl font-medium">Deck 2</h2>
+                            <div class="flex space-x-2">
+                                <button onclick="toggleSync(1)" class="dj-button tooltip" title="Sync Tempo with Master">
+                                    <i class="fas fa-sync"></i>
+                                    <span class="tooltip-text">Sync Tempo with Master</span>
+                                </button>
+                                <button onclick="toggleKeyLock(1)" class="dj-button tooltip" title="Key Lock">
+                                    <i class="fas fa-key"></i>
+                                    <span class="tooltip-text">Lock Key When Changing Tempo</span>
+                                </button>
+                                <button onclick="toggleLoop(1)" class="dj-button tooltip" title="Loop Current Section">
+                                    <i class="fas fa-redo"></i>
+                                    <span class="tooltip-text">Loop Current Section</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="track-info p-2 mb-4">
+                            <div id="deck2Title" class="font-medium truncate">No track loaded</div>
+                            <div id="deck2Artist" class="text-sm text-gray-400 truncate">--</div>
+                            <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
+                                <span id="deck2CurrentTime">00:00</span>
+                                <div class="progress-bar flex-1 mx-2">
+                                    <div id="deck2Progress" class="progress-bar-fill" style="width: 0%"></div>
+                                </div>
+                                <span id="deck2TotalTime">00:00</span>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-6">
+                            <div class="flex flex-col items-center">
+                                <span class="control-label">Turntable Control</span>
+                                <div class="vinyl tooltip" id="vinyl2" onmousedown="startScratch(1, event)" 
+                                     onmousemove="scratch(1, event)" onmouseup="stopScratch(1)">
+                                    <span class="tooltip-text">Click and drag to scratch</span>
+                                </div>
+                                <div class="transport-controls mt-4">
+                                    <button onclick="playDeck(1)" class="transport-button tooltip" id="playBtn2">
+                                        <i class="fas fa-play" id="playIcon2"></i>
+                                        <span class="tooltip-text">Play/Pause</span>
+                                    </button>
+                                    <button onclick="cuePoint(1)" class="transport-button tooltip">
+                                        <i class="fas fa-flag"></i>
+                                        <span class="tooltip-text">Set Cue Point</span>
+                                    </button>
+                                    <button onclick="skipBackward(1)" class="transport-button tooltip">
+                                        <i class="fas fa-backward"></i>
+                                        <span class="tooltip-text">Skip Backward</span>
+                                    </button>
+                                    <button onclick="skipForward(1)" class="transport-button tooltip">
+                                        <i class="fas fa-forward"></i>
+                                        <span class="tooltip-text">Skip Forward</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="mb-4">
+                                    <span class="control-label">Waveform</span>
+                                    <div class="waveform">
+                                        <canvas id="waveform2" class="waveform-data"></canvas>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <span class="control-label">Tempo Control</span>
+                                        <input type="range" min="60" max="200" value="128" class="slider"
+                                               oninput="updateTempo(1, this.value)" title="Adjust track tempo">
+                                        <div class="text-center text-sm mt-1" id="deck2Tempo">128 BPM</div>
+                                    </div>
+                                    <div>
+                                        <span class="control-label">Key/Pitch Control</span>
+                                        <input type="range" min="-12" max="12" value="0" class="slider"
+                                               oninput="updateKey(1, this.value)" title="Adjust track key/pitch">
+                                        <div class="text-center text-sm mt-1" id="deck2Key">Original Key</div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4 mt-4">
+                                    <div>
+                                        <span class="control-label">Low EQ</span>
+                                        <div class="eq-knob" id="lowEQ2" data-value="0" onclick="rotateEQ(this, 'low', 1)" title="Low Frequency EQ"></div>
+                                    </div>
+                                    <div>
+                                        <span class="control-label">Mid EQ</span>
+                                        <div class="eq-knob" id="midEQ2" data-value="0" onclick="rotateEQ(this, 'mid', 1)" title="Mid Frequency EQ"></div>
+                                    </div>
+                                    <div>
+                                        <span class="control-label">High EQ</span>
+                                        <div class="eq-knob" id="highEQ2" data-value="0" onclick="rotateEQ(this, 'high', 1)" title="High Frequency EQ"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mixer Controls -->
+                <div class="flex justify-center items-center space-x-8 bg-[#1a1a1a] p-6 rounded-lg">
+                    <div>
+                        <span class="control-label text-center">Deck 1 Volume</span>
+                        <input type="range" min="0" max="100" value="100" class="vertical-slider"
+                               oninput="updateVolume(0, this.value)" title="Deck 1 Volume Control">
+                        <div class="text-center text-xs mt-2" id="volume1Value">100%</div>
+                    </div>
+                    <div class="flex-1">
+                        <span class="control-label">Crossfader</span>
+                        <div class="flex items-center">
+                            <span class="text-xs mr-2">Deck 1</span>
+                            <input type="range" min="0" max="100" value="50" class="slider w-full"
+                                   oninput="updateCrossfader(this.value)" title="Mix between Deck 1 and Deck 2">
+                            <span class="text-xs ml-2">Deck 2</span>
+                        </div>
+                        <div class="text-center text-xs mt-2" id="crossfaderValue">Center</div>
+                    </div>
+                    <div>
+                        <span class="control-label text-center">Deck 2 Volume</span>
+                        <input type="range" min="0" max="100" value="100" class="vertical-slider"
+                               oninput="updateVolume(1, this.value)" title="Deck 2 Volume Control">
+                        <div class="text-center text-xs mt-2" id="volume2Value">100%</div>
+                    </div>
+                </div>
+
+                <!-- FX Section -->
+                <div class="bg-[#1a1a1a] p-6 rounded-lg">
+                    <div class="section-label">Effects Panel</div>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <span class="control-label">Deck 1 Effects</span>
+                            <div class="grid grid-cols-4 gap-2">
+                                <div class="fx-button tooltip" onclick="toggleEffect(0, 'reverb')">
+                                    Reverb
+                                    <span class="tooltip-text">Apply reverb effect to Deck 1</span>
+                                </div>
+                                <div class="fx-button tooltip" onclick="toggleEffect(0, 'delay')">
+                                    Delay
+                                    <span class="tooltip-text">Apply delay effect to Deck 1</span>
+                                </div>
+                                <div class="fx-button tooltip" onclick="toggleEffect(0, 'flanger')">
+                                    Flanger
+                                    <span class="tooltip-text">Apply flanger effect to Deck 1</span>
+                                </div>
+                                <div class="fx-button tooltip" onclick="toggleEffect(0, 'filter')">
+                                    Filter
+                                    <span class="tooltip-text">Apply filter effect to Deck 1</span>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <span class="control-label">Effect Mix</span>
+                                <input type="range" min="0" max="100" value="50" class="slider"
+                                       oninput="updateEffectMix(0, this.value)" title="Adjust effect mix level">
+                            </div>
+                        </div>
+                        <div>
+                            <span class="control-label">Deck 2 Effects</span>
+                            <div class="grid grid-cols-4 gap-2">
+                                <div class="fx-button tooltip" onclick="toggleEffect(1, 'reverb')">
+                                    Reverb
+                                    <span class="tooltip-text">Apply reverb effect to Deck 2</span>
+                                </div>
+                                <div class="fx-button tooltip" onclick="toggleEffect(1, 'delay')">
+                                    Delay
+                                    <span class="tooltip-text">Apply delay effect to Deck 2</span>
+                                </div>
+                                <div class="fx-button tooltip" onclick="toggleEffect(1, 'flanger')">
+                                    Flanger
+                                    <span class="tooltip-text">Apply flanger effect to Deck 2</span>
+                                </div>
+                                <div class="fx-button tooltip" onclick="toggleEffect(1, 'filter')">
+                                    Filter
+                                    <span class="tooltip-text">Apply filter effect to Deck 2</span>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <span class="control-label">Effect Mix</span>
+                                <input type="range" min="0" max="100" value="50" class="slider"
+                                       oninput="updateEffectMix(1, this.value)" title="Adjust effect mix level">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Broadcast Status -->
+                <div class="bg-[#1a1a1a] p-4 rounded-lg" id="broadcastStatus">
+                    <div class="section-label">Broadcast Status</div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 rounded-full bg-red-500 mr-2" id="broadcastStatusIndicator"></div>
+                            <span id="broadcastStatusText">Not broadcasting</span>
+                        </div>
+                        <div>
+                            <button id="startStopBroadcastBtn" onclick="toggleBroadcast()" class="dj-button">
+                                <i class="fas fa-play-circle mr-2"></i> Start Broadcasting
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-2" id="broadcastStats">
+                        Configure your Icecast settings using the Broadcast Settings button in the toolbar.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="alertModal" class="modal">
+        <div class="modal-content">
+            <h3 class="text-xl font-medium mb-4" id="modalTitle">Alert</h3>
+            <p id="modalMessage" class="mb-4">Message content will appear here.</p>
+            <div class="flex justify-end">
+                <button onclick="closeModal('alertModal')" class="dj-button">Close</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Function used by inline JavaScript
-        function showMessage(message) {
-            document.getElementById('result').textContent = message;
+        // Audio Context and Processor
+        let audioContext;
+        let masterGain;
+        const decks = [{}, {}];
+        let scratching = [false, false];
+        let lastY = [0, 0];
+        let broadcasting = false;
+
+        class AudioProcessor {
+            constructor(context, masterNode) {
+                this.context = context;
+                this.masterNode = masterNode;
+                this.source = null;
+                this.gainNode = context.createGain();
+                this.lowEQ = context.createBiquadFilter();
+                this.midEQ = context.createBiquadFilter();
+                this.highEQ = context.createBiquadFilter();
+                this.buffer = null;
+                this.playing = false;
+                this.startTime = 0;
+                this.offset = 0;
+                this.looping = false;
+                this.cuePoint = 0;
+                this.trackTitle = "No track loaded";
+                this.trackArtist = "--";
+                this.duration = 0;
+
+                // Configure EQ
+                this.lowEQ.type = "lowshelf";
+                this.lowEQ.frequency.value = 320;
+                this.lowEQ.gain.value = 0;
+
+                this.midEQ.type = "peaking";
+                this.midEQ.frequency.value = 1000;
+                this.midEQ.Q.value = 1;
+                this.midEQ.gain.value = 0;
+
+                this.highEQ.type = "highshelf";
+                this.highEQ.frequency.value = 3200;
+                this.highEQ.gain.value = 0;
+
+                // Connect nodes (source -> gain -> lowEQ -> midEQ -> highEQ -> master)
+                this.gainNode.connect(this.lowEQ);
+                this.lowEQ.connect(this.midEQ);
+                this.midEQ.connect(this.highEQ);
+                this.highEQ.connect(masterNode);
+
+                // Initialize settings
+                this.gainNode.gain.value = 1;
+            }
+
+            async loadAudio(url, fileName = "", artistName = "") {
+                try {
+                    const response = await fetch(url);
+                    const arrayBuffer = await response.arrayBuffer();
+                    this.buffer = await this.context.decodeAudioData(arrayBuffer);
+                    this.trackTitle = fileName || "Untitled Track";
+                    this.trackArtist = artistName || "Unknown Artist";
+                    this.duration = this.buffer.duration;
+                    this.drawWaveform();
+                    this.updateTrackInfo();
+                    return true;
+                } catch (error) {
+                    console.error('Error loading audio:', error);
+                    showAlert("Error", `Failed to load audio: ${error.message}`);
+                    return false;
+                }
+            }
+
+            play() {
+                if (!this.buffer) {
+                    showAlert("Error", "No track loaded");
+                    return;
+                }
+
+                if (this.playing) {
+                    this.pause();
+                    return;
+                }
+
+                this.source = this.context.createBufferSource();
+                this.source.buffer = this.buffer;
+                this.source.connect(this.gainNode);
+
+                if (this.looping) {
+                    // Set loop points if needed
+                    this.source.loop = true;
+                }
+
+                this.startTime = this.context.currentTime - this.offset;
+                this.source.start(0, this.offset);
+                this.playing = true;
+                
+                // Update UI
+                const playBtn = document.getElementById(`playBtn${this.deckIndex + 1}`);
+                const playIcon = document.getElementById(`playIcon${this.deckIndex + 1}`);
+                playBtn.classList.add('active');
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+
+                // Start vinyl rotation animation
+                const vinyl = document.getElementById(`vinyl${this.deckIndex + 1}`);
+                vinyl.classList.add('playing');
+
+                // Start progress tracking
+                this.trackProgress();
+            }
+
+            pause() {
+                if (!this.playing) return;
+
+                this.source.stop();
+                this.offset = this.context.currentTime - this.startTime;
+                this.playing = false;
+
+                // Update UI
+                const playBtn = document.getElementById(`playBtn${this.deckIndex + 1}`);
+                const playIcon = document.getElementById(`playIcon${this.deckIndex + 1}`);
+                playBtn.classList.remove('active');
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+
+                // Stop vinyl rotation animation
+                const vinyl = document.getElementById(`vinyl${this.deckIndex + 1}`);
+                vinyl.classList.remove('playing');
+            }
+
+            stop() {
+                if (!this.playing) return;
+
+                this.source.stop();
+                this.offset = 0;
+                this.playing = false;
+
+                // Update UI
+                const playBtn = document.getElementById(`playBtn${this.deckIndex + 1}`);
+                const playIcon = document.getElementById(`playIcon${this.deckIndex + 1}`);
+                playBtn.classList.remove('active');
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+
+                // Stop vinyl rotation animation
+                const vinyl = document.getElementById(`vinyl${this.deckIndex + 1}`);
+                vinyl.classList.remove('playing');
+
+                // Update progress bar
+                const progressElement = document.getElementById(`deck${this.deckIndex + 1}Progress`);
+                if (progressElement) {
+                    progressElement.style.width = '0%';
+                }
+                
+                // Update time display
+                const currentTimeElement = document.getElementById(`deck${this.deckIndex + 1}CurrentTime`);
+                if (currentTimeElement) {
+                    currentTimeElement.textContent = '00:00';
+                }
+            }
+
+            setCuePoint() {
+                this.cuePoint = this.offset;
+                showAlert("Cue Point Set", `Cue point set at ${formatTime(this.cuePoint)}`);
+            }
+
+            jumpToCue() {
+                this.offset = this.cuePoint;
+                if (this.playing) {
+                    this.pause();
+                    this.play();
+                }
+                // Update progress display
+                this.updateProgressDisplay();
+            }
+
+            trackProgress() {
+                if (!this.playing) return;
+
+                const currentTime = this.context.currentTime - this.startTime;
+                const percent = (currentTime / this.buffer.duration) * 100;
+                
+                // Update progress bar
+                const progressElement = document.getElementById(`deck${this.deckIndex + 1}Progress`);
+                if (progressElement) {
+                    progressElement.style.width = `${percent}%`;
+                }
+                
+                // Update time display
+                const currentTimeElement = document.getElementById(`deck${this.deckIndex + 1}CurrentTime`);
+                if (currentTimeElement) {
+                    currentTimeElement.textContent = formatTime(currentTime);
+                }
+
+                // If track ended
+                if (currentTime >= this.buffer.duration) {
+                    this.stop();
+                    return;
+                }
+
+                // Continue tracking
+                requestAnimationFrame(() => this.trackProgress());
+            }
+
+            updateProgressDisplay() {
+                if (!this.buffer) return;
+                
+                const percent = (this.offset / this.buffer.duration) * 100;
+                
+                // Update progress bar
+                const progressElement = document.getElementById(`deck${this.deckIndex + 1}Progress`);
+                if (progressElement) {
+                    progressElement.style.width = `${percent}%`;
+                }
+                
+                // Update time display
+                const currentTimeElement = document.getElementById(`deck${this.deckIndex + 1}CurrentTime`);
+                if (currentTimeElement) {
+                    currentTimeElement.textContent = formatTime(this.offset);
+                }
+            }
+
+            setPlaybackRate(rate) {
+                if (this.source) {
+                    this.source.playbackRate.value = rate;
+                }
+            }
+
+            setVolume(value) {
+                this.gainNode.gain.value = value;
+                // Update volume display
+                const volumeValueElement = document.getElementById(`volume${this.deckIndex + 1}Value`);
+                if (volumeValueElement) {
+                    volumeValueElement.textContent = `${Math.round(value * 100)}%`;
+                }
+            }
+
+            setEQ(type, value) {
+                // Convert from percentage (-100 to 100) to dB (-12 to 12)
+                const dbValue = (value / 100) * 12;
+                
+                switch(type) {
+                    case 'low':
+                        this.lowEQ.gain.value = dbValue;
+                        break;
+                    case 'mid':
+                        this.midEQ.gain.value = dbValue;
+                        break;
+                    case 'high':
+                        this.highEQ.gain.value = dbValue;
+                        break;
+                }
+            }
+
+            applyScratchEffect(delta) {
+                const direction = delta > 0 ? 1 : -1;
+                const speed = Math.min(Math.abs(delta) * 0.01, 4);
+                this.setPlaybackRate(direction * speed);
+
+                // Adjust EQ for vinyl scratching effect
+                this.highEQ.gain.value = -6; // Reduce highs slightly
+            }
+
+            toggleLoop() {
+                this.looping = !this.looping;
+                if (this.source) {
+                    this.source.loop = this.looping;
+                }
+                return this.looping;
+            }
+
+            updateTrackInfo() {
+                const titleElement = document.getElementById(`deck${this.deckIndex + 1}Title`);
+                const artistElement = document.getElementById(`deck${this.deckIndex + 1}Artist`);
+                const totalTimeElement = document.getElementById(`deck${this.deckIndex + 1}TotalTime`);
+                
+                if (titleElement) titleElement.textContent = this.trackTitle;
+                if (artistElement) artistElement.textContent = this.trackArtist;
+                if (totalTimeElement) totalTimeElement.textContent = formatTime(this.duration);
+            }
+
+            drawWaveform() {
+                const canvas = document.getElementById(`waveform${this.deckIndex + 1}`);
+                if (!canvas) return;
+                
+                const ctx = canvas.getContext('2d');
+                const data = this.buffer.getChannelData(0);
+                const width = canvas.width;
+                const height = canvas.height;
+                
+                // Set canvas dimensions if needed
+                if (canvas.width !== canvas.offsetWidth) {
+                    canvas.width = canvas.offsetWidth;
+                    canvas.height = canvas.offsetHeight;
+                }
+                
+                ctx.clearRect(0, 0, width, height);
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = '#D46400';
+                ctx.beginPath();
+                
+                // Draw the waveform
+                const step = Math.ceil(data.length / width);
+                for (let i = 0; i < width; i++) {
+                    let min = 1.0;
+                    let max = -1.0;
+                    
+                    // Get min and max values for this segment
+                    for (let j = 0; j < step; j++) {
+                        const datum = data[(i * step) + j];
+                        if (datum < min) min = datum;
+                        if (datum > max) max = datum;
+                    }
+                    
+                    // Draw the line
+                    const y1 = (1 + min) * height / 2;
+                    const y2 = (1 + max) * height / 2;
+                    ctx.moveTo(i, y1);
+                    ctx.lineTo(i, y2);
+                }
+                
+                ctx.stroke();
+            }
+
+            skipForward() {
+                if (!this.buffer) return;
+                
+                this.offset = Math.min(this.offset + 10, this.buffer.duration);
+                if (this.playing) {
+                    this.pause();
+                    this.play();
+                } else {
+                    this.updateProgressDisplay();
+                }
+            }
+
+            skipBackward() {
+                if (!this.buffer) return;
+                
+                this.offset = Math.max(this.offset - 10, 0);
+                if (this.playing) {
+                    this.pause();
+                    this.play();
+                } else {
+                    this.updateProgressDisplay();
+                }
+            }
+        }
+
+        // Initialize audio context on user interaction
+        document.addEventListener('click', () => {
+            if (!audioContext) {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    masterGain = audioContext.createGain();
+                    masterGain.connect(audioContext.destination);
+
+                    // Initialize deck processors
+                    decks[0].processor = new AudioProcessor(audioContext, masterGain);
+                    decks[1].processor = new AudioProcessor(audioContext, masterGain);
+                    decks[0].processor.deckIndex = 0;
+                    decks[1].processor.deckIndex = 1;
+
+                    // Initialize canvas for waveforms
+                    initializeCanvases();
+                } catch (error) {
+                    console.error('Failed to initialize audio context:', error);
+                    showAlert('Error', 'Failed to initialize audio. Please check your browser settings.');
+                }
+            }
+        });
+
+        function initializeCanvases() {
+            const canvas1 = document.getElementById('waveform1');
+            const canvas2 = document.getElementById('waveform2');
+            
+            if (canvas1) {
+                canvas1.width = canvas1.offsetWidth;
+                canvas1.height = canvas1.offsetHeight;
+            }
+            
+            if (canvas2) {
+                canvas2.width = canvas2.offsetWidth;
+                canvas2.height = canvas2.offsetHeight;
+            }
+        }
+
+        // Utility function to format time in MM:SS
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Vinyl control functions
+        function startScratch(deckIndex, event) {
+            scratching[deckIndex] = true;
+            lastY[deckIndex] = event.clientY;
+            event.preventDefault();
+
+            const vinyl = document.getElementById(`vinyl${deckIndex + 1}`);
+            vinyl.classList.add('scratching');
+            vinyl.style.cursor = 'grabbing';
+            
+            // Add enhanced vinyl scratching visuals
+            if (!vinyl.querySelector('.vinyl-texture')) {
+                const texture = document.createElement('div');
+                texture.className = 'vinyl-texture';
+                vinyl.appendChild(texture);
+            }
+            
+            if (!vinyl.querySelector('.vinyl-label')) {
+                const label = document.createElement('div');
+                label.className = 'vinyl-label';
+                label.innerText = 'KIRK RADIO';
+                vinyl.appendChild(label);
+            }
+            
+            // Add visual animation effect
+            vinyl.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                if (scratching[deckIndex]) {
+                    vinyl.style.transform = '';
+                }
+            }, 150);
+        }
+
+        function scratch(deckIndex, event) {
+            if (!scratching[deckIndex]) return;
+
+            const delta = event.clientY - lastY[deckIndex];
+            if (decks[deckIndex].processor) {
+                decks[deckIndex].processor.applyScratchEffect(delta);
+            }
+
+            // Enhanced visual scratch effects
+            const vinyl = document.getElementById(`vinyl${deckIndex + 1}`);
+            const speed = Math.abs(delta);
+            
+            // Dynamic rotation based on scratch movement
+            const currentRotation = getRotation(vinyl) || 0;
+            vinyl.style.transform = `rotate(${currentRotation + delta}deg)`;
+            
+            // Enhanced visual effects based on scratch speed
+            if (document.getElementById('highQualityVinylToggle')?.checked) {
+                if (speed > 10) {
+                    vinyl.style.boxShadow = '0 4px 25px rgba(0,0,0,0.7)';
+                } else if (speed > 5) {
+                    vinyl.style.boxShadow = '0 4px 20px rgba(0,0,0,0.6)';
+                } else {
+                    vinyl.style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)';
+                }
+            }
+
+            lastY[deckIndex] = event.clientY;
+            event.preventDefault();
+        }
+
+        function stopScratch(deckIndex) {
+            if (!scratching[deckIndex]) return;
+
+            scratching[deckIndex] = false;
+            if (decks[deckIndex].processor) {
+                decks[deckIndex].processor.setPlaybackRate(1);
+                // Reset EQ
+                decks[deckIndex].processor.highEQ.gain.value = 0;
+            }
+            
+            const vinyl = document.getElementById(`vinyl${deckIndex + 1}`);
+            vinyl.classList.remove('scratching');
+            vinyl.style.cursor = 'grab';
+            vinyl.style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)';
+            
+            // Smooth bounce-back effect
+            vinyl.style.transition = 'transform 0.3s ease-out';
+            vinyl.style.transform = 'rotate(0deg)';
+            setTimeout(() => {
+                vinyl.style.transition = 'transform 0.05s linear';
+            }, 300);
         }
         
-        // Internal JavaScript with event listener
-        document.getElementById('internalButton').addEventListener('click', function() {
-            showMessage('Internal JavaScript works!');
+        // Fullscreen toggle function
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                // Enter fullscreen
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.webkitRequestFullscreen) { /* Safari */
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) { /* IE11 */
+                    document.documentElement.msRequestFullscreen();
+                }
+                
+                // Change button text
+                const fullscreenBtn = document.querySelector('button[onclick="toggleFullscreen()"]');
+                if (fullscreenBtn) {
+                    fullscreenBtn.innerHTML = '<i class="fas fa-compress mr-2"></i> Exit Fullscreen';
+                }
+                
+                showAlert("Fullscreen Mode", "Entering fullscreen mode. Press ESC or click the button again to exit.");
+            } else {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) { /* Safari */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE11 */
+                    document.msExitFullscreen();
+                }
+                
+                // Change button text back
+                const fullscreenBtn = document.querySelector('button[onclick="toggleFullscreen()"]');
+                if (fullscreenBtn) {
+                    fullscreenBtn.innerHTML = '<i class="fas fa-expand mr-2"></i> Toggle Fullscreen';
+                }
+            }
+        }
+        
+        // Detect hardware function for audio interface and controllers
+        function detectHardware() {
+            showAlert("Detecting Hardware", "Scanning for audio interfaces and DJ controllers...");
+            
+            // This would normally use Web MIDI API or Web Audio API to detect hardware
+            // For demonstration, we'll simulate finding devices after a delay
+            setTimeout(() => {
+                // Update audio device dropdown
+                const audioOutputDevice = document.getElementById('audioOutputDevice');
+                if (audioOutputDevice) {
+                    audioOutputDevice.innerHTML = `
+                        <option value="default" selected>Default Output</option>
+                        <option value="interface1">External Audio Interface</option>
+                        <option value="hdmi">HDMI Audio Output</option>
+                        <option value="bluetooth">Bluetooth Speakers</option>
+                        <option value="usb_headphones">USB Headphones</option>
+                    `;
+                }
+                
+                // Update microphone dropdown
+                const micInputDevice = document.getElementById('micInputDevice');
+                if (micInputDevice) {
+                    micInputDevice.innerHTML = `
+                        <option value="none">No Microphone</option>
+                        <option value="default" selected>Built-in Microphone</option>
+                        <option value="usb">USB Microphone</option>
+                        <option value="xlr">XLR Microphone (via Interface)</option>
+                        <option value="bluetooth_mic">Bluetooth Headset Mic</option>
+                    `;
+                }
+                
+                // Update controller dropdown
+                const djControllerDevice = document.getElementById('djControllerDevice');
+                if (djControllerDevice) {
+                    djControllerDevice.innerHTML = `
+                        <option value="none">No Controller</option>
+                        <option value="pioneer" selected>Pioneer DDJ-400 (Connected)</option>
+                        <option value="numark">Numark Controller</option>
+                        <option value="traktor">Traktor Controller</option>
+                        <option value="denon">Denon DJ Controller</option>
+                    `;
+                }
+                
+                showAlert("Hardware Detected", "Found 1 audio interface and 1 DJ controller. Settings have been updated.");
+            }, 1500);
+        }
+
+        // Control functions
+        function updateMasterTempo(value) {
+            document.getElementById('tempoValue').textContent = `${value} BPM`;
+            
+            // Update deck tempos if sync is enabled
+            const syncModeEnabled = document.getElementById('syncModeToggle').checked;
+            if (syncModeEnabled) {
+                // Update both decks to match master tempo
+                for (let i = 0; i < 2; i++) {
+                    if (decks[i].processor) {
+                        decks[i].processor.setPlaybackRate(value / 128);
+                        document.getElementById(`deck${i+1}Tempo`).textContent = `${value} BPM`;
+                    }
+                }
+            }
+        }
+
+        function updateMasterVolume(value) {
+            if (masterGain) {
+                masterGain.gain.value = value / 100;
+            }
+        }
+
+        function updateTempo(deckIndex, value) {
+            if (decks[deckIndex].processor) {
+                decks[deckIndex].processor.setPlaybackRate(value / 128);
+                document.getElementById(`deck${deckIndex+1}Tempo`).textContent = `${value} BPM`;
+            }
+        }
+
+        function updateKey(deckIndex, value) {
+            // Placeholder for key/pitch shifting
+            // In a real implementation, this would change the pitch without affecting tempo
+            const keyNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+            const semitones = parseInt(value);
+            
+            let keyText;
+            if (semitones === 0) {
+                keyText = 'Original Key';
+            } else {
+                const direction = semitones > 0 ? '+' : '';
+                keyText = `${direction}${semitones} semitones`;
+            }
+            
+            document.getElementById(`deck${deckIndex+1}Key`).textContent = keyText;
+        }
+
+        function updateVolume(deckIndex, value) {
+            if (decks[deckIndex].processor) {
+                decks[deckIndex].processor.setVolume(value / 100);
+            }
+        }
+
+        function updateCrossfader(value) {
+            const normalizedValue = parseInt(value);
+            let leftGain, rightGain;
+            
+            // Implement non-linear crossfader curve for better mixing
+            if (normalizedValue <= 50) {
+                leftGain = 1;
+                rightGain = Math.sin((normalizedValue / 50) * Math.PI/2);
+            } else {
+                leftGain = Math.sin(((100 - normalizedValue) / 50) * Math.PI/2);
+                rightGain = 1;
+            }
+
+            if (decks[0].processor) decks[0].processor.setVolume(leftGain);
+            if (decks[1].processor) decks[1].processor.setVolume(rightGain);
+            
+            // Update display
+            let crossfaderText = "";
+            if (normalizedValue < 25) {
+                crossfaderText = "Deck 1";
+            } else if (normalizedValue > 75) {
+                crossfaderText = "Deck 2";
+            } else if (normalizedValue === 50) {
+                crossfaderText = "Center";
+            } else {
+                crossfaderText = normalizedValue < 50 ? "Mixing (Deck 1)" : "Mixing (Deck 2)";
+            }
+            document.getElementById('crossfaderValue').textContent = crossfaderText;
+        }
+
+        // Button toggle functions
+        function toggleSync(deckIndex) {
+            const button = event.currentTarget;
+            button.classList.toggle('active');
+            
+            // Apply master tempo to this deck
+            if (button.classList.contains('active')) {
+                const masterTempo = document.getElementById('tempoValue').textContent;
+                const tempoValue = parseInt(masterTempo);
+                updateTempo(deckIndex, tempoValue);
+            }
+        }
+
+        function toggleKeyLock(deckIndex) {
+            const button = event.currentTarget;
+            button.classList.toggle('active');
+            // Key lock functionality would maintain the pitch when tempo is changed
+        }
+
+        function toggleLoop(deckIndex) {
+            if (!decks[deckIndex].processor) return;
+            
+            const button = event.currentTarget;
+            const looping = decks[deckIndex].processor.toggleLoop();
+            button.classList.toggle('active', looping);
+        }
+
+        // Deck playback control
+        function playDeck(deckIndex) {
+            if (!decks[deckIndex].processor) return;
+            decks[deckIndex].processor.play();
+        }
+
+        function cuePoint(deckIndex) {
+            if (!decks[deckIndex].processor) return;
+            decks[deckIndex].processor.setCuePoint();
+        }
+
+        function skipBackward(deckIndex) {
+            if (!decks[deckIndex].processor) return;
+            decks[deckIndex].processor.skipBackward();
+        }
+
+        function skipForward(deckIndex) {
+            if (!decks[deckIndex].processor) return;
+            decks[deckIndex].processor.skipForward();
+        }
+
+        // EQ Control
+        function rotateEQ(element, type, deckIndex) {
+            // This would be much more sophisticated in a real DJ app
+            // Here we just toggle between -50%, 0%, and +50%
+            const currentValue = parseInt(element.getAttribute('data-value') || 0);
+            let newValue;
+            
+            if (currentValue <= -50) newValue = 0;
+            else if (currentValue === 0) newValue = 50;
+            else newValue = -50;
+            
+            // Update visual rotation
+            element.style.transform = `rotate(${newValue * 1.8}deg)`; // 180 degrees max rotation
+            element.setAttribute('data-value', newValue);
+            
+            // Apply EQ
+            if (decks[deckIndex].processor) {
+                decks[deckIndex].processor.setEQ(type, newValue);
+            }
+        }
+
+        // FX Functions
+        function toggleEffect(deckIndex, effectType) {
+            const button = event.currentTarget;
+            button.classList.toggle('active');
+            
+            // Show message about effect
+            if (button.classList.contains('active')) {
+                showAlert("Effect Enabled", `${effectType.charAt(0).toUpperCase() + effectType.slice(1)} effect enabled on Deck ${deckIndex + 1}`);
+            }
+            // In a real implementation, this would apply WebAudio effects
+        }
+
+        function updateEffectMix(deckIndex, value) {
+            // In a real implementation, this would control the wet/dry mix of effects
+            console.log(`Deck ${deckIndex + 1} effect mix: ${value}%`);
+        }
+
+        // Track loading
+        async function loadTrack() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'audio/*';
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const url = URL.createObjectURL(file);
+                
+                // Find which deck to load into
+                let deckToUse = 0;
+                
+                // If both decks have tracks, use the one that's not playing
+                if (decks[0].processor?.buffer && decks[1].processor?.buffer) {
+                    if (decks[0].processor.playing && !decks[1].processor.playing) {
+                        deckToUse = 1;
+                    } else if (!decks[0].processor.playing && decks[1].processor.playing) {
+                        deckToUse = 0;
+                    } else {
+                        // Ask user which deck to use
+                        deckToUse = confirm("Load into Deck 2?") ? 1 : 0;
+                    }
+                } 
+                // If only deck 1 has a track, use deck 2
+                else if (decks[0].processor?.buffer) {
+                    deckToUse = 1;
+                }
+                
+                // Show loading message
+                showAlert("Loading", `Loading track into Deck ${deckToUse + 1}...`);
+                
+                // Load the track
+                if (decks[deckToUse].processor) {
+                    // Extract artist and title from filename if possible
+                    let fileName = file.name.replace(/\.[^/.]+$/, ""); // Remove extension
+                    let artistName = "";
+                    
+                    // Try to find artist - title pattern
+                    const dashIndex = fileName.indexOf(' - ');
+                    if (dashIndex !== -1) {
+                        artistName = fileName.substring(0, dashIndex);
+                        fileName = fileName.substring(dashIndex + 3);
+                    }
+                    
+                    const success = await decks[deckToUse].processor.loadAudio(url, fileName, artistName);
+                    if (success) {
+                        closeModal('alertModal');
+                    }
+                }
+            };
+            input.click();
+        }
+
+        // Broadcast functions
+        function toggleBroadcastSettings() {
+            const dropdown = document.getElementById('broadcastSettings');
+            const button = document.getElementById('broadcastBtn');
+            
+            button.classList.toggle('active');
+            if (button.classList.contains('active')) {
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        function toggleAppSettings() {
+            const dropdown = document.getElementById('appSettings');
+            const button = document.getElementById('settingsBtn');
+            
+            button.classList.toggle('active');
+            if (button.classList.contains('active')) {
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        function startBroadcast() {
+            const url = document.getElementById('icecastUrl').value;
+            const mountPoint = document.getElementById('mountPoint').value;
+            const username = document.getElementById('icecastUsername').value;
+            const password = document.getElementById('icecastPassword').value;
+            const streamName = document.getElementById('streamName').value;
+            
+            if (!url || !mountPoint || !username || !password) {
+                showAlert("Error", "Please fill in all required Icecast settings");
+                return;
+            }
+            
+            // This would normally connect to an Icecast server
+            // For this demo, we'll just simulate it
+            showAlert("Broadcasting", `Starting broadcast to ${url}${mountPoint}`);
+            
+            // Update broadcast status
+            broadcasting = true;
+            updateBroadcastStatus();
+            
+            // Hide the settings dropdown
+            document.getElementById('broadcastSettings').style.display = 'none';
+            document.getElementById('broadcastBtn').classList.remove('active');
+        }
+
+        function toggleBroadcast() {
+            if (broadcasting) {
+                // Stop broadcast
+                broadcasting = false;
+                showAlert("Broadcast Ended", "Your broadcast has been stopped");
+                
+                // Update button
+                const button = document.getElementById('startStopBroadcastBtn');
+                button.innerHTML = '<i class="fas fa-play-circle mr-2"></i> Start Broadcasting';
+            } else {
+                // Show broadcast settings if not configured
+                if (!document.getElementById('icecastUrl').value) {
+                    toggleBroadcastSettings();
+                    showAlert("Configure Broadcast", "Please configure your Icecast settings first");
+                    return;
+                }
+                
+                // Start broadcast
+                broadcasting = true;
+                showAlert("Broadcasting", "Your broadcast has started");
+                
+                // Update button
+                const button = document.getElementById('startStopBroadcastBtn');
+                button.innerHTML = '<i class="fas fa-stop-circle mr-2"></i> Stop Broadcasting';
+            }
+            
+            updateBroadcastStatus();
+        }
+
+        function updateBroadcastStatus() {
+            const indicator = document.getElementById('broadcastStatusIndicator');
+            const text = document.getElementById('broadcastStatusText');
+            const stats = document.getElementById('broadcastStats');
+            
+            if (broadcasting) {
+                indicator.classList.remove('bg-red-500');
+                indicator.classList.add('bg-green-500');
+                text.textContent = 'Broadcasting';
+                
+                // Show mock stats
+                const bitrate = document.getElementById('streamBitrate').value;
+                const format = document.getElementById('streamFormat').value.toUpperCase();
+                stats.textContent = `Live at ${bitrate} kbps ${format} | Listeners: 0 | Uptime: 00:00:00`;
+                
+                // Update button
+                const button = document.getElementById('startStopBroadcastBtn');
+                button.innerHTML = '<i class="fas fa-stop-circle mr-2"></i> Stop Broadcasting';
+            } else {
+                indicator.classList.remove('bg-green-500');
+                indicator.classList.add('bg-red-500');
+                text.textContent = 'Not broadcasting';
+                stats.textContent = 'Configure your Icecast settings using the Broadcast Settings button in the toolbar.';
+                
+                // Update button
+                const button = document.getElementById('startStopBroadcastBtn');
+                button.innerHTML = '<i class="fas fa-play-circle mr-2"></i> Start Broadcasting';
+            }
+        }
+
+        // Library functions
+        function openLibraryFolder() {
+            showAlert("Library", "This would open a folder dialog to import multiple tracks.");
+        }
+
+        function createPlaylist() {
+            showAlert("Playlist", "This would create a new playlist in your library.");
+        }
+
+        function exportLibrary() {
+            showAlert("Export", "This would export your track library.");
+        }
+
+        function saveMix() {
+            showAlert("Save Mix", "This would save your current mix session.");
+        }
+        
+        // Music service integration functions
+        function connectGoogleDrive() {
+            showAlert("Google Drive Connection", "Connecting to Google Drive to access your music files. You will be prompted to authorize access to your Drive files.");
+            // This would use Google Drive API for OAuth and file access
+        }
+        
+        function connectOneDrive() {
+            showAlert("OneDrive Connection", "Connecting to Microsoft OneDrive to access your music files. You will be prompted to authorize access.");
+            // This would use Microsoft Graph API for OneDrive access
+        }
+        
+        function connectYouTube() {
+            showAlert("YouTube Connection", "Connecting to YouTube for DJ mixes and music. You will be prompted to authorize access to your YouTube account.");
+            // This would use YouTube API for video/audio
+        }
+        
+        function connectSoundCloud() {
+            showAlert("SoundCloud Connection", "Connecting to SoundCloud to access music. You will be prompted to authorize access to your SoundCloud account.");
+            // This would use SoundCloud API
+        }
+        
+        function browseMusicDatabase() {
+            // Populate the library with some sample tracks from the database
+            const musicDatabase = [
+                { id: 1, title: "Summer Vibes", artist: "DJ Sunshine", genre: "House", duration: "3:45" },
+                { id: 2, title: "Midnight Run", artist: "Beat Masters", genre: "Techno", duration: "4:12" },
+                { id: 3, title: "Electric Dreams", artist: "Synth Wave", genre: "Electronic", duration: "5:30" },
+                { id: 4, title: "Urban Rhythm", artist: "City Beats", genre: "Hip Hop", duration: "3:22" },
+                { id: 5, title: "Chill Out Zone", artist: "Ambient Sounds", genre: "Ambient", duration: "6:15" },
+                { id: 6, title: "Club Anthems", artist: "Party DJs", genre: "Dance", duration: "4:45" },
+                { id: 7, title: "Retro Wave", artist: "80s Revival", genre: "Synthwave", duration: "4:30" },
+                { id: 8, title: "Bass Drop", artist: "Dubstep Kings", genre: "Dubstep", duration: "3:50" },
+                { id: 9, title: "Smooth Jazz", artist: "Saxophone Soul", genre: "Jazz", duration: "5:20" },
+                { id: 10, title: "Tropical House", artist: "Beach Vibes", genre: "House", duration: "4:10" }
+            ];
+            
+            const trackList = document.getElementById('trackList');
+            trackList.innerHTML = '<div class="text-sm text-gray-400 mb-3">Showing tracks from Music Database</div>';
+            
+            trackList.innerHTML += musicDatabase.map(track => `
+                <div class="flex items-center p-2 hover:bg-gray-800 rounded cursor-pointer mb-2"
+                     onclick="loadSampleTrack(${track.id})">
+                    <div class="w-10 h-10 bg-gray-700 rounded flex items-center justify-center mr-3">
+                        <i class="fas fa-music text-gray-400"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-medium text-white">${track.title}</div>
+                        <div class="text-xs text-gray-400 flex justify-between">
+                            <span>${track.artist}</span>
+                            <span>${track.duration}</span>
+                        </div>
+                        <div class="text-xs text-gray-500">${track.genre}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function loadSampleTrack(id) {
+            // This would normally load the actual track
+            showAlert("Track Loading", `Loading track ID ${id} from music database. This would connect to our online music service in a real implementation.`);
+        }
+
+        // Utility functions
+        function showAlert(title, message) {
+            const modal = document.getElementById('alertModal');
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Placeholder search functions
+        function searchTracks(query) {
+            if (!query || query.length < 3) return;
+            
+            // This would normally search through a database or media library
+            // For now, we'll just show a message
+            const library = document.getElementById('trackList');
+            library.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin fa-2x text-gray-500"></i></div>';
+            
+            // Simulate loading
+            setTimeout(() => {
+                library.innerHTML = '<div class="text-center text-gray-500 mt-10"><p>No tracks found matching "' + query + '"</p></div>';
+            }, 1000);
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add global mouse event listeners for scratch effect
+            document.addEventListener('mousemove', (e) => {
+                scratching.forEach((isScratch, index) => {
+                    if (isScratch) {
+                        scratch(index, e);
+                    }
+                });
+            });
+
+            document.addEventListener('mouseup', () => {
+                scratching.forEach((isScratch, index) => {
+                    if (isScratch) {
+                        stopScratch(index);
+                    }
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('#broadcastBtn') && !e.target.closest('#broadcastSettings')) {
+                    const dropdown = document.getElementById('broadcastSettings');
+                    if (dropdown.style.display === 'block') {
+                        dropdown.style.display = 'none';
+                        document.getElementById('broadcastBtn').classList.remove('active');
+                    }
+                }
+                
+                if (!e.target.closest('#settingsBtn') && !e.target.closest('#appSettings')) {
+                    const dropdown = document.getElementById('appSettings');
+                    if (dropdown.style.display === 'block') {
+                        dropdown.style.display = 'none';
+                        document.getElementById('settingsBtn').classList.remove('active');
+                    }
+                }
+            });
+
+            // Close modal when clicking outside the content
+            document.getElementById('alertModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('alertModal')) {
+                    closeModal('alertModal');
+                }
+            });
+
+            // Initialize broadcast status
+            updateBroadcastStatus();
+
+            // Setup window resize handler for waveform canvases
+            window.addEventListener('resize', () => {
+                // Redraw waveforms if decks have tracks loaded
+                if (decks[0].processor?.buffer) decks[0].processor.drawWaveform();
+                if (decks[1].processor?.buffer) decks[1].processor.drawWaveform();
+            });
         });
     </script>
-    
-    <!-- External JavaScript -->
-    <script src="script.js"></script>
 </body>
 </html>
