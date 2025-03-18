@@ -23,6 +23,8 @@
             color: var(--text-primary);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
         
         /* Add background image with overlay */
@@ -33,7 +35,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('kirkradio_logo.jpg');
+            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect width="400" height="400" fill="%23111111"/%3E%3Cpath d="M100,200 A100,100 0 1,0 300,200 A100,100 0 1,0 100,200 Z" fill="none" stroke="%23D42F00" stroke-width="20"/%3E%3Ccircle cx="200" cy="200" r="20" fill="%23D42F00"/%3E%3Ctext x="200" y="180" text-anchor="middle" font-family="Arial" font-size="30" font-weight="bold" fill="%23FFFFFF"%3EKIRK%3C/text%3E%3Ctext x="200" y="220" text-anchor="middle" font-family="Arial" font-size="24" font-weight="bold" fill="%23FFFFFF"%3ERADIO%3C/text%3E%3C/svg%3E');
             background-size: 400px;
             background-position: center center;
             background-repeat: no-repeat;
@@ -58,8 +60,56 @@
             background-color: var(--secondary);
             border: 1px solid var(--border);
             border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
         }
 
+        .deck:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Improved turntable setup */
+        .turntable-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        /* Turntable platter */
+        .turntable-platter {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background-color: #1a1a1a;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            border: 2px solid #2a2a2a;
+        }
+
+        /* Turntable strobe marks */
+        .strobe-marks {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            background: repeating-conic-gradient(
+                #333 0deg 10deg,
+                #222 10deg 20deg
+            );
+            opacity: 0.7;
+        }
+
+        /* Improved vinyl record */
         .vinyl {
             width: 200px;
             height: 200px;
@@ -70,26 +120,54 @@
             border-radius: 50%;
             position: relative;
             cursor: grab;
-            transition: transform 0.05s linear;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5), 
+                        inset 0 2px 10px rgba(255,255,255,0.1),
+                        inset 0 -2px 10px rgba(0,0,0,0.5);
             border: 1px solid #444;
+            transition: transform 0.1s linear;
+            will-change: transform;
+            z-index: 2;
         }
 
         .vinyl:active {
             cursor: grabbing;
         }
 
+        /* Vinyl record texture */
+        .vinyl-texture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: repeating-radial-gradient(
+                circle at center,
+                transparent,
+                transparent 5px,
+                rgba(30, 30, 30, 0.3) 5px,
+                rgba(30, 30, 30, 0.3) 6px,
+                transparent 6px,
+                transparent 10px
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        /* Vinyl center hole and spindle */
         .vinyl::after {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
+            width: 20px;
+            height: 20px;
+            background: #111;
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px rgba(66, 153, 225, 0.5);
+            box-shadow: 0 0 0 10px rgba(50, 50, 50, 0.5);
+            z-index: 4;
         }
 
         .vinyl::before {
@@ -102,45 +180,27 @@
             border: 2px solid #444;
             border-radius: 50%;
             transform: translate(-50%, -50%);
+            z-index: 1;
         }
         
-        /* Vinyl record texture */
-        .vinyl-texture {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: repeating-radial-gradient(
-                circle at center,
-                #222,
-                #222 1px,
-                #333 1px,
-                #333 2px,
-                #222 2px,
-                #222 3px,
-                #333 3px,
-                #333 4px,
-                #222 4px,
-                #222 5px
-            );
-            opacity: 0.3;
-            pointer-events: none;
-        }
-        
-        /* Vinyl record label */
-        .vinyl-label {
+        /* Improved vinyl record label - now doesn't rotate with the record */
+        .vinyl-label-container {
             position: absolute;
             top: 50%;
             left: 50%;
             width: 80px;
             height: 80px;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        .vinyl-label {
+            width: 80px;
+            height: 80px;
             background: radial-gradient(circle at center, #D42F00, #961F00);
             border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-            pointer-events: none;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -150,6 +210,43 @@
             font-weight: bold;
             text-transform: uppercase;
             text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 5;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Vinyl reflection effect */
+        .vinyl-reflection {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(45deg, 
+                rgba(255,255,255,0.1) 0%, 
+                rgba(255,255,255,0) 60%);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        /* Improved animation for vinyl rotation */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .vinyl.playing {
+            animation: rotate 2s linear infinite;
+        }
+
+        /* Enhanced scratching animation - more responsive */
+        .vinyl.scratching {
+            animation: none;
+            transition: transform 0.05s linear;
         }
 
         .waveform {
@@ -210,20 +307,6 @@
             display: block;
         }
 
-        /* Add animations for vinyl rotation */
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .vinyl.playing {
-            animation: rotate 2s linear infinite;
-        }
-
-        .vinyl.scratching {
-            animation: none;
-        }
-
         /* Progress bar for tracks */
         .progress-bar {
             height: 6px;
@@ -232,6 +315,7 @@
             border-radius: 3px;
             position: relative;
             cursor: pointer;
+            overflow: hidden;
         }
 
         .progress-bar-fill {
@@ -239,6 +323,7 @@
             background-color: var(--primary);
             border-radius: 3px;
             width: 0%;
+            transition: width 0.1s linear;
         }
 
         /* EQ Knobs */
@@ -251,6 +336,7 @@
             margin: 0 auto;
             border: 2px solid #444;
             cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
         }
 
         .eq-knob::after {
@@ -277,10 +363,12 @@
             cursor: pointer;
             text-align: center;
             transition: background-color 0.2s;
+            border: 1px solid #444;
         }
 
         .fx-button.active {
             background-color: var(--primary);
+            box-shadow: 0 0 10px rgba(212, 47, 0, 0.5);
         }
 
         /* Button styles */
@@ -292,17 +380,23 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background-color 0.2s;
-            border: none;
+            transition: all 0.2s;
+            border: 1px solid #444;
             color: white;
         }
 
         .dj-button:hover {
             background-color: #444;
+            transform: translateY(-1px);
+        }
+
+        .dj-button:active {
+            transform: translateY(1px);
         }
 
         .dj-button.active {
             background-color: var(--primary);
+            box-shadow: 0 0 10px rgba(212, 47, 0, 0.3);
         }
 
         /* Crossfader */
@@ -316,19 +410,28 @@
             width: 100%;
             height: 12px;
             -webkit-appearance: none;
-            background: linear-gradient(to right, #3498db, #2ecc71);
+            background: linear-gradient(to right, 
+                rgba(52, 152, 219, 0.8), 
+                rgba(46, 204, 113, 0.8));
             border-radius: 6px;
             outline: none;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
         }
 
         .crossfader::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 24px;
             height: 24px;
-            background-color: #fff;
+            background: linear-gradient(to bottom, #fff, #ddd);
             border-radius: 50%;
             cursor: grab;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            border: 1px solid #aaa;
+        }
+
+        .crossfader::-webkit-slider-thumb:active {
+            cursor: grabbing;
+            background: linear-gradient(to bottom, #eee, #ccc);
         }
 
         /* Transport controls */
@@ -348,15 +451,22 @@
             background-color: #333;
             border-radius: 50%;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.2s;
+            border: 1px solid #444;
         }
 
         .transport-button:hover {
             background-color: #444;
+            transform: scale(1.05);
+        }
+
+        .transport-button:active {
+            transform: scale(0.95);
         }
 
         .transport-button.active {
             background-color: var(--primary);
+            box-shadow: 0 0 10px rgba(212, 47, 0, 0.5);
         }
 
         /* Tooltips */
@@ -380,6 +490,8 @@
             opacity: 0;
             transition: opacity 0.3s;
             font-size: 0.75rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            pointer-events: none;
         }
 
         .tooltip:hover .tooltip-text {
@@ -502,11 +614,11 @@
                 </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto p-4" id="trackList">
+            <div class="flex-1 max-h-fit p-4" id="trackList">
                 <!-- Track list will be populated by JavaScript -->
                 <div class="text-center text-gray-500 mt-10">
                     <p>No tracks loaded</p>
-                    <p class="mt-2">Use "Load Track" button to add music</p>
+                    <p class="mt-2">Use "Load Track" button or click "Music Database" to see available tracks</p>
                 </div>
             </div>
 
@@ -599,47 +711,36 @@
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">Password</label>
-                                            <input type="password" id="icecastPassword" 
+                                            <input type="password" id="icecastPassword" placeholder="********" 
                                                    class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">Stream Name</label>
-                                            <input type="text" id="streamName" placeholder="KirkRadioDJ Live" 
+                                            <input type="text" id="streamName" placeholder="Kirk Radio DJ Live Mix" 
                                                    class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">Stream Description</label>
-                                            <input type="text" id="streamDescription" placeholder="Live DJ Set" 
+                                            <input type="text" id="streamDescription" placeholder="Live DJ set by Kirk Radio DJ" 
                                                    class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
                                         </div>
                                         <div>
-                                            <label class="block mb-1 text-sm">Stream Genre</label>
-                                            <input type="text" id="streamGenre" placeholder="Electronic" 
-                                                   class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
-                                        </div>
-                                        <div>
-                                            <label class="block mb-1 text-sm">Bitrate (kbps)</label>
+                                            <label class="block mb-1 text-sm">Bitrate</label>
                                             <select id="streamBitrate" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
-                                                <option value="64">64 kbps</option>
-                                                <option value="96">96 kbps</option>
-                                                <option value="128" selected>128 kbps</option>
-                                                <option value="192">192 kbps</option>
-                                                <option value="256">256 kbps</option>
-                                                <option value="320">320 kbps</option>
+                                                <option value="64">64 kbps (Low Quality)</option>
+                                                <option value="128" selected>128 kbps (Standard)</option>
+                                                <option value="192">192 kbps (Good Quality)</option>
+                                                <option value="256">256 kbps (High Quality)</option>
+                                                <option value="320">320 kbps (Best Quality)</option>
                                             </select>
                                         </div>
                                         <div>
                                             <label class="block mb-1 text-sm">Format</label>
                                             <select id="streamFormat" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
                                                 <option value="mp3" selected>MP3</option>
-                                                <option value="ogg">OGG</option>
                                                 <option value="aac">AAC</option>
+                                                <option value="ogg">Ogg Vorbis</option>
                                             </select>
-                                        </div>
-                                        <div class="pt-2">
-                                            <button id="startBroadcastBtn" onclick="startBroadcast()" class="dj-button w-full">
-                                                <i class="fas fa-play-circle mr-2"></i> Start Broadcasting
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -647,56 +748,34 @@
                         </div>
                         <div class="dropdown relative">
                             <button id="settingsBtn" onclick="toggleAppSettings()" class="dj-button tooltip">
-                                <i class="fas fa-cog mr-2"></i>App Settings
+                                <i class="fas fa-cog mr-2"></i>Settings
                                 <span class="tooltip-text">Configure application settings</span>
                             </button>
                             <div id="appSettings" class="dropdown-content">
                                 <div class="p-4">
                                     <h3 class="text-white font-medium mb-4">Application Settings</h3>
                                     <div class="space-y-4">
-                                        <div class="section-label">Audio Settings</div>
+                                        <div class="section-label">Audio Devices</div>
                                         <div>
-                                            <label class="flex items-center mb-2">
-                                                <input type="checkbox" id="syncModeToggle" class="mr-2" checked> 
-                                                <span>Sync Mode (Auto-sync tempo between decks)</span>
-                                            </label>
-                                            <label class="flex items-center mb-2">
-                                                <input type="checkbox" id="keyLockToggle" class="mr-2" checked> 
-                                                <span>Key Lock (Maintain pitch during tempo changes)</span>
-                                            </label>
-                                            <label class="flex items-center mb-2">
-                                                <input type="checkbox" id="gridSnapToggle" class="mr-2" checked> 
-                                                <span>Grid Snap (Align loops to beat grid)</span>
-                                            </label>
+                                            <label class="block mb-1 text-sm">Output Device</label>
+                                            <select id="audioOutputDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                                <option value="default" selected>Default Output Device</option>
+                                            </select>
                                         </div>
-                                        
-                                        <div class="section-label">Audio Interface & Hardware</div>
                                         <div>
-                                            <label class="block mb-1 text-sm">Audio Output Device</label>
-                                            <select id="audioOutputDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm mb-3">
-                                                <option value="default" selected>Default Output</option>
-                                                <option value="interface1">External Audio Interface</option>
-                                                <option value="hdmi">HDMI Audio Output</option>
-                                                <option value="bluetooth">Bluetooth Speakers</option>
-                                            </select>
-                                            
                                             <label class="block mb-1 text-sm">Microphone Input</label>
-                                            <select id="micInputDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm mb-3">
-                                                <option value="none" selected>No Microphone</option>
-                                                <option value="default">Built-in Microphone</option>
-                                                <option value="usb">USB Microphone</option>
-                                                <option value="xlr">XLR Microphone (via Interface)</option>
+                                            <select id="micInputDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
+                                                <option value="none">No Microphone</option>
+                                                <option value="default" selected>Default Input Device</option>
                                             </select>
-                                            
+                                        </div>
+                                        <div>
                                             <label class="block mb-1 text-sm">DJ Controller</label>
-                                            <select id="djControllerDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm mb-3">
+                                            <select id="djControllerDevice" class="w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-white text-sm">
                                                 <option value="none" selected>No Controller</option>
-                                                <option value="pioneer">Pioneer DDJ</option>
-                                                <option value="numark">Numark Controller</option>
-                                                <option value="traktor">Traktor Controller</option>
-                                                <option value="denon">Denon DJ Controller</option>
                                             </select>
-                                            
+                                        </div>
+                                        <div>
                                             <button onclick="detectHardware()" class="dj-button w-full mb-3">
                                                 <i class="fas fa-search mr-2"></i> Detect Hardware
                                             </button>
@@ -803,9 +882,17 @@
                         <div class="flex gap-6">
                             <div class="flex flex-col items-center">
                                 <span class="control-label">Turntable Control</span>
-                                <div class="vinyl tooltip" id="vinyl1" onmousedown="startScratch(0, event)" 
-                                     onmousemove="scratch(0, event)" onmouseup="stopScratch(0)">
-                                    <span class="tooltip-text">Click and drag to scratch</span>
+                                <!-- Improved turntable visuals -->
+                                <div class="turntable-container relative">
+                                    <div class="turntable-platter"></div>
+                                    <div class="strobe-marks"></div>
+                                    <div class="vinyl tooltip" id="vinyl1" onmousedown="startScratch(0, event)" 
+                                         onmousemove="scratch(0, event)" onmouseup="stopScratch(0)">
+                                        <div class="vinyl-texture"></div>
+                                        <div class="vinyl-reflection"></div>
+                                        <div class="vinyl-label">KIRK RADIO</div>
+                                        <span class="tooltip-text">Click and drag to scratch</span>
+                                    </div>
                                 </div>
                                 <div class="transport-controls mt-4">
                                     <button onclick="playDeck(0)" class="transport-button tooltip" id="playBtn1">
@@ -900,9 +987,17 @@
                         <div class="flex gap-6">
                             <div class="flex flex-col items-center">
                                 <span class="control-label">Turntable Control</span>
-                                <div class="vinyl tooltip" id="vinyl2" onmousedown="startScratch(1, event)" 
-                                     onmousemove="scratch(1, event)" onmouseup="stopScratch(1)">
-                                    <span class="tooltip-text">Click and drag to scratch</span>
+                                <!-- Improved turntable visuals -->
+                                <div class="turntable-container relative">
+                                    <div class="turntable-platter"></div>
+                                    <div class="strobe-marks"></div>
+                                    <div class="vinyl tooltip" id="vinyl2" onmousedown="startScratch(1, event)" 
+                                         onmousemove="scratch(1, event)" onmouseup="stopScratch(1)">
+                                        <div class="vinyl-texture"></div>
+                                        <div class="vinyl-reflection"></div>
+                                        <div class="vinyl-label">KIRK RADIO</div>
+                                        <span class="tooltip-text">Click and drag to scratch</span>
+                                    </div>
                                 </div>
                                 <div class="transport-controls mt-4">
                                     <button onclick="playDeck(1)" class="transport-button tooltip" id="playBtn2">
@@ -1099,199 +1194,176 @@
                 this.lowEQ = context.createBiquadFilter();
                 this.midEQ = context.createBiquadFilter();
                 this.highEQ = context.createBiquadFilter();
-                this.buffer = null;
-                this.playing = false;
-                this.startTime = 0;
-                this.offset = 0;
-                this.looping = false;
-                this.cuePoint = 0;
-                this.trackTitle = "No track loaded";
-                this.trackArtist = "--";
-                this.duration = 0;
-
-                // Configure EQ
-                this.lowEQ.type = "lowshelf";
+                
+                // Set up filter types
+                this.lowEQ.type = 'lowshelf';
                 this.lowEQ.frequency.value = 320;
                 this.lowEQ.gain.value = 0;
-
-                this.midEQ.type = "peaking";
+                
+                this.midEQ.type = 'peaking';
                 this.midEQ.frequency.value = 1000;
                 this.midEQ.Q.value = 1;
                 this.midEQ.gain.value = 0;
-
-                this.highEQ.type = "highshelf";
+                
+                this.highEQ.type = 'highshelf';
                 this.highEQ.frequency.value = 3200;
                 this.highEQ.gain.value = 0;
-
-                // Connect nodes (source -> gain -> lowEQ -> midEQ -> highEQ -> master)
+                
+                // Connect the nodes
                 this.gainNode.connect(this.lowEQ);
                 this.lowEQ.connect(this.midEQ);
                 this.midEQ.connect(this.highEQ);
-                this.highEQ.connect(masterNode);
-
-                // Initialize settings
-                this.gainNode.gain.value = 1;
+                this.highEQ.connect(this.masterNode);
+                
+                // Initialize properties
+                this.playing = false;
+                this.looping = false;
+                this.buffer = null;
+                this.deckIndex = 0;
+                this.trackTitle = "No track loaded";
+                this.trackArtist = "--";
+                this.duration = 0;
+                this.offset = 0;
+                this.startTime = 0;
             }
-
-            async loadAudio(url, fileName = "", artistName = "") {
-                try {
-                    const response = await fetch(url);
-                    const arrayBuffer = await response.arrayBuffer();
-                    this.buffer = await this.context.decodeAudioData(arrayBuffer);
-                    this.trackTitle = fileName || "Untitled Track";
-                    this.trackArtist = artistName || "Unknown Artist";
-                    this.duration = this.buffer.duration;
-                    this.drawWaveform();
-                    this.updateTrackInfo();
-                    return true;
-                } catch (error) {
-                    console.error('Error loading audio:', error);
-                    showAlert("Error", `Failed to load audio: ${error.message}`);
-                    return false;
-                }
+            
+            loadBuffer(buffer, title = "Untitled Track", artist = "Unknown Artist") {
+                this.buffer = buffer;
+                this.duration = buffer.duration;
+                this.trackTitle = title;
+                this.trackArtist = artist;
+                this.offset = 0;
+                
+                // Draw waveform
+                this.drawWaveform();
+                
+                // Update the track info display
+                this.updateTrackInfo();
+                
+                // Update the progress display
+                this.updateProgressDisplay();
             }
-
+            
             play() {
-                if (!this.buffer) {
-                    showAlert("Error", "No track loaded");
-                    return;
-                }
-
+                if (!this.buffer) return;
+                
                 if (this.playing) {
                     this.pause();
                     return;
                 }
-
+                
+                // Create a new source node
                 this.source = this.context.createBufferSource();
                 this.source.buffer = this.buffer;
+                this.source.loop = this.looping;
                 this.source.connect(this.gainNode);
-
-                if (this.looping) {
-                    // Set loop points if needed
-                    this.source.loop = true;
-                }
-
-                this.startTime = this.context.currentTime - this.offset;
+                
+                // If we have an offset set, start from there
                 this.source.start(0, this.offset);
+                this.startTime = this.context.currentTime - this.offset;
                 this.playing = true;
                 
                 // Update UI
-                const playBtn = document.getElementById(`playBtn${this.deckIndex + 1}`);
                 const playIcon = document.getElementById(`playIcon${this.deckIndex + 1}`);
-                playBtn.classList.add('active');
-                playIcon.classList.remove('fa-play');
-                playIcon.classList.add('fa-pause');
-
-                // Start vinyl rotation animation
+                if (playIcon) {
+                    playIcon.className = "fas fa-pause";
+                }
+                
                 const vinyl = document.getElementById(`vinyl${this.deckIndex + 1}`);
-                vinyl.classList.add('playing');
-
-                // Start progress tracking
-                this.trackProgress();
+                if (vinyl) {
+                    vinyl.classList.add('playing');
+                }
+                
+                // Start updating progress
+                this.startProgressUpdate();
             }
-
+            
             pause() {
-                if (!this.playing) return;
-
-                this.source.stop();
+                if (!this.playing || !this.source) return;
+                
+                // Stop the source and update offset
+                this.source.stop(0);
                 this.offset = this.context.currentTime - this.startTime;
-                this.playing = false;
-
-                // Update UI
-                const playBtn = document.getElementById(`playBtn${this.deckIndex + 1}`);
-                const playIcon = document.getElementById(`playIcon${this.deckIndex + 1}`);
-                playBtn.classList.remove('active');
-                playIcon.classList.remove('fa-pause');
-                playIcon.classList.add('fa-play');
-
-                // Stop vinyl rotation animation
-                const vinyl = document.getElementById(`vinyl${this.deckIndex + 1}`);
-                vinyl.classList.remove('playing');
-            }
-
-            stop() {
-                if (!this.playing) return;
-
-                this.source.stop();
-                this.offset = 0;
-                this.playing = false;
-
-                // Update UI
-                const playBtn = document.getElementById(`playBtn${this.deckIndex + 1}`);
-                const playIcon = document.getElementById(`playIcon${this.deckIndex + 1}`);
-                playBtn.classList.remove('active');
-                playIcon.classList.remove('fa-pause');
-                playIcon.classList.add('fa-play');
-
-                // Stop vinyl rotation animation
-                const vinyl = document.getElementById(`vinyl${this.deckIndex + 1}`);
-                vinyl.classList.remove('playing');
-
-                // Update progress bar
-                const progressElement = document.getElementById(`deck${this.deckIndex + 1}Progress`);
-                if (progressElement) {
-                    progressElement.style.width = '0%';
+                if (this.offset > this.duration) {
+                    this.offset = 0;
                 }
                 
-                // Update time display
-                const currentTimeElement = document.getElementById(`deck${this.deckIndex + 1}CurrentTime`);
-                if (currentTimeElement) {
-                    currentTimeElement.textContent = '00:00';
+                this.playing = false;
+                
+                // Update UI
+                const playIcon = document.getElementById(`playIcon${this.deckIndex + 1}`);
+                if (playIcon) {
+                    playIcon.className = "fas fa-play";
+                }
+                
+                const vinyl = document.getElementById(`vinyl${this.deckIndex + 1}`);
+                if (vinyl) {
+                    vinyl.classList.remove('playing');
                 }
             }
-
-            setCuePoint() {
-                this.cuePoint = this.offset;
-                showAlert("Cue Point Set", `Cue point set at ${formatTime(this.cuePoint)}`);
+            
+            startProgressUpdate() {
+                if (!this.playing) return;
+                
+                requestAnimationFrame(() => this.updateProgressDisplay());
             }
-
-            jumpToCue() {
-                this.offset = this.cuePoint;
+            
+            updateProgressDisplay() {
+                if (!this.buffer) return;
+                
+                let currentTime;
                 if (this.playing) {
-                    this.pause();
-                    this.play();
+                    currentTime = this.context.currentTime - this.startTime;
+                    if (currentTime > this.duration) {
+                        if (this.looping) {
+                            this.startTime = this.context.currentTime - (currentTime % this.duration);
+                            currentTime = this.context.currentTime - this.startTime;
+                        } else {
+                            this.pause();
+                            currentTime = this.duration;
+                        }
+                    }
+                } else {
+                    currentTime = this.offset;
                 }
-                // Update progress display
-                this.updateProgressDisplay();
-            }
-
-            trackProgress() {
-                if (!this.playing) return;
-
-                const currentTime = this.context.currentTime - this.startTime;
-                const percent = (currentTime / this.buffer.duration) * 100;
                 
                 // Update progress bar
                 const progressElement = document.getElementById(`deck${this.deckIndex + 1}Progress`);
                 if (progressElement) {
-                    progressElement.style.width = `${percent}%`;
+                    const progressPercentage = (currentTime / this.duration) * 100;
+                    progressElement.style.width = `${progressPercentage}%`;
                 }
                 
-                // Update time display
+                // Update current time display
                 const currentTimeElement = document.getElementById(`deck${this.deckIndex + 1}CurrentTime`);
                 if (currentTimeElement) {
                     currentTimeElement.textContent = formatTime(currentTime);
                 }
-
-                // If track ended
-                if (currentTime >= this.buffer.duration) {
-                    this.stop();
-                    return;
+                
+                if (this.playing) {
+                    requestAnimationFrame(() => this.updateProgressDisplay());
                 }
-
-                // Continue tracking
-                requestAnimationFrame(() => this.trackProgress());
             }
-
-            updateProgressDisplay() {
+            
+            setCuePoint() {
                 if (!this.buffer) return;
                 
-                const percent = (this.offset / this.buffer.duration) * 100;
+                if (this.playing) {
+                    this.offset = this.context.currentTime - this.startTime;
+                    if (this.offset > this.duration) {
+                        this.offset = 0;
+                    }
+                } else {
+                    // If not playing, just use the current offset
+                    // This will be where playback starts next time
+                    this.updateProgressDisplay();
+                }
                 
-                // Update progress bar
-                const progressElement = document.getElementById(`deck${this.deckIndex + 1}Progress`);
-                if (progressElement) {
-                    progressElement.style.width = `${percent}%`;
+                // Show visual feedback
+                const cueBtn = document.querySelector(`button[onclick="cuePoint(${this.deckIndex})"]`);
+                if (cueBtn) {
+                    cueBtn.classList.add('active');
+                    setTimeout(() => cueBtn.classList.remove('active'), 200);
                 }
                 
                 // Update time display
@@ -1300,13 +1372,13 @@
                     currentTimeElement.textContent = formatTime(this.offset);
                 }
             }
-
+            
             setPlaybackRate(rate) {
                 if (this.source) {
                     this.source.playbackRate.value = rate;
                 }
             }
-
+            
             setVolume(value) {
                 this.gainNode.gain.value = value;
                 // Update volume display
@@ -1315,7 +1387,7 @@
                     volumeValueElement.textContent = `${Math.round(value * 100)}%`;
                 }
             }
-
+            
             setEQ(type, value) {
                 // Convert from percentage (-100 to 100) to dB (-12 to 12)
                 const dbValue = (value / 100) * 12;
@@ -1332,16 +1404,18 @@
                         break;
                 }
             }
-
+            
             applyScratchEffect(delta) {
                 const direction = delta > 0 ? 1 : -1;
                 const speed = Math.min(Math.abs(delta) * 0.01, 4);
                 this.setPlaybackRate(direction * speed);
-
-                // Adjust EQ for vinyl scratching effect
-                this.highEQ.gain.value = -6; // Reduce highs slightly
+                
+                // Enhanced scratch sound effect
+                // Apply frequency shaping for more realistic vinyl scratch
+                this.lowEQ.gain.value = -3; // Reduce bass slightly during scratch
+                this.highEQ.gain.value = direction > 0 ? 4 : -6; // Dynamic high frequency response
             }
-
+            
             toggleLoop() {
                 this.looping = !this.looping;
                 if (this.source) {
@@ -1349,7 +1423,7 @@
                 }
                 return this.looping;
             }
-
+            
             updateTrackInfo() {
                 const titleElement = document.getElementById(`deck${this.deckIndex + 1}Title`);
                 const artistElement = document.getElementById(`deck${this.deckIndex + 1}Artist`);
@@ -1359,7 +1433,7 @@
                 if (artistElement) artistElement.textContent = this.trackArtist;
                 if (totalTimeElement) totalTimeElement.textContent = formatTime(this.duration);
             }
-
+            
             drawWaveform() {
                 const canvas = document.getElementById(`waveform${this.deckIndex + 1}`);
                 if (!canvas) return;
@@ -1402,7 +1476,7 @@
                 
                 ctx.stroke();
             }
-
+            
             skipForward() {
                 if (!this.buffer) return;
                 
@@ -1414,7 +1488,7 @@
                     this.updateProgressDisplay();
                 }
             }
-
+            
             skipBackward() {
                 if (!this.buffer) return;
                 
@@ -1427,7 +1501,7 @@
                 }
             }
         }
-
+        
         // Initialize audio context on user interaction
         document.addEventListener('click', () => {
             if (!audioContext) {
@@ -1435,13 +1509,13 @@
                     audioContext = new (window.AudioContext || window.webkitAudioContext)();
                     masterGain = audioContext.createGain();
                     masterGain.connect(audioContext.destination);
-
+                    
                     // Initialize deck processors
                     decks[0].processor = new AudioProcessor(audioContext, masterGain);
                     decks[1].processor = new AudioProcessor(audioContext, masterGain);
                     decks[0].processor.deckIndex = 0;
                     decks[1].processor.deckIndex = 1;
-
+                    
                     // Initialize canvas for waveforms
                     initializeCanvases();
                 } catch (error) {
@@ -1450,7 +1524,7 @@
                 }
             }
         });
-
+        
         function initializeCanvases() {
             const canvas1 = document.getElementById('waveform1');
             const canvas2 = document.getElementById('waveform2');
@@ -1465,39 +1539,33 @@
                 canvas2.height = canvas2.offsetHeight;
             }
         }
-
+        
         // Utility function to format time in MM:SS
         function formatTime(seconds) {
             const mins = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);
             return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
-
-        // Vinyl control functions
+        
+        // Helper function to get current rotation of an element
+        function getRotation(el) {
+            const style = window.getComputedStyle(el);
+            const matrix = new DOMMatrix(style.transform);
+            const angle = Math.atan2(matrix.b, matrix.a) * (180 / Math.PI);
+            return angle;
+        }
+        
+        // Vinyl control functions - IMPROVED SCRATCHING
         function startScratch(deckIndex, event) {
             scratching[deckIndex] = true;
             lastY[deckIndex] = event.clientY;
             event.preventDefault();
-
+            
             const vinyl = document.getElementById(`vinyl${deckIndex + 1}`);
             vinyl.classList.add('scratching');
             vinyl.style.cursor = 'grabbing';
             
-            // Add enhanced vinyl scratching visuals
-            if (!vinyl.querySelector('.vinyl-texture')) {
-                const texture = document.createElement('div');
-                texture.className = 'vinyl-texture';
-                vinyl.appendChild(texture);
-            }
-            
-            if (!vinyl.querySelector('.vinyl-label')) {
-                const label = document.createElement('div');
-                label.className = 'vinyl-label';
-                label.innerText = 'KIRK RADIO';
-                vinyl.appendChild(label);
-            }
-            
-            // Add visual animation effect
+            // Add visual animation effect - more responsive
             vinyl.style.transform = 'scale(1.02)';
             setTimeout(() => {
                 if (scratching[deckIndex]) {
@@ -1505,15 +1573,15 @@
                 }
             }, 150);
         }
-
+        
         function scratch(deckIndex, event) {
             if (!scratching[deckIndex]) return;
-
+            
             const delta = event.clientY - lastY[deckIndex];
             if (decks[deckIndex].processor) {
                 decks[deckIndex].processor.applyScratchEffect(delta);
             }
-
+            
             // Enhanced visual scratch effects
             const vinyl = document.getElementById(`vinyl${deckIndex + 1}`);
             const speed = Math.abs(delta);
@@ -1525,25 +1593,26 @@
             // Enhanced visual effects based on scratch speed
             if (document.getElementById('highQualityVinylToggle')?.checked) {
                 if (speed > 10) {
-                    vinyl.style.boxShadow = '0 4px 25px rgba(0,0,0,0.7)';
+                    vinyl.style.boxShadow = '0 4px 25px rgba(212,47,0,0.3)';
                 } else if (speed > 5) {
                     vinyl.style.boxShadow = '0 4px 20px rgba(0,0,0,0.6)';
                 } else {
                     vinyl.style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)';
                 }
             }
-
+            
             lastY[deckIndex] = event.clientY;
             event.preventDefault();
         }
-
+        
         function stopScratch(deckIndex) {
             if (!scratching[deckIndex]) return;
-
+            
             scratching[deckIndex] = false;
             if (decks[deckIndex].processor) {
                 decks[deckIndex].processor.setPlaybackRate(1);
                 // Reset EQ
+                decks[deckIndex].processor.lowEQ.gain.value = 0;
                 decks[deckIndex].processor.highEQ.gain.value = 0;
             }
             
@@ -1643,7 +1712,7 @@
                 showAlert("Hardware Detected", "Found 1 audio interface and 1 DJ controller. Settings have been updated.");
             }, 1500);
         }
-
+        
         // Control functions
         function updateMasterTempo(value) {
             document.getElementById('tempoValue').textContent = `${value} BPM`;
@@ -1660,20 +1729,20 @@
                 }
             }
         }
-
+        
         function updateMasterVolume(value) {
             if (masterGain) {
                 masterGain.gain.value = value / 100;
             }
         }
-
+        
         function updateTempo(deckIndex, value) {
             if (decks[deckIndex].processor) {
                 decks[deckIndex].processor.setPlaybackRate(value / 128);
                 document.getElementById(`deck${deckIndex+1}Tempo`).textContent = `${value} BPM`;
             }
         }
-
+        
         function updateKey(deckIndex, value) {
             // Placeholder for key/pitch shifting
             // In a real implementation, this would change the pitch without affecting tempo
@@ -1690,13 +1759,13 @@
             
             document.getElementById(`deck${deckIndex+1}Key`).textContent = keyText;
         }
-
+        
         function updateVolume(deckIndex, value) {
             if (decks[deckIndex].processor) {
                 decks[deckIndex].processor.setVolume(value / 100);
             }
         }
-
+        
         function updateCrossfader(value) {
             const normalizedValue = parseInt(value);
             let leftGain, rightGain;
@@ -1709,7 +1778,7 @@
                 leftGain = Math.sin(((100 - normalizedValue) / 50) * Math.PI/2);
                 rightGain = 1;
             }
-
+            
             if (decks[0].processor) decks[0].processor.setVolume(leftGain);
             if (decks[1].processor) decks[1].processor.setVolume(rightGain);
             
@@ -1726,7 +1795,7 @@
             }
             document.getElementById('crossfaderValue').textContent = crossfaderText;
         }
-
+        
         // Button toggle functions
         function toggleSync(deckIndex) {
             const button = event.currentTarget;
@@ -1739,13 +1808,13 @@
                 updateTempo(deckIndex, tempoValue);
             }
         }
-
+        
         function toggleKeyLock(deckIndex) {
             const button = event.currentTarget;
             button.classList.toggle('active');
             // Key lock functionality would maintain the pitch when tempo is changed
         }
-
+        
         function toggleLoop(deckIndex) {
             if (!decks[deckIndex].processor) return;
             
@@ -1753,28 +1822,28 @@
             const looping = decks[deckIndex].processor.toggleLoop();
             button.classList.toggle('active', looping);
         }
-
+        
         // Deck playback control
         function playDeck(deckIndex) {
             if (!decks[deckIndex].processor) return;
             decks[deckIndex].processor.play();
         }
-
+        
         function cuePoint(deckIndex) {
             if (!decks[deckIndex].processor) return;
             decks[deckIndex].processor.setCuePoint();
         }
-
+        
         function skipBackward(deckIndex) {
             if (!decks[deckIndex].processor) return;
             decks[deckIndex].processor.skipBackward();
         }
-
+        
         function skipForward(deckIndex) {
             if (!decks[deckIndex].processor) return;
             decks[deckIndex].processor.skipForward();
         }
-
+        
         // EQ Control
         function rotateEQ(element, type, deckIndex) {
             // This would be much more sophisticated in a real DJ app
@@ -1795,228 +1864,778 @@
                 decks[deckIndex].processor.setEQ(type, newValue);
             }
         }
-
+        
         // FX Functions
         function toggleEffect(deckIndex, effectType) {
+            // Placeholder for effect toggle
+            // In a real app, this would enable audio effects like reverb, delay, etc.
             const button = event.currentTarget;
             button.classList.toggle('active');
             
-            // Show message about effect
             if (button.classList.contains('active')) {
-                showAlert("Effect Enabled", `${effectType.charAt(0).toUpperCase() + effectType.slice(1)} effect enabled on Deck ${deckIndex + 1}`);
+                showAlert(`Effect Enabled`, `${effectType.charAt(0).toUpperCase() + effectType.slice(1)} effect enabled on Deck ${deckIndex + 1}`);
             }
-            // In a real implementation, this would apply WebAudio effects
         }
-
+        
         function updateEffectMix(deckIndex, value) {
-            // In a real implementation, this would control the wet/dry mix of effects
-            console.log(`Deck ${deckIndex + 1} effect mix: ${value}%`);
+            // Placeholder for effect mix level
+            // In a real app, this would adjust the wet/dry mix of active effects
         }
-
-        // Track loading
-        async function loadTrack() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'audio/*';
-            input.onchange = async (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-
-                const url = URL.createObjectURL(file);
-                
-                // Find which deck to load into
-                let deckToUse = 0;
-                
-                // If both decks have tracks, use the one that's not playing
-                if (decks[0].processor?.buffer && decks[1].processor?.buffer) {
-                    if (decks[0].processor.playing && !decks[1].processor.playing) {
-                        deckToUse = 1;
-                    } else if (!decks[0].processor.playing && decks[1].processor.playing) {
-                        deckToUse = 0;
-                    } else {
-                        // Ask user which deck to use
-                        deckToUse = confirm("Load into Deck 2?") ? 1 : 0;
-                    }
-                } 
-                // If only deck 1 has a track, use deck 2
-                else if (decks[0].processor?.buffer) {
-                    deckToUse = 1;
-                }
-                
-                // Show loading message
-                showAlert("Loading", `Loading track into Deck ${deckToUse + 1}...`);
-                
-                // Load the track
-                if (decks[deckToUse].processor) {
-                    // Extract artist and title from filename if possible
-                    let fileName = file.name.replace(/\.[^/.]+$/, ""); // Remove extension
-                    let artistName = "";
-                    
-                    // Try to find artist - title pattern
-                    const dashIndex = fileName.indexOf(' - ');
-                    if (dashIndex !== -1) {
-                        artistName = fileName.substring(0, dashIndex);
-                        fileName = fileName.substring(dashIndex + 3);
-                    }
-                    
-                    const success = await decks[deckToUse].processor.loadAudio(url, fileName, artistName);
-                    if (success) {
-                        closeModal('alertModal');
-                    }
-                }
-            };
-            input.click();
-        }
-
+        
         // Broadcast functions
         function toggleBroadcastSettings() {
             const dropdown = document.getElementById('broadcastSettings');
             const button = document.getElementById('broadcastBtn');
             
-            button.classList.toggle('active');
-            if (button.classList.contains('active')) {
-                dropdown.style.display = 'block';
-            } else {
+            if (dropdown.style.display === 'block') {
                 dropdown.style.display = 'none';
+                button.classList.remove('active');
+            } else {
+                dropdown.style.display = 'block';
+                button.classList.add('active');
             }
         }
-
+        
         function toggleAppSettings() {
             const dropdown = document.getElementById('appSettings');
             const button = document.getElementById('settingsBtn');
             
-            button.classList.toggle('active');
-            if (button.classList.contains('active')) {
-                dropdown.style.display = 'block';
-            } else {
+            if (dropdown.style.display === 'block') {
                 dropdown.style.display = 'none';
-            }
-        }
-
-        function startBroadcast() {
-            const url = document.getElementById('icecastUrl').value;
-            const mountPoint = document.getElementById('mountPoint').value;
-            const username = document.getElementById('icecastUsername').value;
-            const password = document.getElementById('icecastPassword').value;
-            const streamName = document.getElementById('streamName').value;
-            
-            if (!url || !mountPoint || !username || !password) {
-                showAlert("Error", "Please fill in all required Icecast settings");
-                return;
-            }
-            
-            // This would normally connect to an Icecast server
-            // For this demo, we'll just simulate it
-            showAlert("Broadcasting", `Starting broadcast to ${url}${mountPoint}`);
-            
-            // Update broadcast status
-            broadcasting = true;
-            updateBroadcastStatus();
-            
-            // Hide the settings dropdown
-            document.getElementById('broadcastSettings').style.display = 'none';
-            document.getElementById('broadcastBtn').classList.remove('active');
-        }
-
-        function toggleBroadcast() {
-            if (broadcasting) {
-                // Stop broadcast
-                broadcasting = false;
-                showAlert("Broadcast Ended", "Your broadcast has been stopped");
-                
-                // Update button
-                const button = document.getElementById('startStopBroadcastBtn');
-                button.innerHTML = '<i class="fas fa-play-circle mr-2"></i> Start Broadcasting';
+                button.classList.remove('active');
             } else {
-                // Show broadcast settings if not configured
-                if (!document.getElementById('icecastUrl').value) {
-                    toggleBroadcastSettings();
-                    showAlert("Configure Broadcast", "Please configure your Icecast settings first");
-                    return;
-                }
-                
-                // Start broadcast
-                broadcasting = true;
-                showAlert("Broadcasting", "Your broadcast has started");
-                
-                // Update button
-                const button = document.getElementById('startStopBroadcastBtn');
-                button.innerHTML = '<i class="fas fa-stop-circle mr-2"></i> Stop Broadcasting';
+                dropdown.style.display = 'block';
+                button.classList.add('active');
             }
-            
-            updateBroadcastStatus();
         }
-
+        
+        function toggleBroadcast() {
+            broadcasting = !broadcasting;
+            updateBroadcastStatus();
+            
+            if (broadcasting) {
+                showAlert("Broadcasting Started", "Your mix is now being broadcast to your configured Icecast server.");
+            } else {
+                showAlert("Broadcasting Stopped", "Your broadcast has been ended.");
+            }
+        }
+        
         function updateBroadcastStatus() {
             const indicator = document.getElementById('broadcastStatusIndicator');
             const text = document.getElementById('broadcastStatusText');
+            const button = document.getElementById('startStopBroadcastBtn');
             const stats = document.getElementById('broadcastStats');
             
             if (broadcasting) {
                 indicator.classList.remove('bg-red-500');
                 indicator.classList.add('bg-green-500');
-                text.textContent = 'Broadcasting';
-                
-                // Show mock stats
-                const bitrate = document.getElementById('streamBitrate').value;
-                const format = document.getElementById('streamFormat').value.toUpperCase();
-                stats.textContent = `Live at ${bitrate} kbps ${format} | Listeners: 0 | Uptime: 00:00:00`;
-                
-                // Update button
-                const button = document.getElementById('startStopBroadcastBtn');
+                text.textContent = "Broadcasting";
                 button.innerHTML = '<i class="fas fa-stop-circle mr-2"></i> Stop Broadcasting';
+                stats.textContent = "Streaming at 128 kbps MP3 format. 12 listeners currently connected.";
             } else {
                 indicator.classList.remove('bg-green-500');
                 indicator.classList.add('bg-red-500');
-                text.textContent = 'Not broadcasting';
-                stats.textContent = 'Configure your Icecast settings using the Broadcast Settings button in the toolbar.';
-                
-                // Update button
-                const button = document.getElementById('startStopBroadcastBtn');
+                text.textContent = "Not broadcasting";
                 button.innerHTML = '<i class="fas fa-play-circle mr-2"></i> Start Broadcasting';
+                stats.textContent = "Configure your Icecast settings using the Broadcast Settings button in the toolbar.";
             }
         }
-
-        // Library functions
-        function openLibraryFolder() {
-            showAlert("Library", "This would open a folder dialog to import multiple tracks.");
-        }
-
-        function createPlaylist() {
-            showAlert("Playlist", "This would create a new playlist in your library.");
-        }
-
-        function exportLibrary() {
-            showAlert("Export", "This would export your track library.");
-        }
-
-        function saveMix() {
-            showAlert("Save Mix", "This would save your current mix session.");
+        
+        // Library management functions
+        function loadTrack() {
+            if (!audioContext) {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    masterGain = audioContext.createGain();
+                    masterGain.connect(audioContext.destination);
+                    
+                    decks[0].processor = new AudioProcessor(audioContext, masterGain);
+                    decks[1].processor = new AudioProcessor(audioContext, masterGain);
+                    decks[0].processor.deckIndex = 0;
+                    decks[1].processor.deckIndex = 1;
+                    
+                    initializeCanvases();
+                } catch (error) {
+                    console.error('Failed to initialize audio context:', error);
+                    showAlert('Error', 'Failed to initialize audio. Please check your browser settings.');
+                    return;
+                }
+            }
+            
+            // Simulate loading audio
+            // In a real app, this would open a file dialog
+            showAlert("Load Track", "In a real application, this would open a file dialog to select audio files. For this demo, we'll load a simulated track.");
+            
+            // Generate a simulated audio buffer
+            const sampleRate = audioContext.sampleRate;
+            const duration = 180; // 3 minutes
+            const frameCount = sampleRate * duration;
+            
+            const audioBuffer = audioContext.createBuffer(2, frameCount, sampleRate);
+            
+            // Generate simple test tone with decay
+            for (let channel = 0; channel < 2; channel++) {
+                const channelData = audioBuffer.getChannelData(channel);
+                
+                for (let i = 0; i < frameCount; i++) {
+                    // Test tone with multiple frequencies to make it more interesting
+                    const t = i / sampleRate;
+                    
+                    // Add some rhythm
+                    const beat = Math.sin(2 * Math.PI * 2 * (t % 0.5) / 0.5) * 0.3;
+                    
+                    // Add some bass notes
+                    const bass = Math.sin(2 * Math.PI * 80 * t) * 0.4 * (Math.sin(2 * Math.PI * 0.5 * t) * 0.5 + 0.5);
+                    
+                    // Add some mid notes
+                    const mid = Math.sin(2 * Math.PI * 320 * t) * 0.2 * (Math.sin(2 * Math.PI * 0.25 * t + 0.2) * 0.5 + 0.5);
+                    
+                    // Add some high notes
+                    const high = Math.sin(2 * Math.PI * 1200 * t) * 0.1 * (Math.sin(2 * Math.PI * 2 * t + 0.5) * 0.5 + 0.5);
+                    
+                    // Combined waveform
+                    const sample = (beat + bass + mid + high) / 2;
+                    
+                    // Apply overall volume envelope
+                    const envelope = Math.min(1, 10 * (1 - i / frameCount) + 0.1);
+                    
+                    channelData[i] = sample * envelope;
+                }
+            }
+            
+            // Create random deck assignment
+            const deckIndex = Math.floor(Math.random() * 2);
+            const titles = [
+                "Summer Vibes", "Midnight Run", "Electric Dreams", "Urban Rhythm", 
+                "Chill Out Zone", "Club Anthems", "Retro Wave", "Bass Drop"
+            ];
+            const artists = [
+                "DJ Sunshine", "Beat Masters", "Synth Wave", "City Beats", 
+                "Ambient Sounds", "Party DJs", "80s Revival", "Dubstep Kings"
+            ];
+            
+            const title = titles[Math.floor(Math.random() * titles.length)];
+            const artist = artists[Math.floor(Math.random() * artists.length)];
+            
+            // Load buffer to processor
+            decks[deckIndex].processor.loadBuffer(audioBuffer, title, artist);
+            
+            showAlert("Track Loaded", `"${title}" by ${artist} loaded to Deck ${deckIndex + 1}. Press play to start.`);
         }
         
-        // Music service integration functions
+        function saveMix() {
+            showAlert("Save Mix", "This would save the current mix session including tracks, cue points, and settings.");
+        }
+        
+        function openLibraryFolder() {
+            showAlert("Open Library Folder", "This would open a folder dialog to import multiple tracks at once.");
+        }
+        
+        function createPlaylist() {
+            showAlert("Create Playlist", "This would create a new playlist in your library.");
+        }
+        
+        function exportLibrary() {
+            showAlert("Export Library", "This would export your track library to a file.");
+        }
+        
         function connectGoogleDrive() {
-            showAlert("Google Drive Connection", "Connecting to Google Drive to access your music files. You will be prompted to authorize access to your Drive files.");
-            // This would use Google Drive API for OAuth and file access
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'flex';
+            modal.innerHTML = `
+                <div class="modal-content w-96 max-w-full">
+                    <h3 class="text-xl font-medium mb-4">Connect to Google Drive</h3>
+                    <div class="mb-6 flex flex-col items-center justify-center text-center">
+                        <i class="fab fa-google-drive text-5xl text-[#4285F4] mb-3"></i>
+                        <p class="mb-4">Connect to your Google Drive to access your music files. You will need to authorize access to your Google account.</p>
+                        <div class="bg-[#1a1a1a] p-4 rounded-md w-full text-left mb-4">
+                            <div class="text-sm font-bold mb-2">This will allow Kirk Radio DJ to:</div>
+                            <ul class="text-xs space-y-1 text-gray-300">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>View and download audio files from your Google Drive</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>Create a folder for storing mixes and playlists</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-times text-red-500 mr-2 mt-0.5"></i>
+                                    <span>Cannot access your personal files or documents</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button onclick="cancelServiceConnection(this)" class="dj-button bg-[#333]">Cancel</button>
+                        <button onclick="simulateServiceConnection('Google Drive')" class="dj-button bg-[#4285F4]">
+                            <i class="fab fa-google mr-2"></i> Connect with Google
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
         }
         
         function connectOneDrive() {
-            showAlert("OneDrive Connection", "Connecting to Microsoft OneDrive to access your music files. You will be prompted to authorize access.");
-            // This would use Microsoft Graph API for OneDrive access
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'flex';
+            modal.innerHTML = `
+                <div class="modal-content w-96 max-w-full">
+                    <h3 class="text-xl font-medium mb-4">Connect to OneDrive</h3>
+                    <div class="mb-6 flex flex-col items-center justify-center text-center">
+                        <i class="fab fa-microsoft text-5xl text-[#0078D4] mb-3"></i>
+                        <p class="mb-4">Connect to your Microsoft OneDrive to access your music files. You will need to authorize access to your Microsoft account.</p>
+                        <div class="bg-[#1a1a1a] p-4 rounded-md w-full text-left mb-4">
+                            <div class="text-sm font-bold mb-2">This will allow Kirk Radio DJ to:</div>
+                            <ul class="text-xs space-y-1 text-gray-300">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>View and download audio files from your OneDrive</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>Create a folder for storing mixes and playlists</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-times text-red-500 mr-2 mt-0.5"></i>
+                                    <span>Cannot access your personal files or documents</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button onclick="cancelServiceConnection(this)" class="dj-button bg-[#333]">Cancel</button>
+                        <button onclick="simulateServiceConnection('OneDrive')" class="dj-button bg-[#0078D4]">
+                            <i class="fab fa-microsoft mr-2"></i> Connect with Microsoft
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
         }
         
         function connectYouTube() {
-            showAlert("YouTube Connection", "Connecting to YouTube for DJ mixes and music. You will be prompted to authorize access to your YouTube account.");
-            // This would use YouTube API for video/audio
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'flex';
+            modal.innerHTML = `
+                <div class="modal-content w-96 max-w-full">
+                    <h3 class="text-xl font-medium mb-4">Connect to YouTube</h3>
+                    <div class="mb-6 flex flex-col items-center justify-center text-center">
+                        <i class="fab fa-youtube text-5xl text-[#FF0000] mb-3"></i>
+                        <p class="mb-4">Connect to YouTube to access music, DJ mixes, and more. You will need to authorize access to your YouTube account.</p>
+                        <div class="bg-[#1a1a1a] p-4 rounded-md w-full text-left mb-4">
+                            <div class="text-sm font-bold mb-2">This will allow Kirk Radio DJ to:</div>
+                            <ul class="text-xs space-y-1 text-gray-300">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>Search and stream music from YouTube</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>Access your YouTube playlists</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>Create playlists for your mixes</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button onclick="cancelServiceConnection(this)" class="dj-button bg-[#333]">Cancel</button>
+                        <button onclick="simulateServiceConnection('YouTube')" class="dj-button bg-[#FF0000]">
+                            <i class="fab fa-youtube mr-2"></i> Connect with YouTube
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
         }
         
         function connectSoundCloud() {
-            showAlert("SoundCloud Connection", "Connecting to SoundCloud to access music. You will be prompted to authorize access to your SoundCloud account.");
-            // This would use SoundCloud API
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'flex';
+            modal.innerHTML = `
+                <div class="modal-content w-96 max-w-full">
+                    <h3 class="text-xl font-medium mb-4">Connect to SoundCloud</h3>
+                    <div class="mb-6 flex flex-col items-center justify-center text-center">
+                        <i class="fab fa-soundcloud text-5xl text-[#FF5500] mb-3"></i>
+                        <p class="mb-4">Connect to SoundCloud to access millions of tracks, remixes, and DJ sets. You will need to authorize access to your SoundCloud account.</p>
+                        <div class="bg-[#1a1a1a] p-4 rounded-md w-full text-left mb-4">
+                            <div class="text-sm font-bold mb-2">This will allow Kirk Radio DJ to:</div>
+                            <ul class="text-xs space-y-1 text-gray-300">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>Search and stream music from SoundCloud</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>Access your SoundCloud playlists and likes</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-0.5"></i>
+                                    <span>Follow artists and add tracks to your favorites</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button onclick="cancelServiceConnection(this)" class="dj-button bg-[#333]">Cancel</button>
+                        <button onclick="simulateServiceConnection('SoundCloud')" class="dj-button bg-[#FF5500]">
+                            <i class="fab fa-soundcloud mr-2"></i> Connect with SoundCloud
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function cancelServiceConnection(button) {
+            // Find the parent modal and remove it
+            const modal = button.closest('.modal');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
+        }
+        
+        function simulateServiceConnection(service) {
+            // Close the connection modal
+            const modal = document.querySelector('.modal:not(#alertModal)');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
+            
+            // Show a loading alert
+            showAlert(`Connecting to ${service}`, `Establishing connection to ${service}. Please wait...`);
+            
+            // After a delay, show success and populate tracks
+            setTimeout(() => {
+                closeModal('alertModal');
+                
+                // Populate the track list with service-specific tracks
+                const trackList = document.getElementById('trackList');
+                
+                // Generate service-specific tracks
+                let tracks = [];
+                let serviceIcon = '';
+                let primaryColor = '';
+                
+                switch(service) {
+                    case 'Google Drive':
+                        tracks = [
+                            { id: 101, title: "Road Trip Mix", artist: "Your Collection", genre: "Mix", duration: "45:20" },
+                            { id: 102, title: "Summer Party 2024", artist: "Your Collection", genre: "Various", duration: "62:15" },
+                            { id: 103, title: "Workout Beats", artist: "Your Collection", genre: "Electronic", duration: "32:40" },
+                            { id: 104, title: "Chill Evening", artist: "Your Collection", genre: "Ambient", duration: "51:10" }
+                        ];
+                        serviceIcon = 'fa-google-drive';
+                        primaryColor = '#4285F4';
+                        break;
+                    case 'OneDrive':
+                        tracks = [
+                            { id: 201, title: "80s Greatest Hits", artist: "Your Collection", genre: "Pop/Rock", duration: "58:30" },
+                            { id: 202, title: "Jazz Classics", artist: "Your Collection", genre: "Jazz", duration: "47:15" },
+                            { id: 203, title: "Classical Moments", artist: "Your Collection", genre: "Classical", duration: "63:40" },
+                            { id: 204, title: "Hip Hop Selection", artist: "Your Collection", genre: "Hip Hop", duration: "42:50" }
+                        ];
+                        serviceIcon = 'fa-microsoft';
+                        primaryColor = '#0078D4';
+                        break;
+                    case 'YouTube':
+                        tracks = [
+                            { id: 301, title: "EDM Festival Mix 2024", artist: "DJ Markus", genre: "EDM", duration: "120:00" },
+                            { id: 302, title: "Lo-Fi Beats to Study To", artist: "ChillBeats", genre: "Lo-Fi", duration: "180:00" },
+                            { id: 303, title: "Best of Techno 2023", artist: "TechnoChannel", genre: "Techno", duration: "95:20" },
+                            { id: 304, title: "Deep House Mix April 2024", artist: "DeepVibes", genre: "House", duration: "75:30" },
+                            { id: 305, title: "Hip Hop Classics", artist: "UrbanBeats", genre: "Hip Hop", duration: "60:45" },
+                            { id: 306, title: "Tomorrowland 2023 Highlights", artist: "Festival Channel", genre: "EDM", duration: "45:10" }
+                        ];
+                        serviceIcon = 'fa-youtube';
+                        primaryColor = '#FF0000';
+                        break;
+                    case 'SoundCloud':
+                        tracks = [
+                            { id: 401, title: "Underground House Mix", artist: "DJ Shadow", genre: "House", duration: "58:24" },
+                            { id: 402, title: "Liquid Drum & Bass Set", artist: "LiquidFlow", genre: "D&B", duration: "62:37" },
+                            { id: 403, title: "Ambient Textures", artist: "Dreamscape", genre: "Ambient", duration: "47:15" },
+                            { id: 404, title: "Future Beats", artist: "CloudBeats", genre: "Electronic", duration: "53:20" },
+                            { id: 405, title: "Minimal Techno Session", artist: "MinimalMinds", genre: "Techno", duration: "67:40" },
+                            { id: 406, title: "Chill Wave", artist: "WaveForms", genre: "Chill", duration: "42:18" }
+                        ];
+                        serviceIcon = 'fa-soundcloud';
+                        primaryColor = '#FF5500';
+                        break;
+                }
+                
+                // Display the tracks
+                trackList.innerHTML = `
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center">
+                            <i class="fab ${serviceIcon} text-[${primaryColor}] text-2xl mr-2"></i>
+                            <div class="text-sm font-bold">${service} Music</div>
+                        </div>
+                        <div class="text-xs text-gray-400">${tracks.length} tracks</div>
+                    </div>
+                `;
+                
+                // Add tracks
+                const trackItems = tracks.map(track => `
+                    <div class="flex items-center p-3 hover:bg-gray-800 rounded cursor-pointer mb-2 bg-[#1a1a1a]"
+                         onclick="loadServiceTrack(${track.id}, '${service}')">
+                        <div class="w-10 h-10 bg-[${primaryColor}20] rounded flex items-center justify-center mr-3 text-[${primaryColor}]">
+                            <i class="fab ${serviceIcon}"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="font-medium text-white">${track.title}</div>
+                            <div class="text-xs text-gray-400 flex justify-between">
+                                <span>${track.artist}</span>
+                                <span>${track.duration}</span>
+                            </div>
+                            <div class="text-xs text-gray-500">${track.genre}</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                trackList.innerHTML += trackItems;
+                
+                // Show success message
+                showAlert(`${service} Connected`, `Successfully connected to ${service}. You can now browse and play tracks from your collection.`);
+            }, 2000);
+        }
+        
+        function loadServiceTrack(id, service) {
+            // Similar to loadSampleTrack but for service tracks
+            // For now, just show a modal with the deck selector
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'flex';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3 class="text-xl font-medium mb-4">Load ${service} Track</h3>
+                    <p class="mb-4">Select which deck to load this track to:</p>
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="simulateLoadServiceTrack(${id}, '${service}', 0)" class="dj-button">Deck 1</button>
+                        <button onclick="simulateLoadServiceTrack(${id}, '${service}', 1)" class="dj-button">Deck 2</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Add click handler to close modal when clicking outside
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+        
+        function simulateLoadServiceTrack(id, service, deckIndex) {
+            // Close the modal
+            const modal = document.querySelector('.modal:not(#alertModal)');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
+            
+            // Show loading indicator
+            showAlert("Loading Track", `Loading track from ${service} to Deck ${deckIndex + 1}...`);
+            
+            // Initialize audio context if needed
+            if (!audioContext) {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    masterGain = audioContext.createGain();
+                    masterGain.connect(audioContext.destination);
+                    
+                    decks[0].processor = new AudioProcessor(audioContext, masterGain);
+                    decks[1].processor = new AudioProcessor(audioContext, masterGain);
+                    decks[0].processor.deckIndex = 0;
+                    decks[1].processor.deckIndex = 1;
+                    
+                    initializeCanvases();
+                } catch (error) {
+                    console.error('Failed to initialize audio context:', error);
+                    showAlert('Error', 'Failed to initialize audio. Please check your browser settings.');
+                    return;
+                }
+            }
+            
+            // Get track info based on service and id
+            let track = { title: "Unknown Track", artist: "Unknown Artist", duration: "3:30" };
+            
+            // Generate a simulated track based on service and id
+            switch(service) {
+                case 'Google Drive':
+                    if (id === 101) track = { title: "Road Trip Mix", artist: "Your Collection", genre: "Mix", duration: "45:20" };
+                    else if (id === 102) track = { title: "Summer Party 2024", artist: "Your Collection", genre: "Various", duration: "62:15" };
+                    else if (id === 103) track = { title: "Workout Beats", artist: "Your Collection", genre: "Electronic", duration: "32:40" };
+                    else if (id === 104) track = { title: "Chill Evening", artist: "Your Collection", genre: "Ambient", duration: "51:10" };
+                    break;
+                case 'OneDrive':
+                    if (id === 201) track = { title: "80s Greatest Hits", artist: "Your Collection", genre: "Pop/Rock", duration: "58:30" };
+                    else if (id === 202) track = { title: "Jazz Classics", artist: "Your Collection", genre: "Jazz", duration: "47:15" };
+                    else if (id === 203) track = { title: "Classical Moments", artist: "Your Collection", genre: "Classical", duration: "63:40" };
+                    else if (id === 204) track = { title: "Hip Hop Selection", artist: "Your Collection", genre: "Hip Hop", duration: "42:50" };
+                    break;
+                case 'YouTube':
+                    if (id === 301) track = { title: "EDM Festival Mix 2024", artist: "DJ Markus", genre: "EDM", duration: "120:00" };
+                    else if (id === 302) track = { title: "Lo-Fi Beats to Study To", artist: "ChillBeats", genre: "Lo-Fi", duration: "180:00" };
+                    else if (id === 303) track = { title: "Best of Techno 2023", artist: "TechnoChannel", genre: "Techno", duration: "95:20" };
+                    else if (id === 304) track = { title: "Deep House Mix April 2024", artist: "DeepVibes", genre: "House", duration: "75:30" };
+                    else if (id === 305) track = { title: "Hip Hop Classics", artist: "UrbanBeats", genre: "Hip Hop", duration: "60:45" };
+                    else if (id === 306) track = { title: "Tomorrowland 2023 Highlights", artist: "Festival Channel", genre: "EDM", duration: "45:10" };
+                    break;
+                case 'SoundCloud':
+                    if (id === 401) track = { title: "Underground House Mix", artist: "DJ Shadow", genre: "House", duration: "58:24" };
+                    else if (id === 402) track = { title: "Liquid Drum & Bass Set", artist: "LiquidFlow", genre: "D&B", duration: "62:37" };
+                    else if (id === 403) track = { title: "Ambient Textures", artist: "Dreamscape", genre: "Ambient", duration: "47:15" };
+                    else if (id === 404) track = { title: "Future Beats", artist: "CloudBeats", genre: "Electronic", duration: "53:20" };
+                    else if (id === 405) track = { title: "Minimal Techno Session", artist: "MinimalMinds", genre: "Techno", duration: "67:40" };
+                    else if (id === 406) track = { title: "Chill Wave", artist: "WaveForms", genre: "Chill", duration: "42:18" };
+                    break;
+            }
+            
+            // Simulate loading by waiting
+            setTimeout(() => {
+                // Generate audio buffer for track
+                const sampleRate = audioContext.sampleRate;
+                const durationParts = track.duration.split(':');
+                const durationInSeconds = parseInt(durationParts[0]) * 60 + parseInt(durationParts[1]);
+                const frameCount = sampleRate * durationInSeconds;
+                
+                const audioBuffer = audioContext.createBuffer(2, frameCount, sampleRate);
+                
+                // Generate different test tones based on genre
+                for (let channel = 0; channel < 2; channel++) {
+                    const channelData = audioBuffer.getChannelData(channel);
+                    
+                    // Base frequency depends on genre
+                    let baseFreq = 110; // default
+                    let rhythm = 2.0; // beats per second (120 BPM)
+                    
+                    if (track.genre === "House") { baseFreq = 110; rhythm = 2.2; } // 132 BPM
+                    else if (track.genre === "Techno") { baseFreq = 100; rhythm = 2.3; } // 138 BPM
+                    else if (track.genre === "Hip Hop") { baseFreq = 80; rhythm = 1.5; } // 90 BPM
+                    else if (track.genre === "D&B") { baseFreq = 140; rhythm = 2.83; } // 170 BPM
+                    else if (track.genre === "Ambient") { baseFreq = 220; rhythm = 0.8; } // Slow
+                    else if (track.genre === "Jazz") { baseFreq = 220; rhythm = 1.8; } // 108 BPM, jazzy
+                    else if (track.genre === "Lo-Fi") { baseFreq = 110; rhythm = 1.42; } // 85 BPM
+                    
+                    for (let i = 0; i < frameCount; i++) {
+                        const t = i / sampleRate;
+                        
+                        // Add some rhythm
+                        const beat = Math.sin(2 * Math.PI * rhythm * (t % 1)) * 0.3;
+                        
+                        // Add some bass notes
+                        const bass = Math.sin(2 * Math.PI * baseFreq * t) * 0.4 * (Math.sin(2 * Math.PI * 0.5 * t) * 0.5 + 0.5);
+                        
+                        // Add some mid notes
+                        const mid = Math.sin(2 * Math.PI * baseFreq * 3 * t) * 0.2 * (Math.sin(2 * Math.PI * 0.25 * t + 0.2) * 0.5 + 0.5);
+                        
+                        // Add some high notes
+                        const high = Math.sin(2 * Math.PI * baseFreq * 10 * t) * 0.1 * (Math.sin(2 * Math.PI * 2 * t + 0.5) * 0.5 + 0.5);
+                        
+                        // Combined waveform with random variations to make it sound more like music
+                        const sample = (beat + bass + mid + high) / 2;
+                        
+                        // Apply volume envelope
+                        const envelope = Math.min(1, 10 * (1 - i / frameCount) + 0.1);
+                        
+                        channelData[i] = sample * envelope;
+                    }
+                }
+                
+                // Load buffer to processor
+                decks[deckIndex].processor.loadBuffer(audioBuffer, track.title, track.artist);
+                
+                // Close alert and show confirmation
+                closeModal('alertModal');
+                showAlert("Track Loaded", `"${track.title}" by ${track.artist} from ${service} successfully loaded to Deck ${deckIndex + 1}. Press play to start.`);
+                
+                // Add to recent tracks
+                const recentTrack = {
+                    id: id,
+                    title: track.title,
+                    artist: track.artist,
+                    service: service,
+                    genre: track.genre,
+                    duration: track.duration
+                };
+                
+                addToRecentTracks(recentTrack, deckIndex);
+            }, 2000);
         }
         
         function browseMusicDatabase() {
-            // Populate the library with some sample tracks from the database
+            // Populate the library with tracks from our music database
+            const musicDatabase = [
+                { id: 1, title: "Summer Vibes", artist: "DJ Sunshine", genre: "House", duration: "3:45", image: "summer.jpg" },
+                { id: 2, title: "Midnight Run", artist: "Beat Masters", genre: "Techno", duration: "4:12", image: "midnight.jpg" },
+                { id: 3, title: "Electric Dreams", artist: "Synth Wave", genre: "Electronic", duration: "5:30", image: "dreams.jpg" },
+                { id: 4, title: "Urban Rhythm", artist: "City Beats", genre: "Hip Hop", duration: "3:22", image: "urban.jpg" },
+                { id: 5, title: "Chill Out Zone", artist: "Ambient Sounds", genre: "Ambient", duration: "6:15", image: "chill.jpg" },
+                { id: 6, title: "Club Anthems", artist: "Party DJs", genre: "Dance", duration: "4:45", image: "club.jpg" },
+                { id: 7, title: "Retro Wave", artist: "80s Revival", genre: "Synthwave", duration: "4:30", image: "retro.jpg" },
+                { id: 8, title: "Bass Drop", artist: "Dubstep Kings", genre: "Dubstep", duration: "3:50", image: "bass.jpg" },
+                { id: 9, title: "Smooth Jazz", artist: "Saxophone Soul", genre: "Jazz", duration: "5:20", image: "jazz.jpg" },
+                { id: 10, title: "Tropical House", artist: "Beach Vibes", genre: "House", duration: "4:10", image: "tropical.jpg" },
+                { id: 11, title: "Rock Classics", artist: "Guitar Heroes", genre: "Rock", duration: "5:15", image: "rock.jpg" },
+                { id: 12, title: "Deep House Journey", artist: "Underground DJs", genre: "House", duration: "7:20", image: "deep.jpg" },
+                { id: 13, title: "Hip Hop Beats", artist: "Urban Producers", genre: "Hip Hop", duration: "3:45", image: "hiphop.jpg" },
+                { id: 14, title: "EDM Festival", artist: "Main Stage", genre: "EDM", duration: "5:30", image: "edm.jpg" },
+                { id: 15, title: "Classical Remix", artist: "Orchestra X", genre: "Classical", duration: "6:10", image: "classical.jpg" },
+                { id: 16, title: "Reggae Roots", artist: "Island Crew", genre: "Reggae", duration: "4:20", image: "reggae.jpg" },
+                { id: 17, title: "Drum & Bass", artist: "Beat Surgeons", genre: "D&B", duration: "5:45", image: "dnb.jpg" },
+                { id: 18, title: "Trance Nation", artist: "Euphoria", genre: "Trance", duration: "8:30", image: "trance.jpg" },
+                { id: 19, title: "Lo-Fi Beats", artist: "Chill Study", genre: "Lo-Fi", duration: "3:33", image: "lofi.jpg" },
+                { id: 20, title: "Funky Grooves", artist: "Disco Funk", genre: "Funk", duration: "4:50", image: "funk.jpg" }
+            ];
+            
+            const trackList = document.getElementById('trackList');
+            trackList.innerHTML = '<div class="flex justify-between items-center mb-3"><div class="text-sm text-primary font-bold">KIRK RADIO MUSIC DATABASE</div><div class="text-xs text-gray-400">' + musicDatabase.length + ' tracks available</div></div>';
+            
+            // Create genre filter buttons
+            const genres = [...new Set(musicDatabase.map(track => track.genre))];
+            let genreHTML = '<div class="flex flex-wrap gap-2 mb-4">';
+            genreHTML += '<button onclick="filterTracks(\'all\')" class="px-2 py-1 bg-[#D42F00] text-white text-xs rounded">All</button>';
+            
+            genres.forEach(genre => {
+                genreHTML += `<button onclick="filterTracks('${genre}')" class="px-2 py-1 bg-[#333] text-white text-xs rounded hover:bg-[#444]">${genre}</button>`;
+            });
+            
+            genreHTML += '</div>';
+            trackList.innerHTML += genreHTML;
+            
+            // Add tracks with cover art (using gradient backgrounds as placeholders)
+            trackList.innerHTML += '<div id="trackGrid" class="grid grid-cols-2 gap-3">';
+            
+            const trackGrid = musicDatabase.map(track => {
+                // Generate a color based on the genre for the background
+                const colors = {
+                    'House': '#3498db',
+                    'Techno': '#1abc9c', 
+                    'Electronic': '#9b59b6',
+                    'Hip Hop': '#e74c3c',
+                    'Ambient': '#2ecc71',
+                    'Dance': '#f39c12',
+                    'Synthwave': '#8e44ad',
+                    'Dubstep': '#c0392b',
+                    'Jazz': '#16a085',
+                    'Rock': '#d35400',
+                    'EDM': '#e67e22',
+                    'Classical': '#2980b9',
+                    'Reggae': '#27ae60',
+                    'D&B': '#e84393',
+                    'Trance': '#74b9ff',
+                    'Lo-Fi': '#6c5ce7',
+                    'Funk': '#fd79a8'
+                };
+                
+                const bgColor = colors[track.genre] || '#D42F00';
+                
+                return `
+                <div class="track-item flex flex-col bg-[#1a1a1a] rounded-lg overflow-hidden hover:bg-[#252525] cursor-pointer transition-all duration-200" 
+                     data-genre="${track.genre}" onclick="loadSampleTrack(${track.id})">
+                    <div class="h-24 w-full bg-gradient-to-br from-${bgColor.replace('#', '')} to-[#111] flex items-center justify-center">
+                        <i class="fas fa-music text-white text-2xl opacity-50"></i>
+                    </div>
+                    <div class="p-2">
+                        <div class="font-medium text-white text-sm truncate">${track.title}</div>
+                        <div class="text-xs text-gray-400 truncate">${track.artist}</div>
+                        <div class="flex justify-between items-center mt-1">
+                            <span class="text-xs px-2 py-0.5 bg-[#333] rounded-full">${track.genre}</span>
+                            <span class="text-xs text-gray-500">${track.duration}</span>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+            
+            document.getElementById('trackGrid').innerHTML = trackGrid;
+            
+            // Show confirmation
+            showAlert("Music Database Connected", "Successfully connected to the Kirk Radio Music Database. Browse and play tracks from our collection.");
+        }
+        
+        // Filter tracks by genre
+        function filterTracks(genre) {
+            const tracks = document.querySelectorAll('.track-item');
+            
+            tracks.forEach(track => {
+                if (genre === 'all' || track.dataset.genre === genre) {
+                    track.style.display = 'flex';
+                } else {
+                    track.style.display = 'none';
+                }
+            });
+        }
+        
+        function loadSampleTrack(id) {
+            // Load sample track to the selected deck
+            if (!audioContext) {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    masterGain = audioContext.createGain();
+                    masterGain.connect(audioContext.destination);
+                    
+                    decks[0].processor = new AudioProcessor(audioContext, masterGain);
+                    decks[1].processor = new AudioProcessor(audioContext, masterGain);
+                    decks[0].processor.deckIndex = 0;
+                    decks[1].processor.deckIndex = 1;
+                    
+                    initializeCanvases();
+                } catch (error) {
+                    console.error('Failed to initialize audio context:', error);
+                    showAlert('Error', 'Failed to initialize audio. Please check your browser settings.');
+                    return;
+                }
+            }
+            
+            // Ask which deck to load to
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'flex';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3 class="text-xl font-medium mb-4">Choose Deck</h3>
+                    <p class="mb-4">Select which deck to load this track to:</p>
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="loadTrackToDeck(${id}, 0)" class="dj-button">Deck 1</button>
+                        <button onclick="loadTrackToDeck(${id}, 1)" class="dj-button">Deck 2</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Add click handler to close modal when clicking outside
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+        
+        function loadTrackToDeck(id, deckIndex) {
+            // Close any open modal
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (modal.style.display === 'flex' && modal !== document.getElementById('alertModal')) {
+                    document.body.removeChild(modal);
+                }
+            });
+            
+            // Get the track info from our database
             const musicDatabase = [
                 { id: 1, title: "Summer Vibes", artist: "DJ Sunshine", genre: "House", duration: "3:45" },
                 { id: 2, title: "Midnight Run", artist: "Beat Masters", genre: "Techno", duration: "4:12" },
@@ -2027,35 +2646,155 @@
                 { id: 7, title: "Retro Wave", artist: "80s Revival", genre: "Synthwave", duration: "4:30" },
                 { id: 8, title: "Bass Drop", artist: "Dubstep Kings", genre: "Dubstep", duration: "3:50" },
                 { id: 9, title: "Smooth Jazz", artist: "Saxophone Soul", genre: "Jazz", duration: "5:20" },
-                { id: 10, title: "Tropical House", artist: "Beach Vibes", genre: "House", duration: "4:10" }
+                { id: 10, title: "Tropical House", artist: "Beach Vibes", genre: "House", duration: "4:10" },
+                { id: 11, title: "Rock Classics", artist: "Guitar Heroes", genre: "Rock", duration: "5:15" },
+                { id: 12, title: "Deep House Journey", artist: "Underground DJs", genre: "House", duration: "7:20" },
+                { id: 13, title: "Hip Hop Beats", artist: "Urban Producers", genre: "Hip Hop", duration: "3:45" },
+                { id: 14, title: "EDM Festival", artist: "Main Stage", genre: "EDM", duration: "5:30" },
+                { id: 15, title: "Classical Remix", artist: "Orchestra X", genre: "Classical", duration: "6:10" },
+                { id: 16, title: "Reggae Roots", artist: "Island Crew", genre: "Reggae", duration: "4:20" },
+                { id: 17, title: "Drum & Bass", artist: "Beat Surgeons", genre: "D&B", duration: "5:45" },
+                { id: 18, title: "Trance Nation", artist: "Euphoria", genre: "Trance", duration: "8:30" },
+                { id: 19, title: "Lo-Fi Beats", artist: "Chill Study", genre: "Lo-Fi", duration: "3:33" },
+                { id: 20, title: "Funky Grooves", artist: "Disco Funk", genre: "Funk", duration: "4:50" }
             ];
             
-            const trackList = document.getElementById('trackList');
-            trackList.innerHTML = '<div class="text-sm text-gray-400 mb-3">Showing tracks from Music Database</div>';
+            const track = musicDatabase.find(t => t.id === id);
             
-            trackList.innerHTML += musicDatabase.map(track => `
-                <div class="flex items-center p-2 hover:bg-gray-800 rounded cursor-pointer mb-2"
-                     onclick="loadSampleTrack(${track.id})">
-                    <div class="w-10 h-10 bg-gray-700 rounded flex items-center justify-center mr-3">
-                        <i class="fas fa-music text-gray-400"></i>
-                    </div>
-                    <div class="flex-1">
-                        <div class="font-medium text-white">${track.title}</div>
-                        <div class="text-xs text-gray-400 flex justify-between">
-                            <span>${track.artist}</span>
-                            <span>${track.duration}</span>
-                        </div>
-                        <div class="text-xs text-gray-500">${track.genre}</div>
-                    </div>
-                </div>
-            `).join('');
+            if (!track) {
+                showAlert("Error", "Track not found in database.");
+                return;
+            }
+            
+            // Show loading indicator
+            showAlert("Loading Track", `Loading "${track.title}" by ${track.artist} to Deck ${deckIndex + 1}...`);
+            
+            // Simulate loading audio from a server
+            setTimeout(() => {
+                // Generate a simulated audio buffer based on the track genre
+                const sampleRate = audioContext.sampleRate;
+                const durationInSeconds = parseInt(track.duration.split(':')[0]) * 60 + parseInt(track.duration.split(':')[1]);
+                const frameCount = sampleRate * durationInSeconds;
+                
+                const audioBuffer = audioContext.createBuffer(2, frameCount, sampleRate);
+                
+                // Generate different test tones based on genre
+                for (let channel = 0; channel < 2; channel++) {
+                    const channelData = audioBuffer.getChannelData(channel);
+                    
+                    // Base frequency depends on genre
+                    let baseFreq = 440; // default A note
+                    let rhythm = 1; // beats per second
+                    
+                    switch (track.genre) {
+                        case 'House':
+                            baseFreq = 110;
+                            rhythm = 2.2; // 132 BPM
+                            break;
+                        case 'Techno':
+                            baseFreq = 100;
+                            rhythm = 2.3; // 138 BPM
+                            break;
+                        case 'Hip Hop':
+                            baseFreq = 80;
+                            rhythm = 1.5; // 90 BPM
+                            break;
+                        case 'Dubstep':
+                            baseFreq = 75;
+                            rhythm = 1.16; // 70 BPM with half-time feel
+                            break;
+                        case 'Ambient':
+                            baseFreq = 220;
+                            rhythm = 0.8; // Slow
+                            break;
+                        default:
+                            baseFreq = 110;
+                            rhythm = 2.0; // 120 BPM
+                    }
+                    
+                    for (let i = 0; i < frameCount; i++) {
+                        const t = i / sampleRate;
+                        
+                        // Add some rhythm
+                        const beat = Math.sin(2 * Math.PI * rhythm * (t % 1)) * 0.3;
+                        
+                        // Add some bass notes
+                        const bass = Math.sin(2 * Math.PI * baseFreq * t) * 0.4 * (Math.sin(2 * Math.PI * 0.5 * t) * 0.5 + 0.5);
+                        
+                        // Add some mid notes
+                        const mid = Math.sin(2 * Math.PI * baseFreq * 3 * t) * 0.2 * (Math.sin(2 * Math.PI * 0.25 * t + 0.2) * 0.5 + 0.5);
+                        
+                        // Add some high notes
+                        const high = Math.sin(2 * Math.PI * baseFreq * 10 * t) * 0.1 * (Math.sin(2 * Math.PI * 2 * t + 0.5) * 0.5 + 0.5);
+                        
+                        // Combined waveform
+                        const sample = (beat + bass + mid + high) / 2;
+                        
+                        // Apply overall volume envelope
+                        const envelope = Math.min(1, 10 * (1 - i / frameCount) + 0.1);
+                        
+                        channelData[i] = sample * envelope;
+                    }
+                }
+                
+                // Load buffer to processor
+                decks[deckIndex].processor.loadBuffer(audioBuffer, track.title, track.artist);
+                
+                // Close alert and show confirmation
+                closeModal('alertModal');
+                showAlert("Track Loaded", `"${track.title}" by ${track.artist} successfully loaded to Deck ${deckIndex + 1}. Press play to start.`);
+                
+                // Add to recent tracks if not already there
+                addToRecentTracks(track, deckIndex);
+            }, 1000);
         }
         
-        function loadSampleTrack(id) {
-            // This would normally load the actual track
-            showAlert("Track Loading", `Loading track ID ${id} from music database. This would connect to our online music service in a real implementation.`);
+        // Add track to recent tracks list
+        function addToRecentTracks(track, deckIndex) {
+            // Check if we have a recents section
+            let recentsContainer = document.getElementById('recentTracks');
+            
+            // If not, create it
+            if (!recentsContainer) {
+                const trackList = document.getElementById('trackList');
+                const recentsHTML = `
+                <div id="recentTracksSection" class="mt-6 border-t border-[#333] pt-4">
+                    <div class="text-sm text-primary font-bold mb-2">RECENT TRACKS</div>
+                    <div id="recentTracks" class="space-y-2"></div>
+                </div>`;
+                
+                // Add it after any existing content
+                trackList.innerHTML += recentsHTML;
+                recentsContainer = document.getElementById('recentTracks');
+            }
+            
+            // Create the track item
+            const trackItem = document.createElement('div');
+            trackItem.className = 'flex items-center p-2 bg-[#1a1a1a] rounded';
+            trackItem.innerHTML = `
+                <div class="w-8 h-8 bg-[#333] rounded flex items-center justify-center mr-2">
+                    <span class="text-xs font-bold text-white">D${deckIndex + 1}</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="font-medium text-white text-sm truncate">${track.title}</div>
+                    <div class="text-xs text-gray-400 truncate">${track.artist}</div>
+                </div>
+                <div class="ml-2">
+                    <button onclick="loadTrackToDeck(${track.id}, ${deckIndex})" class="text-xs px-2 py-1 bg-[#333] hover:bg-[#444] rounded">
+                        Reload
+                    </button>
+                </div>
+            `;
+            
+            // Add to recents container (at the top)
+            recentsContainer.insertBefore(trackItem, recentsContainer.firstChild);
+            
+            // Limit to 5 recent tracks
+            if (recentsContainer.children.length > 5) {
+                recentsContainer.removeChild(recentsContainer.lastChild);
+            }
         }
-
+        
         // Utility functions
         function showAlert(title, message) {
             const modal = document.getElementById('alertModal');
@@ -2063,11 +2802,11 @@
             document.getElementById('modalMessage').textContent = message;
             modal.style.display = 'flex';
         }
-
+        
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
-
+        
         // Placeholder search functions
         function searchTracks(query) {
             if (!query || query.length < 3) return;
@@ -2082,7 +2821,7 @@
                 library.innerHTML = '<div class="text-center text-gray-500 mt-10"><p>No tracks found matching "' + query + '"</p></div>';
             }, 1000);
         }
-
+        
         // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
             // Add global mouse event listeners for scratch effect
@@ -2093,7 +2832,7 @@
                     }
                 });
             });
-
+            
             document.addEventListener('mouseup', () => {
                 scratching.forEach((isScratch, index) => {
                     if (isScratch) {
@@ -2101,7 +2840,7 @@
                     }
                 });
             });
-
+            
             // Close dropdowns when clicking outside
             document.addEventListener('click', (e) => {
                 if (!e.target.closest('#broadcastBtn') && !e.target.closest('#broadcastSettings')) {
@@ -2120,17 +2859,17 @@
                     }
                 }
             });
-
+            
             // Close modal when clicking outside the content
             document.getElementById('alertModal').addEventListener('click', (e) => {
                 if (e.target === document.getElementById('alertModal')) {
                     closeModal('alertModal');
                 }
             });
-
+            
             // Initialize broadcast status
             updateBroadcastStatus();
-
+            
             // Setup window resize handler for waveform canvases
             window.addEventListener('resize', () => {
                 // Redraw waveforms if decks have tracks loaded
