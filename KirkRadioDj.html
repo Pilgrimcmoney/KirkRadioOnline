@@ -3,220 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kirk Radio DJ Pro</title>
+    <title>Kirk Radio DJ - Professional DJ Software</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Enhanced Turntable Styles */
-        .turntable-container {
-            width: 180px;
-            height: 180px;
+        :root {
+            --primary: #D42F00;
+            --background: #111;
+            --secondary: #222;
+            --border: #333;
+            --highlight-active: #D42F00;
+            --highlight-inactive: #555;
+            --text-primary: #fff;
+            --text-secondary: #aaa;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             position: relative;
-            margin: 0 auto;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .vinyl {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background: radial-gradient(circle at center, 
-                #333 0%, 
-                #222 50%, 
-                #1a1a1a 100%);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            cursor: grab;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-        }
-
-        .vinyl-label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            background: #D42F00;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6rem;
-            color: white;
-            text-align: center;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .vinyl.playing {
-            animation: rotate 2s linear infinite;
-        }
-
-        /* Improved File Input */
-        .custom-file-input {
-            border: 2px dashed #D42F00;
-            padding: 1rem;
+        .deck {
+            background-color: var(--secondary);
+            border: 1px solid var(--border);
             border-radius: 8px;
-            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
         }
 
-        .custom-file-input:hover {
-            background-color: rgba(212, 47, 0, 0.1);
-        }
-    </style>
-</head>
-<body class="bg-gray-900 text-white">
-    <div class="container mx-auto p-6">
-        <!-- Deck Section -->
-        <div class="grid grid-cols-2 gap-6 mb-8">
-            <!-- Deck 1 -->
-            <div class="deck bg-gray-800 p-6 rounded-xl">
-                <div class="turntable-container mb-6">
-                    <div class="vinyl" id="vinyl1">
-                        <div class="vinyl-label">DECK 1</div>
-                    </div>
-                </div>
-                
-                <div class="text-center mb-4">
-                    <input type="file" accept="audio/*" class="custom-file-input" id="fileInput1" 
-                           onchange="loadTrack(0, this.files[0])">
-                </div>
-                
-                <div class="track-info bg-gray-700 p-4 rounded-lg mb-4">
-                    <div id="track1-name" class="font-bold truncate">No track loaded</div>
-                    <div id="track1-duration" class="text-sm text-gray-400">--:--</div>
-                </div>
-
-                <div class="flex justify-center space-x-4">
-                    <button onclick="togglePlay(0)" class="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700">
-                        <i id="playIcon1" class="fas fa-play"></i>
-                    </button>
-                    <input type="range" min="0" max="100" value="100" class="w-32" 
-                           oninput="setVolume(0, this.value)">
-                </div>
-            </div>
-
-            <!-- Deck 2 (Same structure as Deck 1) -->
-        </div>
-
-        <!-- Mixer Section -->
-        <div class="bg-gray-800 p-6 rounded-xl">
-            <div class="flex items-center justify-center space-x-8">
-                <div class="text-center">
-                    <label class="block mb-2">Deck 1 Volume</label>
-                    <input type="range" min="0" max="100" value="100" 
-                           class="vertical-slider h-32" oninput="setVolume(0, this.value)">
-                </div>
-                
-                <div class="flex-1 max-w-md">
-                    <label class="block mb-2 text-center">Crossfader</label>
-                    <input type="range" min="0" max="100" value="50" 
-                           class="w-full" oninput="updateCrossfader(this.value)">
-                </div>
-
-                <div class="text-center">
-                    <label class="block mb-2">Deck 2 Volume</label>
-                    <input type="range" min="0" max="100" value="100" 
-                           class="vertical-slider h-32" oninput="setVolume(1, this.value)">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        let audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const decks = [
-            { source: null, gainNode: null, buffer: null, playing: false },
-            { source: null, gainNode: null, buffer: null, playing: false }
-        ];
-
-        async function loadTrack(deckIndex, file) {
-            try {
-                const arrayBuffer = await file.arrayBuffer();
-                const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-                
-                // Create audio nodes
-                const source = audioContext.createBufferSource();
-                const gainNode = audioContext.createGain();
-                
-                source.buffer = audioBuffer;
-                source.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                // Store in deck
-                decks[deckIndex] = {
-                    source,
-                    gainNode,
-                    buffer: audioBuffer,
-                    playing: false
-                };
-
-                // Update UI
-                document.getElementById(`track${deckIndex+1}-name`).textContent = file.name;
-                document.getElementById(`track${deckIndex+1}-duration`).textContent = 
-                    formatTime(audioBuffer.duration);
-                
-            } catch (error) {
-                console.error('Error loading track:', error);
-                alert('Error loading audio file. Please try again.');
-            }
+        .deck:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
         }
 
-        function togglePlay(deckIndex) {
-            const deck = decks[deckIndex];
-            const vinyl = document.getElementById(`vinyl${deckIndex+1}`);
-            const playIcon = document.getElementById(`playIcon${deckIndex+1}`);
-
-            if (!deck.buffer) {
-                alert('Please load a track first!');
-                return;
-            }
-
-            if (deck.playing) {
-                // Stop playback
-                deck.source.stop();
-                vinyl.classList.remove('playing');
-                playIcon.classList.replace('fa-pause', 'fa-play');
-            } else {
-                // Start playback
-                const newSource = audioContext.createBufferSource();
-                newSource.buffer = deck.buffer;
-                newSource.connect(deck.gainNode);
-                newSource.start(0);
-                
-                deck.source = newSource;
-                vinyl.classList.add('playing');
-                playIcon.classList.replace('fa-play', 'fa-pause');
-            }
-            
-            deck.playing = !deck.playing;
+        .turntable-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            perspective: 1000px;
         }
 
-        function setVolume(deckIndex, value) {
-            if (decks[deckIndex].gainNode) {
-                decks[deckIndex].gainNode.gain.value = value / 100;
-            }
-        }
-
-        function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const remainingSeconds = Math.floor(seconds % 60);
-            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-        }
-
-        function updateCrossfader(value) {
-            const normalizedValue = value / 100;
-            if (decks[0].gainNode && decks[1].gainNode) {
-                decks[0].gainNode.gain.value = 1 - normalizedValue;
-                decks[1].gainNode.gain.value = normalizedValue;
-            }
-        }
-    </script>
-</body>
-</html>
+        .turntable-platter, .vinyl {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius
