@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Callback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            color: #2a5885;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: #2a5885;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Authentication Callback</h1>
+        <div id="statusMessage" class="status">
+            <div class="loading"></div> Processing authentication response...
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusElement = document.getElementById('statusMessage');
+            
+            // Parse URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams(window.location.hash.substring(1));
+            
+            // Determine which service this callback is for
+            const service = urlParams.get('service') || determineServiceFromUrl();
+            
+            // Get relevant parameters
+            let authData = {};
+            let isSuccess = false;
+            
+            // Process according to service
+            try {
+                switch(service) {
+                    case 'spotify':
+                        // Spotify provides token in the hash fragment
+                        authData = {
+                            access_token: hashParams.get('access_token'),
+                            token_type: hashParams.get('token_type'),
+                            expires_in: hashParams.get('expires_in'),
+                            state: hashParams.get('state'),
+                            service: 'spotify'
+                        };
+                        isSuccess = !!authData.access_token;
+                        break;
+                        
+                    case 'soundcloud':
+                        // SoundCloud provides code in query params
+                        authData = {
+                            code: urlParams.get('code'),
+                            state: urlParams.get('state'),
+                            service: 'soundcloud'
+                        };
+                        isSuccess = !!authData.code;
+                        break;
+                        
+                    case 'youtube':
+                    case 'google-drive':
+                        // Google services provide either code in query params or token in hash
+                        if(urlParams.get('code')) {
+                            authData = {
+                                code: urlParams.get('code'),
+                                state: urlParams.get('state'),
+                                service: service
+                            };
+                        } else {
+                            authData = {
+                                access_token: hashParams.get('access_token'),
+                                token_type: hashParams.get('token_type'),
+                                expires_in: hashParams.get('expires_in'),
+                                state: hashParams.get('state'),
+                                service: service
+                            };
+                        }
+                        isSuccess = !!(authData.code || authData.access_token);
+                        break;
+                        
+                    default:
+                        throw new Error('Unknown service');
+                }
+                
+                // Check for errors
+                if(urlParams.get('error')) {
+                    throw new Error(urlParams.get('error_description') || 'Authentication failed');
+                }
+                
+                if(!isSuccess) {
+                    throw new Error('Invalid authentication response');
+                }
+                
+                // Update UI
+                statusElement.className = 'status success';
+                statusElement.innerHTML = `Authentication successful! Redirecting back to application...`;
+                
+                // Send data to opener window
+                if(window.opener) {
+                    window.opener.postMessage({
+                        type: 'oauth-callback',
+                        data: authData
+                    }, '*');
+                    
+                    // Close this window after a short delay
+                    setTimeout(() => window.close(), 1500);
+                } else {
+                    // If no opener, redirect to main page with auth data
+                    statusElement.innerHTML += '<br>Please wait...';
+                    window.location.href = '/turntables.html?auth=' + encodeURIComponent(JSON.stringify(authData));
+                }
+            } catch(error) {
+                console.error('Authentication error:', error);
+                statusElement.className = 'status error';
+                statusElement.textContent = `Authentication Error: ${error.message}`;
+            }
+        });
+        
+        // Helper function to determine service from URL
+        function determineServiceFromUrl() {
+            const url = window.location.href.toLowerCase();
+            if(url.includes('spotify')) return 'spotify';
+            if(url.includes('soundcloud')) return 'soundcloud';
+            if(url.includes('youtube')) return 'youtube';
+            if(url.includes('drive') || url.includes('google')) return 'google-drive';
+            return 'unknown';
+        }
+    </script>
+</body>
+</html>
+
