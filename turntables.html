@@ -1,3 +1,69 @@
+<!-- Add before closing </body> tag -->
+<!-- Core scripts -->
+<script src="js/config.js"></script>
+
+<!-- Audio processing -->
+<script src="js/audio.js"></script>
+<script src="js/effects.js"></script>
+
+<!-- Library and controls -->
+<script src="js/library.js"></script>
+<script src="js/turntable.js"></script>
+
+<!-- Broadcasting -->
+<script src="js/broadcast.js"></script>
+
+<!-- UI and interface -->
+<script src="js/ui.js"></script>
+
+<!-- Initialize app -->
+<script>
+    // Global state
+    let currentDeck = 0;
+    let broadcasting = false;
+
+    // Initialize components on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize audio system
+        if (initializeAudio()) {
+            // Initialize UI components
+            initializeTurntables();
+            
+            // Load any saved settings
+            loadSettings();
+            
+            // Setup broadcast capabilities
+            initializeBroadcast();
+
+            showToast('Virtual Turntables initialized successfully', 'success');
+        } else {
+            showToast('Error initializing audio system', 'error');
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        // Update UI layouts if needed
+        if (decks[0]) decks[0].updateWaveform();
+        if (decks[1]) decks[1].updateWaveform();
+    });
+
+    // Handle visibility change
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            // Pause animations when tab is not visible
+            turntables.forEach(tt => tt.stopNormalRotation());
+        } else {
+            // Resume animations when tab becomes visible
+            turntables.forEach((tt, i) => {
+                if (decks[i] && decks[i].isPlaying) {
+                    tt.startNormalRotation();
+                }
+            });
+        }
+    });
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +72,7 @@
     <title>Kirk Radio DJ - Professional DJ Software</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="https://raw.githubusercontent.com/Pilgrimcmoney/KirkRadioOnline/main/favicon.svg" type="image/svg+xml">
     <style>
         :root {
             --primary: #D42F00; 
@@ -40,35 +107,24 @@
             min-height: 100vh; 
             overflow-x: hidden; 
             background-image: 
-                url('https://kirkradio.net/wp-content/uploads/2023/12/logo-simple.png'),
-                radial-gradient(circle at center, rgba(212, 47, 0, 0.05) 0%, rgba(17, 17, 17, 0) 70%);
+                url('https://raw.githubusercontent.com/Pilgrimcmoney/KirkRadioOnline/main/favicon.svg'),
+                radial-gradient(circle at center, rgba(212, 47, 0, 0.08) 0%, rgba(17, 17, 17, 0) 80%);
             background-repeat: no-repeat;
             background-position: center center, center center;
-            background-size: 40% auto, 100% 100%;
+            background-size: 50% auto, 100% 100%;
             background-attachment: fixed;
             background-blend-mode: soft-light, normal;
+            position: relative;
         }
 
         /* Responsive background adjustments */
         @media (max-width: 768px) {
             body {
-                background-size: 70% auto;
+                background-size: 80% auto;
             }
         }
-
-        /* Overlay to make background subtle */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(10, 10, 10, 0.97), rgba(17, 17, 17, 0.92), rgba(10, 10, 10, 0.97));
-            z-index: -1;
-            pointer-events: none;
-        }
-
+        
+        /* Enhanced SVG background effect */
         body::before {
             content: '';
             position: fixed;
@@ -83,6 +139,20 @@
             z-index: -2;
             pointer-events: none;
             opacity: 0.4;
+        }
+        /* Overlay to make background subtle */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(10, 10, 10, 0.96), rgba(17, 17, 17, 0.90), rgba(10, 10, 10, 0.96));
+            z-index: -1;
+            pointer-events: none;
+            backdrop-filter: blur(1px);
+            -webkit-backdrop-filter: blur(1px);
         }
         
         /* Enhanced Panel Styling with Glassmorphism */
@@ -121,12 +191,13 @@
             color: var(--text-primary);
             border: 1px solid var(--border);
             border-radius: 6px;
-            padding: 0.5rem 1rem;
+            padding: 0.2rem 0.4rem;
             font-weight: 500;
             transition: all 0.2s ease;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
+            font-size: 0.7rem;
         }
         
         .dj-button::after {
@@ -199,10 +270,10 @@
         
         input[type="range"].vertical-slider {
             -webkit-appearance: none;
-            height: 150px;
-            width: 8px;
+            height: 60px;
+            width: 5px;
             background: linear-gradient(to bottom, rgba(26, 26, 26, 0.8), rgba(17, 17, 17, 0.8));
-            border-radius: 8px;
+            border-radius: 6px;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
             outline: none;
             writing-mode: bt-lr;
@@ -213,8 +284,8 @@
         
         input[type="range"].vertical-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             background: var(--highlight-gradient);
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
@@ -309,22 +380,58 @@
         }
         
         /* Your existing CSS styles go here */
+        .waveform {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .waveform-data {
+            width: 100%;
+            height: 60px;
+            background: transparent;
+        }
+
+        .waveform::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            background: linear-gradient(90deg, 
+                rgba(26, 26, 26, 0.2) 0%,
+                rgba(26, 26, 26, 0) 2%,
+                rgba(26, 26, 26, 0) 98%,
+                rgba(26, 26, 26, 0.2) 100%
+            );
+        }
 /* Enhanced Turntable Styles */
 .turntable-container {
-    perspective: 1200px; /* Enhanced perspective for better 3D effect */
-    width: 200px; /* Smaller width for side-by-side display */
-    height: 200px; /* Maintain aspect ratio */
-    margin: 0 auto; /* Center in container */
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
     position: relative;
-    z-index: 10;
-    transform-style: preserve-3d;
+}
+
+.turntable-3d-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
 .turntable-platter {
     transform: rotateX(20deg) rotateY(0deg);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    width: 180px; /* Smaller platter size */
-    height: 180px; /* Maintain aspect ratio */
+    width: 90px; /* Further reduced platter size */
+    height: 90px; /* Maintain aspect ratio */
     border-radius: 50%;
     position: relative;
     background: linear-gradient(145deg, #1e1e1e, #0a0a0a);
@@ -358,47 +465,49 @@
     z-index: 5;
 }
 
-/* Kirk Radio Vinyl Label Styling */
-.vinyl-label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%;
-    height: 70%;
-    border-radius: 50%;
-    background-color: white;
-    color: #111;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 0.9rem;
-    text-align: center;
-    z-index: 2;
-    background-image: url('https://kirkradio.net/wp-content/uploads/2023/12/logo-simple.png');
-    background-size: 70% 70%;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: 4px solid var(--kirk-radio-accent);
-    box-shadow: 0 0 10px var(--accent-glow);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    animation: pulseLight 3s infinite alternate;
-}
+        /* Kirk Radio Vinyl Label Styling */
+        .vinyl-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 70%;
+            border-radius: 50%;
+            background-color: white;
+            color: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+            z-index: 2;
+            background-image: url('https://raw.githubusercontent.com/Pilgrimcmoney/KirkRadioOnline/main/favicon.svg');
+            background-size: 80% 80%;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 4px solid var(--kirk-radio-accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: pulseLight 3s infinite alternate;
+            filter: drop-shadow(0 0 2px rgba(212, 47, 0, 0.8));
+        }
 
-.vinyl-label::before {
-    content: 'KIRK RADIO';
-    position: absolute;
-    bottom: 10%;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 0.7rem;
-    font-weight: bold;
-    color: var(--kirk-radio-accent);
-    letter-spacing: 1px;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-}
+        .vinyl-label::before {
+            content: 'KIRK RADIO';
+            position: absolute;
+            bottom: 10%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: var(--kirk-radio-accent);
+            letter-spacing: 1px;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+            z-index: 3;
+        }
 
 .vinyl-label::after {
     content: '';
@@ -473,8 +582,14 @@
 }
 
 @keyframes pulseLight {
-    0% { box-shadow: 0 0 10px var(--accent-glow); }
-    100% { box-shadow: 0 0 20px var(--accent-glow), 0 0 30px var(--accent-glow); }
+    0% { 
+        box-shadow: 0 0 10px var(--accent-glow);
+        filter: drop-shadow(0 0 2px rgba(212, 47, 0, 0.8));
+    }
+    100% { 
+        box-shadow: 0 0 20px var(--accent-glow), 0 0 30px var(--accent-glow);
+        filter: drop-shadow(0 0 4px rgba(212, 47, 0, 0.9));
+    }
 }
 
 .vinyl.scratching {
@@ -495,12 +610,33 @@
     overflow: hidden;
     z-index: -1;
 }
-        /* ... (omitted for brevity) ... */
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        z-index: -1;
+    }
 
-        /* Broadcast Controls Styles */
-        .mic-indicator {
-            background-color: #555;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    /* SVG enhancements */
+    svg path {
+        transition: all 0.3s ease;
+    }
+    
+    .svg-container {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%;
+        vertical-align: middle;
+        overflow: hidden;
+    }
+    
+    .svg-content {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
             transition: all 0.3s ease;
             width: 12px;
             height: 12px;
@@ -528,9 +664,9 @@
         }
         
         .vu-meter {
-            height: 14px;
+            height: 8px;
             background: linear-gradient(to right, rgba(40, 40, 40, 0.6), rgba(30, 30, 30, 0.6));
-            border-radius: 7px;
+            border-radius: 4px;
             overflow: hidden;
             position: relative;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
@@ -605,8 +741,8 @@
         .on-air-text {
             color: #555;
             font-weight: bold;
-            font-size: 1.2rem;
-            padding: 0.25rem 0.75rem;
+            font-size: 0.85rem;
+            padding: 0.15rem 0.5rem;
             border-radius: 4px;
             border: 2px solid #555;
             letter-spacing: 1px;
@@ -669,14 +805,39 @@
         .dj-button.active:hover {
             box-shadow: 0 0 20px rgba(212, 47, 0, 0.6);
         }
-        
-        /* Button press animation */
-        .dj-button:active {
-            transform: scale(0.95) translateY(1px);
-            transition: all 0.1s ease;
+        /* Style for active buttons */
+        .dj-button.active {
+            background: var(--highlight-gradient);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(212, 47, 0, 0.4);
+            transform: translateY(-1px);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        /* Kirk Radio Panel styling */
+        /* Connection status styling */
+        .connection-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #666;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .connection-status.connected {
+            background-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Hover effect for connection status */
+        .dj-button:hover .connection-status {
+            transform: scale(1.2);
+        }
         .kirk-radio-panel {
             position: relative;
             overflow: hidden;
@@ -695,13 +856,14 @@
             top: 10px;
             right: 10px;
             width: 50px;
+            width: 50px;
             height: 50px;
-            background-image: url('https://kirkradio.net/wp-content/uploads/2023/12/logo-simple.png');
+            background-image: url('https://raw.githubusercontent.com/Pilgrimcmoney/KirkRadioOnline/main/favicon.svg');
             background-size: contain;
             background-repeat: no-repeat;
-            opacity: 0.2;
+            opacity: 0.3;
             z-index: 1;
-        }
+            filter: drop-shadow(0 0 2px rgba(212, 47, 0, 0.3));
         
         @media (max-width: 768px) {
             .kirk-radio-panel::before {
@@ -716,7 +878,7 @@
 <body>
     <!-- Preload images -->
     <div class="preload-images">
-        <img src="https://kirkradio.net/wp-content/uploads/2023/12/logo-simple.png" alt="Kirk Radio Logo">
+        <img src="https://raw.githubusercontent.com/Pilgrimcmoney/KirkRadioOnline/main/favicon.svg" alt="Kirk Radio Logo">
     </div>
     <div class="menu">
     <button onclick="saveMix()" class="menu-button">Save Mix</button>
@@ -726,68 +888,132 @@
 </div>
     <div class="flex h-screen">
         <!-- Left Sidebar - Track Library -->
-        <div class="w-64 bg-[#1a1a1a] border-r border-[#333] flex flex-col">
-            <div class="p-4 border-b border-[#333]">
-                <h2 class="text-lg font-medium mb-3">Track Library</h2>
+        <div class="bg-[#1a1a1a] border-r border-[#333] flex flex-col" style="min-width: 260px; max-width: 260px; overflow-x: hidden;">
+            <div class="p-1 border-b border-[#333]">
+                <h2 class="text-sm font-medium mb-0.5 flex items-center">
+                    <i class="fas fa-music mr-1 text-[#D42F00]"></i> Track Library
+                </h2>
                 <div class="relative">
                     <input type="text" 
                            placeholder="Search tracks..." 
-                           class="w-full bg-[#222] border border-[#333] rounded px-4 py-2 pl-10 text-white"
+                           class="w-full bg-[#222] border border-[#333] rounded px-2 py-0.5 pl-6 text-white text-xs"
                            onkeyup="searchTracks(this.value)">
-                    <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
+                    <i class="fas fa-search absolute left-2 top-1 text-gray-500 text-xs"></i>
                 </div>
             </div>
-            <div class="flex-1 max-h-fit p-4" id="trackList">
-                <div class="text-center text-gray-500 mt-10">
-                    <p>No tracks loaded</p>
-                    <p class="mt-2">Use "Load Track" button or click "Music Database" to see available tracks</p>
+            <div class="flex-1 overflow-y-auto p-0.5" id="trackList" style="max-height: calc(100vh - 480px);">
+                <div class="text-center text-gray-500 mt-4">
+                    <p class="text-xs">No tracks loaded</p>
+                    <p class="mt-1 text-xs">Use "Load Track" button or click "Music Database"</p>
                 </div>
             </div>
-            <!-- Library Controls -->
-            <div class="p-4 border-t border-[#333]">
-                <div class="section-label">Library Controls</div>
-                <button onclick="openLibraryFolder()" class="dj-button w-full mb-2 tooltip">
-                    <i class="fas fa-folder-open mr-2"></i> Open Library Folder
+            <div class="bg-[#222] p-2 rounded-lg m-1 border border-[#333] shadow-inner">
+                <h3 class="section-label text-xs flex items-center">
+                    <i class="fas fa-list-ul mr-1"></i> Playlist Panel
+                </h3>
+                <div id="playlistContainer" class="overflow-y-auto max-h-52">
+                    <div class="text-center text-gray-500 my-2">
+                        <p class="text-xs">No playlists created</p>
+                        <p class="text-xs mt-1">Create a playlist to organize your tracks</p>
+                    </div>
+                </div>
+                <div class="mt-2 text-center">
+                    <button onclick="createPlaylist()" class="dj-button text-xs py-1">
+                        <i class="fas fa-plus mr-1"></i> Create New Playlist
+                    </button>
+                </div>
+                <div class="mt-2">
+                    <p class="text-xs font-medium text-[#D42F00] mb-1">
+                        <i class="fas fa-info-circle mr-1"></i> How to use:
+                    </p>
+                    <ul class="text-xs text-gray-300 ml-2">
+                        <li class="mb-0.5"><i class="fas fa-angle-right mr-1"></i> Create playlists to organize tracks</li>
+                        <li class="mb-0.5"><i class="fas fa-angle-right mr-1"></i> Drag songs from library to playlists</li>
+                        <li class="mb-0.5"><i class="fas fa-angle-right mr-1"></i> Double-click to load a track to a deck</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="p-1 border-t border-[#333]">
+                <button onclick="openLibraryFolder()" class="dj-button w-full mb-1 tooltip py-0.5 text-xs">
+                    <i class="fas fa-folder-open mr-1"></i> Open Library Folder
                     <span class="tooltip-text">Open a folder to import multiple tracks at once</span>
                 </button>
-                <div class="flex gap-2 mb-4">
-                    <button onclick="createPlaylist()" class="dj-button flex-1 tooltip">
+                <div class="flex gap-1 mb-1">
+                    <button onclick="createPlaylist()" class="dj-button flex-1 tooltip py-0.5 text-xs">
                         <i class="fas fa-plus mr-1"></i> New Playlist
                         <span class="tooltip-text">Create a new playlist</span>
                     </button>
-                    <button onclick="exportLibrary()" class="dj-button flex-1 tooltip">
+                    <button onclick="exportLibrary()" class="dj-button flex-1 tooltip py-0.5 text-xs">
                         <i class="fas fa-file-export mr-1"></i> Export
                         <span class="tooltip-text">Export your track library</span>
                     </button>
                 </div>
-                <div class="section-label">Music Services</div>
-                <div class="space-y-2">
-                    <button onclick="connectGoogleDrive()" class="dj-button w-full flex items-center justify-between tooltip">
-                        <div><i class="fab fa-google-drive mr-2"></i> Google Drive</div>
-                        <span class="tooltip-text">Connect to your Google Drive music</span>
+                
+                <!-- Enhanced Music Services Section -->
+                <div class="section-label mb-0.5 text-xs flex items-center justify-between">
+                    <span>Music Services</span>
+                    <span class="text-xs font-normal text-gray-400" id="servicesConnected">0/6 Connected</span>
+                </div>
+                
+                <!-- Music Service Connection Status Panel -->
+                <div class="bg-[#222] p-2 rounded-lg border border-[#333] mb-2">
+                    <div class="text-xs mb-2">Service Status</div>
+                    <div class="grid grid-cols-3 gap-1">
+                        <div class="service-status-item" id="googleStatus">
+                            <i class="fab fa-google-drive text-gray-500"></i>
+                            <span class="connection-status" title="Google Drive: Disconnected"></span>
+                        </div>
+                        <div class="service-status-item" id="oneDriveStatus">
+                            <i class="fab fa-microsoft text-gray-500"></i>
+                            <span class="connection-status" title="OneDrive: Disconnected"></span>
+                        </div>
+                        <div class="service-status-item" id="youtubeStatus">
+                            <i class="fab fa-youtube text-gray-500"></i>
+                            <span class="connection-status" title="YouTube: Disconnected"></span>
+                        </div>
+                        <div class="service-status-item" id="spotifyStatus">
+                            <i class="fab fa-spotify text-gray-500"></i>
+                            <span class="connection-status" title="Spotify: Disconnected"></span>
+                        </div>
+                        <div class="service-status-item" id="soundCloudStatus">
+                            <i class="fab fa-soundcloud text-gray-500"></i>
+                            <span class="connection-status" title="SoundCloud: Disconnected"></span>
+                        </div>
+                        <div class="service-status-item" id="appleMusicStatus">
+                            <i class="fab fa-apple text-gray-500"></i>
+                            <span class="connection-status" title="Apple Music: Disconnected"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Access Music Service Buttons -->
+                <div class="space-y-1">
+                    <button onclick="connectGoogleDrive()" class="dj-button w-full flex items-center justify-between py-0.5 text-xs" id="googleDriveBtn">
+                        <div><i class="fab fa-google-drive mr-0.5"></i> Google Drive</div>
+                        <span class="connection-status"></span>
                     </button>
-                    <button onclick="connectOneDrive()" class="dj-button w-full flex items-center justify-between tooltip">
-                        <div><i class="fab fa-microsoft mr-2"></i> OneDrive</div>
-                        <span class="tooltip-text">Connect to your OneDrive music</span>
+                    <button onclick="connectOneDrive()" class="dj-button w-full flex items-center justify-between py-0.5 text-xs" id="oneDriveBtn">
+                        <div><i class="fab fa-microsoft mr-1"></i> OneDrive</div>
+                        <span class="connection-status"></span>
                     </button>
-                    <button onclick="connectYouTube()" class="dj-button w-full flex items-center justify-between tooltip">
-                        <div><i class="fab fa-youtube mr-2"></i> YouTube</div>
-                        <span class="tooltip-text">Connect to YouTube for DJ mixes</span>
+                    <button onclick="connectYouTube()" class="dj-button w-full flex items-center justify-between py-0.5 text-xs" id="youtubeBtn">
+                        <div><i class="fab fa-youtube mr-1"></i> YouTube</div>
+                        <span class="connection-status"></span>
                     </button>
-                    <button onclick="connectSpotify()" class="dj-button w-full flex items-center justify-between tooltip">
-                        <div><i class="fab fa-spotify mr-2"></i> Spotify</div>
-                        <span class="tooltip-text">Connect to Spotify for streaming music</span>
+                    <button onclick="connectSpotify()" class="dj-button w-full flex items-center justify-between py-0.5 text-xs" id="spotifyBtn">
+                        <div><i class="fab fa-spotify mr-1"></i> Spotify</div>
+                        <span class="connection-status"></span>
                     </button>
-                    <button onclick="connectSoundCloud()" class="dj-button w-full flex items-center justify-between tooltip">
-                        <div><i class="fab fa-soundcloud mr-2"></i> SoundCloud</div>
-                        <span class="tooltip-text">Connect to SoundCloud for streaming music</span>
+                    <button onclick="connectSoundCloud()" class="dj-button w-full flex items-center justify-between py-0.5 text-xs" id="soundCloudBtn">
+                        <div><i class="fab fa-soundcloud mr-1"></i> SoundCloud</div>
+                        <span class="connection-status"></span>
                     </button>
-                    <button onclick="connectAppleMusic()" class="dj-button w-full flex items-center justify-between tooltip">
-                        <div><i class="fab fa-apple mr-2"></i> Apple Music</div>
-                        <span class="tooltip-text">Connect to Apple Music for streaming music</span>
+                    <button onclick="connectAppleMusic()" class="dj-button w-full flex items-center justify-between py-0.5 text-xs" id="appleMusicBtn">
+                        <div><i class="fab fa-apple mr-1"></i> Apple Music</div>
+                        <span class="connection-status"></span>
                     </button>
-                    <button onclick="browseMusicDatabase()" class="dj-button w-full flex items-center justify-between tooltip bg-[#D42F00]">
-                        <div><i class="fas fa-database mr-2"></i> Music Database</div>
+                    <button onclick="browseMusicDatabase()" class="dj-button w-full flex items-center justify-between py-0.5 text-xs bg-[#D42F00]">
+                        <div><i class="fas fa-database mr-1"></i> Music Database</div>
                         <span class="tooltip-text">Browse our extensive online music collection</span>
                     </button>
                 </div>
@@ -795,23 +1021,23 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col bg-[#111]">
+        <div class="flex-1 flex flex-col bg-[#111] overflow-hidden">
             <!-- Top Toolbar -->
-            <div class="bg-[#1a1a1a] border-b border-[#333] p-4">
+            <div class="bg-[#1a1a1a] border-b border-[#333] p-1">
                 <div class="flex items-center justify-between">
-                    <div class="flex space-x-4">
-                        <button onclick="saveMix()" class="dj-button tooltip">
-                            <i class="fas fa-save mr-2"></i> Save Mix
+                    <div class="flex space-x-1">
+                        <button onclick="saveMix()" class="dj-button tooltip text-xs py-0.5 px-1.5">
+                            <i class="fas fa-save mr-1"></i> Save Mix
                             <span class="tooltip-text">Save the current mix session</span>
                         </button>
-                        <button id="loadTrackBtn" onclick="loadTrack()" class="dj-button tooltip">
-                            <i class="fas fa-file-audio mr-2"></i> Load Track
-                            <span class="tooltip-text">Load an audio track from your device</span>
+                        <button id="loadTrackBtn" onclick="loadTrack()" class="dj-button tooltip text-xs py-0.5 px-1.5">
+                            <i class="fas fa-file-audio mr-1"></i> Load Track
+                            <span class="tooltip-text">Load an audio track</span>
                         </button>
                         <div class="dropdown relative">
-                            <button id="broadcastBtn" onclick="toggleBroadcastSettings()" class="dj-button tooltip">
-                                <i class="fas fa-broadcast-tower mr-2"></i> Broadcast Settings
-                                <span class="tooltip-text">Configure and start broadcasting</span>
+                            <button id="broadcastBtn" onclick="toggleBroadcastSettings()" class="dj-button tooltip text-xs py-0.5 px-1.5">
+                                <i class="fas fa-broadcast-tower mr-1"></i> Broadcast
+                                <span class="tooltip-text">Configure broadcasting</span>
                             </button>
                             <div id="broadcastSettings" class="dropdown-content">
                                 <!-- Broadcast settings content -->
@@ -821,9 +1047,8 @@
                             </div>
                         </div>
                         <div class="dropdown relative">
-                            <button id="settingsBtn" onclick="toggleAppSettings()" class="dj-button tooltip">
-                                <i class="fas fa-cog mr-2"></i> Settings
-                                <span class="tooltip-text">Configure application settings</span>
+                            <button id="settingsBtn" onclick="toggleDropdownMenu('settingsDropdown')" class="dj-button tooltip text-xs py-0.5 px-1.5">
+                                <i class="fas fa-cog mr-1"></i> Settings
                             </button>
                             <div id="appSettings" class="dropdown-content">
                                 <!-- App settings content -->
@@ -833,30 +1058,27 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-2">
                         <div class="flex items-center">
-                            <span class="control-label mr-2">Master Tempo:</span>
-                            <input type="range" min="60" max="200" value="128" class="slider w-32"
-                                   oninput="updateMasterTempo(this.value)">
-                            <span class="text-white ml-2" id="tempoValue">128 BPM</span>
+                            <span class="control-label text-xs mr-1">Tempo:</span>
+                            <input type="range" min="60" max="200" value="128" class="slider w-24" oninput="updateMasterTempo(this.value)">
+                            <span class="text-white text-xs ml-1" id="tempoValue">128</span>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-volume-up text-white mr-2" title="Master Volume"></i>
-                            <input type="range" min="0" max="100" value="100" class="slider w-24"
-                                   oninput="updateMasterVolume(this.value)" title="Master Volume Control">
+                            <i class="fas fa-volume-up text-white text-xs mr-1"></i>
+                            <input type="range" min="0" max="100" value="100" class="slider w-16" oninput="updateMasterVolume(this.value)">
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Decks -->
-            <div class="flex-1 p-6 space-y-6">
-                <div class="grid grid-cols-2 gap-2">
+            <div class="flex-1 p-1 space-y-2 overflow-y-auto">
+                <div class="grid grid-cols-2 gap-1">
                     <!-- Deck 1 -->
-                    <div class="deck p-6">
-                        <div class="flex justify-between mb-4">
-                            <h2 class="text-xl font-medium">Deck 1</h2>
+                    <div class="deck p-1">
+                        <div class="flex justify-between mb-1">
+                            <h2 class="text-sm font-medium">Deck 1</h2>
                             <div class="flex space-x-2">
                                 <button onclick="toggleSync(0)" class="dj-button tooltip" title="Sync Tempo with Master">
                                     <i class="fas fa-sync"></i>
@@ -872,9 +1094,9 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="track-info p-2 mb-4">
+                        <div class="track-info p-1 mb-1 text-xs">
                             <div id="deck1Title" class="font-medium truncate">No track loaded</div>
-                            <div id="deck1Artist" class="text-sm text-gray-400 truncate">--</div>
+                            <div id="deck1Artist" class="text-xs text-gray-400 truncate">--</div>
                             <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
                                 <span id="deck1CurrentTime">00:00</span>
                                 <div class="progress-bar flex-1 mx-2">
@@ -883,10 +1105,11 @@
                                 <span id="deck1TotalTime">00:00</span>
                             </div>
                         </div>
-                        <div class="flex gap-6">
+                        <div class="flex gap-1">
                             <div class="flex flex-col items-center">
-                                <span class="control-label">Turntable Control</span>
+                                <span class="control-label text-xs">Turntable Control</span>
                                 <div class="turntable-container relative">
+                                    <div id="turntable3d1" class="turntable-3d-container"></div>
                                     <div class="turntable-platter"></div>
                                     <div class="strobe-marks"></div>
                                     <div class="vinyl tooltip" id="vinyl1" onmousedown="startScratch(0, event)" 
@@ -897,7 +1120,7 @@
                                         <span class="tooltip-text">Click and drag to scratch</span>
                                     </div>
                                 </div>
-                                <div class="transport-controls mt-4">
+                                <div class="transport-controls mt-2">
                                     <button onclick="playDeck(0)" class="transport-button tooltip" id="playBtn1">
                                         <i class="fas fa-play" id="playIcon1"></i>
                                         <span class="tooltip-text">Play/Pause</span>
@@ -917,37 +1140,37 @@
                                 </div>
                             </div>
                             <div class="flex-1">
-                                <div class="mb-4">
-                                    <span class="control-label">Waveform</span>
+                                <div class="mb-2">
+                                    <span class="control-label text-xs">Waveform</span>
                                     <div class="waveform">
-                                        <canvas id="waveform1" class="waveform-data"></canvas>
+                                        <canvas id="waveform1" class="waveform-data" width="400" height="100"></canvas>
                                     </div>
                                 </div>
-                                <div class="grid grid-cols-2 gap-4">
+                                <div class="grid grid-cols-2 gap-2">
                                     <div>
-                                        <span class="control-label">Tempo Control</span>
+                                        <span class="control-label text-xs">Tempo Control</span>
                                         <input type="range" min="60" max="200" value="128" class="slider"
                                                oninput="updateTempo(0, this.value)" title="Adjust track tempo">
-                                        <div class="text-center text-sm mt-1" id="deck1Tempo">128 BPM</div>
+                                        <div class="text-center text-xs mt-1" id="deck1Tempo">128 BPM</div>
                                     </div>
                                     <div>
-                                        <span class="control-label">Key/Pitch Control</span>
+                                        <span class="control-label text-xs">Key/Pitch Control</span>
                                         <input type="range" min="-12" max="12" value="0" class="slider"
                                                oninput="updateKey(0, this.value)" title="Adjust track key/pitch">
-                                        <div class="text-center text-sm mt-1" id="deck1Key">Original Key</div>
+                                        <div class="text-center text-xs mt-1" id="deck1Key">Original Key</div>
                                     </div>
                                 </div>
-                                <div class="grid grid-cols-3 gap-4 mt-4">
+                                <div class="grid grid-cols-3 gap-2 mt-2">
                                     <div>
-                                        <span class="control-label">Low EQ</span>
+                                        <span class="control-label text-xs">Low EQ</span>
                                         <div class="eq-knob" id="lowEQ1" data-value="0" onclick="rotateEQ(this, 'low', 0)" title="Low Frequency EQ"></div>
                                     </div>
                                     <div>
-                                        <span class="control-label">Mid EQ</span>
+                                        <span class="control-label text-xs">Mid EQ</span>
                                         <div class="eq-knob" id="midEQ1" data-value="0" onclick="rotateEQ(this, 'mid', 0)" title="Mid Frequency EQ"></div>
                                     </div>
                                     <div>
-                                        <span class="control-label">High EQ</span>
+                                        <span class="control-label text-xs">High EQ</span>
                                         <div class="eq-knob" id="highEQ1" data-value="0" onclick="rotateEQ(this, 'high', 0)" title="High Frequency EQ"></div>
                                     </div>
                                 </div>
@@ -956,9 +1179,9 @@
                     </div>
 
                     <!-- Deck 2 -->
-                    <div class="deck p-6">
-                        <div class="flex justify-between mb-4">
-                            <h2 class="text-xl font-medium">Deck 2</h2>
+                    <div class="deck p-1">
+                        <div class="flex justify-between mb-1">
+                            <h2 class="text-sm font-medium">Deck 2</h2>
                             <div class="flex space-x-2">
                                 <button onclick="toggleSync(1)" class="dj-button tooltip" title="Sync Tempo with Master">
                                     <i class="fas fa-sync"></i>
@@ -975,9 +1198,9 @@
                             </div>
                         </div>
 
-                        <div class="track-info p-2 mb-4">
+                        <div class="track-info p-1 mb-1 text-xs">
                             <div id="deck2Title" class="font-medium truncate">No track loaded</div>
-                            <div id="deck2Artist" class="text-sm text-gray-400 truncate">--</div>
+                            <div id="deck2Artist" class="text-xs text-gray-400 truncate">--</div>
                             <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
                                 <span id="deck2CurrentTime">00:00</span>
                                 <div class="progress-bar flex-1 mx-2">
@@ -987,10 +1210,11 @@
                             </div>
                         </div>
 
-                        <div class="flex gap-6">
+                        <div class="flex gap-1">
                             <div class="flex flex-col items-center">
-                                <span class="control-label">Turntable Control</span>
+                                <span class="control-label text-xs">Turntable Control</span>
                                 <div class="turntable-container relative">
+                                    <div id="turntable3d2" class="turntable-3d-container"></div>
                                     <div class="turntable-platter"></div>
                                     <div class="strobe-marks"></div>
                                     <div class="vinyl tooltip" id="vinyl2" onmousedown="startScratch(1, event)" 
@@ -1001,7 +1225,7 @@
                                         <span class="tooltip-text">Click and drag to scratch</span>
                                     </div>
                                 </div>
-                                <div class="transport-controls mt-4">
+                                <div class="transport-controls mt-2">
                                     <button onclick="playDeck(1)" class="transport-button tooltip" id="playBtn2">
                                         <i class="fas fa-play" id="playIcon2"></i>
                                         <span class="tooltip-text">Play/Pause</span>
@@ -1024,7 +1248,7 @@
                                 <div class="mb-4">
                                     <span class="control-label">Waveform</span>
                                     <div class="waveform">
-                                        <canvas id="waveform2" class="waveform-data"></canvas>
+                                        <canvas id="waveform2" class="waveform-data" width="400" height="100"></canvas>
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4">
@@ -1061,7 +1285,7 @@
                 </div>
 
                 <!-- Mixer Controls -->
-                <div class="flex justify-center items-center space-x-8 bg-[#1a1a1a] p-6 rounded-lg">
+                <div class="flex justify-center items-center space-x-4 bg-[#1a1a1a] p-2 rounded-lg">
                     <div>
                         <span class="control-label text-center">Deck 1 Volume</span>
                         <input type="range" min="0" max="100" value="100" class="vertical-slider"
@@ -1087,9 +1311,9 @@
                 </div>
 
                 <!-- FX Section -->
-                <div class="bg-[#1a1a1a] p-6 rounded-lg">
+                <div class="bg-[#1a1a1a] p-2 rounded-lg">
                     <div class="section-label">Effects Panel</div>
-                    <div class="grid grid-cols-2 gap-6">
+                    <div class="grid grid-cols-2 gap-2">
                         <div>
                             <span class="control-label">Deck 1 Effects</span>
                             <div class="grid grid-cols-4 gap-2">
@@ -1147,18 +1371,18 @@
 
                 <!-- Broadcast Status -->
                 <!-- Broadcast Controls and Status -->
-                <div class="bg-[#1a1a1a] p-4 rounded-lg kirk-radio-panel broadcast-panel" id="broadcastStatus">
+                <div class="bg-[#1a1a1a] p-2 rounded-lg kirk-radio-panel broadcast-panel" id="broadcastStatus">
                     <div class="section-label">Broadcast Controls</div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
                         <!-- Mic Controls -->
-                        <div class="p-3 bg-[#222] rounded-lg transition-all duration-300 hover:bg-[#2a2a2a] mic-control-panel">
+                        <div class="p-2 bg-[#222] rounded-lg transition-all duration-300 hover:bg-[#2a2a2a] mic-control-panel">
                             <div class="flex items-center justify-between mb-2">
                                 <div class="flex items-center">
                                     <div class="text-sm font-medium">Microphone</div>
-                                    <div class="w-3 h-3 rounded-full ml-2 mic-indicator" id="micStatusIndicator"></div>
+                                    <div class="w-2 h-2 rounded-full ml-2 mic-indicator" id="micStatusIndicator"></div>
                                 </div>
                                 <div>
-                                    <button id="micToggleBtn" onclick="toggleMic()" class="dj-button">
+                                    <button id="micToggleBtn" onclick="toggleMic()" class="dj-button text-xs py-0.5 px-1">
                                         <i class="fas fa-microphone mr-2"></i> Mic OFF
                                     </button>
                                 </div>
@@ -1180,10 +1404,10 @@
                         </div>
                         
                         <!-- ON AIR Controls -->
-                        <div class="p-3 bg-[#222] rounded-lg transition-all duration-300 hover:bg-[#2a2a2a] on-air-control-panel">
+                        <div class="p-2 bg-[#222] rounded-lg transition-all duration-300 hover:bg-[#2a2a2a] on-air-control-panel">
                             <div class="flex items-center justify-between mb-3">
                                 <div class="flex items-center">
-                                    <div class="on-air-text" id="onAirIndicator">ON AIR</div>
+                                    <div class="on-air-text text-sm" id="onAirIndicator">ON AIR</div>
                                 </div>
                                 <div>
                                     <button id="onAirToggleBtn" onclick="toggleOnAir()" class="dj-button bg-[#D42F00]">
@@ -1235,6 +1459,390 @@
             <p id="modalMessage" class="mb-4">Message content will appear here.</p>
             <div class="flex justify-end">
                 <button onclick="closeModal('alertModal')" class="dj-button">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music Service Login Modals -->
+    <div id="musicServiceModals" class="modal-container">
+        <!-- Google Drive Login Modal -->
+        <div id="googleDriveModal" class="modal">
+            <div class="modal-content bg-[#1a1a1a] p-4 rounded-lg max-w-md mx-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-medium flex items-center">
+                        <i class="fab fa-google-drive mr-2 text-[#4285F4]"></i> Google Drive Login
+                    </h3>
+                    <button onclick="closeModal('googleDriveModal')" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <!-- Connection Status Indicator -->
+                <div class="bg-[#222] p-3 rounded-lg mb-4">
+                    <div class="flex items-center">
+                        <div id="googleDriveConnStatus" class="connection-status mr-2"></div>
+                        <span id="googleDriveStatusText" class="text-sm">Not connected</span>
+                    </div>
+                    <div id="googleDriveErrorMsg" class="text-red-500 text-xs mt-2 hidden">
+                        Connection error: Please check your credentials and try again.
+                    </div>
+                </div>
+                
+                <form id="googleDriveLoginForm" class="space-y-3">
+                    <div>
+                        <label class="text-xs">Email</label>
+                        <input type="email" id="googleDriveEmail" 
+                               class="w-full bg-[#333] border border-[#444] rounded p-2 text-sm"
+                               placeholder="your.email@gmail.com">
+                    </div>
+                    <div>
+                        <label class="text-xs">Password</label>
+                        <input type="password" id="googleDrivePassword" 
+                               class="w-full bg-[#333] border border-[#444] rounded p-2 text-sm"
+                               placeholder="•••••••••••">
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="googleDriveRemember" class="mr-2">
+                        <label for="googleDriveRemember" class="text-xs text-gray-300">Remember me</label>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="googleDriveAutoLogin" class="mr-2">
+                        <label for="googleDriveAutoLogin" class="text-xs text-gray-300">Auto-login next time</label>
+                    </div>
+                    
+                    <div class="text-xs text-gray-400 mt-2">
+                        By connecting, you agree to Google's 
+                        <a href="https://policies.google.com/terms" target="_blank" class="text-[#D42F00] hover:underline">Terms of Service</a>
+                        and 
+                        <a href="https://policies.google.com/privacy" target="_blank" class="text-[#D42F00] hover:underline">Privacy Policy</a>.
+                    </div>
+                    
+                    <div class="flex justify-between mt-4">
+                        <button type="button" onclick="retryGoogleDriveConnection()" 
+                                class="dj-button" id="googleDriveRetryBtn" disabled>
+                            <i class="fas fa-sync-alt mr-1"></i> Retry
+                        </button>
+                        <button type="button" onclick="authenticateGoogleDrive()" 
+                                class="dj-button bg-[#D42F00]" id="googleDriveConnectBtn">
+                            <i class="fas fa-sign-in-alt mr-1"></i> Connect
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Spotify Login Modal -->
+        <div id="spotifyModal" class="modal">
+            <div class="modal-content bg-[#1a1a1a] p-4 rounded-lg max-w-md mx-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-medium flex items-center">
+                        <i class="fab fa-spotify mr-2 text-[#1DB954]"></i> Spotify Login
+                    </h3>
+                    <button onclick="closeModal('spotifyModal')" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <!-- Connection Status Indicator -->
+                <div class="bg-[#222] p-3 rounded-lg mb-4">
+                    <div class="flex items-center">
+                        <div id="spotifyConnStatus" class="connection-status mr-2"></div>
+                        <span id="spotifyStatusText" class="text-sm">Not connected</span>
+                    </div>
+                    <div id="spotifyErrorMsg" class="text-red-500 text-xs mt-2 hidden">
+                        Connection error: Please check your credentials and try again.
+                    </div>
+                </div>
+                
+                <form id="spotifyLoginForm" class="space-y-3">
+                    <div>
+                        <label class="text-xs">Username or Email</label>
+                        <input type="text" id="spotifyUsername" 
+                               class="w-full bg-[#333] border border-[#444] rounded p-2 text-sm"
+                               placeholder="username or email">
+                    </div>
+                    <div>
+                        <label class="text-xs">Password</label>
+                        <input type="password" id="spotifyPassword" 
+                               class="w-full bg-[#333] border border-[#444] rounded p-2 text-sm"
+                               placeholder="•••••••••••">
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="spotifyRemember" class="mr-2">
+                        <label for="spotifyRemember" class="text-xs text-gray-300">Remember me</label>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="spotifyAutoLogin" class="mr-2">
+                        <label for="spotifyAutoLogin" class="text-xs text-gray-300">Auto-login next time</label>
+                    </div>
+                    
+                    <div class="text-xs text-gray-400 mt-2">
+                        By connecting, you agree to Spotify's 
+                        <a href="https://www.spotify.com/us/legal/end-user-agreement/" target="_blank" class="text-[#D42F00] hover:underline">Terms of Service</a>
+                        and 
+                        <a href="https://www.spotify.com/us/legal/privacy-policy/" target="_blank" class="text-[#D42F00] hover:underline">Privacy Policy</a>.
+                    </div>
+                    
+                    <div class="flex justify-between mt-4">
+                        <button type="button" onclick="retrySpotifyConnection()" 
+                                class="dj-button" id="spotifyRetryBtn" disabled>
+                            <i class="fas fa-sync-alt mr-1"></i> Retry
+                        </button>
+                        <button type="button" onclick="authenticateSpotify()" 
+                                class="dj-button bg-[#D42F00]" id="spotifyConnectBtn">
+                            <i class="fas fa-sign-in-alt mr-1"></i> Connect
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- SoundCloud Login Modal -->
+        <div id="soundCloudModal" class="modal">
+            <div class="modal-content bg-[#1a1a1a] p-4 rounded-lg max-w-md mx-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-medium flex items-center">
+                        <i class="fab fa-soundcloud mr-2 text-[#FF5500]"></i> SoundCloud Login
+                    </h3>
+                    <button onclick="closeModal('soundCloudModal')" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <!-- Connection Status Indicator -->
+                <div class="bg-[#222] p-3 rounded-lg mb-4">
+                    <div class="flex items-center">
+                        <div id="soundCloudConnStatus" class="connection-status mr-2"></div>
+                        <span id="soundCloudStatusText" class="text-sm">Not connected</span>
+                    </div>
+                    <div id="soundCloudErrorMsg" class="text-red-500 text-xs mt-2 hidden">
+                        Connection error: Please check your credentials and try again.
+                    </div>
+                </div>
+                
+                <form id="soundCloudLoginForm" class="space-y-3">
+                    <div>
+                        <label class="text-xs">Email</label>
+                        <input type="email" id="soundCloudEmail" 
+                               class="w-full bg-[#333] border border-[#444] rounded p-2 text-sm"
+                               placeholder="your.email@example.com">
+                    </div>
+                    <div>
+                        <label class="text-xs">Password</label>
+                        <input type="password" id="soundCloudPassword" 
+                               class="w-full bg-[#333] border border-[#444] rounded p-2 text-sm"
+                               placeholder="•••••••••••">
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="soundCloudRemember" class="mr-2">
+                        <label for="soundCloudRemember" class="text-xs text-gray-300">Remember me</label>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="soundCloudAutoLogin" class="mr-2">
+                        <label for="soundCloudAutoLogin" class="text-xs text-gray-300">Auto-login next time</label>
+                    </div>
+                    
+                    <div class="text-xs text-gray-400 mt-2">
+                        By connecting, you agree to SoundCloud's 
+                        <a href="https://soundcloud.com/terms-of-use" target="_blank" class="text-[#D42F00] hover:underline">Terms of Service</a>
+                        and 
+                        <a href="https://soundcloud.com/pages/privacy" target="_blank" class="text-[#D42F00] hover:underline">Privacy Policy</a>.
+                    </div>
+                    
+                    <div class="flex justify-between mt-4">
+                        <button type="button" onclick="retrySoundCloudConnection()" 
+                                class="dj-button" id="soundCloudRetryBtn" disabled>
+                            <i class="fas fa-sync-alt mr-1"></i> Retry
+                        </button>
+                        <button type="button" onclick="authenticateSoundCloud()" 
+                                class="dj-button bg-[#D42F00]" id="soundCloudConnectBtn">
+                            <i class="fas fa-sign-in-alt mr-1"></i> Connect
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- YouTube Login Modal -->
+        <div id="youtubeModal" class="modal">
+            <div class="modal-content bg-[#1a1a1a] p-4 rounded-lg max-w-md mx-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-medium flex items-center">
+                        <i class="fab fa-youtube mr-2 text-[#FF0000]"></i> YouTube Login
+                    </h3>
+                    <button onclick="closeModal('youtubeModal')" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <!-- Connection Status Indicator -->
+                <div class="bg-[#222] p-3 rounded-lg mb-4">
+                    <div class="flex items-center">
+                        <div id="youtubeConnStatus" class="connection-status mr-2"></div>
+                        <span id="youtubeStatusText" class="text-sm">Not connected</span>
+                    </div>
+                    <div id="youtubeErrorMsg" class="text-red-500 text-xs mt-2 hidden">
+                        Connection error: Please check your credentials and try again.
+                    </div>
+                </div>
+                
+                <form id="youtubeLoginForm" class="space-y-3">
+                    <div>
+                        <label class="text-xs">Google Account Email</label>
+                        <input type="email" id="youtubeEmail" 
+                               class="w-full bg-[#333] border border-[#444] rounded p-2 text-sm"
+                               placeholder="your.email@gmail.com">
+                    </div>
+                    <div>
+                        <label class="text-xs">Password</label>
+                        <input type="password" id="youtubePassword" 
+                               class="w-full bg-[#333] border border-[#444] rounded p-2 text-sm"
+                               placeholder="•••••••••••">
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="youtubeRemember" class="mr-2">
+                        <label for="youtubeRemember" class="text-xs text-gray-300">Remember me</label>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="youtubeAutoLogin" class="mr-2">
+                        <label for="youtubeAutoLogin" class="text-xs text-gray-300">Auto-login next time</label>
+                    </div>
+                    
+                    <div class="text-xs text-gray-400 mt-2">
+                        By connecting, you agree to YouTube's 
+                        <a href="https://www.youtube.com/t/terms" target="_blank" class="text-[#D42F00] hover:underline">Terms of Service</a>
+                        and 
+                        <a href="https://policies.google.com/privacy"
+    <div id="settingsModal" class="modal">
+        <div class="modal-content bg-[#1a1a1a] p-4 rounded-lg max-w-2xl mx-auto">
+            <h3 class="text-xl font-medium mb-4">App Settings</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Audio Settings -->
+                <div class="bg-[#222] p-3 rounded-lg">
+                    <h4 class="text-sm font-medium mb-2">Audio Settings</h4>
+                    <div class="space-y-2">
+                        <div>
+                            <label class="text-xs">Audio Device</label>
+                            <select id="audioDevice" class="w-full bg-[#333] text-xs p-1 rounded">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-xs">Sample Rate</label>
+                            <select id="sampleRate" class="w-full bg-[#333] text-xs p-1 rounded">
+                                <option value="44100">44.1 kHz</option>
+                                <option value="48000">48 kHz</option>
+                                <option value="96000">96 kHz</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-xs">Buffer Size</label>
+                            <select id="bufferSize" class="w-full bg-[#333] text-xs p-1 rounded">
+                                <option value="256">256</option>
+                                <option value="512">512</option>
+                                <option value="1024">1024</option>
+                                <option value="2048">2048</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Broadcast Settings -->
+                <div class="bg-[#222] p-3 rounded-lg">
+                    <h4 class="text-sm font-medium mb-2">Broadcast Settings</h4>
+                    <div class="space-y-2">
+                        <div>
+                            <label class="text-xs">Server Type</label>
+                            <select id="serverType" class="w-full bg-[#333] text-xs p-1 rounded">
+                                <option value="icecast">Icecast</option>
+                                <option value="shoutcast">Shoutcast</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-xs">Server URL</label>
+                            <input type="text" id="serverUrl" class="w-full bg-[#333] text-xs p-1 rounded"
+                                   placeholder="http://your-server:port">
+                        </div>
+                        <div>
+                            <label class="text-xs">Mount Point</label>
+                            <input type="text" id="mountPoint" class="w-full bg-[#333] text-xs p-1 rounded"
+                                   placeholder="/live">
+                        </div>
+                        <div>
+                            <label class="text-xs">Stream Password</label>
+                            <input type="password" id="streamPassword" class="w-full bg-[#333] text-xs p-1 rounded">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Encoder Settings -->
+                <div class="bg-[#222] p-3 rounded-lg">
+                    <h4 class="text-sm font-medium mb-2">Encoder Settings</h4>
+                    <div class="space-y-2">
+                        <div>
+                            <label class="text-xs">Bitrate</label>
+                            <select id="bitrate" class="w-full bg-[#333] text-xs p-1 rounded">
+                                <option value="64">64 kbps</option>
+                                <option value="128">128 kbps</option>
+                                <option value="192">192 kbps</option>
+                                <option value="256">256 kbps</option>
+                                <option value="320">320 kbps</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-xs">Format</label>
+                            <select id="format" class="w-full bg-[#333] text-xs p-1 rounded">
+                                <option value="mp3">MP3</option>
+                                <option value="aac">AAC</option>
+                                <option value="ogg">OGG</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-xs">Channels</label>
+                            <select id="channels" class="w-full bg-[#333] text-xs p-1 rounded">
+                                <option value="2">Stereo</option>
+                                <option value="1">Mono</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Settings -->
+                <div class="bg-[#222] p-3 rounded-lg">
+                    <h4 class="text-sm font-medium mb-2">Performance Settings</h4>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="lowLatencyMode" class="mr-2">
+                            <label class="text-xs">Low Latency Mode</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="hardwareAcceleration" class="mr-2">
+                            <label class="text-xs">Hardware Acceleration</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="autoGainControl" class="mr-2">
+                            <label class="text-xs">Auto Gain Control</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end mt-4 space-x-2">
+                <button onclick="saveSettings()" class="dj-button bg-[#D42F00]">
+                    <i class="fas fa-save mr-1"></i> Save Settings
+                </button>
+                <button onclick="closeSettingsModal()" class="dj-button">
+                    Cancel
+                </button>
             </div>
         </div>
     </div>
@@ -1535,9 +2143,45 @@
         
         // Functions for handling app settings
         function toggleAppSettings() {
-            toggleDropdown('appSettings');
+            let modal = document.getElementById('settingsModal');
+            if (modal) {
+                modal.style.display = 'block';
+                
+                // Load current settings to form
+                document.getElementById('sampleRate').value = appSettings.audio.sampleRate.toString();
+                document.getElementById('bufferSize').value = appSettings.audio.bufferSize.toString();
+                document.getElementById('serverType').value = appSettings.broadcast.serverType;
+                document.getElementById('serverUrl').value = appSettings.broadcast.serverUrl;
+                document.getElementById('mountPoint').value = appSettings.broadcast.mountPoint;
+                document.getElementById('streamPassword').value = appSettings.broadcast.password;
+                document.getElementById('bitrate').value = appSettings.encoder.bitrate.toString();
+                document.getElementById('format').value = appSettings.encoder.format;
+                document.getElementById('channels').value = appSettings.encoder.channels.toString();
+                document.getElementById('lowLatencyMode').checked = appSettings.performance.lowLatencyMode;
+                document.getElementById('hardwareAcceleration').checked = appSettings.performance.hardwareAcceleration;
+                document.getElementById('autoGainControl').checked = appSettings.performance.autoGainControl;
+                
+                // Set audio device if available
+                if (appSettings.audio.device && document.getElementById('audioDevice')) {
+                    document.getElementById('audioDevice').value = appSettings.audio.device;
+                }
+            }
         }
         
+        function closeSettingsModal() {
+            let modal = document.getElementById('settingsModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // General function to close any modal by ID
+        function closeModal(modalId) {
+            let modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
         // Turntable scratching functionalities
         function startScratch(deckIndex, event) {
             scratching[deckIndex] = true;
@@ -1703,8 +2347,15 @@
             console.log('Attempting to initialize audio context on load');
             // This will likely be blocked by browsers until user interaction
             initializeAudioContext();
+            // Load saved settings
+            loadSettings();
+            // Initialize audio devices dropdown
+            initializeAudioDevices();
         });
-
+        
+        function loadSettings() {
+            const savedSettings = localStorage.getItem('appSettings');
+            if (
         // Music service integration functions
         function connectGoogleDrive() {
             try {
@@ -1932,12 +2583,17 @@
         // Your remaining script logic...
         // It should include all functions like playDeck, loadTrack, and so on.
     </script>
+<!-- Core libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<!-- Application modules -->
 <script src="js/config.js"></script>
+<script src="js/ui.js"></script>
 <script src="js/audio.js"></script>
 <script src="js/effects.js"></script>
-<script src="js/library.js"></script>
 <script src="js/turntable.js"></script>
-<script src="js/ui.js"></script>
 <script src="js/app.js"></script>
+<!-- Hidden file input for track loading -->
+<input type="file" id="fileInput" accept="audio/*" style="display: none;">
 </body>
 </html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirk Radio DJ - Music Library</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="menu">
+        <button onclick="saveMix()" class="menu-button">Save Mix</button>
+        <button onclick="loadTrack()" class="menu-button">Load Track</button>
+        <button onclick="openLibraryFolder()" class="menu-button">Open Library Folder</button>
+        <button onclick="createPlaylist()" class="menu-button">New Playlist</button>
+    </div>
+
+    <div class="flex h-screen">
+        <!-- Left Sidebar - Track Library -->
+        <div class="w-96 bg-[#1a1a1a] border-r border-[#333] flex flex-col">
+            <div class="p-4 border-b border-[#333]">
+                <h2 class="text-lg font-medium mb-3">Track Library</h2>
+                <div class="relative">
+                    <input type="search" 
+                           id="searchInput"
+                           placeholder="Search tracks..." 
+                           autocomplete="off"
+                           autocorrect="off"
+                           autocapitalize="off"
+                           spellcheck="false"
+                           class="w-full bg-[#222] border border-[#444] rounded px-4 py-2 pl-10 pr-10 text-white focus:bg-[#333] focus:border-[#555]">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto p-4 max-h-[calc(100vh-200px)]" id="trackList">
+                <div class="text-center text-gray-500 mt-10">
+                    <p>No tracks loaded</p>
+                    <p class="mt-2">Use "Load Track" button or click "Music Database" to see available tracks</p>
+                </div>
+            </div>
+            <!-- Library Controls -->
+            <div class="p-4 border-t border-[#333]">
+                <div class="section-label">Library Controls</div>
+                <button onclick="openLibraryFolder()" class="dj-button w-full mb-2 tooltip">
+                    <i class="fas fa-folder-open mr-2"></i> Open Library Folder
+                    <span class="tooltip-text">Open a folder to import multiple tracks at once</span>
+                </button>
+                <div class="flex gap-2 mb-4">
+                    <button onclick="createPlaylist()" class="dj-button flex-1 tooltip">
+                        <i class="fas fa-plus mr-1"></i> New Playlist
+                        <span class="tooltip-text">Create a new playlist</span>
+                    </button>
+                    <button onclick="exportLibrary()" class="dj-button flex-1 tooltip">
+                        <i class="fas fa-file-export mr-1"></i> Export
+                        <span class="tooltip-text">Export your track library</span>
+                    </button>
+                </div>
+                <div class="section-label">Music Services</div>
+                <div class="space-y-2">
+                    <div class="dropdown relative w-full">
+                        <button id="googleDriveBtn" onclick="toggleMusicService('googleDrivePanel')" class="dj-button w-full flex items-center justify-between tooltip">
+                            <div><i class="fab fa-google-drive mr-2"></i> Google Drive</div>
+                            <span class="tooltip-text">Connect to your Google Drive music</span>
+                        </button>
+                        <div id="googleDrivePanel" class="dropdown-content music-service-panel">
+                            <div class="p-4">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="font-medium">Google Drive</h3>
+                                    <button onclick="closeMusicService('googleDrivePanel')" class="text-gray-500 hover:text-white">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div id="googleDriveTracks" class="max-h-60 overflow-y-auto mb-4">
+                                    <div class="text-center text-gray-500 py-8">
+                                        <i class="fab fa-google-drive text-4xl mb-2"></i>
+                                        <p>Connect to Google Drive to see your music files</p>
+                                    </div>
+                                </div>
+                                <button onclick="connectGoogleDrive()" class="dj-button w-full">
+                                    <i class="fas fa-link mr-2"></i> Connect to Google Drive
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown relative w-full">
+                        <button id="oneDriveBtn" onclick="toggleMusicService('oneDrivePanel')" class="dj-button w-full flex items-center justify-between tooltip">
+                            <div><i class="fab fa-microsoft mr-2"></i> OneDrive</div>
+                            <span class="tooltip-text">Connect to your OneDrive music</span>
+                        </button>
+                        <div id="oneDrivePanel" class="dropdown-content music-service-panel">
+                            <div class="p-4">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="font-medium">OneDrive</h3>
+                                    <button onclick="closeMusicService('oneDrivePanel')" class="text-gray-500 hover:text-white">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div id="oneDriveTracks" class="max-h-60 overflow-y-auto mb-4">
+                                    <div class="text-center text-gray-500 py-8">
+                                        <i class="fab fa-microsoft text-4xl mb-2"></i>
+                                        <p>Connect to OneDrive to see your music files</p>
+                                    </div>
+                                </div>
+                                <button onclick="connectOneDrive()" class="dj-button w-full">
+                                    <i class="fas fa-link mr-2"></i> Connect to OneDrive
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown relative w-full">
+                        <button id="youtubeBtn" onclick="toggleMusicService('youtubePanel')" class="dj-button w-full flex items-center justify-between tooltip">
+                            <div><i class="fab fa-youtube mr-2"></i> YouTube</div>
+                            <span class="tooltip-text">Connect to YouTube for DJ mixes</span>
+                        </button>
+                        <div id="youtubePanel" class="dropdown-content music-service-panel">
+                            <div class="p-4">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="font-medium">YouTube</h3>
+                                    <button onclick="closeMusicService('youtubePanel')" class="text-gray-500 hover:text-white">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="search" 
+                                           placeholder="Search YouTube" 
+                                           autocomplete="off"
+                                           autocorrect="off" 
+                                           autocapitalize="off"
+                                           spellcheck="false"
+                                           class="w-full bg-[#222] border border-[#444] rounded px-3 py-2 text-white focus:bg-[#333] focus:border-[#555]">
+                                </div>
+                                <div id="youtubeTracks" class="max-h-60 overflow-y-auto mb-4">
+                                    <div class="text-center text-gray-500 py-8">
+                                        <i class="fab fa-youtube text-4xl mb-2 text-red-600"></i>
+                                        <p>Search or connect your account to see videos</p>
+                                    </div>
+                                </div>
+                                <button onclick="connectYouTube()" class="dj-button w-full">
+                                    <i class="fas fa-link mr-2"></i> Connect YouTube Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown relative w-full">
+                        <button id="soundcloudBtn" onclick="toggleMusicService('soundcloudPanel')" class="dj-button w-full flex items-center justify-between tooltip bg-[#D42F00]">
+                            <div><i class="fab fa-soundcloud mr-2"></i> SoundCloud</div>
+                            <span class="tooltip-text">Connect to SoundCloud for streaming music</span>
+                        </button>
+                        <div id="soundcloudPanel" class="dropdown-content music-service-panel">
+                            <div class="p-4">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="font-medium">SoundCloud</h3>
+                                    <button onclick="closeMusicService('soundcloudPanel')" class="text-gray-500 hover:text-white">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="search" 
+                                           placeholder="Search SoundCloud" 
+                                           autocomplete="off"
+                                           autocorrect="off" 
+                                           autocapitalize="off"
+                                           spellcheck="false"
+                                           class="w-full bg-[#222] border border-[#444] rounded px-3 py-2 text-white focus:bg-[#333] focus:border-[#555]">
+                                </div>
+                                <div id="soundcloudTracks" class="max-h-60 overflow-y-auto mb-4">
+                                    <div class="text-center text-gray-500 py-8">
+                                        <i class="fab fa-soundcloud text-4xl mb-2 text-orange-500"></i>
+                                        <p>Search or connect your account to see tracks</p>
+                                    </div>
+                                </div>
+                                <button onclick="connectSoundCloud()" class="dj-button w-full">
+                                    <i class="fas fa-link mr-2"></i> Connect SoundCloud Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown relative w-full">
+                        <button id="musicDatabaseBtn" onclick="toggleMusicService('musicDatabasePanel')" class="dj-button w-full flex items-center justify-between tooltip bg-[#D42F00]">
+                            <div><i class="fas fa-database mr-2"></i> Music Database</div>
+                            <span class="tooltip-text">Browse our extensive online music collection</span>
+                        </button>
+                        <div id="musicDatabasePanel" class="dropdown-content music-service-panel">
+                            <div class="p-4">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="font-medium">Music Database</h3>
+                                    <button onclick="closeMusicService('musicDatabasePanel')" class="text-gray-500 hover:text-white">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="search" 
+                                           placeholder="Search database" 
+                                           id="databaseSearchInput"
+                                           autocomplete="off"
+                                           autocorrect="off" 
+                                           autocapitalize="off"
+                                           spellcheck="false"
+                                           class="w-full bg-[#222] border border-[#444] rounded px-3 py-2 text-white focus:bg-[#333] focus:border-[#555]">
+                                </div>
+                                <div id="databaseTracks" class="max-h-60 overflow-y-auto mb-4">
+                                    <div class="text-center text-gray-500 py-8">
+                                        <i class="fas fa-database text-4xl mb-2"></i>
+                                        <p>Click "Load Sample Tracks" to browse</p>
+                                    </div>
+                                </div>
+                                <button onclick="browseMusicDatabase()" class="dj-button w-full">
+                                    <i class="fas fa-download mr-2"></i> Load Sample Tracks
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col bg-[#111]">
+            <!-- Top Toolbar -->
+            <div class="bg-[#1a1a1a] border-b border-[#333] p-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-4">
+                        <button onclick="saveMix()" class="dj-button tooltip">
+                            <i class="fas fa-save mr-2"></i> Save Mix
+                            <span class="tooltip-text">Save the current mix session</span>
+                        </button>
+                        <button id="loadTrackBtn" onclick="loadTrack()" class="dj-button tooltip">
+                            <i class="fas fa-file-audio mr-2"></i> Load Track
+                            <span class="tooltip-text">Load an audio track from your device</span>
+                        </button>
+                        <div class="dropdown relative">
+                            <button id="broadcastBtn" onclick="toggleBroadcastSettings()" class="dj-button tooltip">
+                                <i class="fas fa-broadcast-tower mr-2"></i> Broadcast Settings
+                                <span class="tooltip-
+
