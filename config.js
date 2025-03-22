@@ -1,6 +1,11 @@
 // Kirk Radio DJ - Configuration Module
 // Application settings and configuration
 
+// Import config from config-loader
+// Note: This assumes config-loader.js is processed during build to make it browser-compatible
+// or is loaded before this file in a compatible context
+const ENV_CONFIG = window.ENV_CONFIG || {};
+
 const CONFIG = {
     // Audio settings
     audio: {
@@ -65,24 +70,35 @@ const CONFIG = {
     // OAuth client IDs for music services
     oauth: {
         googleDrive: {
-            clientId: '{{GOOGLE_CLIENT_ID}}',
-            scope: 'https://www.googleapis.com/auth/drive.readonly'
+            clientId: ENV_CONFIG.oauth?.googleDrive?.clientId || '',
+            clientSecret: ENV_CONFIG.oauth?.googleDrive?.clientSecret || '',
+            redirectUri: ENV_CONFIG.oauth?.googleDrive?.redirectUri || '',
+            scope: ENV_CONFIG.oauth?.googleDrive?.scope || 'https://www.googleapis.com/auth/drive.readonly',
+            isConfigured: ENV_CONFIG.oauth?.googleDrive?.isConfigured || false
         },
         oneDrive: {
-            clientId: '{{ONEDRIVE_CLIENT_ID}}',
-            scope: 'files.read'
+            clientId: ENV_CONFIG.oauth?.oneDrive?.clientId || '',
+            scope: 'files.read',
+            isConfigured: false // Add OneDrive to config-loader.js if needed
         },
         spotify: {
-            clientId: '{{SPOTIFY_CLIENT_ID}}',
-            scope: 'streaming user-read-email user-read-private'
+            clientId: ENV_CONFIG.oauth?.spotify?.clientId || '',
+            clientSecret: ENV_CONFIG.oauth?.spotify?.clientSecret || '',
+            redirectUri: ENV_CONFIG.oauth?.spotify?.redirectUri || '',
+            scope: ENV_CONFIG.oauth?.spotify?.scope || 'streaming user-read-email user-read-private',
+            isConfigured: ENV_CONFIG.oauth?.spotify?.isConfigured || false
         },
         youtube: {
-            clientId: '{{YOUTUBE_CLIENT_ID}}',
-            scope: 'https://www.googleapis.com/auth/youtube.readonly'
+            clientId: ENV_CONFIG.oauth?.youtube?.clientId || '',
+            scope: 'https://www.googleapis.com/auth/youtube.readonly',
+            isConfigured: false // Add YouTube to config-loader.js if needed
         },
         soundCloud: {
-            clientId: '{{SOUNDCLOUD_CLIENT_ID}}',
-            scope: 'non-expiring'
+            clientId: ENV_CONFIG.oauth?.soundCloud?.clientId || '',
+            clientSecret: ENV_CONFIG.oauth?.soundCloud?.clientSecret || '',
+            redirectUri: ENV_CONFIG.oauth?.soundCloud?.redirectUri || '',
+            scope: ENV_CONFIG.oauth?.soundCloud?.scope || 'non-expiring',
+            isConfigured: ENV_CONFIG.oauth?.soundCloud?.isConfigured || false
         }
     },
 
@@ -166,3 +182,22 @@ window.STORAGE_KEYS = STORAGE_KEYS;
 window.loadSettings = loadSettings;
 window.saveSettings = saveSettings;
 
+// Function to check if a service is properly configured
+function isServiceConfigured(serviceName) {
+    return CONFIG.oauth[serviceName] && CONFIG.oauth[serviceName].isConfigured === true;
+}
+
+// Function to get error message for unconfigured services
+function getServiceConfigError(serviceName) {
+    if (!CONFIG.oauth[serviceName]) {
+        return `Service ${serviceName} is not supported`;
+    }
+    if (!CONFIG.oauth[serviceName].isConfigured) {
+        return `Service ${serviceName} is not properly configured. Check your environment settings.`;
+    }
+    return null;
+}
+
+// Export additional utility functions
+window.isServiceConfigured = isServiceConfigured;
+window.getServiceConfigError = getServiceConfigError;

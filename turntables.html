@@ -1,69 +1,3 @@
-<!-- Add before closing </body> tag -->
-<!-- Core scripts -->
-<script src="js/config.js"></script>
-
-<!-- Audio processing -->
-<script src="js/audio.js"></script>
-<script src="js/effects.js"></script>
-
-<!-- Library and controls -->
-<script src="js/library.js"></script>
-<script src="js/turntable.js"></script>
-
-<!-- Broadcasting -->
-<script src="js/broadcast.js"></script>
-
-<!-- UI and interface -->
-<script src="js/ui.js"></script>
-
-<!-- Initialize app -->
-<script>
-    // Global state
-    let currentDeck = 0;
-    let broadcasting = false;
-
-    // Initialize components on page load
-    document.addEventListener('DOMContentLoaded', () => {
-        // Initialize audio system
-        if (initializeAudio()) {
-            // Initialize UI components
-            initializeTurntables();
-            
-            // Load any saved settings
-            loadSettings();
-            
-            // Setup broadcast capabilities
-            initializeBroadcast();
-
-            showToast('Virtual Turntables initialized successfully', 'success');
-        } else {
-            showToast('Error initializing audio system', 'error');
-        }
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        // Update UI layouts if needed
-        if (decks[0]) decks[0].updateWaveform();
-        if (decks[1]) decks[1].updateWaveform();
-    });
-
-    // Handle visibility change
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            // Pause animations when tab is not visible
-            turntables.forEach(tt => tt.stopNormalRotation());
-        } else {
-            // Resume animations when tab becomes visible
-            turntables.forEach((tt, i) => {
-                if (decks[i] && decks[i].isPlaying) {
-                    tt.startNormalRotation();
-                }
-            });
-        }
-    });
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,10 +6,43 @@
     <title>Kirk Radio DJ - Professional DJ Software</title>
     <!-- Google Drive Integration -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="{{GOOGLE_CLIENT_ID}}">
+    <meta name="google-signin-client_id" content="GOOGLE_CLIENT_ID_PLACEHOLDER" data-info="Replace with your actual Google Client ID in production">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="https://raw.githubusercontent.com/Pilgrimcmoney/KirkRadioOnline/main/favicon.svg" type="image/svg+xml">
+    
+    <!-- Core scripts -->
+    <script src="js/config.js"></script>
+    
+    <!-- Audio processing -->
+    <script src="js/audio.js"></script>
+    <script src="js/effects.js"></script>
+    
+    <!-- Library and controls -->
+    <script src="js/library.js"></script>
+    <script src="js/turntable.js"></script>
+    
+    <!-- Broadcasting -->
+    <script src="js/broadcast.js"></script>
+    
+    <!-- UI and interface -->
+    <script src="js/ui.js"></script>
+    
+    <!-- Service worker registration -->
+    <script>
+        // Register service worker for offline capabilities
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+    </script>
     <style>
         :root {
             --primary: #D42F00; 
@@ -419,10 +386,8 @@
             display: none;
         }
         
-        /* Your existing CSS styles go here */
+        /* End of base styles */
         }
-        
-        /* Your existing CSS styles go here */
         .waveform {
             background: rgba(26, 26, 26, 0.8);
             border-radius: 4px;
@@ -653,12 +618,6 @@
     overflow: hidden;
     z-index: -1;
 }
-        position: absolute;
-        width: 0;
-        height: 0;
-        overflow: hidden;
-        z-index: -1;
-    }
 
     /* SVG enhancements */
     svg path {
@@ -753,7 +712,6 @@
             animation: pulseGlow 2s infinite alternate;
         }
         
-        .vu-meter-peak-indicator {
         .vu-meter-peak-indicator {
             position: absolute;
             top: 0;
@@ -899,7 +857,6 @@
             top: 10px;
             right: 10px;
             width: 50px;
-            width: 50px;
             height: 50px;
             background-image: url('https://raw.githubusercontent.com/Pilgrimcmoney/KirkRadioOnline/main/favicon.svg');
             background-size: contain;
@@ -907,6 +864,7 @@
             opacity: 0.3;
             z-index: 1;
             filter: drop-shadow(0 0 2px rgba(212, 47, 0, 0.3));
+        }
         
         @media (max-width: 768px) {
             .kirk-radio-panel::before {
@@ -1785,7 +1743,22 @@
                         By connecting, you agree to YouTube's 
                         <a href="https://www.youtube.com/t/terms" target="_blank" class="text-[#D42F00] hover:underline">Terms of Service</a>
                         and 
-                        <a href="https://policies.google.com/privacy"
+                        <a href="https://policies.google.com/privacy" target="_blank" class="text-[#D42F00] hover:underline">Privacy Policy</a>.
+                    </div>
+                    
+                    <div class="flex justify-between mt-4">
+                        <button type="button" onclick="retryYoutubeConnection()" 
+                                class="dj-button" id="youtubeRetryBtn" disabled>
+                            <i class="fas fa-sync-alt mr-1"></i> Retry
+                        </button>
+                        <button type="button" onclick="authenticateYoutube()" 
+                                class="dj-button bg-[#D42F00]" id="youtubeConnectBtn">
+                            <i class="fas fa-sign-in-alt mr-1"></i> Connect
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     <div id="settingsModal" class="modal">
         <div class="modal-content bg-[#1a1a1a] p-4 rounded-lg max-w-2xl mx-auto">
             <h3 class="text-xl font-medium mb-4">App Settings</h3>
@@ -2313,23 +2286,54 @@
             return Math.round(Math.atan2(b, a) * (180/Math.PI));
         }
         
+        // Audio system states and error handling
+        const AudioSystemState = {
+            UNINITIALIZED: 'uninitialized',
+            INITIALIZING: 'initializing',
+            RUNNING: 'running',
+            SUSPENDED: 'suspended',
+            ERROR: 'error'
+        };
+
         // Basic audio handling
-        let audioContext;
-        let masterGain;
+        let audioContext = null;
+        let audioState = AudioSystemState.UNINITIALIZED;
+        let masterGain = null;
+        let masterLimiter = null;
+        let masterAnalyser = null;
         const decks = [{}, {}];
+        let deckProcessors = [null, null];
         let scratching = [false, false];
         let lastY = [0, 0];
         let broadcasting = false;
+
         class AudioProcessor {
-            constructor(context, masterNode) {
+            /**
+             * Creates a new AudioProcessor for a deck
+             * @param {AudioContext} context - The audio context
+             * @param {AudioNode} masterNode - The master output node
+             * @param {number} deckIndex - The index of the deck (0 or 1)
+             */
+            constructor(context, masterNode, deckIndex) {
+                if (!context || !(context instanceof AudioContext)) {
+                    throw new Error('Invalid AudioContext provided to AudioProcessor');
+                }
+                
                 this.context = context;
                 this.masterNode = masterNode;
+                this.deckIndex = deckIndex;
                 this.source = null;
-                this.gainNode = context.createGain();
-                this.lowEQ = context.createBiquadFilter();
-                this.midEQ = context.createBiquadFilter();
-                this.highEQ = context.createBiquadFilter();
+                
+                // Create audio node chain
+                this.gainNode = this.context.createGain();
+                this.gainNode.gain.value = 1.0;
+                
+                // Create EQ nodes
+                this.lowEQ = this.context.createBiquadFilter();
+                this.midEQ = this.context.createBiquadFilter();
+                this.highEQ = this.context.createBiquadFilter();
 
+                // Configure EQ nodes
                 this.lowEQ.type = 'lowshelf';
                 this.lowEQ.frequency.value = 320;
                 this.lowEQ.gain.value = 0;
@@ -2342,67 +2346,615 @@
                 this.highEQ.type = 'highshelf';
                 this.highEQ.frequency.value = 3200;
                 this.highEQ.gain.value = 0;
-
-                this.gainNode.connect(this.lowEQ);
+                
+                // Create effect nodes
+                this.reverbNode = null;
+                this.delayNode = null;
+                this.flangerNode = null;
+                this.filterNode = null;
+                
+                // Create pre and post FX gain nodes for wet/dry mixing
+                this.preFXGain = this.context.createGain();
+                this.postFXGain = this.context.createGain();
+                this.dryGain = this.context.createGain();
+                this.wetGain = this.context.createGain();
+                
+                // Set initial FX mix (0% wet)
+                this.dryGain.gain.value = 1.0;
+                this.wetGain.gain.value = 0.0;
+                
+                // Create analyzer for waveform visualizations
+                this.analyser = this.context.createAnalyser();
+                this.analyser.fftSize = 2048;
+                this.analyser.smoothingTimeConstant = 0.8;
+                
+                // Connect the basic audio nodes chain
+                this.gainNode.connect(this.preFXGain);
+                this.gainNode.connect(this.dryGain);
+                this.preFXGain.connect(this.lowEQ);
                 this.lowEQ.connect(this.midEQ);
                 this.midEQ.connect(this.highEQ);
-                this.highEQ.connect(this.masterNode);
-
+                this.highEQ.connect(this.postFXGain);
+                this.postFXGain.connect(this.wetGain);
+                
+                // Connect both dry and wet paths to analyzer
+                this.dryGain.connect(this.analyser);
+                this.wetGain.connect(this.analyser);
+                
+                // Connect analyzer to master output
+                this.analyser.connect(this.masterNode);
+                
+                // Player state
                 this.playing = false;
                 this.looping = false;
+                this.keyLocked = false;
+                this.speed = 1.0;
+                this.originalPlaybackRate = 1.0;
+                this.originalPitch = 0;
                 this.buffer = null;
-                this.deckIndex = 0;
                 this.trackTitle = "No track loaded";
                 this.trackArtist = "--";
                 this.duration = 0;
                 this.offset = 0;
                 this.startTime = 0;
+                this.pauseTime = 0;
+                this.syncActive = false;
+                this.cuePoints = [];
+                
+                // Add active effects register
+                this.activeEffects = {
+                    reverb: false,
+                    delay: false,
+                    flanger: false,
+                    filter: false
+                };
+                
+                console.log(`AudioProcessor initialized for deck ${deckIndex}`);
             }
 
+            /**
+             * Loads an audio buffer into the deck
+             * @param {AudioBuffer} buffer - The audio buffer to load
+             * @param {string} title - Track title
+             * @param {string} artist - Track artist
+             */
             loadBuffer(buffer, title = "Untitled Track", artist = "Unknown Artist") {
+                if (!buffer || !(buffer instanceof AudioBuffer)) {
+                    throw new Error('Invalid audio buffer provided');
+                }
+                
                 this.buffer = buffer;
                 this.duration = buffer.duration;
                 this.trackTitle = title;
                 this.trackArtist = artist;
                 this.offset = 0;
+                this.pauseTime = 0;
                 this.updateTrackInfo();
+                
+                // Create waveform visualization
+                this.createWaveformVisualization();
+                
+                console.log(`Loaded track: ${title} by ${artist}, duration: ${this.duration.toFixed(2)}s`);
+                return true;
             }
-
+            
+            /**
+             * Play the current audio buffer
+             * @returns {boolean} - Success status
+             */
             play() {
-                // Your play logic
-            }
-
-            // Other methods...
-        }
-
-        // Initialize audio context on user interaction
-        function initializeAudioContext() {
-            if (!audioContext) {
+                if (!this.buffer) {
+                    console.warn(`Deck ${this.deckIndex}: Cannot play, no audio loaded`);
+                    return false;
+                }
+                
                 try {
-                    // Create audio context with fallback for different browsers
-                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    // Stop any existing playback
+                    if (this.source) {
+                        this.source.stop();
+                        this.source.disconnect();
+                    }
                     
-                    // Create master gain node for volume control
-                    masterGain = audioContext.createGain();
-                    masterGain.connect(audioContext.destination);
+                    // Create new source
+                    this.source = this.context.createBufferSource();
+                    this.source.buffer = this.buffer;
                     
-                    // Initialize processors for both decks
-                    decks[0].processor = new AudioProcessor(audioContext, masterGain);
-                    decks[0].processor.deckIndex = 0;
+                    // Set playback rate if key is locked
+                    if (this.keyLocked) {
+                        this.source.playbackRate.value = this.speed;
+                    } else {
+                        this.source.playbackRate.value = this.speed;
+                    }
                     
-                    decks[1].processor = new AudioProcessor(audioContext, masterGain);
-                    decks[1].processor.deckIndex = 1;
+                    // Connect source to gain node (start of chain)
+                    this.source.connect(this.gainNode);
                     
-                    console.log('Audio context initialized successfully');
+                    // Set looping if enabled
+                    this.source.loop = this.looping;
+                    
+                    // Calculate offset
+                    let startOffset = this.pauseTime;
+                    
+                    // Start playback
+                    this.source.start(0, startOffset);
+                    this.startTime = this.context.currentTime - startOffset;
+                    this.playing = true;
+                    
+                    // Update UI
+                    this.updatePlayPauseButton();
+                    this.startProgressUpdate();
+                    
                     return true;
                 } catch (error) {
-                    console.error('Failed to initialize audio context:', error);
-                    showToast('Audio initialization failed. Please try reloading the page.', 'error');
+                    console.error(`Deck ${this.deckIndex}: Error during playback:`, error);
+                    showToast(`Playback error: ${error.message}`, 'error');
+                    this.playing = false;
                     return false;
                 }
             }
-            return true;
-        }
+            
+            /**
+             * Pause the current playback
+             */
+            pause() {
+                if (!this.playing || !this.source) return;
+                
+                try {
+                    // Calculate current position
+                    this.pauseTime = this.context.currentTime - this.startTime;
+                    
+                    // Stop the source (cannot be restarted)
+                    this.source.stop();
+                    this.source.disconnect();
+                    this.source = null;
+                    this.playing = false;
+                    
+                    // Update UI
+                    this.updatePlayPauseButton();
+                    this.stopProgressUpdate();
+                } catch (error) {
+                    console.error(`Deck ${this.deckIndex}: Error pausing playback:`, error);
+                }
+            }
+            
+            /**
+             * Clean up and release resources
+             */
+            dispose() {
+                try {
+                    // Stop any playback
+                    if (this.source) {
+                        this.source.stop();
+                        this.source.disconnect();
+                    }
+                    
+                    // Disconnect all nodes
+                    this.gainNode.disconnect();
+                    this.lowEQ.disconnect();
+                    this.midEQ.disconnect();
+                    this.highEQ.disconnect();
+                    this.analyser.disconnect();
+                    this.preFXGain.disconnect();
+                    this.postFXGain.disconnect();
+                    this.dryGain.disconnect();
+                    this.wetGain.disconnect();
+                    
+                    // Disconnect effect nodes if they exist
+                    if (this.reverbNode) this.reverbNode.disconnect();
+                    if (this.delayNode) this.delayNode.disconnect();
+                    if (this.flangerNode) this.flangerNode.disconnect();
+                    if (this.filterNode) this.filterNode.disconnect();
+                    
+                    console.log(`Deck ${this.deckIndex}: AudioProcessor resources released`);
+                } catch (error) {
+                    console.error(`Deck ${this.deckIndex}: Error during cleanup:`, error);
+                }
+            }
+            
+            /**
+             * Create and initialize effect nodes
+             */
+            initializeEffects() {
+                try {
+                    // Create reverb node (ConvolverNode)
+                    this.reverbNode = this.context.createConvolver();
+                    
+                    // Create delay node
+                    this.delayNode = this.context.createDelay(5.0);
+                    this.delayNode.delayTime.value = 0.5;
+                    
+                    // Create filter node
+                    this.filterNode = this.context.createBiquadFilter();
+                    this.filterNode.type = 'lowpass';
+                    this.filterNode.frequency.value = 1000;
+                    
+                    // Load impulse response for reverb
+                    this.loadReverbImpulse();
+                    
+                    console.log(`Deck ${this.deckIndex}: Effects initialized`);
+                } catch (error) {
+                    console.error(`Deck ${this.deckIndex}: Error initializing effects:`, error);
+                }
+            }
+            
+            /**
+             * Load impulse response for reverb effect
+             */
+            loadReverbImpulse() {
+                try {
+                    // Create a simple impulse response for testing
+                    // In a real app, you would load an actual impulse response file
+                    const sampleRate = this.context.sampleRate;
+                    const length = 2 * sampleRate; // 2 seconds
+                    const impulseBuffer = this.context.createBuffer(2, length, sampleRate);
+                    
+                    const leftChannel = impulseBuffer.getChannelData(0);
+                    const rightChannel = impulseBuffer.getChannelData(1);
+                    
+                    // Exponential decay impulse
+                    for (let i = 0; i < length; i++) {
+                        const decay = Math.exp(-6 * i / length);
+                        leftChannel[i] = (Math.random() * 2 - 1) * decay;
+                        rightChannel[i] = (Math.random() * 2 - 1) * decay;
+                    }
+                    
+                    this.reverbNode.buffer = impulseBuffer;
+                    console.log(`Deck ${this.deckIndex}: Reverb impulse loaded`);
+                } catch (error) {
+                    console.error(`Deck ${this.deckIndex}: Error loading reverb impulse:`, error);
+                }
+            }
+            
+            /**
+             * Toggle an effect on/off
+             * @param {string} effectType - The effect to toggle ('reverb', 'delay', 'flanger', 'filter')
+             * @returns {boolean} - New state of the effect
+             */
+            toggleEffect(effectType) {
+                if (!this.buffer) {
+                    console.warn(`Deck ${this.deckIndex}: Cannot toggle effect, no audio loaded`);
+                    return false;
+                }
+                
+                try {
+                    // Initialize effects if not already done
+                    if (!this.reverbNode) {
+                        this.initializeEffects();
+                    }
+                    
+                    const newState = !this.activeEffects[effectType];
+                    
+                    // Disconnect current effect chain
+                    this.postFXGain.disconnect();
+                    
+                    if (newState) {
+                        // Effect is being turned ON
+                        switch(effectType) {
+                            case 'reverb':
+                                this.postFXGain.connect(this.reverbNode);
+                                this.reverbNode.connect(this.wetGain);
+                                break;
+                            case 'delay':
+                                this.postFXGain.connect(this.delayNode);
+                                this.delayNode.connect(this.wetGain);
+                                break;
+                            case 'flanger':
+                                // Flanger implementation would go here
+                                this.postFXGain.connect(this.wetGain);
+                                break;
+                            case 'filter':
+                                this.postFXGain.connect(this.filterNode);
+                                this.filterNode.connect(this.wetGain);
+                                break;
+                            default:
+                                this.postFXGain.connect(this.wetGain);
+                        }
+                    } else {
+                        // Effect is being turned OFF
+                        this.postFXGain.connect(this.wetGain);
+                    }
+                    
+                    // Update effect state
+                    this.activeEffects[effectType] = newState;
+                    
+                    // Update UI if needed
+                    const buttonEl = document.querySelector(`.fx-button[onclick*="${this.deckIndex}, '${effectType}')"]`);
+                    if (buttonEl) {
+                        if (newState) {
+                            buttonEl.classList.add('active');
+                        } else {
+                            buttonEl.classList.remove('active');
+                        }
+                    }
+                    
+                    console.log(`Deck ${this.deckIndex}: ${effectType} effect ${newState ? 'enabled' : 'disabled'}`);
+                    return newState;
+                } catch (error) {
+                    console.error(`Deck ${this.deckIndex}: Error toggling ${effectType}:`, error);
+                    return false;
+                }
+            }
+            
+            /**
+             * Update the wet/dry mix of effects
+             * @param {number} wetAmount - Amount of wet signal (0-100)
+             */
+            updateEffectMix(wetAmount) {
+                try {
+                    const normalizedWet = wetAmount / 100;
+                    this.wetGain.gain.value = normalizedWet;
+                    this.dryGain.gain.value = 1 - normalizedWet;
+                    console.log(`Deck ${this.deckIndex}: Effect mix set to ${wetAmount}%`);
+                } catch (error) {
+                    console.error(`Deck ${this.deckIndex}: Error updating effect mix:`, error);
+                }
+            }
+            
+            /**
+             * Update the EQ settings
+             * @param {string} band - The EQ band to adjust ('low', 'mid', 'high')
+             * @param {number} gain - The gain value (-12 to 12 dB)
+             */
+            updateEQ(band, gain) {
+                try {
+                    let node;
+                    switch(band) {
+                        case 'low':
+                            node = this.lowEQ;
+                            break;
+                        case 'mid':
+                            node = this.midEQ;
+                            break;
+                        case 'high':
+                            node = this.highEQ;
+                            break;
+                        default:
+                            console.warn(`Deck ${this.deckIndex}: Invalid EQ band: ${band}`);
+                            return;
+                    }
+                    
+                    node.gain.value = gain;
+                    console.log(`Deck ${this.deckIndex}: ${band} EQ set to ${gain} dB`);
+                } catch (error) {
+                    console.error(`Deck ${this.deckIndex}: Error updating ${band} EQ:`, error);
+                }
+            }
+            
+            /**
+             * Update the deck's volume
+             * @param {number} volume - Volume level (0-100)
+             */
+            updateVolume(volume) {
+                try {
+                    const normalizedVolume = volume / 100;
+                    this.gainNode.gain.value = normalizedVolume;
+                    
+                    const volumeValueEl = document.getElementById(`volume${this.deckIndex + 1}Value`);
+                    if (volumeValueEl) {
+                        volumeValueEl.textContent = `${volume}%`;
+                    }
+                    
+                    console.log(`Deck ${this.deckIndex}: Volume set to ${volume}%`);
+                } catch (error) {
+                    console.error(`Deck ${this.deckIndex}: Error updating volume:`, error);
+                }
+            }
+            
+            /**
+             * Update the playback rate/tempo
+             * @param {number} tempo - The new tempo in BPM
+             */
+            updateTempo(tempo) {
+                if (!this.source) return;
+                
+                try {
+                    // Calculate playback rate based on original tempo
+                    const originalTempo = 128; // Default if not detected
+                    this.speed = tempo / originalTempo;
+                    
+                    // Update playback rate
+                    this.source.playbackRate.value = this.speed;
+                    
+                    // Update UI
+                    const tempoEl = document.getElementById(`deck${this.deckIndex + 1}Tempo`);
+                    if (tempoEl) {
+                        tempoEl.textContent = `${tempo} BPM`;
+                    }
+                    
+                    console.log(`Deck ${this.deckIndex}: Tempo set to ${tempo} BPM (rate: ${this.speed.toFixed(2)}x)`);
+                } catch (error) {
+                    console.error(`Deck ${this.deckIndex}: Error updating tempo:`, error);
+                }
+            }
+            
+            /**
+             * Update track visualization
+             */
+            createWaveformVisualization() {
+                try {
+                    const canvas = document.getElementById(`waveform${this.deckIndex + 1}`);
+                    if (!canvas || !this.buffer) return;
+                    
+                    const ctx = canvas.getContext('2d');
+                    const width = canvas.width;
+                    const height = canvas.height;
+                    
+                    // Clear the canvas
+                    ctx.clearRect(0, 0, width, height);
+                    
+                    // Set up colors for waveform
+                    ctx.fillStyle = 'rgba(212, 47, 0, 0.2)';
+                    ctx.strokeStyle = 'rgba(212, 47, 0, 0.8)';
+                    ctx.lineWidth = 1;
+                    
+                    // Get audio data
+                    const channelData = this.buffer.getChannelData(0); // Use first channel
+                    const step = Math.ceil(channelData.length / width);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(0, height / 2);
+                    
+                    // Draw the waveform
+                    for (let i = 0; i < width; i++) {
+                        const dataIndex = Math.floor(i * step);
+                        const value = channelData[dataIndex] || 0;
+                        const y = (value + 1) * height / 2; // Convert to Y coordinate
+                        ctx.lineTo(i, y);
+                    }
+                    
+                    // Complete the waveform path
+                    ctx.lineTo(width, height / 2);
+                    ctx.stroke();
+                    ctx.closePath();
+                    
+                    // Fill the waveform
+                    ctx.fillStyle = 'rgba(212, 47, 0, 0.1)';
+                    ctx.fill();
+                    
+                    console.log(`Deck ${this.deckIndex}: Waveform visualization created`);
+                } catch (error) {
+                    console.error(`Deck ${this.deckIndex}: Error creating waveform:`, error);
+                }
+            }
+            
+            /**
+             * Start the progress update timer
+             */
+            startProgressUpdate() {
+                if (this.progressInterval) {
+                    clearInterval(this.progressInterval);
+                }
+                
+                this.progressInterval = setInterval(() => {
+                    if (!this.playing || !this.buffer) return;
+                    
+                    try {
+                        // Calculate current position
+                        const currentTime = this.context.currentTime - this.startTime;
+                        
+                        if (currentTime >= this.buffer.duration) {
+                            // Track finished
+                            if (this.looping) {
+                                // If looping, restart from beginning
+                                this.play();
+                            } else {
+                                // Stop playback
+                                this.pause();
+                                this.pauseTime = 0;
+                            }
+                            return;
+                        }
+                        
+                        // Update progress bar
+                        const progressBar = document.getElementById(`deck${this.deckIndex + 1}Progress`);
+                        if (progressBar) {
+                            const percent = (currentTime / this.buffer.duration) * 100;
+                            progressBar.style.width = `${percent}%`;
+                        }
+                        
+                        // Update time displays
+                        const currentTimeEl = document.getElementById(`deck${this.deckIndex + 1}CurrentTime`);
+                        const totalTimeEl = document.getElementById(`deck${this.deckIndex + 1}TotalTime`);
+                        
+                        if (currentTimeEl) {
+                            currentTimeEl.textContent = this.formatTime(currentTime);
+                        }
+                        
+                        if (totalTimeEl) {
+                            totalTimeEl.textContent = this.formatTime(this.buffer.duration);
+                        }
+                    } catch (error) {
+                        console.error(`Deck ${this.deckIndex}: Error updating progress:`, error);
+                    }
+                }, 100);
+            }
+            
+            /**
+             * Stop the progress update timer
+             */
+            stopProgressUpdate() {
+                if (this.progressInterval) {
+                    clearInterval(this.progressInterval);
+                    this.progressInterval = null;
+                }
+            }
+            
+            /**
+             * Format time in seconds to MM:SS format
+             * @param {number} seconds - Time in seconds
+             * @returns {string} - Formatted time string
+             */
+            formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+            
+            /**
+             * Update the track information display
+             */
+            updateTrackInfo() {
+                const titleEl = document.getElementById(`deck${this.deckIndex + 1}Title`);
+                const artistEl = document.getElementById(`deck${this.deckIndex + 1}Artist`);
+                
+                if (titleEl) {
+                    titleEl.textContent = this.trackTitle;
+                }
+                
+                if (artistEl) {
+                    artistEl.textContent = this.trackArtist;
+                }
+                
+                // Update total time display
+                const totalTimeEl = document.getElementById(`deck${this.deckIndex + 1}TotalTime`);
+                if (totalTimeEl && this.buffer) {
+                    totalTimeEl.textContent = this.formatTime(this.buffer.duration);
+                }
+            }
+            
+            /**
+             * Update the play/pause button UI
+             */
+            updatePlayPauseButton() {
+                const playBtn = document.getElementById(`playBtn${this.deckIndex + 1}`);
+                const playIcon = document.getElementById(`playIcon${this.deckIndex + 1}`);
+                
+                if (playBtn && playIcon) {
+                    if (this.playing) {
+                        playIcon.classList.remove('fa-play');
+                        playIcon.classList.add('fa-pause');
+                        playBtn.classList.add('active');
+                    } else {
+                        playIcon.classList.remove('fa-pause');
+                        playIcon.classList.add('fa-play');
+                        playBtn.classList.remove('active');
+                    }
+                }
+                
+                // Also update vinyl rotation
+                const vinyl = document.getElementById(`vinyl${this.deckIndex + 1}`);
+                if (vinyl) {
+                    if (this.playing) {
+                        vinyl.style.animation = 'spin 2s linear infinite';
+                    } else {
+                        vinyl.style.animation = 'none';
+                    }
+                }
+            }
+            
+            /**
+             * Set a cue point at the current position
+             */
+            setCuePoint() {
+                if (!this.buffer) return;
+                
+                try {
+                    const currentPosition = this.playing 
+                        ? this.context.currentTime - this.startTime 
+                        : this.pauseTime;
+                    
+                    this.cuePoints.push(currentPosition);
+                    console.log(`Deck
         
         // Initialize audio on first user interaction (required by browsers)
         document.addEventListener('click', initializeAudioContext, { once: true });
@@ -2718,17 +3270,520 @@
         // Your remaining script logic...
         // It should include all functions like playDeck, loadTrack, and so on.
     </script>
+
 <!-- Core libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-<!-- Application modules -->
-<script src="js/config.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/audio.js"></script>
-<script src="js/effects.js"></script>
-<script src="js/turntable.js"></script>
+<!-- Initialize app -->
+<script>
+    // Global state
+    let currentDeck = 0;
+    let broadcasting = false;
+    
+    // Initialize components on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize audio system with error handling
+        try {
+            if (initializeAudio()) {
+                // Initialize UI components
+                initializeTurntables();
+                
+                // Load any saved settings
+                loadSettings();
+                
+                // Setup broadcast capabilities
+                initializeBroadcast();
+
+                showToast('Virtual Turntables initialized successfully', 'success');
+            } else {
+                showToast('Error initializing audio system. Please check your audio settings.', 'error');
+            }
+        } catch (error) {
+            console.error('Error during initialization:', error);
+            showToast('Error initializing application: ' + (error.message || 'Unknown error'), 'error');
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        // Update UI layouts if needed
+        if (decks && decks[0]) decks[0].updateWaveform();
+        if (decks && decks[1]) decks[1].updateWaveform();
+    });
+
+    // Handle visibility change
+    document.addEventListener('visibilitychange', () => {
+        if (!turntables) return;
+        
+        if (document.hidden) {
+            // Pause animations when tab is not visible
+            turntables.forEach(tt => tt.stopNormalRotation());
+        } else {
+            // Resume animations when tab becomes visible
+            turntables.forEach((tt, i) => {
+                if (decks[i] && decks[i].isPlaying) {
+                    tt.startNormalRotation();
+                }
+            });
+        }
+    });
+</script>
+
+<!-- Application module -->
 <script src="js/app.js"></script>
 <!-- Hidden file input for track loading -->
 <input type="file" id="fileInput" accept="audio/*" style="display: none;">
 </body>
 </html>
+
+<script>
+/**
+ * Complete AudioProcessor class implementation
+ */
+// Complete the setCuePoint method that was cut off
+AudioProcessor.prototype.setCuePoint = function() {
+    if (!this.buffer) return;
+    
+    try {
+        const currentPosition = this.playing 
+            ? this.context.currentTime - this.startTime 
+            : this.pauseTime;
+        
+        this.cuePoints.push(currentPosition);
+        console.log(`Deck ${this.deckIndex}: Cue point set at ${this.formatTime(currentPosition)}`);
+        
+        // You might want to visualize this cue point on the waveform
+        this.markCuePointOnWaveform(currentPosition);
+        
+        // Flash the cue button to indicate success
+        const cueButton = document.querySelector(`button[onclick*="cuePoint(${this.deckIndex})"]`);
+        if (cueButton) {
+            cueButton.classList.add('active');
+            setTimeout(() => {
+                cueButton.classList.remove('active');
+            }, 300);
+        }
+        
+        return currentPosition;
+    } catch (error) {
+        console.error(`Deck ${this.deckIndex}: Error setting cue point:`, error);
+        return null;
+    }
+};
+
+/**
+ * Mark a cue point on the waveform visualization
+ * @param {number} position - Position in seconds
+ */
+AudioProcessor.prototype.markCuePointOnWaveform = function(position) {
+    try {
+        const canvas = document.getElementById(`waveform${this.deckIndex + 1}`);
+        if (!canvas || !this.buffer) return;
+        
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const percent = position / this.buffer.duration;
+        const x = percent * width;
+        
+        // Draw cue point marker
+        ctx.save();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+        
+        // Draw cue point label
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('CUE', x, 10);
+        ctx.restore();
+    } catch (error) {
+        console.error(`Deck ${this.deckIndex}: Error marking cue point:`, error);
+    }
+};
+
+/**
+ * Jump to a cue point
+ * @param {number} index - Index of the cue point
+ */
+AudioProcessor.prototype.jumpToCuePoint = function(index) {
+    if (!this.buffer || !this.cuePoints[index]) return;
+    
+    try {
+        const position = this.cuePoints[index];
+        this.pauseTime = position;
+        
+        if (this.playing) {
+            // If already playing, restart from new position
+            this.play();
+        }
+        
+        console.log(`Deck ${this.deckIndex}: Jumped to cue point at ${this.formatTime(position)}`);
+    } catch (error) {
+        console.error(`Deck ${this.deckIndex}: Error jumping to cue point:`, error);
+    }
+};
+
+/**
+ * Initialize the AudioContext with proper error handling and state management
+ * @returns {boolean} Success status
+ */
+function initializeAudioContext() {
+    if (audioContext) {
+        // Already initialized
+        console.log('Audio context already initialized, current state:', audioContext.state);
+        return true;
+    }
+    
+    try {
+        // Create audio context with error handling
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) {
+            throw new Error('Web Audio API not supported in this browser');
+        }
+        
+        audioContext = new AudioContext();
+        audioState = AudioSystemState.INITIALIZING;
+        
+        console.log('Audio context created, state:', audioContext.state);
+        
+        // Initialize master nodes
+        initializeMasterAudioNodes();
+        
+        // Setup state change listeners
+        setupAudioContextStateHandlers();
+        
+        // Browser may initialize the context in suspended state
+        if (audioContext.state === 'suspended') {
+            console.log('Audio context suspended, waiting for user interaction');
+            audioState = AudioSystemState.SUSPENDED;
+            showToast('Click anywhere to enable audio playback', 'info');
+            
+            // Add click handler to resume context
+            document.body.addEventListener('click', function resumeAudioContext() {
+                if (audioContext.state === 'suspended') {
+                    audioContext.resume().then(() => {
+                        console.log('Audio context resumed by user interaction');
+                        audioState = AudioSystemState.RUNNING;
+                        showToast('Audio playback enabled', 'success');
+                    }).catch(error => {
+                        console.error('Failed to resume audio context:', error);
+                        audioState = AudioSystemState.ERROR;
+                        showToast('Failed to enable audio. Please reload the page.', 'error');
+                    });
+                }
+                
+                // Remove this listener after first successful click
+                if (audioContext.state === 'running') {
+                    document.body.removeEventListener('click', resumeAudioContext);
+                }
+            }, { once: false });
+        } else {
+            audioState = AudioSystemState.RUNNING;
+        }
+        
+        // Initialize deck processors
+        initializeDeckProcessors();
+        
+        return true;
+    } catch (error) {
+        console.error('Error initializing audio context:', error);
+        audioState = AudioSystemState.ERROR;
+        
+        showToast('Failed to initialize audio system: ' + error.message, 'error');
+        
+        // Show more detailed error in modal
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        
+        if (modalTitle && modalMessage) {
+            modalTitle.textContent = 'Audio System Error';
+            modalMessage.innerHTML = `
+                <p>There was an error initializing the audio system:</p>
+                <p class="text-red-500 mt-2">${error.message}</p>
+                <p class="mt-2">Possible reasons:</p>
+                <ul class="list-disc ml-5 mt-2">
+                    <li>Your browser doesn't support Web Audio API</li>
+                    <li>Audio device not available or permission denied</li>
+                    <li>Too many audio contexts created</li>
+                    <li>System audio issues</li>
+                </ul>
+                <p class="mt-2">Try the following:</p>
+                <ul class="list-disc ml-5 mt-2">
+                    <li>Refresh the page</li>
+                    <li>Use a different browser (Chrome recommended)</li>
+                    <li>Check your audio device settings</li>
+                    <li>Grant microphone permissions if prompted</li>
+                </ul>
+            `;
+            
+            const alertModal = document.getElementById('alertModal');
+            if (alertModal) {
+                alertModal.style.display = 'block';
+            }
+        }
+        
+        return false;
+    }
+}
+
+/**
+ * Initialize master audio nodes (gain, limiter, analyser)
+ */
+function initializeMasterAudioNodes() {
+    if (!audioContext) return false;
+    
+    try {
+        // Create master gain node
+        masterGain = audioContext.createGain();
+        masterGain.gain.value = 1.0;
+        
+        // Create dynamics compressor for limiting/preventing clipping
+        masterLimiter = audioContext.createDynamicsCompressor();
+        masterLimiter.threshold.value = -1.0;  // dB
+        masterLimiter.knee.value = 0.0;        // dB
+        masterLimiter.ratio.value = 20.0;      // ratio
+        masterLimiter.attack.value = 0.001;    // seconds
+        masterLimiter.release.value = 0.1;     // seconds
+        
+        // Create master analyser for visualizations
+        masterAnalyser = audioContext.createAnalyser();
+        masterAnalyser.fftSize = 2048;
+        masterAnalyser.smoothingTimeConstant = 0.8;
+        
+        // Connect master audio chain
+        masterGain.connect(masterLimiter);
+        masterLimiter.connect(masterAnalyser);
+        masterAnalyser.connect(audioContext.destination);
+        
+        console.log('Master audio nodes initialized');
+        return true;
+    } catch (error) {
+        console.error('Error initializing master audio nodes:', error);
+        return false;
+    }
+}
+
+/**
+ * Initialize deck processors
+ */
+function initializeDeckProcessors() {
+    if (!audioContext || !masterGain) return false;
+    
+    try {
+        // Create processors for each deck
+        deckProcessors[0] = new AudioProcessor(audioContext, masterGain, 0);
+        deckProcessors[1] = new AudioProcessor(audioContext, masterGain, 1);
+        
+        // Store in decks array for other parts of the app
+        decks[0].processor = deckProcessors[0];
+        decks[1].processor = deckProcessors[1];
+        
+        console.log('Deck processors initialized');
+        return true;
+    } catch (error) {
+        console.error('Error initializing deck processors:', error);
+        return false;
+    }
+}
+
+/**
+ * Setup audio context state change handlers
+ */
+function setupAudioContextStateHandlers() {
+    if (!audioContext) return;
+    
+    audioContext.onstatechange = function() {
+        console.log('Audio context state changed to:', audioContext.state);
+        
+        switch (audioContext.state) {
+            case 'running':
+                audioState = AudioSystemState.RUNNING;
+                showToast('Audio system running', 'success');
+                break;
+                
+            case 'suspended':
+                audioState = AudioSystemState.SUSPENDED;
+                showToast('Audio system suspended. Click to resume.', 'warning');
+                break;
+                
+            case 'closed':
+                audioState = AudioSystemState.UNINITIALIZED;
+                showToast('Audio system closed', 'info');
+                break;
+                
+            default:
+                break;
+        }
+        
+        // Update UI to reflect current state
+        updateAudioSystemStatusDisplay();
+    };
+}
+
+/**
+ * Update the audio system status display in the UI
+ */
+function updateAudioSystemStatusDisplay() {
+    // This is a placeholder for where you might add UI elements to show audio system status
+    console.log('Audio system status:', audioState);
+    
+    // Example: change an indicator color based on state
+    const statusIndicator = document.getElementById('audioStatusIndicator');
+    if (statusIndicator) {
+        statusIndicator.className = 'connection-status';
+        
+        switch (audioState) {
+            case AudioSystemState.RUNNING:
+                statusIndicator.classList.add('connected');
+                statusIndicator.title = 'Audio system running';
+                break;
+                
+            case AudioSystemState.SUSPENDED:
+                statusIndicator.classList.add('warning');
+                statusIndicator.title = 'Audio system suspended';
+                break;
+                
+            case AudioSystemState.ERROR:
+                statusIndicator.classList.add('error');
+                statusIndicator.title = 'Audio system error';
+                break;
+                
+            default:
+                statusIndicator.title = 'Audio system not initialized';
+                break;
+        }
+    }
+}
+
+/**
+ * Check if the audio system is in a valid state for operations
+ * @returns {boolean} Whether audio system is operational
+ */
+function checkAudioSystemStatus() {
+    if (!audioContext) {
+        console.warn('Audio context not initialized');
+        showToast('Audio system not initialized. Click anywhere to enable.', 'warning');
+        initializeAudioContext();
+        return false;
+    }
+    
+    if (audioContext.state === 'suspended') {
+        console.warn('Audio context suspended, attempting to resume');
+        
+        // Try to resume the context
+        audioContext.resume().then(() => {
+            console.log('Audio context resumed successfully');
+            return true;
+        }).catch(error => {
+            console.error('Failed to resume audio context:', error);
+            return false;
+        });
+        
+        return false;
+    }
+    
+    if (audioState === AudioSystemState.ERROR) {
+        console.error('Audio system is in error state');
+        showToast('Audio system error. Try reloading the page.', 'error');
+        return false;
+    }
+    
+    return true;
+}
+
+/**
+ * Recover from audio system errors
+ * @returns {boolean} Success status
+ */
+function recoverAudioSystem() {
+    // Attempt to recover from various error states
+    if (!audioContext || audioState === AudioSystemState.ERROR) {
+        console.log('Attempting to recover audio system...');
+        
+        // Close existing context if it exists
+        if (audioContext) {
+            try {
+                audioContext.close();
+            } catch (error) {
+                console.warn('Error closing audio context:', error);
+            }
+            audioContext = null;
+        }
+        
+        // Release resources
+        if (masterGain) {
+            try {
+                masterGain.disconnect();
+            } catch (error) {
+                console.warn('Error disconnecting master gain:', error);
+            }
+            masterGain = null;
+        }
+        
+        if (masterLimiter) {
+            try {
+                masterLimiter.disconnect();
+            } catch (error) {
+                console.warn('Error disconnecting master limiter:', error);
+            }
+            masterLimiter = null;
+        }
+        
+        if (masterAnalyser) {
+            try {
+                masterAnalyser.disconnect();
+            } catch (error) {
+                console.warn('Error disconnecting master analyser:', error);
+            }
+            masterAnalyser = null;
+        }
+        
+        // Release deck processors
+        for (let i = 0; i < deckProcessors.length; i++) {
+            if (deckProcessors[i]) {
+                try {
+                    deckProcessors[i].dispose();
+                } catch (error) {
+                    console.warn(`Error disposing deck processor ${i}:`, error);
+                }
+                deckProcessors[i] = null;
+            }
+        }
+        
+        // Reinitialize audio system
+        const success = initializeAudioContext();
+        if (success) {
+            showToast('Audio system recovered', 'success');
+            return true;
+        } else {
+            showToast('Failed to recover audio system', 'error');
+            return false;
+        }
+    } else if (audioContext.state === 'suspended') {
+        // Just try to resume
+        try {
+            audioContext.resume();
+            showToast('Audio resumed', 'success');
+            return true;
+        } catch (error) {
+            console.error('Error resuming audio context:', error);
+            showToast('Failed to resume audio', 'error');
+            return false;
+        }
+    }
+    
+    return false;
+}
+
+/**
+ * Get available audio output devices
+ * @returns {Promise} Promise that resolves with the list of audio devices
+ */
+function getAudioOutputDevices() {
+    return new Promise((resolve, reject) => {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+            reject(new Error('MediaDevices API not supporte
