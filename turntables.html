@@ -70,6 +70,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kirk Radio DJ - Professional DJ Software</title>
+    <!-- Google Drive Integration -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="{{GOOGLE_CLIENT_ID}}">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="https://raw.githubusercontent.com/Pilgrimcmoney/KirkRadioOnline/main/favicon.svg" type="image/svg+xml">
@@ -371,12 +374,52 @@
         /* Enhanced Control Label */
         .control-label {
             font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
             text-align: center;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+        }
+        
+        /* Upload section styles */
+        .upload-section {
+            transition: all 0.3s ease;
+        }
+
+        .music-file {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            border-bottom: 1px solid #4a5568;
+            transition: all 0.3s ease;
+        }
+
+        .music-file:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .music-file span {
+            color: #cbd5e0;
+            font-size: 0.875rem;
+        }
+
+        .music-file button {
+            background: #4299e1;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .music-file button:hover {
+            background: #3182ce;
+        }
+
+        #uploadControls.hidden {
+            display: none;
+        }
+        
+        /* Your existing CSS styles go here */
         }
         
         /* Your existing CSS styles go here */
@@ -932,9 +975,31 @@
                         <li class="mb-0.5"><i class="fas fa-angle-right mr-1"></i> Double-click to load a track to a deck</li>
                     </ul>
                 </div>
+                </div>
             </div>
+            
+            <!-- Upload Music Section -->
+            <div class="bg-gray-800 p-4 rounded-lg mb-4 upload-section">
+                <h3 class="text-xl font-bold text-white mb-4">Upload Music</h3>
+                <div id="googleSignInButton" class="g-signin2 mb-4" data-onsuccess="onSignIn"></div>
+                <div id="uploadControls" class="hidden">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <input type="file" id="musicFileInput" accept="audio/*" multiple
+                            class="text-sm text-white file:mr-4 file:py-2 file:px-4
+                            file:rounded-full file:border-0
+                            file:text-sm file:font-semibold
+                            file:bg-violet-50 file:text-violet-700
+                            hover:file:bg-violet-100">
+                        <button onclick="uploadFiles()"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Upload to Drive
+                        </button>
+                    </div>
+                </div>
+                <div id="musicList" class="bg-gray-700 rounded-lg p-4"></div>
+            </div>
+            
             <div class="p-1 border-t border-[#333]">
-                <button onclick="openLibraryFolder()" class="dj-button w-full mb-1 tooltip py-0.5 text-xs">
                     <i class="fas fa-folder-open mr-1"></i> Open Library Folder
                     <span class="tooltip-text">Open a folder to import multiple tracks at once</span>
                 </button>
@@ -2521,6 +2586,76 @@
             
             // Show modal
             modal.style.display = 'block';
+        }
+        // Google Drive Integration Functions
+        let isAuthenticated = false;
+
+        function onSignIn(googleUser) {
+            isAuthenticated = true;
+            document.getElementById('uploadControls').style.display = 'block';
+            loadMusicFiles();
+        }
+
+        async function uploadFiles() {
+            const fileInput = document.getElementById('musicFileInput');
+            const files = fileInput.files;
+
+            for (let file of files) {
+                const formData = new FormData();
+                formData.append('musicFile', file);
+
+                try {
+                    const response = await fetch('/api/drive/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+                    if (response.ok) {
+                        console.log('Upload successful:', result);
+                        loadMusicFiles(); // Refresh the file list
+                    } else {
+                        console.error('Upload failed:', result.error);
+                        alert('Failed to upload file: ' + result.error);
+                    }
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    alert('Error uploading file');
+                }
+            }
+        }
+
+        async function loadMusicFiles() {
+            try {
+                const response = await fetch('/api/drive/files');
+                const files = await response.json();
+
+                const musicList = document.getElementById('musicList');
+                musicList.innerHTML = '<h4>Your Music Files</h4>';
+
+                files.forEach(file => {
+                    const fileElement = document.createElement('div');
+                    fileElement.className = 'music-file';
+                    fileElement.innerHTML = `
+                        <span>${file.name}</span>
+                        <button onclick="loadTrack('${file.webContentLink}', '${file.name}')">
+                            Load to Deck
+                        </button>
+                    `;
+                    musicList.appendChild(fileElement);
+                });
+            } catch (error) {
+                console.error('Error loading music files:', error);
+            }
+        }
+
+        function signOut() {
+            const auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(() => {
+                isAuthenticated = false;
+                document.getElementById('uploadControls').style.display = 'none';
+                document.getElementById('musicList').innerHTML = '';
+            });
         }
 
         function showToast(message, type = 'info') {

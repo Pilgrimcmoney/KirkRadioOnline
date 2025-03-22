@@ -1,17 +1,28 @@
 {
-    "name": "kirk-radio-dj",
-    "version": "1.0.0",
-    "description": "Kirk Radio DJ Virtual Turntables",
-    "main": "server.js",
-    "scripts": {
-        "start": "node server.js",
-        "dev": "nodemon server.js"
-    },
-    "dependencies": {
-        "express": "^4.17.1"
-    },
-    "devDependencies": {
-        "nodemon": "^2.0.15"
-    }
+  "name": "kirk-radio-dj",
+  "version": "1.0.0",
+  "description": "Virtual DJ Turntables Application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "axios": "^1.8.4",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "googleapis": "^148.0.0",
+    "icecast-stack": "^0.3.0",
+    "multer": "^1.4.5-lts.2",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-oauth2": "^1.8.0",
+    "ws": "^8.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
 }
-
