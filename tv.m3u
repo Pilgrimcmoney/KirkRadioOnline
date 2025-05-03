@@ -1,5 +1,5 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="UFC" tvg-logo="https://imgur.com/gallery/ufc-hd-logo-lGhn93M",UFC
+#EXTINF:-1 tvg-id="UFC" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/united-states/ufc-us.png",UFC
 https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playlist.m3u8
 #EXTINF:-1 tvg-id="NFLChannel.us",NFL 
 https://apollo.production-public.tubi.io/live/ac-nfl2.m3u8
