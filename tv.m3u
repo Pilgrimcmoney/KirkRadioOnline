@@ -66,7 +66,7 @@ https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/98
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/ce168a85-c8d4-41d6-a597-cc8fd7baddd9/manifest.m3u8
 #EXTINF:-1 tvg-id="",BILLIARDS+
 https://streams2.sofast.tv/WiseM3U8_18/sofast/cleanhls/master.m3u8
-#EXTINF:-1 tvg-id="",CARTOON CLASSICS
+#EXTINF:-1 tvg-id="" tvg-logo="cartoons-4u-vod-us.png",CARTOON CLASSICS
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/d5543c06-5122-49a7-9662-32187f48aa2c/manifest.m3u8
 #EXTINF:-1 tvg-id="",CHRONO
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/d375ebca-9cd0-475e-ad4d-0cde6634de9c/manifest.m3u8
