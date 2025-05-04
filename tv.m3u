@@ -13,6 +13,8 @@ https://2-fss-2.streamhoster.com/pl_140/amlst:200914-1298290/playlist.m3u8
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/c8d16110-566c-4e95-a1df-55d175e9e201/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="panda-logo-png_seeklogo-400328.png",CRAFTY PANDA
 https://bpd-cp-stirr.otteravision.com/bpd/cp/cp.m3u8
+#EXTINF:-1 tvg-id="LoveNature4K.ca" tvg-logo="https://i.imgur.com/oDacp1F.png",LOVE NATURE 4K
+https://d18dyiwu97wm6q.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/LoveNature4K2-prod/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="travel-4u-vod-us.png",4K TRAVEL TV
 https://streams2.sofast.tv/sofastplayout/33c31ac4-51fa-46ae-afd0-0d1fe5e60a80_0_HLS/master.m3u8
 #EXTINF:-1 tvg-id="MovieSphere.us" tvg-logo="Moviesphere.png",MOVIESPHERE 
@@ -68,36 +70,6 @@ https://aegis-cloudfront-1.tubi.video/c987b155-8d7e-4307-bd24-720bb2843d42/playl
 https://aegis-cloudfront-1.tubi.video/4e6d2330-f93e-4068-b795-9f8585640b13/playlist.m3u8
 #EXTINF:-1 tvg-id="FoxSports.us" tvg-logo="fox-sports-us.png",FOX SPORTS
 https://apollo.production-public.tubi.io/live/fox-sports.m3u8
-#EXTINF:-1 tvg-id="FoxWeather.us" tvg-logo="fox-weather-us.png",FOX WEATHER 
-https://livetv-fa.tubi.video/fox-weather/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="" tvg-logo="Space.png",SPACE
-https://apollo.production-public.tubi.io/live/ac-cosmos.m3u8
-#EXTINF:-1 tvg-id="CourtTV.us" tvg-logo="court-tv-us.png",COURT TV 
-https://apollo.production-public.tubi.io/live/ac-court-tv.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="CrimeThrillher.png",CRIME THRILLER 
-https://apollo.production-public.tubi.io/live/ac-crime-thrillher.m3u8
-#EXTINF:-1 tvg-id="ColdCaseFiles.us" tvg-logo="cold-case-files-vod-us.png",COLDCASE FILES
-https://apollo.production-public.tubi.io/live/ac-cold-case-files.m3u8
-#EXTINF:-1 tvg-id="UnsolvedMysteries.us" tvg-logo="unsolved-mysteries-vod-us.png",UNSOLVED MYSTERIES 
-https://livetv-fa.tubi.video/unsolved-mysteries/index.m3u8
-#EXTINF:-1 tvg-id="VICETV.us" tvg-logo="vice-us.png",VICE 
-https://aegis-cloudfront-1.tubi.video/073ab3b0-a8a5-472d-9b45-46d3dead6146/playlist.m3u8
-#EXTINF:-1 tvg-id="Buzzr.us" tvg-logo="buzzr-vod.png",BUZZR 
-https://apollo.production-public.tubi.io/live/ac-buzzr.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="ace-212.png",ACE TV
-https://streams2.sofast.tv/WiseM3U8_30/sofast/cleanhls/master.m3u8
-#EXTINF:-1 tvg-id=""tvg-logo="Boating Channel.png",BOATING CHANNEL
-https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/04c3a27e-c2a0-420b-8eef-7dae9ab93056/manifest.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="automotion@logotyp.us.png",AUTOMOTION
-https://streams2.sofast.tv/sofastplayout/0c3229e2-6ca5-4714-859e-c0ac6b9aa58a_0_HLS/master.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="BangBang---Red-Logo.png",BANGBANG TV
-https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/6a98fce2-bf4c-4bfb-91f4-c43851bb3801/manifest.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="Billiard.png",BILLIARDS+
-https://streams2.sofast.tv/WiseM3U8_18/sofast/cleanhls/master.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="Billiard.png",CHRONO
-https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/d375ebca-9cd0-475e-ad4d-0cde6634de9c/manifest.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",CUISINE CHANNEL
-https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/34839a9b-a901-4f31-b593-07555f7937d4/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",DANGERVISION
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/453971f3-855a-455e-9353-ebbb069583a4/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",EDGY TV
@@ -182,35 +154,6 @@ https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/e0
 https://d1h1d6qoy9vnra.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/Freebie-Plex/187.m3u8
 #EXTINF:-1 tvg-id="HardKnocks.ca",HARD KNOCKS 
 https://d3uyzhwvmemdyf.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/HardKnocks-PLEX/121.m3u8
-#EXTINF:-1 tvg-id="HumorMill.us",HUMOR MILL
-https://damkf751d85s1.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/HumorMill-PLEX/152.m3u8
-#EXTINF:-1 tvg-id="MuseumTVFast.us",MUSEUM TV
-https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01492-secomsasmediart-museumtv-en-plex/playlist.m3u8
-#EXTINF:-1 tvg-id="PopstarTV.us",POPSTAR! TV
-https://linear-10.frequency.stream/dist/plex/10/hls/master/playlist.m3u8
-#EXTINF:-1 tvg-id="Timeline.us",Timeline 
-https://lds-timeline-plex.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="",DRYBAR HUMOR
-https://drybar-drybarcomedy-1-ca.samsung.wurl.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="FightNetwork.ca" tvg-logo="https://i.imgur.com/vlKPZHR.png",FIGHT NETWORK
-https://d12a2vxqkkh1bo.cloudfront.net/hls/main.m3u8
-#EXTINF:-1 tvg-id="LoveNature4K.ca" tvg-logo="https://i.imgur.com/oDacp1F.png",LOVE NATURE 4K
-https://d18dyiwu97wm6q.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/LoveNature4K2-prod/playlist.m3u8
-#EXTINF:-1 tvg-id="CJONDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/b/bd/CJON-TV.PNG",NEWFOUNDLAND TV
-https://2-fss-1.streamhoster.com/pl_122/201748-1431018-1/playlist.m3u8
-#EXTINF:-1 tvg-id="HorseCountryTV.uk",HORSE AND COUNTRY
-https://hncfree-samsung-uk.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="DuckHuntingTV.us",DUCK HUNTING CHANNEL
-https://main.duckhunting.playout.vju.tv/duckhuntingtv/main.m3u8
-#EXTINF:-1 tvg-id="TheUltimateMusicChannel.us",The Ultimate Music Channel 
-https://app.viloud.tv/hls/channel/0694b92d093cc2bd5438ff9bbccaf1a2.m3u8
-#EXTINF:-1 tvg-id="IMPACTWrestling.us",TNA Wrestling 
-https://d3mwqwqfak7y2q.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/ImpactWrestling-prod/hls/main.m3u8
-#EXTINF:-1 tvg-id="TODAYTV.us",Today TV 
-#EXTINF:-1 tvg-id="TVSBowlingNetwork.us",TVS BOXING NETWORK
-https://bozztv.com/gusa/gusa-tvsbowling/index.m3u8
-#EXTINF:-1 tvg-id="Choppertown.us",CHOPPERTOWN
-https://linear-11.frequency.stream/dist/glewedtv/11/hls/master/playlist.m3u8
 #EXTINF:-1 tvg-id="SwerveSports.us",SWERVE SPORTS
 https://linear-253.frequency.stream/dist/glewedtv/253/hls/master/playlist.m3u8
 #EXTINF:-1 tvg-id="30AGolfKingdom.us" tvg-logo="https://golfkingdom.net/wp-content/uploads/2022/04/golf-kingdom-st.jpg" group-title="Sports",30A Golf Kingdom
@@ -317,10 +260,10 @@ https://2-fss-2.streamhoster.com/pl_138/201660-1270634-1/playlist.m3u8
 https://tvturf4.janus.cl/playlist/stream.m3u8?d=w&id=
 #EXTINF:-1 tvg-id="WorldofFreesports.de" tvg-logo="https://i.imgur.com/lta5Mog.png" group-title="Sports",World of Freesports (1080p)
 https://mainstreammedia-worldoffreesportsintl-rakuten.amagi.tv/hls/amagi_hls_data_rakutenAA-mainstreammediafreesportsintl-rakuten/CDN/master.m3u8
-#EXTINF:-1 tvg-id="WorldPokerTour.us@Poland" tvg-logo="https://i.imgur.com/98kLMjj.png" group-title="Sports",World Poker Tour (1080p)
-https://d39g1vxj2ef6in.cloudfront.net/v1/manifest/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-rakuten-stitched/15d59f2f-80da-4448-9bce-775cc9f470f7/1.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Catholic-TV-500x270.png",Catholic TV
 https://catholictvhd-lh.akamaized.net/hls/live/2043390/CTVLiveHD/master.m3u8
+#EXTINF:-1 tvg-id="WorldPokerTour.us@Poland" tvg-logo="https://i.imgur.com/98kLMjj.png" group-title="Sports",World Poker Tour (1080p)
+https://d39g1vxj2ef6in.cloudfront.net/v1/manifest/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-rakuten-stitched/15d59f2f-80da-4448-9bce-775cc9f470f7/1.m3u8
 #EXTINF:-1 tvg-id="WorldPokerTour.us",WORLD POKER TOUR
 https://dth07jsr8atug.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/WPT-Plex/171.m3u8
 #EXTINF:-1 tvg-id="WLKYDT1.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/CBS_logo_%282020%29.svg/512px-CBS_logo_%282020%29.svg.png" group-title="News",CBS 32 
@@ -359,7 +302,64 @@ https://aegis-cloudfront-1.tubi.video/b2fc97e6-b98f-42b4-be35-bd0361f1f637/playl
 https://apollo.production-public.tubi.io/live/ac-dog-the-bounty-hunter.m3u8
 #EXTINF:-1 tvg-id="CPACEnglish.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/2016_CPAC_logo.svg/512px-2016_CPAC_logo.svg.png" group-title="Legislative",CPAC 
 https://d7z3qjdsxbwoq.cloudfront.net/groupa/live/f9809cea-1e07-47cd-a94d-2ddd3e1351db/live.isml/.m3u8
+#EXTINF:-1 tvg-id="FoxWeather.us" tvg-logo="fox-weather-us.png",FOX WEATHER 
+https://livetv-fa.tubi.video/fox-weather/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="" tvg-logo="Space.png",SPACE
+https://apollo.production-public.tubi.io/live/ac-cosmos.m3u8
+#EXTINF:-1 tvg-id="CourtTV.us" tvg-logo="court-tv-us.png",COURT TV 
+https://apollo.production-public.tubi.io/live/ac-court-tv.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="CrimeThrillher.png",CRIME THRILLER 
+https://apollo.production-public.tubi.io/live/ac-crime-thrillher.m3u8
+#EXTINF:-1 tvg-id="ColdCaseFiles.us" tvg-logo="cold-case-files-vod-us.png",COLDCASE FILES
+https://apollo.production-public.tubi.io/live/ac-cold-case-files.m3u8
+#EXTINF:-1 tvg-id="UnsolvedMysteries.us" tvg-logo="unsolved-mysteries-vod-us.png",UNSOLVED MYSTERIES 
+https://livetv-fa.tubi.video/unsolved-mysteries/index.m3u8
+#EXTINF:-1 tvg-id="VICETV.us" tvg-logo="vice-us.png",VICE 
+https://aegis-cloudfront-1.tubi.video/073ab3b0-a8a5-472d-9b45-46d3dead6146/playlist.m3u8
+#EXTINF:-1 tvg-id="Buzzr.us" tvg-logo="buzzr-vod.png",BUZZR 
+https://apollo.production-public.tubi.io/live/ac-buzzr.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="ace-212.png",ACE TV
+https://streams2.sofast.tv/WiseM3U8_30/sofast/cleanhls/master.m3u8
+#EXTINF:-1 tvg-id=""tvg-logo="Boating Channel.png",BOATING CHANNEL
+https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/04c3a27e-c2a0-420b-8eef-7dae9ab93056/manifest.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="automotion@logotyp.us.png",AUTOMOTION
+https://streams2.sofast.tv/sofastplayout/0c3229e2-6ca5-4714-859e-c0ac6b9aa58a_0_HLS/master.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="BangBang---Red-Logo.png",BANGBANG TV
+https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/6a98fce2-bf4c-4bfb-91f4-c43851bb3801/manifest.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="Billiard.png",BILLIARDS+
+https://streams2.sofast.tv/WiseM3U8_18/sofast/cleanhls/master.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="Billiard.png",CHRONO
+https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/d375ebca-9cd0-475e-ad4d-0cde6634de9c/manifest.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",CUISINE CHANNEL
+https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/34839a9b-a901-4f31-b593-07555f7937d4/manifest.m3u8
 #EXTINF:-1 tvg-id="TennisChannel.us" tvg-logo="https://i.imgur.com/tsljAnY.png" group-title="Sports",Tennis Channel
 https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01444-tennischannelth-tennischannelnl-samsungnl/playlist.m3u8
 #EXTINF:-1 tvg-id="SuperTennis.it@HD" tvg-logo="https://upload.wikimedia.org/wikipedia/it/thumb/6/6a/SuperTennis_-_Logo_2016.svg/512px-SuperTennis_-_Logo_2016.svg.png" group-title="Sports",SuperTennis HD
 https://live-embed.supertennix.hiway.media/restreamer/supertennix_client/gpu-a-c0-16/restreamer/outgest/h24_supertennix/manifest.m3u8
+#EXTINF:-1 tvg-id="HumorMill.us",HUMOR MILL
+https://damkf751d85s1.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/HumorMill-PLEX/152.m3u8
+#EXTINF:-1 tvg-id="MuseumTVFast.us",MUSEUM TV
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01492-secomsasmediart-museumtv-en-plex/playlist.m3u8
+#EXTINF:-1 tvg-id="PopstarTV.us",POPSTAR! TV
+https://linear-10.frequency.stream/dist/plex/10/hls/master/playlist.m3u8
+#EXTINF:-1 tvg-id="Timeline.us",Timeline 
+https://lds-timeline-plex.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="",DRYBAR HUMOR
+https://drybar-drybarcomedy-1-ca.samsung.wurl.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="FightNetwork.ca" tvg-logo="https://i.imgur.com/vlKPZHR.png",FIGHT NETWORK
+https://d12a2vxqkkh1bo.cloudfront.net/hls/main.m3u8
+#EXTINF:-1 tvg-id="CJONDT.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/en/b/bd/CJON-TV.PNG",NEWFOUNDLAND TV
+https://2-fss-1.streamhoster.com/pl_122/201748-1431018-1/playlist.m3u8
+#EXTINF:-1 tvg-id="HorseCountryTV.uk",HORSE AND COUNTRY
+https://hncfree-samsung-uk.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="DuckHuntingTV.us",DUCK HUNTING CHANNEL
+https://main.duckhunting.playout.vju.tv/duckhuntingtv/main.m3u8
+#EXTINF:-1 tvg-id="TheUltimateMusicChannel.us",The Ultimate Music Channel 
+https://app.viloud.tv/hls/channel/0694b92d093cc2bd5438ff9bbccaf1a2.m3u8
+#EXTINF:-1 tvg-id="IMPACTWrestling.us",TNA Wrestling 
+https://d3mwqwqfak7y2q.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/ImpactWrestling-prod/hls/main.m3u8
+#EXTINF:-1 tvg-id="TODAYTV.us",Today TV 
+#EXTINF:-1 tvg-id="TVSBowlingNetwork.us",TVS BOXING NETWORK
+https://bozztv.com/gusa/gusa-tvsbowling/index.m3u8
+#EXTINF:-1 tvg-id="Choppertown.us",CHOPPERTOWN
+https://linear-11.frequency.stream/dist/glewedtv/11/hls/master/playlist.m3u8
