@@ -154,7 +154,6 @@ https://streams2.sofast.tv/WiseM3U8_11/sofast/cleanhls/master.m3u8
 https://streams2.sofast.tv/vglive-sk-231198/index.m3u8
 #EXTINF:-1 tvg-id="", NITRO TV
 https://streams2.sofast.tv/sofastplayout/71960d71-216f-47f3-bfe5-5b1386c05760_0_HLS/master.m3u8
-
 #EXTINF:-1 tvg-id="",PEEKFLICK
 https://streams2.sofast.tv/WiseM3U8_26/sofast/cleanhls/master.m3u8
 #EXTINF:-1 tvg-id="",SCI-FI
