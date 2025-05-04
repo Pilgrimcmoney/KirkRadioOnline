@@ -1,16 +1,24 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="RetroCrush.us" tvg-logo="https://i.imgur.com/M40b4YI.png" group-title="Animation;Classic",RetroCrush TV (1080p)
-https://45034ce1cbb7489ab1499301f6274415.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/Plex_RetroCrush/playlist.m3u8?ads.app_bundle=&ads.app_store_url=&ads.consent=0&ads.gdpr=0&ads.plex_id=5ef4e1b40d9ad000423c442a&ads.plex_token=z1MCPUpbxYcHru-5hdyq&ads.psid=&ads.targetopt=1&ads.ua=Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/84.0.4147.89+Safari/537.36+OPR/70.0.3728.71&ads.us_privacy=1---&ads.wurl_channel=491&ads.wurl_name=RetroCrush
-#EXTINF:-1 tvg-id="PlutoTVKidsAnimation.us" tvg-logo="https://i.imgur.com/l1d9j4d.png" group-title="Kids",Pluto TV Kids Animation (720p) [Not 24/7]
-https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5db0ad56edc89300090d2ebb/master.m3u8?advertisingId=&appName=web&appStoreUrl=&appVersion=DNT&app_name=&architecture=&buildVersion=&deviceDNT=0&deviceId=5db0ad56edc89300090d2ebb&deviceLat=&deviceLon=&deviceMake=web&deviceModel=web&deviceType=web&deviceVersion=DNT&includeExtendedEvents=false&marketingRegion=US&serverSideAds=false&sid=976&terminate=false&userId=
 #EXTINF:-1 tvg-id="PBSKidsEasternCentral.us" tvg-logo="https://i.imgur.com/ambc9le.png" group-title="Education;Kids",PBS Kids Eastern/Central (720p)
 https://2-fss-2.streamhoster.com/pl_140/amlst:200914-1298290/playlist.m3u8
-#EXTINF:-1 tvg-id="NickHDPlus.in" tvg-logo="https://i.imgur.com/nJPbTet.png" group-title="Kids",Nick HD+ (1080p)
-https://prod-sports-north-gm.jiocinema.com/bpk-tv/Nick_HD_Plus_voot_MOB/Fallback/index.m3u8
 #EXTINF:-1 tvg-id="MovieSphere.us" tvg-logo="Moviesphere.png",MOVIESPHERE 
 https://livetv-fa.tubi.video/moviesphere/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",MOVIESPERE CANADA
 https://apollo.production-public.tubi.io/live/ac-moviesphere-canada2.m3u8
+#EXTINF:-1 tvg-id="",ACTION TV
+https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/9a4a5412-ca99-48d3-9013-d1811b95b9d2/manifest.m3u8
+#EXTINF:-1 tvg-id="",DRAMA TV
+https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/9800ea5c-2183-4160-9f01-70e5d6428a50/manifest.m3u8
+#EXTINF:-1 tvg-id="",THRILLER TV
+https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/ce168a85-c8d4-41d6-a597-cc8fd7baddd9/manifest.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="filmrise-movies-us.png",FILMRISE HORROR CANADA
+https://apollo.production-public.tubi.io/live/ac-rifleman-filmrise.m3u8
+#EXTINF:-1 tvg-id="FilmRiseTrueCrime.us" tvg-logo="filmrise-logo-png_seeklogo-409221.png",TRUE CRIME
+https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="filmrise-logo-png_seeklogo-409221.png",FILMRISE TRUE CRIME CANADA 
+https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime-canada.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="filmrise-logo-png_seeklogo-409221.png",FILMRISE WORLDS MOST EVIL KILLERS
+https://apollo.production-public.tubi.io/live/ac-worlds-most-evil-killers.m3u8
 #EXTINF:-1 tvg-id="UFC" tvg-logo="ufc-us.png",UFC
 https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playlist.m3u8
 #EXTINF:-1 tvg-id="NFLChannel.us" tvg-logo="nfl-icon-us.png",NFL 
@@ -30,14 +38,6 @@ https://aegis-cloudfront-1.tubi.video/4e6d2330-f93e-4068-b795-9f8585640b13/playl
 https://apollo.production-public.tubi.io/live/fox-sports.m3u8
 #EXTINF:-1 tvg-id="FoxWeather.us" tvg-logo="fox-weather-us.png",FOX WEATHER 
 https://livetv-fa.tubi.video/fox-weather/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="filmrise-movies-us.png",FILMRISE HORROR CANADA
-https://apollo.production-public.tubi.io/live/ac-rifleman-filmrise.m3u8
-#EXTINF:-1 tvg-id="FilmRiseTrueCrime.us" tvg-logo="filmrise-logo-png_seeklogo-409221.png",TRUE CRIME
-https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="filmrise-logo-png_seeklogo-409221.png",FILMRISE TRUE CRIME CANADA 
-https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime-canada.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="filmrise-logo-png_seeklogo-409221.png",FILMRISE WORLDS MOST EVIL KILLERS
-https://apollo.production-public.tubi.io/live/ac-worlds-most-evil-killers.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="" tvg-logo="Space.png",SPACE
 https://apollo.production-public.tubi.io/live/ac-cosmos.m3u8
 #EXTINF:-1 tvg-id="CourtTV.us" tvg-logo="court-tv-us.png",COURT TV 
@@ -66,12 +66,7 @@ https://streams2.sofast.tv/sofastplayout/0c3229e2-6ca5-4714-859e-c0ac6b9aa58a_0_
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/c8d16110-566c-4e95-a1df-55d175e9e201/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="BangBang---Red-Logo.png",BANGBANG TV
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/6a98fce2-bf4c-4bfb-91f4-c43851bb3801/manifest.m3u8
-#EXTINF:-1 tvg-id="",ACTION TV
-https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/9a4a5412-ca99-48d3-9013-d1811b95b9d2/manifest.m3u8
-#EXTINF:-1 tvg-id="",DRAMA TV
-https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/9800ea5c-2183-4160-9f01-70e5d6428a50/manifest.m3u8
-#EXTINF:-1 tvg-id="",THRILLER TV
-https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/ce168a85-c8d4-41d6-a597-cc8fd7baddd9/manifest.m3u8
+
 #EXTINF:-1 tvg-id="" tvg-logo="Billiard.png",BILLIARDS+
 https://streams2.sofast.tv/WiseM3U8_18/sofast/cleanhls/master.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="cartoons-4u-vod-us.png",CARTOON CLASSICS
