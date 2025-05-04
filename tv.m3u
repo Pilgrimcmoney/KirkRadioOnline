@@ -36,7 +36,7 @@ https://apollo.production-public.tubi.io/live/ac-cosmos.m3u8
 https://apollo.production-public.tubi.io/live/ac-court-tv.m3u8
 #EXTINF:-1 tvg-id="",CRIME THRILLER 
 https://apollo.production-public.tubi.io/live/ac-crime-thrillher.m3u8
-#EXTINF:-1 tvg-id="ColdCaseFiles.us",COLDCASE FILES
+#EXTINF:-1 tvg-id="ColdCaseFiles.us" tvg-logo="cold-case-files-vod-us.png" ,COLDCASE FILES
 https://apollo.production-public.tubi.io/live/ac-cold-case-files.m3u8
 #EXTINF:-1 tvg-id="UnsolvedMysteries.us",UNSOLVED MYSTERIES 
 https://livetv-fa.tubi.video/unsolved-mysteries/index.m3u8
