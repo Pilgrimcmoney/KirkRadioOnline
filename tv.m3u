@@ -28,23 +28,23 @@ https://apollo.production-public.tubi.io/live/ac-rifleman-filmrise.m3u8
 https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="filmrise-logo-png_seeklogo-409221.png",FILMRISE TRUE CRIME CANADA 
 https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime-canada.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="filmrise-logo-png_seeklogo-409221.png" ,FILMRISE WORLDS MOST EVIL KILLERS
+#EXTINF:-1 tvg-id="" tvg-logo="filmrise-logo-png_seeklogo-409221.png",FILMRISE WORLDS MOST EVIL KILLERS
 https://apollo.production-public.tubi.io/live/ac-worlds-most-evil-killers.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="" tvg-logo="Space.png",SPACE
 https://apollo.production-public.tubi.io/live/ac-cosmos.m3u8
-#EXTINF:-1 tvg-id="CourtTV.us" tvg-logo="court-tv-us.png" ,COURT TV 
+#EXTINF:-1 tvg-id="CourtTV.us" tvg-logo="court-tv-us.png",COURT TV 
 https://apollo.production-public.tubi.io/live/ac-court-tv.m3u8
 #EXTINF:-1 tvg-id="",CRIME THRILLER 
 https://apollo.production-public.tubi.io/live/ac-crime-thrillher.m3u8
-#EXTINF:-1 tvg-id="ColdCaseFiles.us" tvg-logo="cold-case-files-vod-us.png" ,COLDCASE FILES
+#EXTINF:-1 tvg-id="ColdCaseFiles.us" tvg-logo="cold-case-files-vod-us.png",COLDCASE FILES
 https://apollo.production-public.tubi.io/live/ac-cold-case-files.m3u8
 #EXTINF:-1 tvg-id="UnsolvedMysteries.us",UNSOLVED MYSTERIES 
 https://livetv-fa.tubi.video/unsolved-mysteries/index.m3u8
 #EXTINF:-1 tvg-id="VICETV.us",VICE 
 https://aegis-cloudfront-1.tubi.video/073ab3b0-a8a5-472d-9b45-46d3dead6146/playlist.m3u8
-#EXTINF:-1 tvg-id="Buzzr.us",BUZZR 
+#EXTINF:-1 tvg-id="Buzzr.us" tvg-logo="buzzr-vod.png",BUZZR 
 https://apollo.production-public.tubi.io/live/ac-buzzr.m3u8
-#EXTINF:-1 tvg-id="",CRAFTY PANDA
+#EXTINF:-1 tvg-id="" tvg-logo="panda-logo-png_seeklogo-400328.png",CRAFTY PANDA
 https://bpd-cp-stirr.otteravision.com/bpd/cp/cp.m3u8
 #EXTINF:-1 tvg-id="",4K TRAVEL TV
 https://streams2.sofast.tv/sofastplayout/33c31ac4-51fa-46ae-afd0-0d1fe5e60a80_0_HLS/master.m3u8
