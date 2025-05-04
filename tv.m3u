@@ -5,7 +5,7 @@ https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playl
 https://apollo.production-public.tubi.io/live/ac-nfl2.m3u8
 #EXTINF:-1 tvg-id="NHLNetwork.us" tvg-logo="nhl-network-us.png",NHL 
 https://apollo.production-public.tubi.io/live/ac-nhl.m3u8
-#EXTINF:-1 tvg-id="NHRATV.us",NHRA TV 
+#EXTINF:-1 tvg-id="NHRATV.us" tvg-logo="nhra-vod.png",NHRA TV 
 https://apollo.production-public.tubi.io/live/ac-nhra.m3u8
 #EXTINF:-1 tvg-id="NBATV.us" tvg-logo="nba-tv-us.png",NBA 
 https://aegis-cloudfront-1.tubi.video/c987b155-8d7e-4307-bd24-720bb2843d42/playlist.m3u8
