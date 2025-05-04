@@ -18,7 +18,7 @@ https://aegis-cloudfront-1.tubi.video/4e6d2330-f93e-4068-b795-9f8585640b13/playl
 https://livetv-fa.tubi.video/moviesphere/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",MOVIESPERE CANADA
 https://apollo.production-public.tubi.io/live/ac-moviesphere-canada2.m3u8
-#EXTINF:-1 tvg-id="FoxSports.us",FOX SPORTS
+#EXTINF:-1 tvg-id="FoxSports.us" tvg-logo="countries/united-states/fox-sports-us.png",FOX SPORTS
 https://apollo.production-public.tubi.io/live/fox-sports.m3u8
 #EXTINF:-1 tvg-id="FoxWeather.us",FOX WEATHER 
 https://livetv-fa.tubi.video/fox-weather/index.m3u8
