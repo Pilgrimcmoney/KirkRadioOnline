@@ -1,5 +1,5 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="DisneyXDEast.us",DISNEY XD 
+#EXTINF:-1 tvg-id="DisneyXDEast.us" tvg-logo="DisneyXD.png",DISNEY XD 
 https://fl5.moveonjoy.com/DISNEY_XD/index.m3u8
 #EXTINF:-1 tvg-id="",KIDDO TV
 https://streams2.sofast.tv/sofastplayout/8258122f-b4c0-416b-a2db-8407847f0c3c_1000015692_HLS/master.m3u8
