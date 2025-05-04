@@ -13,13 +13,13 @@ https://2-fss-2.streamhoster.com/pl_140/amlst:200914-1298290/playlist.m3u8
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/c8d16110-566c-4e95-a1df-55d175e9e201/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="panda-logo-png_seeklogo-400328.png",CRAFTY PANDA
 https://bpd-cp-stirr.otteravision.com/bpd/cp/cp.m3u8
-#EXTINF:-1 tvg-id=""  tvg-logo="travel-4u-vod-us.png",4K TRAVEL TV
+#EXTINF:-1 tvg-id="" tvg-logo="travel-4u-vod-us.png",4K TRAVEL TV
 https://streams2.sofast.tv/sofastplayout/33c31ac4-51fa-46ae-afd0-0d1fe5e60a80_0_HLS/master.m3u8
 #EXTINF:-1 tvg-id="MovieSphere.us" tvg-logo="Moviesphere.png",MOVIESPHERE 
 https://livetv-fa.tubi.video/moviesphere/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",MOVIESPERE CANADA
 https://apollo.production-public.tubi.io/live/ac-moviesphere-canada2.m3u8
-#EXTINF:-1 tvg-id="",URBAN ACTION TV
+#EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",URBAN ACTION TV
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/7ad8ce96-5a3f-413e-ae15-7c2cef7bc8f8/manifest.m3u8
 #EXTINF:-1 tvg-id="CineLife.us" tvg-logo="Moviesphere.png",CINELIFE
 https://magnolia-cinelife.amagi.tv/hls/amagi_hls_data_magnoliaA-cinelife-oando/CDN/playlist.m3u8
