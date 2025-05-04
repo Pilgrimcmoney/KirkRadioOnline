@@ -15,7 +15,7 @@ https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/c8
 https://bpd-cp-stirr.otteravision.com/bpd/cp/cp.m3u8
 #EXTINF:-1 tvg-id="LoveNature4K.ca" tvg-logo="https://i.imgur.com/oDacp1F.png",LOVE NATURE 4K
 https://d18dyiwu97wm6q.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/LoveNature4K2-prod/playlist.m3u8
-#EXTINF:-1 tvg-id="HorseCountryTV.uk",HORSE AND COUNTRY
+#EXTINF:-1 tvg-id="HorseCountryTV.uk" tvg-logo="CHRONO.png",HORSE AND COUNTRY
 https://hncfree-samsung-uk.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="travel-4u-vod-us.png",4K TRAVEL TV
 https://streams2.sofast.tv/sofastplayout/33c31ac4-51fa-46ae-afd0-0d1fe5e60a80_0_HLS/master.m3u8
@@ -29,8 +29,6 @@ https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/7a
 https://magnolia-cinelife.amagi.tv/hls/amagi_hls_data_magnoliaA-cinelife-oando/CDN/playlist.m3u8
 #EXTINF:-1 tvg-id="FreebieTV.us" tvg-logo="Moviesphere.png",FREEBIE TV
 https://d1h1d6qoy9vnra.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/Freebie-Plex/187.m3u8
-#EXTINF:-1 tvg-id="MyTimeMovieNetworkEast.us" tvg-logo="mytime.png",MYTIME MOVIE NETWORK
-https://livetv-fa.tubi.video/my-time/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",ACTION TV
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/9a4a5412-ca99-48d3-9013-d1811b95b9d2/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",ENCORE+
@@ -51,6 +49,8 @@ https://apollo.production-public.tubi.io/live/ac-rifleman-filmrise.m3u8
 https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime-canada.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="filmrise-logo-png_seeklogo-409221.png",FILMRISE WORLDS MOST EVIL KILLERS
 https://apollo.production-public.tubi.io/live/ac-worlds-most-evil-killers.m3u8
+#EXTINF:-1 tvg-id="MyTimeMovieNetworkEast.us" tvg-logo="mytime.png",MYTIME MOVIE NETWORK
+https://livetv-fa.tubi.video/my-time/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Kung Fu.png",KUNG FU+
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/06862a07-6a92-4b4d-abc3-5fea131713b5/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",DOCUVISION
