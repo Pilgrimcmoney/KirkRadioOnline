@@ -1,6 +1,12 @@
 #EXTM3U
+#EXTINF:-1 tvg-id="DisneyXDEast.us",DISNEY XD 
+https://fl5.moveonjoy.com/DISNEY_XD/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="cartoons-4u-vod-us.png",CARTOON CLASSICS
+https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/d5543c06-5122-49a7-9662-32187f48aa2c/manifest.m3u8
 #EXTINF:-1 tvg-id="PBSKidsEasternCentral.us" tvg-logo="https://i.imgur.com/ambc9le.png" group-title="Education;Kids",PBS Kids Eastern/Central (720p)
 https://2-fss-2.streamhoster.com/pl_140/amlst:200914-1298290/playlist.m3u8
+#EXTINF:-1 tvg-id="BabyFirst.us" tvg-logo="baby-first-tv-us.png", BABYFIRST
+https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/c8d16110-566c-4e95-a1df-55d175e9e201/manifest.m3u8
 #EXTINF:-1 tvg-id="MovieSphere.us" tvg-logo="Moviesphere.png",MOVIESPHERE 
 https://livetv-fa.tubi.video/moviesphere/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",MOVIESPERE CANADA
@@ -62,15 +68,10 @@ https://streams2.sofast.tv/WiseM3U8_30/sofast/cleanhls/master.m3u8
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/04c3a27e-c2a0-420b-8eef-7dae9ab93056/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="automotion@logotyp.us.png",AUTOMOTION
 https://streams2.sofast.tv/sofastplayout/0c3229e2-6ca5-4714-859e-c0ac6b9aa58a_0_HLS/master.m3u8
-#EXTINF:-1 tvg-id="BabyFirst.us" tvg-logo="baby-first-tv-us.png", BABYFIRST
-https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/c8d16110-566c-4e95-a1df-55d175e9e201/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="BangBang---Red-Logo.png",BANGBANG TV
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/6a98fce2-bf4c-4bfb-91f4-c43851bb3801/manifest.m3u8
-
 #EXTINF:-1 tvg-id="" tvg-logo="Billiard.png",BILLIARDS+
 https://streams2.sofast.tv/WiseM3U8_18/sofast/cleanhls/master.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="cartoons-4u-vod-us.png",CARTOON CLASSICS
-https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/d5543c06-5122-49a7-9662-32187f48aa2c/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Billiard.png",CHRONO
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/d375ebca-9cd0-475e-ad4d-0cde6634de9c/manifest.m3u8
 #EXTINF:-1 tvg-id="",COWBOY MOVIE CHANNEL
@@ -237,8 +238,6 @@ https://2-fss-1.streamhoster.com/pl_122/201748-1431018-1/playlist.m3u8
 https://hncfree-samsung-uk.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="CineLife.us",CINELIFE
 https://magnolia-cinelife.amagi.tv/hls/amagi_hls_data_magnoliaA-cinelife-oando/CDN/playlist.m3u8
-#EXTINF:-1 tvg-id="DisneyXDEast.us",DISNEY XD 
-https://fl5.moveonjoy.com/DISNEY_XD/index.m3u8
 #EXTINF:-1 tvg-id="DuckHuntingTV.us",DUCK HUNTING CHANNEL
 https://main.duckhunting.playout.vju.tv/duckhuntingtv/main.m3u8
 #EXTINF:-1 tvg-id="TheUltimateMusicChannel.us",The Ultimate Music Channel 
