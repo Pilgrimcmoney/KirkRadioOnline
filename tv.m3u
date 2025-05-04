@@ -34,7 +34,7 @@ https://apollo.production-public.tubi.io/live/ac-worlds-most-evil-killers.m3u8
 https://apollo.production-public.tubi.io/live/ac-cosmos.m3u8
 #EXTINF:-1 tvg-id="CourtTV.us" tvg-logo="court-tv-us.png",COURT TV 
 https://apollo.production-public.tubi.io/live/ac-court-tv.m3u8
-#EXTINF:-1 tvg-id="",CRIME THRILLER 
+#EXTINF:-1 tvg-id="" tvg-logo="CrimeThrillher.png",CRIME THRILLER 
 https://apollo.production-public.tubi.io/live/ac-crime-thrillher.m3u8
 #EXTINF:-1 tvg-id="ColdCaseFiles.us" tvg-logo="cold-case-files-vod-us.png",COLDCASE FILES
 https://apollo.production-public.tubi.io/live/ac-cold-case-files.m3u8
