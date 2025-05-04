@@ -39,23 +39,23 @@ https://streams2.sofast.tv/sofastplayout/11d7f7fd-9c12-4c8a-b1a8-e879821e2187_10
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/9800ea5c-2183-4160-9f01-70e5d6428a50/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",THRILLER TV
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/ce168a85-c8d4-41d6-a597-cc8fd7baddd9/manifest.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="filmrise-movies-us.png",FILMRISE HORROR CANADA
-https://apollo.production-public.tubi.io/live/ac-rifleman-filmrise.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",DRIVE IN MOVIE CHANNEL
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/e5056383-20ac-488f-b299-6577f66881ff/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",COWBOY MOVIE CHANNEL
 https://streams2.sofast.tv/sofastplayout/32eb332e-f644-46e5-ad91-e55ad80d14f7_0_HLS/master.m3u8
 #EXTINF:-1 tvg-id="FilmRiseTrueCrime.us" tvg-logo="filmrise-logo-png_seeklogo-409221.png",TRUE CRIME
 https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="filmrise-movies-us.png",FILMRISE HORROR CANADA
+https://apollo.production-public.tubi.io/live/ac-rifleman-filmrise.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="filmrise-logo-png_seeklogo-409221.png",FILMRISE TRUE CRIME CANADA 
 https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime-canada.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="filmrise-logo-png_seeklogo-409221.png",FILMRISE WORLDS MOST EVIL KILLERS
 https://apollo.production-public.tubi.io/live/ac-worlds-most-evil-killers.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Kung Fu.png",KUNG FU+
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/06862a07-6a92-4b4d-abc3-5fea131713b5/manifest.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",DOCU VISION
+#EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",DOCUVISION
 https://streams2.sofast.tv/sofastplayout/7e8d2a51-985d-4e76-bf7e-91edf0aa6e5f_0_HLS/master.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",OUTER VISION
+#EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",OUTERVISION
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/ea1ad8da-7c74-4dc3-999f-15088a0d942a/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",DANGERVISION
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/453971f3-855a-455e-9353-ebbb069583a4/manifest.m3u8
@@ -86,8 +86,6 @@ https://apollo.production-public.tubi.io/live/fox-sports.m3u8
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/70e45fc8-1f6c-4492-ac26-9868f70f4e02/manifest.m3u8
 #EXTINF:-1 tvg-id="",GOAL TV
 https://streams2.sofast.tv/sofastplayout/WiseM3U8_1/master.m3u8
-#EXTINF:-1 tvg-id="",HD TRAVEL TV
-https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/e58c3999-b5e1-4322-8d73-db8ebd8acb32/manifest.m3u8
 #EXTINF:-1 tvg-id="",HUNT FISH TV
 https://streams2.sofast.tv/sofastplayout/WiseM3U8_2/master.m3u8
 #EXTINF:-1 tvg-id="",ITSF
@@ -146,8 +144,6 @@ https://30a-tv.com/feeds/vidaa/golf.m3u8
 https://1815337252.rsc.cdn77.org/HLS/CORNHOLETV.m3u8
 #EXTINF:-1 tvg-id="AfroSportNigeria.ng" tvg-logo="https://pbs.twimg.com/profile_images/1451668129042599936/Uh-Z6Sh1_400x400.jpg" group-title="Sports",AfroSport Nigeria
 https://newproxy3.vidivu.tv/vidivu_afrosport/index.m3u8
-#EXTINF:-1 tvg-id="Arryadia.ma" tvg-logo="https://i.imgur.com/XjzK3gZ.png" group-title="Sports",Arryadia (480p)
-https://cdn.live.easybroadcast.io/abr_corp/73_arryadia_k2tgcj0/playlist_dvr.m3u8
 #EXTINF:-1 tvg-id="CampusLore.us" tvg-logo="https://i.imgur.com/dCXl0rq.png" group-title="Sports",CampusLore (720p)
 https://linear-235.frequency.stream/dist/glewedtv/235/hls/master/playlist.m3u8
 #EXTINF:-1 tvg-id="DAZNCombat.uk@Poland" tvg-logo="https://i.postimg.cc/VsW3Jsrz/logo-DAZN-Combat.png" group-title="Sports",DAZN Combat (1080p)
@@ -244,8 +240,6 @@ https://2-fss-2.streamhoster.com/pl_138/201660-1270634-1/playlist.m3u8
 https://tvturf4.janus.cl/playlist/stream.m3u8?d=w&id=
 #EXTINF:-1 tvg-id="WorldofFreesports.de" tvg-logo="https://i.imgur.com/lta5Mog.png" group-title="Sports",World of Freesports (1080p)
 https://mainstreammedia-worldoffreesportsintl-rakuten.amagi.tv/hls/amagi_hls_data_rakutenAA-mainstreammediafreesportsintl-rakuten/CDN/master.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="Catholic-TV-500x270.png",Catholic TV
-https://catholictvhd-lh.akamaized.net/hls/live/2043390/CTVLiveHD/master.m3u8
 #EXTINF:-1 tvg-id="WorldPokerTour.us@Poland" tvg-logo="https://i.imgur.com/98kLMjj.png" group-title="Sports",World Poker Tour (1080p)
 https://d39g1vxj2ef6in.cloudfront.net/v1/manifest/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-rakuten-stitched/15d59f2f-80da-4448-9bce-775cc9f470f7/1.m3u8
 #EXTINF:-1 tvg-id="WorldPokerTour.us",WORLD POKER TOUR
@@ -353,3 +347,5 @@ https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/93
 https://linear-11.frequency.stream/dist/glewedtv/11/hls/master/playlist.m3u8
 #EXTINF:-1 tvg-id="EuronewsEnglish.fr",EURONEWS
 https://streams.sofast.tv/euronewsen/live/eds/euronews-en/25017/euronews-en.m3u8
+#EXTINF:-1 tvg-id="" tvg-logo="Catholic-TV-500x270.png",Catholic TV
+https://catholictvhd-lh.akamaized.net/hls/live/2043390/CTVLiveHD/master.m3u8
