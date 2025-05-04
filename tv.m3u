@@ -48,7 +48,7 @@ https://apollo.production-public.tubi.io/live/ac-buzzr.m3u8
 https://bpd-cp-stirr.otteravision.com/bpd/cp/cp.m3u8
 #EXTINF:-1 tvg-id=""  tvg-logo="travel-4u-vod-us.png",4K TRAVEL TV
 https://streams2.sofast.tv/sofastplayout/33c31ac4-51fa-46ae-afd0-0d1fe5e60a80_0_HLS/master.m3u8
-#EXTINF:-1 tvg-id="",ACE TV
+#EXTINF:-1 tvg-id="" tvg-logo="ace-212.png",ACE TV
 https://streams2.sofast.tv/WiseM3U8_30/sofast/cleanhls/master.m3u8
 #EXTINF:-1 tvg-id=""tvg-logo="Boating Channel.png",BOATING CHANNEL
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/04c3a27e-c2a0-420b-8eef-7dae9ab93056/manifest.m3u8
