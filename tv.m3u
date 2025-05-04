@@ -40,7 +40,7 @@ https://apollo.production-public.tubi.io/live/ac-crime-thrillher.m3u8
 https://apollo.production-public.tubi.io/live/ac-cold-case-files.m3u8
 #EXTINF:-1 tvg-id="UnsolvedMysteries.us",UNSOLVED MYSTERIES 
 https://livetv-fa.tubi.video/unsolved-mysteries/index.m3u8
-#EXTINF:-1 tvg-id="VICETV.us",VICE 
+#EXTINF:-1 tvg-id="VICETV.us" tvg-logo="vice-us.png",VICE 
 https://aegis-cloudfront-1.tubi.video/073ab3b0-a8a5-472d-9b45-46d3dead6146/playlist.m3u8
 #EXTINF:-1 tvg-id="Buzzr.us" tvg-logo="buzzr-vod.png",BUZZR 
 https://apollo.production-public.tubi.io/live/ac-buzzr.m3u8
