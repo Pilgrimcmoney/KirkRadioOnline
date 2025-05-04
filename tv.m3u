@@ -1,9 +1,9 @@
 #EXTM3U
 #EXTINF:-1 tvg-id="DisneyXDEast.us" tvg-logo="DisneyXD.png",DISNEY XD 
 https://fl5.moveonjoy.com/DISNEY_XD/index.m3u8
-#EXTINF:-1 tvg-id="",KIDDO TV
+#EXTINF:-1 tvg-id="" tvg-logo="Kiddo TV.png",KIDDO TV
 https://streams2.sofast.tv/sofastplayout/8258122f-b4c0-416b-a2db-8407847f0c3c_1000015692_HLS/master.m3u8
-#EXTINF:-1 tvg-id="",RIC+
+#EXTINF:-1 tvg-id="" tvg-logo="RIC+.png",RIC+
 https://streams2.sofast.tv/WiseM3U8_32/sofast/cleanhls/master.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="cartoons-4u-vod-us.png",CARTOON CLASSICS
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/d5543c06-5122-49a7-9662-32187f48aa2c/manifest.m3u8
