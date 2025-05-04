@@ -20,7 +20,7 @@ https://livetv-fa.tubi.video/moviesphere/playlist.m3u8
 https://apollo.production-public.tubi.io/live/ac-moviesphere-canada2.m3u8
 #EXTINF:-1 tvg-id="FoxSports.us" tvg-logo="fox-sports-us.png" ,FOX SPORTS
 https://apollo.production-public.tubi.io/live/fox-sports.m3u8
-#EXTINF:-1 tvg-id="FoxWeather.us",FOX WEATHER 
+#EXTINF:-1 tvg-id="FoxWeather.us" tvg-logo="fox-weather-us.png",FOX WEATHER 
 https://livetv-fa.tubi.video/fox-weather/index.m3u8
 #EXTINF:-1 tvg-id="",FILMRISE HORROR CANADA
 https://apollo.production-public.tubi.io/live/ac-rifleman-filmrise.m3u8
