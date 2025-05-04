@@ -7,7 +7,7 @@ https://apollo.production-public.tubi.io/live/ac-nfl2.m3u8
 https://apollo.production-public.tubi.io/live/ac-nhl.m3u8
 #EXTINF:-1 tvg-id="NHRATV.us",NHRA TV 
 https://apollo.production-public.tubi.io/live/ac-nhra.m3u8
-#EXTINF:-1 tvg-id="NBATV.us" tvg-logo="nba-tv-icon-us.png",NBA 
+#EXTINF:-1 tvg-id="NBATV.us" tvg-logo="nba-tv-us.png",NBA 
 https://aegis-cloudfront-1.tubi.video/c987b155-8d7e-4307-bd24-720bb2843d42/playlist.m3u8
 #EXTINF:-1 tvg-id="WESHDT1.us",NBC 2 
 #EXTINF:-1 tvg-id="MyTimeMovieNetworkEast.us",MYTIME MOVIE NETWORK
