@@ -218,7 +218,7 @@ https://cbcrclinear-tor.akamaized.net/hls/live/2042764/CBCRCLINEAR_TOR_10/master
 https://cbcrclinear-tor.akamaized.net/hls/live/2042760/CBCRCLINEAR_TOR_6/master5.m3u8
 #EXTINF:-1 tvg-id="CBLTDT.ca" tvg-logo="https://i.imgur.com/EHGOQhj.png",CBC NORTH
 https://cbcrclinear-tor.akamaized.net/hls/live/2042766/CBCRCLINEAR_TOR_12/master5.m3u8
-#EXTINF:-1 tvg-id="",DEF JAM
+#EXTINF:-1 tvg-id="" tvg-logo="def-jam-recordings-corporate-logotype-logo-png-transparent.png",DEF JAM
 https://aegis-cloudfront-1.tubi.video/b2fc97e6-b98f-42b4-be35-bd0361f1f637/playlist.m3u8
 #EXTINF:-1 tvg-id="DogtheBountyHunter.us",DOG THE BOUNTY HUNTER
 https://apollo.production-public.tubi.io/live/ac-dog-the-bounty-hunter.m3u8
