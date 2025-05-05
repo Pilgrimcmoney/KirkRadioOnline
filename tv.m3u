@@ -29,8 +29,6 @@ https://d18dyiwu97wm6q.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68
 https://hncfree-samsung-uk.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://image.xumo.com/v1/channels/channel/99992286/600x200.png?type=white_cropped",226 Xumo Free Action Movies
 https://d6b383jzkrtyn.cloudfront.net/hls/master.m3u8?includeAssetTags=true&ads.xumo_channelId=99992286&ads.caid=XumoFreeActionMovies&ads.csid=lgchannels_[COUNTRY]_XumoFreeActionMovies_ssai&ads.lat=&ads.lon=&ads.os=webOS&ads.osv=&ads.xumo_platform=lg&ads._fw_is_lat=[LMT]&ads._fw_us_privacy=[US_PRIVACY]&ads._fw_coppa=0&ads._fw_did=[IFA]&ads._fw_content_category=IAB1-7&ads._fw_content_genre=Movies&ads._fw_content_language=en&ads._fw_content_rating=TV-14&ads._fw_deviceMake=[DEVICE_MAKE]&ads._fw_device_model=[DEVICE_MODEL]&ads._fw_gdpr=[GDPR]&ads._fw_gdpr_consent=[GDPR_CONSENT]&ads._fw_h_x_country=[COUNTRY]&ads.appName=[APP_NAME]&ads.xumo_contentId=5&ads.xumo_contentName=XumoAggregate&ads.xumo_providerId=5&ads.xumo_providerName=XumoFreeActionMovies&ads.channelId=99992286&ads.xumo_imdb_genre=Action&ads.xumo_adsystem=mediatailor&ads.tpcl=MIDROLL&ads._fw_app_store_url=[APP_STOREURL]&ads._fw_app_bundle=[APP_BUNDLE]&ads.appVersion=[APP_VERSION]&ads.amznappId=51a04667c92e45fd94bae191cb9c6e16&ads.amznslotId=b187c68c-9a6f-4d25-9a9c-b95b42d440af&ads.givn=[NONCE]&ads.fck=[FCK]&ads.viewsize=[VIEWSIZE]
-#EXTINF:-1 tvg-logo="https://image.xumo.com/v1/channels/channel/99993051/600x200.png?type=white_cropped",210 Universal Movies
-https://d4whmvwm0rdvi.cloudfront.net/10007/99993051/hls/master.m3u8?ads.xumo_channelId=99993051&ads.asnw=169843&ads.afid=158702674&ads.sfid=108140&ads.csid=lgchannels_us_rottentomatoesrttv_ssai_cro&ads._fw_is_lat=[LMT]&ads._fw_us_privacy=[US_PRIVACY]&ads._fw_coppa=0&ads._fw_did=[IFA]&ads._fw_vcid2=512116:[IFA]&ads._fw_app_bundle=[APP_BUNDLE]&ads._fw_app_store_url=[APP_STOREURL]&ads._fw_content_category=IAB1-7&ads._fw_content_genre=television&ads._fw_content_language=en&ads._fw_content_rating=tv-14&ads._fw_deviceMake=[DEVICE_MAKE]&ads._fw_device_model=[DEVICE_MODEL]&ads._fw_deviceType=3-Connected_TV&ads.appVersion=[APP_VERSION]&ads.appName=xumo&ads.xumo_contentId=2659&ads.xumo_contentName=RottenTomatoesRTTV&ads.xumo_providerId=2659&ads.xumo_providerName=RottenTomatoesRTTV&ads.channelId=99993051&ads._fw_ifa_type=dpid
 #EXTINF:-1 tvg-id="MovieSphere.us" tvg-logo="Moviesphere.png",MOVIESPHERE 
 https://livetv-fa.tubi.video/moviesphere/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",MOVIESPERE CANADA
@@ -185,7 +183,6 @@ https://apollo.production-public.tubi.io/live/ac-wlex.m3u8
 https://2-fss-1.streamhoster.com/pl_134/amlst:200914-1282960/playlist.m3u8
 #EXTINF:-1 tvg-id="WHASDT1.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ABC-2021-LOGO.svg/512px-ABC-2021-LOGO.svg.png" group-title="Undefined",WHAS-DT1 
 https://livevideo01.whas11.com/hls/live/2016284/elvs/live.m3u8
-#EXTINF:-1 tvg-id="WTVQDT1.us" tvg-logo="https://i.imgur.com/XIoBeja.png" group-title="Undefined",WTVQ ABC 36 NEWS 
 #EXTINF:-1 tvg-id="" tvg-logo="" group-title="Sports",30A WE LOVE CARS
 https://30a-tv.com/feeds/vidaa/cars.m3u8
 #EXTINF:-1 tvg-id="Cable14Hamilton.ca" tvg-logo="https://i.imgur.com/bJ7ygTq.png",CABLE 14 HAMILTON
