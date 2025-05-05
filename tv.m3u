@@ -15,6 +15,10 @@ https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/c8
 https://bpd-cp-stirr.otteravision.com/bpd/cp/cp.m3u8
 #EXTINF:-1 tvg-id="LoveNature4K.ca" tvg-logo="https://i.imgur.com/oDacp1F.png",LOVE NATURE 4K
 https://d18dyiwu97wm6q.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/LoveNature4K2-prod/playlist.m3u8
+#EXTINF:-1 tvg-id="WKPCDT2.us" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/3/33/PBS_logo.svg/512px-PBS_logo.svg.png" group-title="Undefined",PBS KET2 
+https://2-fss-2.streamhoster.com/pl_140/amlst:200914-1315484/playlist.m3u8
+#EXTINF:-1 tvg-id="WKPCDT3.us" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/3/33/PBS_logo.svg/512px-PBS_logo.svg.png" group-title="Undefined",PBS KET KY
+https://2-fss-2.streamhoster.com/pl_132/amlst:200914-1315486/playlist.m3u8
 #EXTINF:-1 tvg-id="HorseCountryTV.uk" tvg-logo="",HORSE AND COUNTRY
 https://hncfree-samsung-uk.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="travel-4u-vod-us.png",4K TRAVEL TV
@@ -193,10 +197,6 @@ https://dth07jsr8atug.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25
 #EXTINF:-1 tvg-id="WLKYDT1.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/CBS_logo_%282020%29.svg/512px-CBS_logo_%282020%29.svg.png" group-title="News",CBS 32 
 #EXTINF:-1 tvg-id="WLEXDT1.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/NBC_logo_2022_%28vertical%29.svg/512px-NBC_logo_2022_%28vertical%29.svg.png" group-title="Undefined",NBC 18 Lexington KY (WLEX)
 https://apollo.production-public.tubi.io/live/ac-wlex.m3u8
-#EXTINF:-1 tvg-id="WKPCDT2.us" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/3/33/PBS_logo.svg/512px-PBS_logo.svg.png" group-title="Undefined",PBS KET2 
-https://2-fss-2.streamhoster.com/pl_140/amlst:200914-1315484/playlist.m3u8
-#EXTINF:-1 tvg-id="WKPCDT3.us" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/3/33/PBS_logo.svg/512px-PBS_logo.svg.png" group-title="Undefined",PBS KET KY
-https://2-fss-2.streamhoster.com/pl_132/amlst:200914-1315486/playlist.m3u8
 #EXTINF:-1 tvg-id="WKMJDT1.us" tvg-logo="https://i.imgur.com/U9HFzJk.png" group-title="Education",PBS KET Louisville KY (WKMJ-TV)
 https://2-fss-1.streamhoster.com/pl_134/amlst:200914-1282960/playlist.m3u8
 #EXTINF:-1 tvg-id="WHASDT1.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ABC-2021-LOGO.svg/512px-ABC-2021-LOGO.svg.png" group-title="Undefined",WHAS-DT1 
