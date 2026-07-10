@@ -1,6 +1,4 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="" tvg-logo="RIC+.png",RIC+
-https://streams2.sofast.tv/WiseM3U8_32/sofast/cleanhls/master.m3u8
 #EXTINF:-1 tvg-logo="https://image.xumo.com/v1/channels/channel/99992126/600x200.png?type=white_cropped",606 Baby Einstein
 https://d29h829bjuxghm.cloudfront.net/hls/master.m3u8?includeAssetTags=true&ads.xumo_channelId=99992126&ads.csid=lgchannels_[COUNTRY]_BabyEinstein_ssai&ads.content_language=en&ads.content_category=IAB6&ads.content_genre=kids&ads.content_rating=tv-y&ads.xumo_contentName=BabyEinstein&ads.xumo_contentId=3517&ads.did=[IFA]&ads.is_lat=[LMT]&ads.us_privacy=[US_PRIVACY]&ads.coppa=1&ads.gdpr=[GDPR]&ads.gdpr_consent=[GDPR_CONSENT]&ads.appName=[APP_NAME]&ads.app_bundle=[APP_BUNDLE]&ads.app_version=[APP_VERSION]&ads.app_storeurl=[APP_STOREURL]&ads.channelId=99992126&ads.fck=[FCK]&ads.viewsize=[VIEWSIZE]&ads.givn=[NONCE]
 #EXTINF:-1 tvg-logo="https://dki01q1l7yn3y.cloudfront.net/thumbnails-platform-prod/assets/cs::content::channels/0-2048/696-LG-Logo-PNG-100x100_v4.png",607 BABY SHARK TV
