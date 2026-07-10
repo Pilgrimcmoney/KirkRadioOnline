@@ -27,24 +27,14 @@ https://967d9da6.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEdfQ2
 https://75943f25.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEdfQ2luZXZhdWx0Q2xhc3NpY3NfSExT/playlist.m3u8
 #EXTINF:-1 tvg-id="CineLife.us" tvg-logo="Moviesphere.png",CINELIFE
 https://magnolia-cinelife.amagi.tv/hls/amagi_hls_data_magnoliaA-cinelife-oando/CDN/playlist.m3u8
-#EXTINF:-1 tvg-id="FreebieTV.us" tvg-logo="Moviesphere.png",FREEBIE TV
-https://d1h1d6qoy9vnra.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/Freebie-Plex/187.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",ACTION TV
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/9a4a5412-ca99-48d3-9013-d1811b95b9d2/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",ENCORE+
 https://streams2.sofast.tv/sofastplayout/11d7f7fd-9c12-4c8a-b1a8-e879821e2187_1000014907_HLS/master.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",DRAMA TV
-https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/9800ea5c-2183-4160-9f01-70e5d6428a50/manifest.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",THRILLER TV
-https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/ce168a85-c8d4-41d6-a597-cc8fd7baddd9/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",DRIVE IN MOVIE CHANNEL
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/e5056383-20ac-488f-b299-6577f66881ff/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Moviesphere.png",COWBOY MOVIE CHANNEL
 https://streams2.sofast.tv/sofastplayout/32eb332e-f644-46e5-ad91-e55ad80d14f7_0_HLS/master.m3u8
-#EXTINF:-1 tvg-id="FilmRiseTrueCrime.us" tvg-logo="filmrise-logo-png_seeklogo-409221.png",TRUE CRIME
-https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="filmrise-movies-us.png",FILMRISE HORROR CANADA
-https://apollo.production-public.tubi.io/live/ac-rifleman-filmrise.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="filmrise-logo-png_seeklogo-409221.png",FILMRISE TRUE CRIME CANADA 
 https://apollo.production-public.tubi.io/live/ac-filmrise-true-crime-canada.m3u8
 #EXTINF:-1 tvg-id="" tvg-logo="Kung Fu.png",KUNG FU+
@@ -63,8 +53,6 @@ https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/50
 https://streams2.sofast.tv/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/a5e9aebd-1df4-4e56-be4f-33a891756f9b/manifest.m3u8
 #EXTINF:-1 tvg-id="UFC" tvg-logo="ufc-us.png",UFC
 https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playlist.m3u8
-#EXTINF:-1 tvg-id="NFLChannel.us" tvg-logo="nfl-icon-us.png",NFL 
-https://apollo.production-public.tubi.io/live/ac-nfl2.m3u8
 #EXTINF:-1 tvg-id="NHLNetwork.us" tvg-logo="nhl-network-us.png",NHL 
 https://apollo.production-public.tubi.io/live/ac-nhl.m3u8
 #EXTINF:-1 tvg-id="NBATV.us" tvg-logo="nba-tv-us.png",NBA 
