@@ -1,0 +1,75 @@
+<!-- AdSense + Cookie Consent integration template for KirkRadioOnline
+Save as web/adsense_and_cmp.html
+Replace data-ad-client and data-ad-slot with your AdSense IDs and set your domain.
+--> 
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>KirkRadioOnline — Ad Integration Example</title>
+
+  <!-- Cookie Consent (Osano / CookieConsent by insites) - simple example -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+  <script>
+    window.addEventListener("load", function(){
+      window.cookieconsent.initialise({
+        palette: {popup: {background: "#000"}, button: {background: "#f1d600"}},
+        theme: "classic",
+        content: {
+          message: "We use cookies to personalise ads and analyse traffic. By clicking Accept you consent to our use of cookies.",
+          dismiss: "Accept",
+          link: "Learn more",
+          href: "/privacy"
+        },
+        onStatusChange: function(status) {
+          console.log('cookieconsent status changed:', status);
+          // If accepted, you can load analytics/ads here if you want to block until consent
+        }
+      })
+    });
+  </script>
+
+  <style>
+    /* Simple responsive ad container */
+    .ad-slot { max-width: 700px; margin: 0.5rem auto; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>KirkRadioOnline</h1>
+  </header>
+
+  <main>
+    <section>
+      <h2>Player</h2>
+      <!-- Your player goes here (HTML5 audio or embedded player). Keep controls accessible. -->
+      <audio controls src="/stream/live.mp3">Your browser does not support audio element.</audio>
+    </section>
+
+    <section class="ad-slot">
+      <!-- AdSense responsive ad unit: replace client & slot IDs -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <!-- KirkRadioOnline responsive -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-REPLACE_WITH_YOUR_CLIENT_ID"
+           data-ad-slot="REPLACE_WITH_AD_SLOT"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </section>
+
+    <section>
+      <h2>Sponsorships</h2>
+      <p>Interested in sponsoring a show? See our <a href="/sponsorship">sponsorship page</a> for packages.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; KirkRadioOnline</p>
+  </footer>
+</body>
+</html>
